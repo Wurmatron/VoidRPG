@@ -1,6 +1,9 @@
 package wurmatron.voidrpg;
 
 
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -19,6 +22,13 @@ public class VoidRPG {
 
 		@SidedProxy (serverSide = Global.COMMONPROXY, clientSide = Global.CLIENTPROXY)
 		public static CommonProxy proxy;
+
+		public static final CreativeTabs tabVoidRPG = new CreativeTabs("tabVoidRPG") {
+				@Override
+				public Item getTabIconItem () {
+						return Items.ENDER_EYE;
+				}
+		};
 
 		@Mod.EventHandler
 		public void onPreInit (FMLPreInitializationEvent e) {
