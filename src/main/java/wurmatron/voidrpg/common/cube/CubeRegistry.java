@@ -37,14 +37,4 @@ public class CubeRegistry {
 				}
 				return null;
 		}
-
-		public String[] getCubeCategorys () {
-				ArrayList<String> categorys = new ArrayList<String>();
-				for (Cube cube : cubes)
-						categorys.add(cube.getCategoryName());
-				String names[] = new String[categorys.size()];
-				for (int n = 0; n <= categorys.size(); n++)
-						names[n] = categorys.get(n);
-				return names;
-		}
 }
