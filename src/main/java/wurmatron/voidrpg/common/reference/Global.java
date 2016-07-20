@@ -10,4 +10,5 @@ public class Global {
 		// Proxy
 		public static final String COMMONPROXY = "wurmatron.voidrpg.common.proxy.CommonProxy";
 		public static final String CLIENTPROXY = "wurmatron.voidrpg.client.proxy.ClientProxy";
+		// GUI
 }

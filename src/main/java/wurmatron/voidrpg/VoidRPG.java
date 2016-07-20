@@ -9,7 +9,13 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import wurmatron.voidrpg.api.cube.Cube;
+import wurmatron.voidrpg.common.blocks.VoidRPGBlocks;
 import wurmatron.voidrpg.common.config.ConfigHandler;
+import wurmatron.voidrpg.common.cube.CubeRegistry;
+import wurmatron.voidrpg.common.items.VoidRPGItems;
+import wurmatron.voidrpg.common.network.GuiHandler;
 import wurmatron.voidrpg.common.proxy.CommonProxy;
 import wurmatron.voidrpg.common.reference.Global;
 import wurmatron.voidrpg.common.utils.LogHandler;
@@ -40,6 +46,15 @@ public class VoidRPG {
 		public void onInit (FMLInitializationEvent e) {
 				LogHandler.info("Init");
 				ConfigHandler.loadMainConfig();
+				NetworkRegistry.INSTANCE.registerGuiHandler(this,new GuiHandler());
+				VoidRPGItems.init();
+				VoidRPGBlocks.init();
+				CubeRegistry.INSTANCE.registerCube(new Cube() {
+						@Override
+						public String getName () {
+								return "test";
+						}
+				});
 		}
 
 		@Mod.EventHandler
