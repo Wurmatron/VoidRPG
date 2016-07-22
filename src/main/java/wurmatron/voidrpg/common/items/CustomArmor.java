@@ -32,7 +32,6 @@ public class CustomArmor extends ItemArmor {
 				setCreativeTab(VoidRPG.tabVoidRPG);
 		}
 
-
 		@SideOnly (Side.CLIENT)
 		@Override
 		public ModelBiped getArmorModel (EntityLivingBase entity, ItemStack stack, EntityEquipmentSlot slot, ModelBiped model) {

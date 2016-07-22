@@ -12,14 +12,16 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = ${mod_version}
-group= ${package_group}
-archivesBaseName = ${mod_name}
+version = "${mod_version}"
+group= package_group
+archivesBaseName = mod_name
 
 minecraft {
     version = "${mc_version}-${forge_version}"
     runDir = "run"
     mappings = "snapshot_20160518"
+	replace "@VERSION@", project.version
+    replaceIn "Global.java"
 }
 
 dependencies {}

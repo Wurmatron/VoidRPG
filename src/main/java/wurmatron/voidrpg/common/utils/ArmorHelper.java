@@ -40,7 +40,7 @@ public class ArmorHelper {
 		public ItemStack createArmorStack (Item item, CubeData[] data) {
 				ItemStack stack = new ItemStack(item, 1, 0);
 				NBTTagCompound nbt = new NBTTagCompound();
-				byte a = 0;
+				int a = 0;
 				for (CubeData c : data) {
 						NBTTagCompound temp = new NBTTagCompound();
 						temp.setFloat(NBT.OFFSETX, c.offX);
@@ -50,12 +50,7 @@ public class ArmorHelper {
 						nbt.setTag(Integer.toString(a), temp);
 						a++;
 				}
-				if (a > 127 || a < 0) {
-						nbt.setInteger(NBT.AMOUNT, 127);
-						LogHandler.info("Data Too Big Capping nbt (Will be fixed once i get the basic systems working)");
-				} else {
-						nbt.setInteger(NBT.AMOUNT, a);
-				}
+				nbt.setInteger(NBT.AMOUNT, a);
 				stack.setTagCompound(nbt);
 				return stack;
 		}
@@ -66,7 +61,7 @@ public class ArmorHelper {
 		public ItemStack createArmorStack (Item item, CubeData[] base, CubeData[] armLeft, CubeData[] armRight) {
 				ItemStack stack = new ItemStack(item, 1, 0);
 				NBTTagCompound nbt = new NBTTagCompound();
-				byte a = 0;
+				int a = 0;
 				for (CubeData c : base) {
 						NBTTagCompound temp = new NBTTagCompound();
 						temp.setFloat(NBT.OFFSETX, c.offX);
@@ -79,7 +74,7 @@ public class ArmorHelper {
 				nbt.setInteger(NBT.AMOUNT, a);
 				stack.setTagInfo(NBT.BODY, nbt);
 				NBTTagCompound nbt2 = new NBTTagCompound();
-				byte b = 0;
+				int b = 0;
 				for (CubeData c : armLeft) {
 						NBTTagCompound temp = new NBTTagCompound();
 						temp.setFloat(NBT.OFFSETX, c.offX);
@@ -92,7 +87,7 @@ public class ArmorHelper {
 				nbt2.setInteger(NBT.AMOUNT, b);
 				stack.setTagInfo(NBT.LEFTARM, nbt2);
 				NBTTagCompound nbt3 = new NBTTagCompound();
-				byte d = 0;
+				int d = 0;
 				for (CubeData c : armRight) {
 						NBTTagCompound temp = new NBTTagCompound();
 						temp.setFloat(NBT.OFFSETX, c.offX);
@@ -113,7 +108,7 @@ public class ArmorHelper {
 		public ItemStack createArmorStack (Item item, CubeData[] leftLeg, CubeData[] rightLeg) {
 				ItemStack stack = new ItemStack(item, 1, 0);
 				NBTTagCompound nbt = new NBTTagCompound();
-				byte a = 0;
+				int a = 0;
 				for (CubeData c : leftLeg) {
 						NBTTagCompound temp = new NBTTagCompound();
 						temp.setFloat(NBT.OFFSETX, c.offX);
@@ -126,7 +121,7 @@ public class ArmorHelper {
 				nbt.setInteger(NBT.AMOUNT, a);
 				stack.setTagInfo(NBT.LEFTLEG, nbt);
 				NBTTagCompound nbt2 = new NBTTagCompound();
-				byte b = 0;
+				int b = 0;
 				for (CubeData c : rightLeg) {
 						NBTTagCompound temp = new NBTTagCompound();
 						temp.setFloat(NBT.OFFSETX, c.offX);
