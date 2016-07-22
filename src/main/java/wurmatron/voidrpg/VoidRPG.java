@@ -1,9 +1,12 @@
 package wurmatron.voidrpg;
 
 
+import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -46,13 +49,60 @@ public class VoidRPG {
 		public void onInit (FMLInitializationEvent e) {
 				LogHandler.info("Init");
 				ConfigHandler.loadMainConfig();
-				NetworkRegistry.INSTANCE.registerGuiHandler(this,new GuiHandler());
+				NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 				VoidRPGItems.init();
 				VoidRPGBlocks.init();
+				// Iron block (Test)
 				CubeRegistry.INSTANCE.registerCube(new Cube() {
 						@Override
-						public String getName () {
+						public String getUnlocalizedName () {
 								return "test";
+						}
+
+						@Override
+						public Block getBlock () {
+								return Blocks.IRON_BLOCK;
+						}
+
+						@Override
+						public ResourceLocation getTexture () {
+								return new ResourceLocation("minecraft", "textures/blocks/iron_block.png");
+						}
+				});
+
+				// Light Armor
+				CubeRegistry.INSTANCE.registerCube(new Cube() {
+						@Override
+						public String getUnlocalizedName () {
+								return "armorLight";
+						}
+
+						@Override
+						public ResourceLocation getTexture () {
+								return new ResourceLocation("minecraft", "textures/blocks/gold_block.png");
+						}
+
+						@Override
+						public Block getBlock () {
+								return VoidRPGBlocks.armorLight;
+						}
+				});
+
+				// Reinforced Armor
+				CubeRegistry.INSTANCE.registerCube(new Cube() {
+						@Override
+						public String getUnlocalizedName () {
+								return "armorHeavy";
+						}
+
+						@Override
+						public ResourceLocation getTexture () {
+								return new ResourceLocation("minecraft", "textures/blocks/diamond_block.png");
+						}
+
+						@Override
+						public Block getBlock () {
+								return VoidRPGBlocks.armorReinforced;
 						}
 				});
 		}

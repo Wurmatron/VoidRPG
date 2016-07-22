@@ -21,7 +21,7 @@ public class ArmorHelper {
 
 		private CubeRegistry registry = new CubeRegistry();
 
-		public static ModelRenderer createModelRenderer (final ModelBase base, final CubeData data) {
+		public static ModelRenderer createModelRenderer (ModelBase base, final CubeData data) {
 				ModelRenderer model = new ModelRenderer(base) {
 						@Override
 						public void render (float scale) {
@@ -30,7 +30,7 @@ public class ArmorHelper {
 								Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(Global.MODID, "textures/test/armor.png"));
 						}
 				};
-				model.addBox(data.offX, data.offY, data.offZ, data.cube.getSize()[0], data.cube.getSize()[1], data.cube.getSize()[2]);
+				model.addBox(data.offX, data.offY, data.offZ, 1, data.cube.getSize()[1], data.cube.getSize()[2]);
 				return model;
 		}
 
@@ -46,7 +46,7 @@ public class ArmorHelper {
 						temp.setFloat(NBT.OFFSETX, c.offX);
 						temp.setFloat(NBT.OFFSETY, c.offY);
 						temp.setFloat(NBT.OFFSETZ, c.offZ);
-						temp.setString(NBT.CUBE, c.cube.getName());
+						temp.setString(NBT.CUBE, c.cube.getUnlocalizedName());
 						nbt.setTag(Integer.toString(a), temp);
 						a++;
 				}
@@ -67,7 +67,7 @@ public class ArmorHelper {
 						temp.setFloat(NBT.OFFSETX, c.offX);
 						temp.setFloat(NBT.OFFSETY, c.offY);
 						temp.setFloat(NBT.OFFSETZ, c.offZ);
-						temp.setString(NBT.CUBE, c.cube.getName());
+						temp.setString(NBT.CUBE, c.cube.getUnlocalizedName());
 						nbt.setTag(Integer.toString(a), temp);
 						a++;
 				}
@@ -80,7 +80,7 @@ public class ArmorHelper {
 						temp.setFloat(NBT.OFFSETX, c.offX);
 						temp.setFloat(NBT.OFFSETY, c.offY);
 						temp.setFloat(NBT.OFFSETZ, c.offZ);
-						temp.setString(NBT.CUBE, c.cube.getName());
+						temp.setString(NBT.CUBE, c.cube.getUnlocalizedName());
 						nbt2.setTag(Integer.toString(b), temp);
 						b++;
 				}
@@ -93,7 +93,7 @@ public class ArmorHelper {
 						temp.setFloat(NBT.OFFSETX, c.offX);
 						temp.setFloat(NBT.OFFSETY, c.offY);
 						temp.setFloat(NBT.OFFSETZ, c.offZ);
-						temp.setString(NBT.CUBE, c.cube.getName());
+						temp.setString(NBT.CUBE, c.cube.getUnlocalizedName());
 						nbt3.setTag(Integer.toString(d), temp);
 						d++;
 				}
@@ -114,7 +114,7 @@ public class ArmorHelper {
 						temp.setFloat(NBT.OFFSETX, c.offX);
 						temp.setFloat(NBT.OFFSETY, c.offY);
 						temp.setFloat(NBT.OFFSETZ, c.offZ);
-						temp.setString(NBT.CUBE, c.cube.getName());
+						temp.setString(NBT.CUBE, c.cube.getUnlocalizedName());
 						nbt.setTag(Integer.toString(a), temp);
 						a++;
 				}
@@ -127,7 +127,7 @@ public class ArmorHelper {
 						temp.setFloat(NBT.OFFSETX, c.offX);
 						temp.setFloat(NBT.OFFSETY, c.offY);
 						temp.setFloat(NBT.OFFSETZ, c.offZ);
-						temp.setString(NBT.CUBE, c.cube.getName());
+						temp.setString(NBT.CUBE, c.cube.getUnlocalizedName());
 						nbt2.setTag(Integer.toString(b), temp);
 						b++;
 				}

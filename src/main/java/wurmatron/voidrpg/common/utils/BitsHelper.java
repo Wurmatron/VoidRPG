@@ -5,10 +5,11 @@ import mod.chiselsandbits.api.IBitAccess;
 import mod.chiselsandbits.api.IBitBrush;
 import mod.chiselsandbits.core.api.ChiselAndBitsAPI;
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import wurmatron.voidrpg.api.cube.Cube;
 import wurmatron.voidrpg.api.cube.CubeData;
+import wurmatron.voidrpg.api.cube.ICube;
 import wurmatron.voidrpg.common.cube.CubeRegistry;
 
 import java.util.ArrayList;
@@ -16,8 +17,8 @@ import java.util.ArrayList;
 public class BitsHelper {
 
 		private static ArrayList<Block> validBlocks = new ArrayList<Block>() {{
-				add(Blocks.IRON_BLOCK);
-				add(Blocks.WOOL);
+				for (ICube cube : CubeRegistry.cubes)
+						add(cube.getBlock());
 		}};
 
 		public static boolean isValidHelmet (World world, BlockPos pos) {
@@ -62,15 +63,17 @@ public class BitsHelper {
 										for (int y = 0; y <= 16; y++)
 												for (int z = 0; z <= 16; z++) {
 														if (!bit.getBitAt(x, y, z).isAir()) {
-																int spacer = -10;
-																data.add(new CubeData(x + spacer, y + spacer, z + spacer, CubeRegistry.INSTANCE.getCubesFromName("test")));
+																int spacer = 10;
+																for (Cube cube : CubeRegistry.cubes)
+																		if (cube.getBlock().equals(bit.getBitAt(x, y, z).getState().getBlock()))
+																				data.add(new CubeData(x - spacer + 3, y - 15, z - spacer, cube));
 														}
 												}
 						} catch (Exception e) {
 								e.printStackTrace();
 						}
 				CubeData[] cubes = new CubeData[data.size()];
-				for (int c = 0; c <= data.size()-1; c++)
+				for (int c = 0; c <= data.size() - 1; c++)
 						cubes[c] = data.get(c);
 				return cubes;
 		}

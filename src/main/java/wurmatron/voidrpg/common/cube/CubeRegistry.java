@@ -30,7 +30,7 @@ public class CubeRegistry {
 						return cacheNames.get(name);
 				}
 				for (Cube c : cubes) {
-						if (c.getName().equalsIgnoreCase(name)) {
+						if (c.getUnlocalizedName().equalsIgnoreCase(name)) {
 								cacheNames.put(name, c);
 								return c;
 						}
