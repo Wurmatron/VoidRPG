@@ -59,9 +59,9 @@ public class BitsHelper {
 				if (!world.isRemote && new ChiselAndBitsAPI().isBlockChiseled(world, pos))
 						try {
 								IBitAccess bit = new ChiselAndBitsAPI().getBitAccess(world, pos);
-								for (int x = 16; x > 0; x--)
-										for (int y = 16; y > 0; y--)
-												for (int z = 16; z > 0; z--) {
+								for (int x = 16; x >= 0; x--)
+										for (int y = 16; y >= 0; y--)
+												for (int z = 16; z >= 0; z--) {
 														if (!bit.getBitAt(x, y, z).isAir()) {
 																for (Cube cube : CubeRegistry.cubes)
 																		if (cube.getBlock().equals(bit.getBitAt(x, y, z).getState().getBlock()))
