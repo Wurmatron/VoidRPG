@@ -2,12 +2,12 @@ package wurmatron.voidrpg.api.cube;
 
 public class CubeData {
 
-		public final float offX;
-		public final float offY;
-		public final float offZ;
+		public final int offX;
+		public final int offY;
+		public final int offZ;
 		public final Cube cube;
 
-		public CubeData (float offX, float offY, float offZ, Cube cube) {
+		public CubeData (int offX, int offY, int offZ, Cube cube) {
 				this.offX = offX;
 				this.offY = offY;
 				this.offZ = offZ;

@@ -4,11 +4,14 @@ import net.minecraft.client.model.ModelBiped;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.DamageSource;
+import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import wurmatron.voidrpg.VoidRPG;
@@ -21,10 +24,11 @@ import wurmatron.voidrpg.common.utils.ArmorHelper;
 
 import java.util.List;
 
-public class CustomArmor extends ItemArmor {
+public class CustomArmor extends ItemArmor implements ISpecialArmor {
 
 
 		private static ModelBiped modelPlayer;
+		private static ModelBiped clearModel;
 
 		public CustomArmor (ArmorMaterial mat, int renderIndexIn, EntityEquipmentSlot equipmentSlotIn) {
 				super(mat, renderIndexIn, equipmentSlotIn);
@@ -36,6 +40,7 @@ public class CustomArmor extends ItemArmor {
 		@Override
 		public ModelBiped getArmorModel (EntityLivingBase entity, ItemStack stack, EntityEquipmentSlot slot, ModelBiped model) {
 				modelPlayer = model;
+				modelPlayer.bipedHead.cubeList.clear();
 				if (stack.getTagCompound() != null && !stack.getTagCompound().hasNoTags()) {
 						if (stack.getItem().equals(VoidRPGItems.armorHelmet)) {
 								NBTTagCompound data = stack.getTagCompound();
@@ -45,89 +50,92 @@ public class CustomArmor extends ItemArmor {
 												NBTTagCompound temp = stack.getTagCompound().getCompoundTag(Integer.toString(a));
 												Cube cube = CubeRegistry.INSTANCE.getCubesFromName(temp.getString(NBT.CUBE));
 												if (cube != null)
-														modelPlayer.bipedHead.addChild(ArmorHelper.createModelRenderer(model, new CubeData(temp.getFloat(NBT.OFFSETX), temp.getFloat(NBT.OFFSETY), temp.getFloat(NBT.OFFSETZ), cube)));
+														modelPlayer.bipedHead.addChild(ArmorHelper.createModelRenderer(model, new CubeData(temp.getInteger(NBT.OFFSETX) - 8, temp.getInteger(NBT.OFFSETY)-14, temp.getInteger(NBT.OFFSETZ)-8, cube)));
 										}
 								}
 						}
-						if (stack.getItem().equals(VoidRPGItems.armorChestplate)) {
-								NBTTagCompound body = stack.getTagCompound().getCompoundTag(NBT.BODY);
-								int amtBody = body.getInteger(NBT.AMOUNT);
-								if (amtBody != 0 && modelPlayer.bipedBody.childModels == null) {
-										for (int b = 0; b < amtBody; b++) {
-												NBTTagCompound temp = body.getCompoundTag(Integer.toString(b));
-												Cube cube = CubeRegistry.INSTANCE.getCubesFromName(temp.getString(NBT.CUBE));
-												if (cube != null)
-														modelPlayer.bipedBody.addChild(ArmorHelper.createModelRenderer(model, new CubeData(temp.getFloat(NBT.OFFSETX), temp.getFloat(NBT.OFFSETY), temp.getFloat(NBT.OFFSETZ), cube)));
-										}
-								}
-								NBTTagCompound leftArm = stack.getTagCompound().getCompoundTag(NBT.LEFTARM);
-								int amtLeft = leftArm.getInteger(NBT.AMOUNT);
-								if (amtLeft != 0 && modelPlayer.bipedLeftArm.childModels == null) {
-										for (int b = 0; b < amtLeft; b++) {
-												NBTTagCompound temp = leftArm.getCompoundTag(Integer.toString(b));
-												Cube cube = CubeRegistry.INSTANCE.getCubesFromName(temp.getString(NBT.CUBE));
-												if (cube != null)
-														modelPlayer.bipedLeftArm.addChild(ArmorHelper.createModelRenderer(model, new CubeData(temp.getFloat(NBT.OFFSETX), temp.getFloat(NBT.OFFSETY), temp.getFloat(NBT.OFFSETZ), cube)));
-										}
-								}
-								NBTTagCompound rightArm = stack.getTagCompound().getCompoundTag(NBT.RIGHTARM);
-								int amtRight = rightArm.getInteger(NBT.AMOUNT);
-								if (amtRight != 0 && modelPlayer.bipedRightArm.childModels == null) {
-										for (int b = 0; b < amtRight; b++) {
-												NBTTagCompound temp = rightArm.getCompoundTag(Integer.toString(b));
-												Cube cube = CubeRegistry.INSTANCE.getCubesFromName(temp.getString(NBT.CUBE));
-												if (cube != null)
-														modelPlayer.bipedRightArm.addChild(ArmorHelper.createModelRenderer(model, new CubeData(temp.getFloat(NBT.OFFSETX), temp.getFloat(NBT.OFFSETY), temp.getFloat(NBT.OFFSETZ), cube)));
-										}
-								}
-						}
-						if (stack.getItem().equals(VoidRPGItems.armorLeggings)) {
-								NBTTagCompound leftLeg = stack.getTagCompound().getCompoundTag(NBT.LEFTLEG);
-								int amtLeft = leftLeg.getInteger(NBT.AMOUNT);
-								if (amtLeft != 0 && modelPlayer.bipedLeftLeg.childModels == null) {
-										for (int b = 0; b < amtLeft; b++) {
-												NBTTagCompound temp = leftLeg.getCompoundTag(Integer.toString(b));
-												Cube cube = CubeRegistry.INSTANCE.getCubesFromName(temp.getString(NBT.CUBE));
-												if (cube != null)
-														modelPlayer.bipedLeftLeg.addChild(ArmorHelper.createModelRenderer(model, new CubeData(temp.getFloat(NBT.OFFSETX), temp.getFloat(NBT.OFFSETY), temp.getFloat(NBT.OFFSETZ), cube)));
-										}
-								}
-								NBTTagCompound rightLeg = stack.getTagCompound().getCompoundTag(NBT.RIGHTLEG);
-								int amtRight = rightLeg.getInteger(NBT.AMOUNT);
-								if (amtRight != 0 && modelPlayer.bipedRightLeg.childModels == null) {
-										for (int b = 0; b < amtRight; b++) {
-												NBTTagCompound temp = rightLeg.getCompoundTag(Integer.toString(b));
-												Cube cube = CubeRegistry.INSTANCE.getCubesFromName(temp.getString(NBT.CUBE));
-												if (cube != null)
-														modelPlayer.bipedRightLeg.addChild(ArmorHelper.createModelRenderer(model, new CubeData(temp.getFloat(NBT.OFFSETX), temp.getFloat(NBT.OFFSETY), temp.getFloat(NBT.OFFSETZ), cube)));
-										}
-								}
-						}
-						if (stack.getItem().equals(VoidRPGItems.armorBoots)) {
-								NBTTagCompound leftLeg = stack.getTagCompound().getCompoundTag(NBT.LEFTLEG);
-								int amtLeft = leftLeg.getInteger(NBT.AMOUNT);
-								if (amtLeft != 0 && model.bipedLeftLeg.childModels == null) {
-										for (int b = 0; b < amtLeft; b++) {
-												NBTTagCompound temp = leftLeg.getCompoundTag(Integer.toString(b));
-												Cube cube = CubeRegistry.INSTANCE.getCubesFromName(temp.getString(NBT.CUBE));
-												if (cube != null)
-														model.bipedLeftLeg.addChild(ArmorHelper.createModelRenderer(model, new CubeData(temp.getFloat(NBT.OFFSETX), temp.getFloat(NBT.OFFSETY), temp.getFloat(NBT.OFFSETZ), cube)));
-										}
-								}
-								NBTTagCompound rightLeg = stack.getTagCompound().getCompoundTag(NBT.RIGHTLEG);
-								int amtRight = rightLeg.getInteger(NBT.AMOUNT);
-								if (amtRight != 0 && modelPlayer.bipedRightLeg.childModels == null) {
-										for (int b = 0; b < amtRight; b++) {
-												NBTTagCompound temp = rightLeg.getCompoundTag(Integer.toString(b));
-												Cube cube = CubeRegistry.INSTANCE.getCubesFromName(temp.getString(NBT.CUBE));
-												if (cube != null)
-														modelPlayer.bipedRightLeg.addChild(ArmorHelper.createModelRenderer(model, new CubeData(temp.getFloat(NBT.OFFSETX), temp.getFloat(NBT.OFFSETY), temp.getFloat(NBT.OFFSETZ), cube)));
-										}
-								}
-						}
+				} else {
+						return model;
 				}
-				model = modelPlayer;
-				return model;
+//						if (stack.getItem().equals(VoidRPGItems.armorChestplate)) {
+//								NBTTagCompound body = stack.getTagCompound().getCompoundTag(NBT.BODY);
+//								int amtBody = body.getInteger(NBT.AMOUNT);
+//								if (amtBody != 0 && modelPlayer.bipedBody.childModels == null) {
+//										for (int b = 0; b < amtBody; b++) {
+//												NBTTagCompound temp = body.getCompoundTag(Integer.toString(b));
+//												Cube cube = CubeRegistry.INSTANCE.getCubesFromName(temp.getString(NBT.CUBE));
+//												if (cube != null)
+//														modelPlayer.bipedBody.addChild(ArmorHelper.createModelRenderer(model, new CubeData(temp.getFloat(NBT.OFFSETX), temp.getFloat(NBT.OFFSETY), temp.getFloat(NBT.OFFSETZ), cube)));
+//										}
+//								}
+//								NBTTagCompound leftArm = stack.getTagCompound().getCompoundTag(NBT.LEFTARM);
+//								int amtLeft = leftArm.getInteger(NBT.AMOUNT);
+//								if (amtLeft != 0 && modelPlayer.bipedLeftArm.childModels == null) {
+//										for (int b = 0; b < amtLeft; b++) {
+//												NBTTagCompound temp = leftArm.getCompoundTag(Integer.toString(b));
+//												Cube cube = CubeRegistry.INSTANCE.getCubesFromName(temp.getString(NBT.CUBE));
+//												if (cube != null)
+//														modelPlayer.bipedLeftArm.addChild(ArmorHelper.createModelRenderer(model, new CubeData(temp.getFloat(NBT.OFFSETX), temp.getFloat(NBT.OFFSETY), temp.getFloat(NBT.OFFSETZ), cube)));
+//										}
+//								}
+//								NBTTagCompound rightArm = stack.getTagCompound().getCompoundTag(NBT.RIGHTARM);
+//								int amtRight = rightArm.getInteger(NBT.AMOUNT);
+//								if (amtRight != 0 && modelPlayer.bipedRightArm.childModels == null) {
+//										for (int b = 0; b < amtRight; b++) {
+//												NBTTagCompound temp = rightArm.getCompoundTag(Integer.toString(b));
+//												Cube cube = CubeRegistry.INSTANCE.getCubesFromName(temp.getString(NBT.CUBE));
+//												if (cube != null)
+//														modelPlayer.bipedRightArm.addChild(ArmorHelper.createModelRenderer(model, new CubeData(temp.getFloat(NBT.OFFSETX), temp.getFloat(NBT.OFFSETY), temp.getFloat(NBT.OFFSETZ), cube)));
+//										}
+//								}
+//						}
+//						if (stack.getItem().equals(VoidRPGItems.armorLeggings)) {
+//								NBTTagCompound leftLeg = stack.getTagCompound().getCompoundTag(NBT.LEFTLEG);
+//								int amtLeft = leftLeg.getInteger(NBT.AMOUNT);
+//								if (amtLeft != 0 && modelPlayer.bipedLeftLeg.childModels == null) {
+//										for (int b = 0; b < amtLeft; b++) {
+//												NBTTagCompound temp = leftLeg.getCompoundTag(Integer.toString(b));
+//												Cube cube = CubeRegistry.INSTANCE.getCubesFromName(temp.getString(NBT.CUBE));
+//												if (cube != null)
+//														modelPlayer.bipedLeftLeg.addChild(ArmorHelper.createModelRenderer(model, new CubeData(temp.getFloat(NBT.OFFSETX), temp.getFloat(NBT.OFFSETY), temp.getFloat(NBT.OFFSETZ), cube)));
+//										}
+//								}
+//								NBTTagCompound rightLeg = stack.getTagCompound().getCompoundTag(NBT.RIGHTLEG);
+//								int amtRight = rightLeg.getInteger(NBT.AMOUNT);
+//								if (amtRight != 0 && modelPlayer.bipedRightLeg.childModels == null) {
+//										for (int b = 0; b < amtRight; b++) {
+//												NBTTagCompound temp = rightLeg.getCompoundTag(Integer.toString(b));
+//												Cube cube = CubeRegistry.INSTANCE.getCubesFromName(temp.getString(NBT.CUBE));
+//												if (cube != null)
+//														modelPlayer.bipedRightLeg.addChild(ArmorHelper.createModelRenderer(model, new CubeData(temp.getFloat(NBT.OFFSETX), temp.getFloat(NBT.OFFSETY), temp.getFloat(NBT.OFFSETZ), cube)));
+//										}
+//								}
+//						}
+//						if (stack.getItem().equals(VoidRPGItems.armorBoots)) {
+//								NBTTagCompound leftLeg = stack.getTagCompound().getCompoundTag(NBT.LEFTLEG);
+//								int amtLeft = leftLeg.getInteger(NBT.AMOUNT);
+//								if (amtLeft != 0 && model.bipedLeftLeg.childModels == null) {
+//										for (int b = 0; b < amtLeft; b++) {
+//												NBTTagCompound temp = leftLeg.getCompoundTag(Integer.toString(b));
+//												Cube cube = CubeRegistry.INSTANCE.getCubesFromName(temp.getString(NBT.CUBE));
+//												if (cube != null)
+//														model.bipedLeftLeg.addChild(ArmorHelper.createModelRenderer(model, new CubeData(temp.getFloat(NBT.OFFSETX), temp.getFloat(NBT.OFFSETY), temp.getFloat(NBT.OFFSETZ), cube)));
+//										}
+//								}
+//								NBTTagCompound rightLeg = stack.getTagCompound().getCompoundTag(NBT.RIGHTLEG);
+//								int amtRight = rightLeg.getInteger(NBT.AMOUNT);
+//								if (amtRight != 0 && modelPlayer.bipedRightLeg.childModels == null) {
+//										for (int b = 0; b < amtRight; b++) {
+//												NBTTagCompound temp = rightLeg.getCompoundTag(Integer.toString(b));
+//												Cube cube = CubeRegistry.INSTANCE.getCubesFromName(temp.getString(NBT.CUBE));
+//												if (cube != null)
+//														modelPlayer.bipedRightLeg.addChild(ArmorHelper.createModelRenderer(model, new CubeData(temp.getFloat(NBT.OFFSETX), temp.getFloat(NBT.OFFSETY), temp.getFloat(NBT.OFFSETZ), cube)));
+//										}
+//								}
+//						}
+//				}
+//				model = modelPlayer;
+				return modelPlayer;
 		}
 
 		@SideOnly (Side.CLIENT)
@@ -148,7 +156,7 @@ public class CustomArmor extends ItemArmor {
 						CubeData[] data = new CubeData[6];
 
 						data[0] = new CubeData(0, -10, 0, CubeRegistry.INSTANCE.getCubesFromName("test"));
-						data[1] = new CubeData(5, -10, 5,CubeRegistry.INSTANCE.getCubesFromName("test"));
+						data[1] = new CubeData(5, -10, 5, CubeRegistry.INSTANCE.getCubesFromName("test"));
 						data[2] = new CubeData(10, 20, 10, CubeRegistry.INSTANCE.getCubesFromName("test"));
 						data[3] = new CubeData(15, -20, 15, CubeRegistry.INSTANCE.getCubesFromName("test"));
 						data[4] = new CubeData(20, 0, 20, CubeRegistry.INSTANCE.getCubesFromName("test"));
@@ -184,5 +192,20 @@ public class CustomArmor extends ItemArmor {
 						sub.add(new ArmorHelper().createArmorStack(item, data, data, data));
 
 				}
+		}
+
+		@Override
+		public ArmorProperties getProperties (EntityLivingBase player, ItemStack armor, DamageSource source, double damage, int slot) {
+				return new ArmorProperties(1, 1, 1);
+		}
+
+		@Override
+		public int getArmorDisplay (EntityPlayer player, ItemStack armor, int slot) {
+				return 0;
+		}
+
+		@Override
+		public void damageArmor (EntityLivingBase entity, ItemStack stack, DamageSource source, int damage, int slot) {
+				// Used to damage the cubes insted of the whole armor
 		}
 }

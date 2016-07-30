@@ -43,9 +43,9 @@ public class ArmorHelper {
 				int a = 0;
 				for (CubeData c : data) {
 						NBTTagCompound temp = new NBTTagCompound();
-						temp.setFloat(NBT.OFFSETX, c.offX);
-						temp.setFloat(NBT.OFFSETY, c.offY);
-						temp.setFloat(NBT.OFFSETZ, c.offZ);
+						temp.setInteger(NBT.OFFSETX, c.offX);
+						temp.setInteger(NBT.OFFSETY, c.offY);
+						temp.setInteger(NBT.OFFSETZ, c.offZ);
 						temp.setString(NBT.CUBE, c.cube.getUnlocalizedName());
 						nbt.setTag(Integer.toString(a), temp);
 						a++;
@@ -64,9 +64,9 @@ public class ArmorHelper {
 				int a = 0;
 				for (CubeData c : base) {
 						NBTTagCompound temp = new NBTTagCompound();
-						temp.setFloat(NBT.OFFSETX, c.offX);
-						temp.setFloat(NBT.OFFSETY, c.offY);
-						temp.setFloat(NBT.OFFSETZ, c.offZ);
+						temp.setInteger(NBT.OFFSETX, c.offX);
+						temp.setInteger(NBT.OFFSETY, c.offY);
+						temp.setInteger(NBT.OFFSETZ, c.offZ);
 						temp.setString(NBT.CUBE, c.cube.getUnlocalizedName());
 						nbt.setTag(Integer.toString(a), temp);
 						a++;
@@ -77,9 +77,9 @@ public class ArmorHelper {
 				int b = 0;
 				for (CubeData c : armLeft) {
 						NBTTagCompound temp = new NBTTagCompound();
-						temp.setFloat(NBT.OFFSETX, c.offX);
-						temp.setFloat(NBT.OFFSETY, c.offY);
-						temp.setFloat(NBT.OFFSETZ, c.offZ);
+						temp.setInteger(NBT.OFFSETX, c.offX);
+						temp.setInteger(NBT.OFFSETY, c.offY);
+						temp.setInteger(NBT.OFFSETZ, c.offZ);
 						temp.setString(NBT.CUBE, c.cube.getUnlocalizedName());
 						nbt2.setTag(Integer.toString(b), temp);
 						b++;
@@ -90,9 +90,9 @@ public class ArmorHelper {
 				int d = 0;
 				for (CubeData c : armRight) {
 						NBTTagCompound temp = new NBTTagCompound();
-						temp.setFloat(NBT.OFFSETX, c.offX);
-						temp.setFloat(NBT.OFFSETY, c.offY);
-						temp.setFloat(NBT.OFFSETZ, c.offZ);
+						temp.setInteger(NBT.OFFSETX, c.offX);
+						temp.setInteger(NBT.OFFSETY, c.offY);
+						temp.setInteger(NBT.OFFSETZ, c.offZ);
 						temp.setString(NBT.CUBE, c.cube.getUnlocalizedName());
 						nbt3.setTag(Integer.toString(d), temp);
 						d++;
@@ -111,9 +111,9 @@ public class ArmorHelper {
 				int a = 0;
 				for (CubeData c : leftLeg) {
 						NBTTagCompound temp = new NBTTagCompound();
-						temp.setFloat(NBT.OFFSETX, c.offX);
-						temp.setFloat(NBT.OFFSETY, c.offY);
-						temp.setFloat(NBT.OFFSETZ, c.offZ);
+						temp.setInteger(NBT.OFFSETX, c.offX);
+						temp.setInteger(NBT.OFFSETY, c.offY);
+						temp.setInteger(NBT.OFFSETZ, c.offZ);
 						temp.setString(NBT.CUBE, c.cube.getUnlocalizedName());
 						nbt.setTag(Integer.toString(a), temp);
 						a++;
@@ -124,9 +124,9 @@ public class ArmorHelper {
 				int b = 0;
 				for (CubeData c : rightLeg) {
 						NBTTagCompound temp = new NBTTagCompound();
-						temp.setFloat(NBT.OFFSETX, c.offX);
-						temp.setFloat(NBT.OFFSETY, c.offY);
-						temp.setFloat(NBT.OFFSETZ, c.offZ);
+						temp.setInteger(NBT.OFFSETX, c.offX);
+						temp.setInteger(NBT.OFFSETY, c.offY);
+						temp.setInteger(NBT.OFFSETZ, c.offZ);
 						temp.setString(NBT.CUBE, c.cube.getUnlocalizedName());
 						nbt2.setTag(Integer.toString(b), temp);
 						b++;

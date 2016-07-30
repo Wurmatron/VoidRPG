@@ -59,14 +59,13 @@ public class BitsHelper {
 				if (!world.isRemote && new ChiselAndBitsAPI().isBlockChiseled(world, pos))
 						try {
 								IBitAccess bit = new ChiselAndBitsAPI().getBitAccess(world, pos);
-								for (int x = 0; x <= 16; x++)
-										for (int y = 0; y <= 16; y++)
-												for (int z = 0; z <= 16; z++) {
+								for (int x = 16; x > 0; x--)
+										for (int y = 16; y > 0; y--)
+												for (int z = 16; z > 0; z--) {
 														if (!bit.getBitAt(x, y, z).isAir()) {
-																int spacer = 10;
 																for (Cube cube : CubeRegistry.cubes)
 																		if (cube.getBlock().equals(bit.getBitAt(x, y, z).getState().getBlock()))
-																				data.add(new CubeData(x - spacer + 3, y - 15, z - spacer, cube));
+																				data.add(new CubeData(x, y, z, cube));
 														}
 												}
 						} catch (Exception e) {
@@ -76,5 +75,19 @@ public class BitsHelper {
 				for (int c = 0; c <= data.size() - 1; c++)
 						cubes[c] = data.get(c);
 				return cubes;
+		}
+
+		public static CubeData[] rotateClockwise (CubeData[] cubes) {
+				CubeData[] data = cubes;
+				for (int s = 0; s <= cubes.length-1; s++)
+						data[s] = new CubeData((cubes[s].offZ * -1) + 15, cubes[s].offY, cubes[s].offX, cubes[s].cube);
+				return data;
+		}
+
+		public static CubeData[] rotateUp (CubeData[] cubes) {
+				CubeData[] data = cubes;
+				for (int s = 0; s <= cubes.length-1; s++)
+						data[s] = new CubeData(cubes[s].offX, (cubes[s].offY * -1) + 15, cubes[s].offZ, cubes[s].cube);
+				return data;
 		}
 }

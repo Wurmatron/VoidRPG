@@ -29,12 +29,10 @@ public class ItemStaff extends Item {
 						if (BitsHelper.isValidHelmet(world, new BlockPos(player.posX, player.posY - 1, player.posZ))) {
 								LogHandler.info("Valid Helmet Found");
 								CubeData[] data = BitsHelper.convertBitsToCubes(world, new BlockPos(player.posX, player.posY - 1, player.posZ));
-								ItemStack helmet = new ArmorHelper().createArmorStack(VoidRPGItems.armorHelmet, data);
+								ItemStack helmet = new ArmorHelper().createArmorStack(VoidRPGItems.armorHelmet, BitsHelper.rotateUp(data));
 								player.inventory.addItemStackToInventory(helmet);
 						}
 				}
 				return super.onItemRightClick(stack, world, player, hand);
 		}
-
-
 }
