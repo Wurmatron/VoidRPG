@@ -21,11 +21,6 @@ public interface ICube {
 		 ResourceLocation getTexture();
 
 		/**
-		 * Size of this cube on the armor
-		 */
-		int[] getSize();
-
-		/**
 		 * Used for calculating the weight of the armor
 		 */
 		double getWeight();

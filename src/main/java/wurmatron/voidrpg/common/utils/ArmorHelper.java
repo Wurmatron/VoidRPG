@@ -1,6 +1,7 @@
 package wurmatron.voidrpg.common.utils;
 
 
+import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
@@ -30,7 +31,7 @@ public class ArmorHelper {
 								Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(Global.MODID, "textures/test/armor.png"));
 						}
 				};
-				model.addBox(data.offX, data.offY, data.offZ, 1, data.cube.getSize()[1], data.cube.getSize()[2]);
+				model.addBox(data.offX, data.offY, data.offZ, 1, 1, 1);
 				return model;
 		}
 
@@ -46,6 +47,7 @@ public class ArmorHelper {
 						temp.setInteger(NBT.OFFSETX, c.offX);
 						temp.setInteger(NBT.OFFSETY, c.offY);
 						temp.setInteger(NBT.OFFSETZ, c.offZ);
+						LogHandler.info("Cube: " + c.cube);
 						temp.setString(NBT.CUBE, c.cube.getUnlocalizedName());
 						nbt.setTag(Integer.toString(a), temp);
 						a++;
@@ -229,5 +231,33 @@ public class ArmorHelper {
 						}
 				}
 				return cubes;
+		}
+
+		public static double getArmorWeight (ItemStack stack) {
+				double weight = 0;
+				if (stack != null && stack.getTagCompound() != null) {
+						if (stack.getItem().equals(VoidRPGItems.armorHelmet)) {
+								int amountOfCubes = stack.getTagCompound().getInteger(NBT.AMOUNT);
+								for (int a = 0; a <= amountOfCubes; a++) {
+										NBTTagCompound temp = stack.getTagCompound().getCompoundTag(Integer.toString(a));
+										Cube cube = CubeRegistry.INSTANCE.getCubesFromName(temp.getString(NBT.CUBE));
+										if (cube != null)
+												weight += cube.getWeight();
+								}
+						}
+				}
+				return weight;
+		}
+
+		public static ChatFormatting getArmorWeightColor (double weight, Item item) {
+				if (item.equals(VoidRPGItems.armorHelmet)) {
+						if (weight <= 50)
+								return ChatFormatting.GREEN;
+						if (weight > 50 && weight <= 75)
+								return ChatFormatting.YELLOW;
+						if (weight > 75)
+								return ChatFormatting.RED;
+				}
+				return ChatFormatting.BLUE;
 		}
 }

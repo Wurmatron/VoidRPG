@@ -40,7 +40,6 @@ public class BitsHelper {
 												}
 										}
 								}
-								LogHandler.info("Valid Helmet Found");
 								return true;
 						} catch (APIExceptions.CannotBeChiseled e) {
 						}

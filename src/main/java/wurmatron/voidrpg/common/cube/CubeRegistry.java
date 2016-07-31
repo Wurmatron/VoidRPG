@@ -28,11 +28,12 @@ public class CubeRegistry {
 		public Cube getCubesFromName (String name) {
 				if (cacheNames.containsKey(name)) {
 						return cacheNames.get(name);
-				}
-				for (Cube c : cubes) {
-						if (c.getUnlocalizedName().equalsIgnoreCase(name)) {
-								cacheNames.put(name, c);
-								return c;
+				} else {
+						for (Cube c : cubes) {
+								if (c.getUnlocalizedName().equalsIgnoreCase(name)) {
+										cacheNames.put(name, c);
+										return c;
+								}
 						}
 				}
 				return null;

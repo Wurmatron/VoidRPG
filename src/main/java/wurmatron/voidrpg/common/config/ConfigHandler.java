@@ -3,6 +3,8 @@ package wurmatron.voidrpg.common.config;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import wurmatron.voidrpg.api.cube.Cube;
+import wurmatron.voidrpg.common.cube.CubeRegistry;
 import wurmatron.voidrpg.common.reference.Global;
 import wurmatron.voidrpg.common.utils.LogHandler;
 
@@ -27,12 +29,20 @@ public class ConfigHandler {
 						LogHandler.info("Loading main config");
 						debug = mainConfig.get(Configuration.CATEGORY_GENERAL, "debug", Defaults.DEBUG, "Enable Debug Mode");
 						Settings.debug = debug.getBoolean();
-
 						if (mainConfig.hasChanged()) {
 								LogHandler.info("Config saved");
 								mainConfig.save();
 						}
 				} else
-						LogHandler.error("Unable to load main config (Global.cfh)");
+						LogHandler.error("Unable to load main config (Global.cfg)");
+		}
+
+		public static void loadJsonCubes () {
+				for (File json : JsonHandler.dir.listFiles()) {
+						if (json.isFile()) {
+								Cube temp = JsonHandler.loadCubeFromFile(json);
+								CubeRegistry.INSTANCE.registerCube(temp);
+						}
+				}
 		}
 }

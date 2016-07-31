@@ -2,29 +2,42 @@ package wurmatron.voidrpg.api.cube;
 
 
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class Cube extends Item implements ICube {
+public class Cube implements ICube {
+
+		private String unlocalizedName;
+		private ResourceLocation block;
+		private ResourceLocation texture;
+		private double weight;
+
+		public Cube (String unlocalizedName, ResourceLocation block, ResourceLocation texture, double weight) {
+				this.unlocalizedName = unlocalizedName;
+				this.block = block;
+				this.texture = texture;
+				this.weight = weight;
+		}
+
+		@Override
+		public String getUnlocalizedName () {
+				if (unlocalizedName != null)
+						return unlocalizedName;
+				return "error";
+		}
 
 		@Override
 		public Block getBlock () {
-				return Blocks.IRON_BLOCK;
+				return GameRegistry.findBlock(block.getResourceDomain(), block.getResourcePath());
 		}
 
 		@Override
 		public ResourceLocation getTexture () {
-				return new ResourceLocation("voidrpg", "/textures/cubes/unknownCube.png");
-		}
-
-		@Override
-		public int[] getSize () {
-				return new int[] {1, 1, 1};
+				return texture;
 		}
 
 		@Override
 		public double getWeight () {
-				return 0.1;
+				return weight;
 		}
 }

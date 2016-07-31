@@ -4,6 +4,7 @@ package wurmatron.voidrpg.common.utils;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import wurmatron.voidrpg.common.config.Settings;
 import wurmatron.voidrpg.common.reference.Global;
 
 public class LogHandler {
@@ -31,7 +32,7 @@ public class LogHandler {
 		}
 
 		public static void debug (String msg) {
-//				if (Settings.debug)
+				if (Settings.debug)
 						log(Level.INFO, msg);
 		}
 }
