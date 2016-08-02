@@ -43,7 +43,7 @@ public class ItemStaff extends Item {
 				if (!world.isRemote) {
 						if (stack.getItemDamage() == 0) {
 								RayTraceResult ray = Minecraft.getMinecraft().getRenderViewEntity().rayTrace(5, 1.0F);
-								if (new ChiselAndBitsAPI().isBlockChiseled(world, ray.getBlockPos()))
+								if (new ChiselAndBitsAPI().isBlockChiseled(world, ray.getBlockPos())) {
 										if (BitsHelper.isValidHelmet(world, ray.getBlockPos())) {
 												EnumFaceDirection face = EnumFaceDirection.getFacing(ray.sideHit);
 												if (face != EnumFaceDirection.DOWN || face != EnumFaceDirection.UP) {
@@ -59,14 +59,14 @@ public class ItemStaff extends Item {
 														CubeData[] data = BitsHelper.convertBitsToCubes(world, ray.getBlockPos());
 														data = BitsHelper.rotateUp(data);
 														LogHandler.debug("Direction: " + face.name());
-														if (face == EnumFaceDirection.NORTH)
+														if (face == EnumFaceDirection.WEST) {
 																data = BitsHelper.rotateClockwise(data);
-														if (face == EnumFaceDirection.EAST) {
 																data = BitsHelper.rotateClockwise(data);
 																data = BitsHelper.rotateClockwise(data);
 														}
-														if (face == EnumFaceDirection.SOUTH) {
+														if (face == EnumFaceDirection.EAST)
 																data = BitsHelper.rotateClockwise(data);
+														if (face == EnumFaceDirection.SOUTH) {
 																data = BitsHelper.rotateClockwise(data);
 																data = BitsHelper.rotateClockwise(data);
 														}
@@ -78,6 +78,7 @@ public class ItemStaff extends Item {
 														player.addChatComponentMessage(new TextComponentTranslation("chat.message.invalid").setStyle(new Style().setColor(TextFormatting.DARK_RED)));
 												}
 										}
+								}
 						} else
 								player.addChatComponentMessage(new TextComponentTranslation("chat.message.charging").setStyle(new Style().setColor(TextFormatting.RED)));
 				} else {

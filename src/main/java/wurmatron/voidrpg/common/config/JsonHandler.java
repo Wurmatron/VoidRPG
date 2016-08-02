@@ -8,23 +8,27 @@ import wurmatron.voidrpg.common.utils.LogHandler;
 import java.io.*;
 import java.util.ArrayList;
 
+@Deprecated
 public class JsonHandler {
 
 		private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		public static final File dir = new File(ConfigHandler.location + File.separator + "Cubes");
 
+		@Deprecated
 		public static String convertCubeToJson (Cube cube) {
 				if (cube != null)
 						return gson.toJson(cube);
 				return null;
 		}
 
+		@Deprecated
 		public static Cube convertJsonToCube (String json) {
 				if (json != null)
 						return gson.fromJson(json, Cube.class);
 				return null;
 		}
 
+		@Deprecated
 		public static void writeCubeToFile (Cube cube) {
 				File location = new File(dir + File.separator + cube.getUnlocalizedName() + ".json");
 				try {
@@ -41,6 +45,7 @@ public class JsonHandler {
 				}
 		}
 
+		@Deprecated
 		public static Cube loadCubeFromFile (File location) {
 				ArrayList<String> lines = new ArrayList<String>();
 				if (location.exists()) {

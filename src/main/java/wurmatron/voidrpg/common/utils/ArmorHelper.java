@@ -47,7 +47,6 @@ public class ArmorHelper {
 						temp.setInteger(NBT.OFFSETX, c.offX);
 						temp.setInteger(NBT.OFFSETY, c.offY);
 						temp.setInteger(NBT.OFFSETZ, c.offZ);
-						LogHandler.info("Cube: " + c.cube);
 						temp.setString(NBT.CUBE, c.cube.getUnlocalizedName());
 						nbt.setTag(Integer.toString(a), temp);
 						a++;

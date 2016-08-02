@@ -21,6 +21,7 @@ import wurmatron.voidrpg.VoidRPG;
 import wurmatron.voidrpg.api.cube.Cube;
 import wurmatron.voidrpg.api.cube.CubeData;
 import wurmatron.voidrpg.api.event.CubeTickEvent;
+import wurmatron.voidrpg.client.model.ArmorModel;
 import wurmatron.voidrpg.common.cube.CubeRegistry;
 import wurmatron.voidrpg.common.reference.Global;
 import wurmatron.voidrpg.common.reference.NBT;
@@ -31,6 +32,7 @@ import java.util.List;
 public class CustomArmor extends ItemArmor implements ISpecialArmor {
 
 		private static ModelBiped modelPlayer;
+		private int counter = 0;
 
 		public CustomArmor (ArmorMaterial mat, int renderIndexIn, EntityEquipmentSlot equipmentSlotIn) {
 				super(mat, renderIndexIn, equipmentSlotIn);
@@ -41,8 +43,9 @@ public class CustomArmor extends ItemArmor implements ISpecialArmor {
 		@SideOnly (Side.CLIENT)
 		@Override
 		public ModelBiped getArmorModel (EntityLivingBase entity, ItemStack stack, EntityEquipmentSlot slot, ModelBiped model) {
-				modelPlayer = model;
-				modelPlayer.bipedHead.cubeList.clear();
+				ArmorModel.createInstance(counter);
+				counter++;
+				modelPlayer = ArmorModel.instance;
 				if (stack.getTagCompound() != null && !stack.getTagCompound().hasNoTags()) {
 						if (stack.getItem().equals(VoidRPGItems.armorHelmet)) {
 								NBTTagCompound data = stack.getTagCompound();
@@ -57,7 +60,7 @@ public class CustomArmor extends ItemArmor implements ISpecialArmor {
 								}
 						}
 				} else {
-						return model;
+						return modelPlayer;
 				}
 //						if (stack.getItem().equals(VoidRPGItems.armorChestplate)) {
 //								NBTTagCompound body = stack.getTagCompound().getCompoundTag(NBT.BODY);
@@ -153,48 +156,7 @@ public class CustomArmor extends ItemArmor implements ISpecialArmor {
 		}
 
 		@Override
-		public void getSubItems (Item item, CreativeTabs tab, List<ItemStack> sub) {
-				if (item.equals(VoidRPGItems.armorHelmet)) {
-						CubeData[] data = new CubeData[6];
-
-						data[0] = new CubeData(0, -10, 0, CubeRegistry.INSTANCE.getCubesFromName("test"));
-						data[1] = new CubeData(5, -10, 5, CubeRegistry.INSTANCE.getCubesFromName("test"));
-						data[2] = new CubeData(10, 20, 10, CubeRegistry.INSTANCE.getCubesFromName("test"));
-						data[3] = new CubeData(15, -20, 15, CubeRegistry.INSTANCE.getCubesFromName("test"));
-						data[4] = new CubeData(20, 0, 20, CubeRegistry.INSTANCE.getCubesFromName("test"));
-						data[5] = new CubeData(25, 0, 25, CubeRegistry.INSTANCE.getCubesFromName("test"));
-
-						sub.add(new ArmorHelper().createArmorStack(item, data));
-				}
-
-				if (item.equals(VoidRPGItems.armorChestplate)) {
-						CubeData[] data = new CubeData[20];
-
-						data[0] = new CubeData(0, 0, 0, CubeRegistry.INSTANCE.getCubesFromName("test"));
-						data[1] = new CubeData(0, 0, 5, CubeRegistry.INSTANCE.getCubesFromName("test"));
-						data[2] = new CubeData(0, 0, 10, CubeRegistry.INSTANCE.getCubesFromName("test"));
-						data[3] = new CubeData(0, 0, 15, CubeRegistry.INSTANCE.getCubesFromName("test"));
-						data[4] = new CubeData(0, 0, 20, CubeRegistry.INSTANCE.getCubesFromName("test"));
-						data[5] = new CubeData(0, 0, 25, CubeRegistry.INSTANCE.getCubesFromName("test"));
-						data[6] = new CubeData(0, 0, 30, CubeRegistry.INSTANCE.getCubesFromName("test"));
-						data[7] = new CubeData(0, 0, 35, CubeRegistry.INSTANCE.getCubesFromName("test"));
-						data[8] = new CubeData(0, 0, 40, CubeRegistry.INSTANCE.getCubesFromName("test"));
-						data[9] = new CubeData(0, 0, 45, CubeRegistry.INSTANCE.getCubesFromName("test"));
-						data[10] = new CubeData(5, 0, 5, CubeRegistry.INSTANCE.getCubesFromName("test"));
-						data[11] = new CubeData(5, 0, 10, CubeRegistry.INSTANCE.getCubesFromName("test"));
-						data[12] = new CubeData(5, 0, 15, CubeRegistry.INSTANCE.getCubesFromName("test"));
-						data[13] = new CubeData(5, 0, 20, CubeRegistry.INSTANCE.getCubesFromName("test"));
-						data[14] = new CubeData(5, 0, 25, CubeRegistry.INSTANCE.getCubesFromName("test"));
-						data[15] = new CubeData(5, 0, 30, CubeRegistry.INSTANCE.getCubesFromName("test"));
-						data[16] = new CubeData(5, 0, 35, CubeRegistry.INSTANCE.getCubesFromName("test"));
-						data[17] = new CubeData(5, 0, 40, CubeRegistry.INSTANCE.getCubesFromName("test"));
-						data[18] = new CubeData(5, 0, 45, CubeRegistry.INSTANCE.getCubesFromName("test"));
-						data[19] = new CubeData(5, 0, 50, CubeRegistry.INSTANCE.getCubesFromName("test"));
-
-						sub.add(new ArmorHelper().createArmorStack(item, data, data, data));
-
-				}
-		}
+		public void getSubItems (Item item, CreativeTabs tab, List<ItemStack> sub) {}
 
 		@Override
 		public ArmorProperties getProperties (EntityLivingBase player, ItemStack armor, DamageSource source, double damage, int slot) {

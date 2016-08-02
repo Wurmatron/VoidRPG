@@ -11,10 +11,18 @@ public class Cube implements ICube {
 		private ResourceLocation block;
 		private ResourceLocation texture;
 		private double weight;
+		private Block realBlock;
 
 		public Cube (String unlocalizedName, ResourceLocation block, ResourceLocation texture, double weight) {
 				this.unlocalizedName = unlocalizedName;
 				this.block = block;
+				this.texture = texture;
+				this.weight = weight;
+		}
+
+		public Cube (String unlocalizedName, Block block, ResourceLocation texture, double weight) {
+				this.unlocalizedName = unlocalizedName;
+				this.realBlock = block;
 				this.texture = texture;
 				this.weight = weight;
 		}
@@ -28,7 +36,11 @@ public class Cube implements ICube {
 
 		@Override
 		public Block getBlock () {
-				return GameRegistry.findBlock(block.getResourceDomain(), block.getResourcePath());
+				if (realBlock != null)
+						return realBlock;
+				if (block != null)
+						return GameRegistry.findBlock(block.getResourceDomain(), block.getResourcePath());
+				return null;
 		}
 
 		@Override
