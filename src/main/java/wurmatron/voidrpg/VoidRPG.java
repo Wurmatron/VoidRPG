@@ -51,6 +51,7 @@ public class VoidRPG {
 				NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 				VoidRPGItems.init();
 				VoidRPGBlocks.init();
+				proxy.register();
 				CubeRegistry.INSTANCE.registerCube(new Cube("test", Blocks.IRON_BLOCK, new ResourceLocation("minecraft", "textures/blocks/iron_block.png"), 0.1));
 				CubeRegistry.INSTANCE.registerCube(new Cube("armorLight", VoidRPGBlocks.armorLight, new ResourceLocation("minecraft", "textures/blocks/gold_block.png"), 0.1));
 				CubeRegistry.INSTANCE.registerCube(new Cube("armorHeavy", VoidRPGBlocks.armorReinforced, new ResourceLocation("minecraft", "textures/blocks/diamond_block.png"), 0.5));
