@@ -58,7 +58,7 @@ public class VoidRPG {
 				CubeRegistry.INSTANCE.registerCube(new Cube("armorLight", VoidRPGBlocks.armorLight, new ResourceLocation("minecraft", "textures/blocks/gold_block.png"), 0.1));
 				CubeRegistry.INSTANCE.registerCube(new Cube("armorHeavy", VoidRPGBlocks.armorReinforced, new ResourceLocation("minecraft", "textures/blocks/diamond_block.png"), 0.5));
 
-				StringCube testJson = new StringCube("jsonTest","minecraft", "dirt", new ResourceLocation("minecraft", "textures/blocks.dirt.png"),0.2);
+				StringCube testJson = new StringCube("jsonTest","minecraft", "dirt", new ResourceLocation("minecraft", "textures/blocks/dirt.png"),0.2);
 				JsonHandler.writeCubeToFile(testJson);
 		}
 
