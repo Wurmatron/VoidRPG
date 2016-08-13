@@ -3,7 +3,7 @@ package wurmatron.voidrpg.common.config;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import wurmatron.voidrpg.api.cube.Cube;
+import wurmatron.voidrpg.api.cube.ICube;
 import wurmatron.voidrpg.common.cube.CubeRegistry;
 import wurmatron.voidrpg.common.reference.Global;
 import wurmatron.voidrpg.common.utils.LogHandler;
@@ -40,8 +40,9 @@ public class ConfigHandler {
 		public static void loadJsonCubes () {
 				for (File json : JsonHandler.dir.listFiles()) {
 						if (json.isFile()) {
-								Cube temp = JsonHandler.loadCubeFromFile(json);
+								ICube temp = JsonHandler.loadCubeFromFile(json);
 								CubeRegistry.INSTANCE.registerCube(temp);
+								LogHandler.info("Loaded cube '" + temp.getUnlocalizedName() + "' from json");
 						}
 				}
 		}

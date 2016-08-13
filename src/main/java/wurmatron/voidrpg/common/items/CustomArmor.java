@@ -18,8 +18,8 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import wurmatron.voidrpg.VoidRPG;
-import wurmatron.voidrpg.api.cube.Cube;
 import wurmatron.voidrpg.api.cube.CubeData;
+import wurmatron.voidrpg.api.cube.ICube;
 import wurmatron.voidrpg.api.event.CubeTickEvent;
 import wurmatron.voidrpg.client.events.PlayerTickHandlerClient;
 import wurmatron.voidrpg.client.model.ArmorModel;
@@ -58,7 +58,7 @@ public class CustomArmor extends ItemArmor implements ISpecialArmor {
 										if (amt != 0 && modelPlayer.bipedHead.childModels == null) {
 												for (int a = 0; a < amt; a++) {
 														NBTTagCompound temp = stack.getTagCompound().getCompoundTag(Integer.toString(a));
-														Cube cube = CubeRegistry.INSTANCE.getCubesFromName(temp.getString(NBT.CUBE));
+														ICube cube = CubeRegistry.INSTANCE.getCubesFromName(temp.getString(NBT.CUBE));
 														if (cube != null)
 																modelPlayer.bipedHead.addChild(ArmorHelper.createModelRenderer(model, new CubeData(temp.getInteger(NBT.OFFSETX) - 8, temp.getInteger(NBT.OFFSETY) - 14, temp.getInteger(NBT.OFFSETZ) - 8, cube)));
 												}

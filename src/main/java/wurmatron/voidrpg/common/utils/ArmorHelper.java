@@ -9,8 +9,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
-import wurmatron.voidrpg.api.cube.Cube;
 import wurmatron.voidrpg.api.cube.CubeData;
+import wurmatron.voidrpg.api.cube.ICube;
 import wurmatron.voidrpg.common.cube.CubeRegistry;
 import wurmatron.voidrpg.common.items.VoidRPGItems;
 import wurmatron.voidrpg.common.reference.Global;
@@ -139,21 +139,21 @@ public class ArmorHelper {
 
 		public float getWeight (ItemStack stack) {
 				int weight = 0;
-				ArrayList<Cube> cubes = getCubes(stack);
-				for (Cube c : cubes) {
+				ArrayList<ICube> cubes = getCubes(stack);
+				for (ICube c : cubes) {
 						weight += c.getWeight();
 				}
 				return weight;
 		}
 
-		public ArrayList<Cube> getCubes (ItemStack stack) {
-				ArrayList<Cube> cubes = new ArrayList<Cube>();
+		public ArrayList<ICube> getCubes (ItemStack stack) {
+				ArrayList<ICube> cubes = new ArrayList<ICube>();
 				if (stack.getItem().equals(VoidRPGItems.armorHelmet)) {
 						NBTTagCompound data = stack.getTagCompound();
 						if (data != null && !data.hasNoTags()) {
 								int amt = data.getInteger(NBT.AMOUNT);
 								for (int i = 0; i < amt; i++) {
-										Cube temp = registry.getCubesFromName(data.getCompoundTag(Integer.toString(i)).getString(NBT.CUBE));
+										ICube temp = registry.getCubesFromName(data.getCompoundTag(Integer.toString(i)).getString(NBT.CUBE));
 										if (temp != null) {
 												cubes.add(temp);
 										}
@@ -164,7 +164,7 @@ public class ArmorHelper {
 						NBTTagCompound body = stack.getTagCompound().getCompoundTag(NBT.BODY);
 						if (body != null && !body.hasNoTags()) {
 								for (int a = 0; a < body.getInteger(NBT.AMOUNT); a++) {
-										Cube temp = registry.getCubesFromName(body.getCompoundTag(Integer.toString(a)).getString(NBT.CUBE));
+										ICube temp = registry.getCubesFromName(body.getCompoundTag(Integer.toString(a)).getString(NBT.CUBE));
 										if (temp != null) {
 												cubes.add(temp);
 										}
@@ -173,7 +173,7 @@ public class ArmorHelper {
 						NBTTagCompound leftArm = stack.getTagCompound().getCompoundTag(NBT.LEFTARM);
 						if (leftArm != null && !leftArm.hasNoTags()) {
 								for (int a = 0; a < leftArm.getInteger(NBT.AMOUNT); a++) {
-										Cube temp = registry.getCubesFromName(leftArm.getCompoundTag(Integer.toString(a)).getString(NBT.CUBE));
+										ICube temp = registry.getCubesFromName(leftArm.getCompoundTag(Integer.toString(a)).getString(NBT.CUBE));
 										if (temp != null) {
 												cubes.add(temp);
 										}
@@ -182,7 +182,7 @@ public class ArmorHelper {
 						NBTTagCompound rightArm = stack.getTagCompound().getCompoundTag(NBT.RIGHTARM);
 						if (rightArm != null && !rightArm.hasNoTags()) {
 								for (int a = 0; a < rightArm.getInteger(NBT.AMOUNT); a++) {
-										Cube temp = registry.getCubesFromName(rightArm.getCompoundTag(Integer.toString(a)).getString(NBT.CUBE));
+										ICube temp = registry.getCubesFromName(rightArm.getCompoundTag(Integer.toString(a)).getString(NBT.CUBE));
 										if (temp != null) {
 												cubes.add(temp);
 										}
@@ -193,7 +193,7 @@ public class ArmorHelper {
 						NBTTagCompound leftLeg = stack.getTagCompound().getCompoundTag(NBT.LEFTLEG);
 						if (leftLeg != null && !leftLeg.hasNoTags()) {
 								for (int a = 0; a < leftLeg.getInteger(NBT.AMOUNT); a++) {
-										Cube temp = registry.getCubesFromName(leftLeg.getCompoundTag(Integer.toString(a)).getString(NBT.CUBE));
+										ICube temp = registry.getCubesFromName(leftLeg.getCompoundTag(Integer.toString(a)).getString(NBT.CUBE));
 										if (temp != null) {
 												cubes.add(temp);
 										}
@@ -202,7 +202,7 @@ public class ArmorHelper {
 						NBTTagCompound rightLeg = stack.getTagCompound().getCompoundTag(NBT.RIGHTLEG);
 						if (rightLeg != null && !rightLeg.hasNoTags()) {
 								for (int a = 0; a < rightLeg.getInteger(NBT.AMOUNT); a++) {
-										Cube temp = registry.getCubesFromName(rightLeg.getCompoundTag(Integer.toString(a)).getString(NBT.CUBE));
+										ICube temp = registry.getCubesFromName(rightLeg.getCompoundTag(Integer.toString(a)).getString(NBT.CUBE));
 										if (temp != null) {
 												cubes.add(temp);
 										}
@@ -213,7 +213,7 @@ public class ArmorHelper {
 						NBTTagCompound leftLeg = stack.getTagCompound().getCompoundTag(NBT.LEFTLEG);
 						if (leftLeg != null && !leftLeg.hasNoTags()) {
 								for (int a = 0; a < leftLeg.getInteger(NBT.AMOUNT); a++) {
-										Cube temp = registry.getCubesFromName(leftLeg.getCompoundTag(Integer.toString(a)).getString(NBT.CUBE));
+										ICube temp = registry.getCubesFromName(leftLeg.getCompoundTag(Integer.toString(a)).getString(NBT.CUBE));
 										if (temp != null) {
 												cubes.add(temp);
 										}
@@ -222,7 +222,7 @@ public class ArmorHelper {
 						NBTTagCompound rightLeg = stack.getTagCompound().getCompoundTag(NBT.RIGHTLEG);
 						if (rightLeg != null && !rightLeg.hasNoTags()) {
 								for (int a = 0; a < rightLeg.getInteger(NBT.AMOUNT); a++) {
-										Cube temp = registry.getCubesFromName(rightLeg.getCompoundTag(Integer.toString(a)).getString(NBT.CUBE));
+										ICube temp = registry.getCubesFromName(rightLeg.getCompoundTag(Integer.toString(a)).getString(NBT.CUBE));
 										if (temp != null) {
 												cubes.add(temp);
 										}
@@ -239,7 +239,7 @@ public class ArmorHelper {
 								int amountOfCubes = stack.getTagCompound().getInteger(NBT.AMOUNT);
 								for (int a = 0; a <= amountOfCubes; a++) {
 										NBTTagCompound temp = stack.getTagCompound().getCompoundTag(Integer.toString(a));
-										Cube cube = CubeRegistry.INSTANCE.getCubesFromName(temp.getString(NBT.CUBE));
+										ICube cube = CubeRegistry.INSTANCE.getCubesFromName(temp.getString(NBT.CUBE));
 										if (cube != null)
 												weight += cube.getWeight();
 								}

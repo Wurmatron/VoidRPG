@@ -7,8 +7,8 @@ import mod.chiselsandbits.core.api.ChiselAndBitsAPI;
 import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import wurmatron.voidrpg.api.cube.Cube;
 import wurmatron.voidrpg.api.cube.CubeData;
+import wurmatron.voidrpg.api.cube.ICube;
 import wurmatron.voidrpg.common.cube.CubeRegistry;
 
 import java.util.ArrayList;
@@ -18,7 +18,6 @@ public class BitsHelper {
 		public static boolean isValidHelmet (World world, BlockPos pos) {
 				if (!world.isRemote && new ChiselAndBitsAPI().isBlockChiseled(world, pos)) {
 						try {
-								LogHandler.info("Chiseled");
 								IBitAccess bit = new ChiselAndBitsAPI().getBitAccess(world, pos);
 								for (int x = 5; x <= 12; x++) {
 										for (int y = 5; y <= 12; y++) {
@@ -57,7 +56,7 @@ public class BitsHelper {
 										for (int y = 16; y >= 0; y--)
 												for (int z = 16; z >= 0; z--) {
 														if (!bit.getBitAt(x, y, z).isAir()) {
-																for (Cube cube : CubeRegistry.cubes)
+																for (ICube cube : CubeRegistry.cubes)
 																		if (cube.getBlock().equals(bit.getBitAt(x, y, z).getState().getBlock()))
 																				data.add(new CubeData(x, y, z, cube));
 														}
@@ -86,7 +85,8 @@ public class BitsHelper {
 		}
 
 		public static boolean isValid (Block block) {
-				for (Cube cube : CubeRegistry.INSTANCE.getCubes()) {
+				for (ICube cube : CubeRegistry.INSTANCE.getCubes()) {
+						LogHandler.info("Block: " + cube.getBlock().getUnlocalizedName() + " = " + block.getUnlocalizedName());
 						if (cube.getBlock().equals(block))
 								return true;
 				}

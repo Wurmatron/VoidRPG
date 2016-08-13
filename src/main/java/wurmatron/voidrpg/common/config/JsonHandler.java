@@ -2,34 +2,31 @@ package wurmatron.voidrpg.common.config;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import wurmatron.voidrpg.api.cube.Cube;
+import wurmatron.voidrpg.api.cube.ICube;
+import wurmatron.voidrpg.common.cube.StringCube;
 import wurmatron.voidrpg.common.utils.LogHandler;
 
 import java.io.*;
 import java.util.ArrayList;
 
-@Deprecated
 public class JsonHandler {
 
 		private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		public static final File dir = new File(ConfigHandler.location + File.separator + "Cubes");
 
-		@Deprecated
-		public static String convertCubeToJson (Cube cube) {
+		public static String convertCubeToJson (StringCube cube) {
 				if (cube != null)
 						return gson.toJson(cube);
 				return null;
 		}
 
-		@Deprecated
-		public static Cube convertJsonToCube (String json) {
+		public static ICube convertJsonToCube (String json) {
 				if (json != null)
-						return gson.fromJson(json, Cube.class);
+						return gson.fromJson(json, StringCube.class);
 				return null;
 		}
 
-		@Deprecated
-		public static void writeCubeToFile (Cube cube) {
+		public static void writeCubeToFile (StringCube cube) {
 				File location = new File(dir + File.separator + cube.getUnlocalizedName() + ".json");
 				try {
 						if (!dir.exists())
@@ -45,8 +42,7 @@ public class JsonHandler {
 				}
 		}
 
-		@Deprecated
-		public static Cube loadCubeFromFile (File location) {
+		public static ICube loadCubeFromFile (File location) {
 				ArrayList<String> lines = new ArrayList<String>();
 				if (location.exists()) {
 						try {
