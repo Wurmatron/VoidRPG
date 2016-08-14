@@ -18,7 +18,8 @@ public class GuiHandler implements IGuiHandler {
 				switch (ID) {
 						case (Global.CUBECREATOR_GUI): {
 								LogHandler.info("Container GUI handler");
-								return new ContainerCubeCreator(player, (TileCubeCreator) world.getTileEntity(new BlockPos(x, y, z)));
+								TileCubeCreator tile = (TileCubeCreator) world.getTileEntity(new BlockPos(x,y,z));
+								return new ContainerCubeCreator(player, player.inventory, tile);
 						}
 				}
 				return new ContainerPlayer(player.inventory, true, player);
@@ -28,7 +29,8 @@ public class GuiHandler implements IGuiHandler {
 		public Object getClientGuiElement (int ID, EntityPlayer player, World world, int x, int y, int z) {
 				switch (ID) {
 						case (Global.CUBECREATOR_GUI):
-								return new GuiCubeCreator(player, (TileCubeCreator) world.getTileEntity(new BlockPos(x, y, z)));
+								TileCubeCreator tile = (TileCubeCreator) world.getTileEntity(new BlockPos(x,y,z));
+								return new GuiCubeCreator(player, player.inventory, tile);
 				}
 				return null;
 		}

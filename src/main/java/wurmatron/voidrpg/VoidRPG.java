@@ -5,6 +5,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -15,9 +16,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import wurmatron.voidrpg.common.blocks.VoidRPGBlocks;
 import wurmatron.voidrpg.common.config.ConfigHandler;
 import wurmatron.voidrpg.common.config.JsonHandler;
-import wurmatron.voidrpg.common.cube.Cube;
-import wurmatron.voidrpg.common.cube.CubeRegistry;
-import wurmatron.voidrpg.common.cube.StringCube;
+import wurmatron.voidrpg.common.cube.*;
 import wurmatron.voidrpg.common.items.VoidRPGItems;
 import wurmatron.voidrpg.common.network.GuiHandler;
 import wurmatron.voidrpg.common.proxy.CommonProxy;
@@ -66,5 +65,6 @@ public class VoidRPG {
 		public void onPostInit (FMLPostInitializationEvent e) {
 				LogHandler.info("Post-Init");
 				ConfigHandler.loadJsonCubes();
+				CubeCreatorRecipeHandler.registerRecipe(new CubeCreatorRecipe(new ItemStack(Blocks.IRON_BLOCK,4), new ItemStack[] {new ItemStack(Blocks.BEACON,2), new ItemStack(Blocks.IRON_BLOCK,2)}, 700));
 		}
 }
