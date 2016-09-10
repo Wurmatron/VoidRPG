@@ -11,7 +11,6 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.ResourceLocation;
 import wurmatron.voidrpg.api.recipe.ICubeCreatorRecipe;
 import wurmatron.voidrpg.common.cube.CubeCreatorRecipeHandler;
-import wurmatron.voidrpg.common.utils.LogHandler;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -22,21 +21,19 @@ public class TileCubeCreator extends TileEntity implements ITickable, IInventory
 
 		private ItemStack[] inv = new ItemStack[30];
 		private ICubeCreatorRecipe activeRecipe;
-		private int proccessingTime;
+		public int proccessingTime;
 
 		@Override
 		public void update () {
 				if (activeRecipe != null) {
 						proccessingTime--;
-						LogHandler.info("Time: " + proccessingTime);
 						if (proccessingTime <= 0) {
 								consumeRecipeItems(activeRecipe);
 								setInventorySlotContents(0, activeRecipe.getOutputCube());
 								activeRecipe = null;
 						}
-				} else {
+				} else
 						checkForValidRecipe();
-				}
 		}
 
 		private void consumeRecipeItems (ICubeCreatorRecipe recipe) {
@@ -103,10 +100,8 @@ public class TileCubeCreator extends TileEntity implements ITickable, IInventory
 								setInventorySlotContents(slot, null);
 						} else {
 								stack = stack.splitStack(amt);
-								if (stack.stackSize == 0) {
+								if (stack.stackSize == 0)
 										setInventorySlotContents(slot, null);
-
-								}
 						}
 				}
 				return stack;
@@ -119,14 +114,11 @@ public class TileCubeCreator extends TileEntity implements ITickable, IInventory
 		}
 
 		@Override
-		public void setInventorySlotContents (int par1, ItemStack par2ItemStack) {
-				this.inv[par1] = par2ItemStack;
-
-				if (par2ItemStack != null && par2ItemStack.stackSize > this.getInventoryStackLimit()) {
-						par2ItemStack.stackSize = this.getInventoryStackLimit();
-				}
-
-				this.markDirty();
+		public void setInventorySlotContents (int index, ItemStack stack) {
+				inv[index] = stack;
+				if (stack != null && stack.stackSize > getInventoryStackLimit())
+						stack.stackSize = this.getInventoryStackLimit();
+				markDirty();
 		}
 
 		@Override
@@ -200,9 +192,8 @@ public class TileCubeCreator extends TileEntity implements ITickable, IInventory
 				if (activeRecipe != null) {
 						ResourceLocation recipeOutput = Item.REGISTRY.getNameForObject(activeRecipe.getOutputCube().getItem());
 						compound.setString("ActiveRecipe", recipeOutput.getResourceDomain() + ":" + recipeOutput.getResourcePath() + "@" + activeRecipe.getOutputCube().getItemDamage() + "%" + activeRecipe.getOutputCube().stackSize);
-				} else {
+				} else
 						compound.setString("ActiveRecipe", "null");
-				}
 				compound.setInteger("Time", proccessingTime);
 				return compound;
 		}
@@ -214,9 +205,8 @@ public class TileCubeCreator extends TileEntity implements ITickable, IInventory
 				for (int i = 0; i < items.tagCount(); ++i) {
 						NBTTagCompound item = items.getCompoundTagAt(i);
 						byte slot = item.getByte("Slot");
-						if (slot >= 0 && slot < getSizeInventory()) {
+						if (slot >= 0 && slot < getSizeInventory())
 								setInventorySlotContents(slot, ItemStack.loadItemStackFromNBT(item));
-						}
 				}
 				if (compound.getString("ActiveRecipe") != "null") {
 						ResourceLocation recipeOutput = new ResourceLocation(compound.getString("ActiveRecipe").substring(0, compound.getString("ActiveRecipe").indexOf(":")), compound.getString("ActiveRecipe").substring(compound.getString("ActiveRecipe").indexOf(":"), compound.getString("ActiveRecipe").indexOf("@")));
@@ -232,5 +222,4 @@ public class TileCubeCreator extends TileEntity implements ITickable, IInventory
 				}
 				proccessingTime = compound.getInteger("Time");
 		}
-
 }

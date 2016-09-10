@@ -23,13 +23,11 @@ public class PlayerTickHandlerClient {
 														armorData.remove(e.player.getGameProfile().getId());
 														armorData.put(e.player.getGameProfile().getId(), false);
 												}
-										} else {
+										} else
 												armorData.put(e.player.getGameProfile().getId(), true);
-										}
 								} else {
-										if (armorData.containsKey(e.player.getGameProfile().getId())) {
+										if (armorData.containsKey(e.player.getGameProfile().getId()))
 												armorData.remove(e.player.getGameProfile().getId());
-										}
 								}
 						} else {
 								if (armorData.containsKey(e.player.getGameProfile().getId()))

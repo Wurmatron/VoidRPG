@@ -19,12 +19,12 @@ public class ContainerCubeCreator extends Container {
 				this.inv = blockInv;
 				for (int i = 0; i < 3; ++i)
 						for (int j = 0; j < 9; ++j)
-								addSlotToContainer(new Slot(playerInv, j + i * 9 + 9, 48 + j * 18, 126 + (i * 18)));
+								addSlotToContainer(new Slot(playerInv, j + i * 9 + 9, 8 + j * 18, 103 + (i * 18)));
 				for (int i = 0; i < 9; ++i)
-						addSlotToContainer(new Slot(playerInv, i, 48 + i * 18, 184));
+						addSlotToContainer(new Slot(playerInv, i, 8 + i * 18, 161));
 				for (int x = 0; x < 3; x++)
 						for (int y = 0; y < 6; y++)
-								addSlotToContainer(new SlotInput(blockInv, y + x * 6, 195 + x * 18, 10 + (y * 18)));
+								addSlotToContainer(new SlotInput(blockInv, y + x * 6, 155 + x * 18,-13 + (y * 18)));
 		}
 
 		@Override
@@ -33,37 +33,29 @@ public class ContainerCubeCreator extends Container {
 		}
 
 		@Override
-		public ItemStack transferStackInSlot(EntityPlayer player, int index)
-		{
+		public ItemStack transferStackInSlot (EntityPlayer player, int index) {
 				ItemStack itemstack = null;
 				Slot slot = (Slot) this.inventorySlots.get(index);
-
-				if (slot != null && slot.getHasStack())
-				{
-						ItemStack itemstack1 = slot.getStack();
-						itemstack = itemstack1.copy();
-
-						if (index < 0)
-						{
-								if (!this.mergeItemStack(itemstack1, 0, 9, true))
-								{
+				if (slot != null && slot.getHasStack()) {
+						ItemStack temp = slot.getStack();
+						itemstack = temp.copy();
+						if (index < 0) {
+								if (!this.mergeItemStack(temp, 0, 9, true))
 										return null;
-								}
-
-								slot.onSlotChange(itemstack1, itemstack);
+								slot.onSlotChange(temp, itemstack);
 						}
 
-						if (itemstack1.stackSize == 0) {
+						if (temp.stackSize == 0) {
 								slot.putStack((ItemStack) null);
 						} else {
 								slot.onSlotChanged();
 						}
 
-						if (itemstack1.stackSize == itemstack.stackSize) {
+						if (temp.stackSize == itemstack.stackSize) {
 								return null;
 						}
 
-						slot.onPickupFromSlot(player, itemstack1);
+						slot.onPickupFromSlot(player, temp);
 				}
 
 				return itemstack;

@@ -21,6 +21,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import wurmatron.voidrpg.VoidRPG;
 import wurmatron.voidrpg.api.cube.CubeData;
+import wurmatron.voidrpg.common.reference.NBT;
 import wurmatron.voidrpg.common.utils.ArmorHelper;
 import wurmatron.voidrpg.common.utils.BitsHelper;
 import wurmatron.voidrpg.common.utils.LogHandler;
@@ -50,10 +51,10 @@ public class ItemStaff extends Item {
 														player.addChatComponentMessage(new TextComponentTranslation("chat.message.validHelmet").setStyle(new Style().setColor(TextFormatting.AQUA)));
 														stack.setItemDamage(getMaxDamage());
 														if (stack.getTagCompound() != null)
-																stack.getTagCompound().setInteger("Durability", stack.getTagCompound().getInteger("Durability") - 1);
+																stack.getTagCompound().setInteger(NBT.DURABILITY, stack.getTagCompound().getInteger(NBT.DURABILITY) - 1);
 														else {
 																NBTTagCompound nbt = new NBTTagCompound();
-																nbt.setInteger("Durability", maxDurability - 1);
+																nbt.setInteger(NBT.DURABILITY, maxDurability - 1);
 																stack.setTagCompound(nbt);
 														}
 														CubeData[] data = BitsHelper.convertBitsToCubes(world, ray.getBlockPos());
@@ -84,7 +85,7 @@ public class ItemStaff extends Item {
 				} else {
 						if (stack.getTagCompound() == null) {
 								NBTTagCompound nbt = new NBTTagCompound();
-								nbt.setInteger("Durability", maxDurability);
+								nbt.setInteger(NBT.DURABILITY, maxDurability);
 								stack.setTagCompound(nbt);
 						}
 				}
@@ -92,23 +93,26 @@ public class ItemStaff extends Item {
 		}
 
 		@Override
-		public void onUpdate (ItemStack stack, World worldIn, Entity entity, int slot, boolean isSelected) {
+		public void onUpdate (ItemStack stack, World world, Entity entity, int slot, boolean isSelected) {
+				if (stack.getTagCompound() != null && stack.getTagCompound().hasKey(NBT.DURABILITY))
+						if (stack.getTagCompound().getInteger(NBT.DURABILITY) <= 0)
+								entity.replaceItemInInventory(slot, null);
 				if (stack.getItemDamage() > 0)
 						stack.setItemDamage(stack.getItemDamage() - 1);
-				super.onUpdate(stack, worldIn, entity, slot, isSelected);
+				super.onUpdate(stack, world, entity, slot, isSelected);
 		}
 
 		@Override
 		public void onCreated (ItemStack stack, World world, EntityPlayer player) {
 				NBTTagCompound nbt = new NBTTagCompound();
-				nbt.setInteger("Durability", maxDurability);
+				nbt.setInteger(NBT.DURABILITY, maxDurability);
 				stack.setTagCompound(nbt);
 		}
 
 		@Override
 		public void addInformation (ItemStack stack, EntityPlayer player, List<String> tip, boolean adv) {
 				if (stack.getTagCompound() != null)
-						tip.add(TextFormatting.GOLD + I18n.format("stat.durability.name") + ": " + getColorBasedOnMaxDurability(stack.getTagCompound().getInteger("Durability"), maxDurability) + stack.getTagCompound().getInteger("Durability"));
+						tip.add(TextFormatting.GOLD + I18n.format("stat.durability.name") + ": " + getColorBasedOnMaxDurability(stack.getTagCompound().getInteger(NBT.DURABILITY), maxDurability) + stack.getTagCompound().getInteger(NBT.DURABILITY));
 		}
 
 		private TextFormatting getColorBasedOnMaxDurability (int current, int max) {
@@ -129,7 +133,7 @@ public class ItemStaff extends Item {
 		public void getSubItems (Item item, CreativeTabs tab, List<ItemStack> sub) {
 				ItemStack stack = new ItemStack(item, 1, 0);
 				NBTTagCompound nbt = new NBTTagCompound();
-				nbt.setInteger("Durability", maxDurability);
+				nbt.setInteger(NBT.DURABILITY, maxDurability);
 				stack.setTagCompound(nbt);
 				sub.add(stack);
 		}

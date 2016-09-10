@@ -12,4 +12,5 @@ public class NBT {
 		public static final String LEFTARM = "armLeft";
 		public static final String RIGHTARM = "armRight";
 		public static final String DAMAGE = "dam";
+		public static final String DURABILITY = "durability";
 }

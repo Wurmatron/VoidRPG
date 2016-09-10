@@ -9,7 +9,6 @@ import wurmatron.voidrpg.client.gui.GuiCubeCreator;
 import wurmatron.voidrpg.common.container.ContainerCubeCreator;
 import wurmatron.voidrpg.common.reference.Global;
 import wurmatron.voidrpg.common.tiles.TileCubeCreator;
-import wurmatron.voidrpg.common.utils.LogHandler;
 
 public class GuiHandler implements IGuiHandler {
 
@@ -17,8 +16,7 @@ public class GuiHandler implements IGuiHandler {
 		public Object getServerGuiElement (int ID, EntityPlayer player, World world, int x, int y, int z) {
 				switch (ID) {
 						case (Global.CUBECREATOR_GUI): {
-								LogHandler.info("Container GUI handler");
-								TileCubeCreator tile = (TileCubeCreator) world.getTileEntity(new BlockPos(x,y,z));
+								TileCubeCreator tile = (TileCubeCreator) world.getTileEntity(new BlockPos(x, y, z));
 								return new ContainerCubeCreator(player, player.inventory, tile);
 						}
 				}
@@ -29,8 +27,8 @@ public class GuiHandler implements IGuiHandler {
 		public Object getClientGuiElement (int ID, EntityPlayer player, World world, int x, int y, int z) {
 				switch (ID) {
 						case (Global.CUBECREATOR_GUI):
-								TileCubeCreator tile = (TileCubeCreator) world.getTileEntity(new BlockPos(x,y,z));
-								return new GuiCubeCreator(player, player.inventory, tile);
+								TileCubeCreator tile = (TileCubeCreator) world.getTileEntity(new BlockPos(x, y, z));
+								return new GuiCubeCreator(player, player.inventory, tile, tile.proccessingTime);
 				}
 				return null;
 		}

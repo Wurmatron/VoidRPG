@@ -4,6 +4,7 @@ import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -34,5 +35,12 @@ public class BlockCubeCreator extends BlockContainer {
 				if (!world.isRemote)
 						player.openGui(VoidRPG.instance, Global.CUBECREATOR_GUI, world, pos.getX(), pos.getY(), pos.getZ());
 				return true;
+		}
+
+		@Override
+		public void breakBlock (World world, BlockPos pos, IBlockState blockstate) {
+				TileCubeCreator te = (TileCubeCreator) world.getTileEntity(pos);
+				InventoryHelper.dropInventoryItems(world, pos, te);
+				super.breakBlock(world, pos, blockstate);
 		}
 }

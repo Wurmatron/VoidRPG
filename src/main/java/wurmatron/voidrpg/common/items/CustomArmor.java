@@ -2,6 +2,7 @@ package wurmatron.voidrpg.common.items;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -20,6 +21,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import wurmatron.voidrpg.VoidRPG;
 import wurmatron.voidrpg.api.cube.CubeData;
 import wurmatron.voidrpg.api.cube.ICube;
+import wurmatron.voidrpg.api.event.CubeBreakEvent;
 import wurmatron.voidrpg.api.event.CubeTickEvent;
 import wurmatron.voidrpg.client.events.PlayerTickHandlerClient;
 import wurmatron.voidrpg.client.model.ArmorModel;
@@ -27,13 +29,14 @@ import wurmatron.voidrpg.common.cube.CubeRegistry;
 import wurmatron.voidrpg.common.reference.Global;
 import wurmatron.voidrpg.common.reference.NBT;
 import wurmatron.voidrpg.common.utils.ArmorHelper;
+import wurmatron.voidrpg.common.utils.LogHandler;
 
 import java.util.List;
 
 public class CustomArmor extends ItemArmor implements ISpecialArmor {
 
 		private static ArmorModel modelPlayer;
-		private int counter = 0;
+		private boolean requiresUpdate = false;
 
 		public CustomArmor (ArmorMaterial mat, int renderIndexIn, EntityEquipmentSlot equipmentSlotIn) {
 				super(mat, renderIndexIn, equipmentSlotIn);
@@ -46,8 +49,10 @@ public class CustomArmor extends ItemArmor implements ISpecialArmor {
 		public ModelBiped getArmorModel (EntityLivingBase entity, ItemStack stack, EntityEquipmentSlot slot, ModelBiped model) {
 				if (entity instanceof EntityPlayer) {
 						EntityPlayer player = (EntityPlayer) entity;
-						if (modelPlayer == null)
+						if (modelPlayer == null || requiresUpdate) {
 								modelPlayer = new ArmorModel();
+								requiresUpdate = false;
+						}
 						if (PlayerTickHandlerClient.armorData.get(player.getGameProfile().getId())) {
 								modelPlayer = new ArmorModel();
 						}
@@ -60,7 +65,7 @@ public class CustomArmor extends ItemArmor implements ISpecialArmor {
 														NBTTagCompound temp = stack.getTagCompound().getCompoundTag(Integer.toString(a));
 														ICube cube = CubeRegistry.INSTANCE.getCubesFromName(temp.getString(NBT.CUBE));
 														if (cube != null)
-																modelPlayer.bipedHead.addChild(ArmorHelper.createModelRenderer(model, new CubeData(temp.getInteger(NBT.OFFSETX) - 8, temp.getInteger(NBT.OFFSETY) - 14, temp.getInteger(NBT.OFFSETZ) - 8, cube)));
+																modelPlayer.bipedHead.addChild(ArmorHelper.createModelRenderer(model, new CubeData(temp.getInteger(NBT.OFFSETX) - 8, temp.getInteger(NBT.OFFSETY) - 14, temp.getInteger(NBT.OFFSETZ) - 8, cube, temp.getInteger(NBT.DAMAGE))));
 												}
 										}
 								}
@@ -100,7 +105,29 @@ public class CustomArmor extends ItemArmor implements ISpecialArmor {
 
 		@Override
 		public void damageArmor (EntityLivingBase entity, ItemStack stack, DamageSource source, int damage, int slot) {
-				// Used to damage the cubes instead of the whole armor
+				if (stack.getTagCompound() != null && stack.getTagCompound().hasKey(NBT.AMOUNT)) {
+						if (stack.getItem().equals(VoidRPGItems.armorHelmet)) {
+								int amount = stack.getTagCompound().getInteger(NBT.AMOUNT);
+								for (int a = 0; a <= amount; a++) {
+										NBTTagCompound temp = stack.getTagCompound().getCompoundTag(Integer.toString(a));
+										LogHandler.info("d: " + (stack.getTagCompound().getCompoundTag(Integer.toString(a))).getInteger(NBT.DAMAGE));
+										temp.setInteger(NBT.DAMAGE, temp.getInteger(NBT.DAMAGE) + damage);
+										stack.getTagCompound().removeTag(Integer.toString(a));
+										stack.getTagCompound().setTag(Integer.toString(a),temp);
+										LogHandler.info("d: " + (stack.getTagCompound().getCompoundTag(Integer.toString(a))).getInteger(NBT.DAMAGE));
+										ICube cube = CubeRegistry.INSTANCE.getCubesFromName(temp.getString(NBT.CUBE));
+										if (cube != null)
+												if (temp.getInteger(NBT.DAMAGE) >= cube.getDurability()) {
+														CubeBreakEvent event = new CubeBreakEvent(new CubeData(temp.getInteger(NBT.OFFSETX), temp.getInteger(NBT.OFFSETY), temp.getInteger(NBT.OFFSETZ), cube, temp.getInteger(NBT.DAMAGE)), entity, stack);
+														MinecraftForge.EVENT_BUS.post(event);
+														if (!event.isCanceled()) {
+																stack.getTagCompound().removeTag(Integer.toString(a));
+																requiresUpdate = true;
+														}
+												}
+								}
+						}
+				}
 		}
 
 		@Override
@@ -110,7 +137,7 @@ public class CustomArmor extends ItemArmor implements ISpecialArmor {
 								int amount = stack.getTagCompound().getInteger(NBT.AMOUNT);
 								for (int a = 0; a <= amount; a++) {
 										NBTTagCompound temp = stack.getTagCompound().getCompoundTag(Integer.toString(a));
-										MinecraftForge.EVENT_BUS.post(new CubeTickEvent(new CubeData(temp.getInteger(NBT.OFFSETX), temp.getInteger(NBT.OFFSETY), temp.getInteger(NBT.OFFSETZ), CubeRegistry.INSTANCE.getCubesFromName(temp.getString(NBT.CUBE))), player, stack));
+										MinecraftForge.EVENT_BUS.post(new CubeTickEvent(new CubeData(temp.getInteger(NBT.OFFSETX), temp.getInteger(NBT.OFFSETY), temp.getInteger(NBT.OFFSETZ), CubeRegistry.INSTANCE.getCubesFromName(temp.getString(NBT.CUBE)), temp.getInteger(NBT.DAMAGE)), player, stack));
 								}
 						}
 				}
@@ -119,6 +146,10 @@ public class CustomArmor extends ItemArmor implements ISpecialArmor {
 		@Override
 		public void addInformation (ItemStack stack, EntityPlayer player, List<String> tip, boolean adv) {
 				double weight = ArmorHelper.getArmorWeight(stack);
-				tip.add(ChatFormatting.AQUA + "stat.weight.name" + ": " + ArmorHelper.getArmorWeightColor(weight, stack.getItem()) + weight);
+				int complexity = ArmorHelper.getArmorComplexity(stack);
+				double damage = ArmorHelper.calculateArmorDamage(stack);
+				tip.add(ChatFormatting.AQUA + I18n.format("stat.weight.name") + ": " + ArmorHelper.getArmorWeightColor(weight, stack.getItem()) + weight);
+				tip.add(ChatFormatting.GOLD + I18n.format("stat.complexity.name") + ": " + ArmorHelper.getComplexityColor(complexity, stack.getItem()) + complexity);
+				tip.add(ChatFormatting.RED + I18n.format("stat.durability.name") + ": " + ArmorHelper.getDamageColor(damage) + damage);
 		}
 }

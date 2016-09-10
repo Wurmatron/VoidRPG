@@ -7,6 +7,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -50,14 +51,15 @@ public class VoidRPG {
 				LogHandler.info("Init");
 				ConfigHandler.loadMainConfig();
 				NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
+				MinecraftForge.EVENT_BUS.register(new CubeEvents());
 				VoidRPGItems.init();
 				VoidRPGBlocks.init();
 				proxy.register();
-				CubeRegistry.INSTANCE.registerCube(new Cube("test", Blocks.IRON_BLOCK, new ResourceLocation("minecraft", "textures/blocks/iron_block.png"), 0.1));
-				CubeRegistry.INSTANCE.registerCube(new Cube("armorLight", VoidRPGBlocks.armorLight, new ResourceLocation("minecraft", "textures/blocks/gold_block.png"), 0.1));
-				CubeRegistry.INSTANCE.registerCube(new Cube("armorHeavy", VoidRPGBlocks.armorReinforced, new ResourceLocation("minecraft", "textures/blocks/diamond_block.png"), 0.5));
+				CubeRegistry.INSTANCE.registerCube(new Cube("test", Blocks.IRON_BLOCK, new ResourceLocation("minecraft", "textures/blocks/iron_block.png"), 0.1, 1, 5));
+				CubeRegistry.INSTANCE.registerCube(new Cube("armorLight", VoidRPGBlocks.armorLight, new ResourceLocation("minecraft", "textures/blocks/gold_block.png"), 0.1, 1, 50));
+				CubeRegistry.INSTANCE.registerCube(new Cube("armorHeavy", VoidRPGBlocks.armorReinforced, new ResourceLocation("minecraft", "textures/blocks/diamond_block.png"), 0.5, 5, 200));
 
-				StringCube testJson = new StringCube("jsonTest","minecraft", "dirt", new ResourceLocation("minecraft", "textures/blocks/dirt.png"),0.2);
+				StringCube testJson = new StringCube("jsonTest", "minecraft", "dirt", new ResourceLocation("minecraft", "textures/blocks/dirt.png"), 0.2, 1, 2);
 				JsonHandler.writeCubeToFile(testJson);
 		}
 
@@ -65,6 +67,6 @@ public class VoidRPG {
 		public void onPostInit (FMLPostInitializationEvent e) {
 				LogHandler.info("Post-Init");
 				ConfigHandler.loadJsonCubes();
-				CubeCreatorRecipeHandler.registerRecipe(new CubeCreatorRecipe(new ItemStack(Blocks.IRON_BLOCK,4), new ItemStack[] {new ItemStack(Blocks.BEACON,2), new ItemStack(Blocks.IRON_BLOCK,2)}, 700));
+				CubeCreatorRecipeHandler.registerRecipe(new CubeCreatorRecipe(new ItemStack(Blocks.IRON_BLOCK, 4), new ItemStack[] {new ItemStack(Blocks.BEACON, 2), new ItemStack(Blocks.IRON_BLOCK, 2)}, 700));
 		}
 }

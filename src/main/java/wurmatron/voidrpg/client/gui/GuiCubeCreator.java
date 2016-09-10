@@ -11,11 +11,13 @@ import wurmatron.voidrpg.common.reference.Global;
 public class GuiCubeCreator extends GuiContainer {
 
 		private EntityPlayer player;
+		private int time;
 
-		public GuiCubeCreator (EntityPlayer player, InventoryPlayer inventoryPlayer, IInventory tile) {
+		public GuiCubeCreator (EntityPlayer player, InventoryPlayer inventoryPlayer, IInventory tile, int time) {
 				super(new ContainerCubeCreator(player, inventoryPlayer, tile));
 				this.player = player;
 				setGuiSize(256, 212);
+				this.time = time;
 		}
 
 		@Override
@@ -26,6 +28,6 @@ public class GuiCubeCreator extends GuiContainer {
 		@Override
 		protected void drawGuiContainerBackgroundLayer (float f, int mouseX, int mouseY) {
 				mc.renderEngine.bindTexture(new ResourceLocation(Global.MODID + ":textures/gui/cubeCreator.png"));
-				drawTexturedModalRect((width - xSize) / 2, (height - ySize) / 2, 0, 0, 256, 256);
+				drawTexturedModalRect((width - 256) / 2, (height - 212) / 2, 0, 0, 256, 212);
 		}
 }

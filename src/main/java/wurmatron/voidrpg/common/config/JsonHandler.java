@@ -34,7 +34,6 @@ public class JsonHandler {
 						if (!location.exists())
 								location.createNewFile();
 						BufferedWriter bw = new BufferedWriter(new FileWriter(location));
-						LogHandler.info("Cube: " + convertCubeToJson(cube));
 						bw.write(convertCubeToJson(cube));
 						bw.close();
 				} catch (IOException e) {

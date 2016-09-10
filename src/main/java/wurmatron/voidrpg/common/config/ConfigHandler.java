@@ -17,6 +17,9 @@ public class ConfigHandler {
 
 		// Global.cfg
 		public static Property debug;
+		public static Property jsonCubes;
+		public static Property cubeEffects;
+		public static Property helmetMaxComplexity;
 
 		public static void preInit (FMLPreInitializationEvent e) {
 				location = new File(e.getSuggestedConfigurationFile().getParent() + File.separator + Global.NAME);
@@ -29,6 +32,12 @@ public class ConfigHandler {
 						LogHandler.info("Loading main config");
 						debug = mainConfig.get(Configuration.CATEGORY_GENERAL, "debug", Defaults.DEBUG, "Enable Debug Mode");
 						Settings.debug = debug.getBoolean();
+						jsonCubes = mainConfig.get(Configuration.CATEGORY_GENERAL, "jsonCubes", Defaults.JSONCUBES, "Enable Json Based Cubes");
+						Settings.jsonCubes = jsonCubes.getBoolean();
+						cubeEffects = mainConfig.get(Configuration.CATEGORY_GENERAL, "cubeEffects", Defaults.CUBEEFFECTS, "Enable Cube Specials");
+						Settings.cubeEffects = cubeEffects.getBoolean();
+						helmetMaxComplexity = mainConfig.get(Configuration.CATEGORY_GENERAL, "helmetMaxComplexity", Defaults.HELMETMAXCOMPLEXITY, "Helmet max complexity");
+						Settings.helmetMaxComplexity = helmetMaxComplexity.getInt();
 						if (mainConfig.hasChanged()) {
 								LogHandler.info("Config saved");
 								mainConfig.save();

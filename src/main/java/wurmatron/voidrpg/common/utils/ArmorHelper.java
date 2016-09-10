@@ -48,6 +48,7 @@ public class ArmorHelper {
 						temp.setInteger(NBT.OFFSETY, c.offY);
 						temp.setInteger(NBT.OFFSETZ, c.offZ);
 						temp.setString(NBT.CUBE, c.cube.getUnlocalizedName());
+						temp.setInteger(NBT.DAMAGE, c.damage);
 						nbt.setTag(Integer.toString(a), temp);
 						a++;
 				}
@@ -69,6 +70,7 @@ public class ArmorHelper {
 						temp.setInteger(NBT.OFFSETY, c.offY);
 						temp.setInteger(NBT.OFFSETZ, c.offZ);
 						temp.setString(NBT.CUBE, c.cube.getUnlocalizedName());
+						temp.setInteger(NBT.DAMAGE, c.damage);
 						nbt.setTag(Integer.toString(a), temp);
 						a++;
 				}
@@ -82,6 +84,7 @@ public class ArmorHelper {
 						temp.setInteger(NBT.OFFSETY, c.offY);
 						temp.setInteger(NBT.OFFSETZ, c.offZ);
 						temp.setString(NBT.CUBE, c.cube.getUnlocalizedName());
+						temp.setInteger(NBT.DAMAGE, c.damage);
 						nbt2.setTag(Integer.toString(b), temp);
 						b++;
 				}
@@ -95,6 +98,7 @@ public class ArmorHelper {
 						temp.setInteger(NBT.OFFSETY, c.offY);
 						temp.setInteger(NBT.OFFSETZ, c.offZ);
 						temp.setString(NBT.CUBE, c.cube.getUnlocalizedName());
+						temp.setInteger(NBT.DAMAGE, c.damage);
 						nbt3.setTag(Integer.toString(d), temp);
 						d++;
 				}
@@ -116,6 +120,7 @@ public class ArmorHelper {
 						temp.setInteger(NBT.OFFSETY, c.offY);
 						temp.setInteger(NBT.OFFSETZ, c.offZ);
 						temp.setString(NBT.CUBE, c.cube.getUnlocalizedName());
+						temp.setInteger(NBT.DAMAGE, c.damage);
 						nbt.setTag(Integer.toString(a), temp);
 						a++;
 				}
@@ -129,6 +134,7 @@ public class ArmorHelper {
 						temp.setInteger(NBT.OFFSETY, c.offY);
 						temp.setInteger(NBT.OFFSETZ, c.offZ);
 						temp.setString(NBT.CUBE, c.cube.getUnlocalizedName());
+						temp.setInteger(NBT.DAMAGE, c.damage);
 						nbt2.setTag(Integer.toString(b), temp);
 						b++;
 				}
@@ -257,6 +263,66 @@ public class ArmorHelper {
 						if (weight > 75)
 								return ChatFormatting.RED;
 				}
+				return ChatFormatting.BLUE;
+		}
+
+		public static int getArmorComplexity (ItemStack stack) {
+				int complexity = 0;
+				if (stack != null && stack.getTagCompound() != null) {
+						if (stack.getItem().equals(VoidRPGItems.armorHelmet)) {
+								int amountOfCubes = stack.getTagCompound().getInteger(NBT.AMOUNT);
+								for (int a = 0; a <= amountOfCubes; a++) {
+										NBTTagCompound temp = stack.getTagCompound().getCompoundTag(Integer.toString(a));
+										ICube cube = CubeRegistry.INSTANCE.getCubesFromName(temp.getString(NBT.CUBE));
+										if (cube != null)
+												complexity += cube.getComplexity();
+								}
+						}
+				}
+				return complexity;
+		}
+
+		public static ChatFormatting getComplexityColor (int complexity, Item item) {
+				if (item.equals(VoidRPGItems.armorHelmet)) {
+						if (complexity == -1)
+								return ChatFormatting.LIGHT_PURPLE;
+						if (complexity <= 1024)
+								return ChatFormatting.GREEN;
+						if (complexity > 1024 && complexity <= 2047)
+								return ChatFormatting.YELLOW;
+						if (complexity > 2048)
+								return ChatFormatting.RED;
+				}
+				return ChatFormatting.BLUE;
+		}
+
+		public static double calculateArmorDamage (ItemStack stack) {
+				if (stack != null && stack.getTagCompound() != null) {
+						if (stack.getItem().equals(VoidRPGItems.armorHelmet)) {
+								int durability = 0;
+								int amountOfCubes = stack.getTagCompound().getInteger(NBT.AMOUNT);
+								for (int a = 0; a <= amountOfCubes; a++) {
+										NBTTagCompound temp = stack.getTagCompound().getCompoundTag(Integer.toString(a));
+										ICube cube = CubeRegistry.INSTANCE.getCubesFromName(temp.getString(NBT.CUBE));
+										if (cube != null)
+												durability += temp.getInteger(NBT.DAMAGE) / cube.getDurability();
+								}
+								LogHandler.info("Dur " + durability + " AMT: " + amountOfCubes );
+								return Math.abs((durability / amountOfCubes) - 100);
+						}
+				}
+				return 0;
+		}
+
+		public static ChatFormatting getDamageColor (double damage) {
+				if (damage >= 85)
+						return ChatFormatting.GREEN;
+				else if (damage >= 50)
+						return ChatFormatting.YELLOW;
+				else if (damage >= 25)
+						return ChatFormatting.RED;
+				else if (damage >= 10)
+						return ChatFormatting.DARK_RED;
 				return ChatFormatting.BLUE;
 		}
 }
