@@ -25,11 +25,12 @@ import wurmatron.voidrpg.api.event.CubeBreakEvent;
 import wurmatron.voidrpg.api.event.CubeTickEvent;
 import wurmatron.voidrpg.client.events.PlayerTickHandlerClient;
 import wurmatron.voidrpg.client.model.ArmorModel;
+import wurmatron.voidrpg.common.config.Settings;
 import wurmatron.voidrpg.common.cube.CubeRegistry;
 import wurmatron.voidrpg.common.reference.Global;
+import wurmatron.voidrpg.common.reference.Local;
 import wurmatron.voidrpg.common.reference.NBT;
 import wurmatron.voidrpg.common.utils.ArmorHelper;
-import wurmatron.voidrpg.common.utils.LogHandler;
 
 import java.util.List;
 
@@ -110,11 +111,9 @@ public class CustomArmor extends ItemArmor implements ISpecialArmor {
 								int amount = stack.getTagCompound().getInteger(NBT.AMOUNT);
 								for (int a = 0; a <= amount; a++) {
 										NBTTagCompound temp = stack.getTagCompound().getCompoundTag(Integer.toString(a));
-										LogHandler.info("d: " + (stack.getTagCompound().getCompoundTag(Integer.toString(a))).getInteger(NBT.DAMAGE));
 										temp.setInteger(NBT.DAMAGE, temp.getInteger(NBT.DAMAGE) + damage);
 										stack.getTagCompound().removeTag(Integer.toString(a));
-										stack.getTagCompound().setTag(Integer.toString(a),temp);
-										LogHandler.info("d: " + (stack.getTagCompound().getCompoundTag(Integer.toString(a))).getInteger(NBT.DAMAGE));
+										stack.getTagCompound().setTag(Integer.toString(a), temp);
 										ICube cube = CubeRegistry.INSTANCE.getCubesFromName(temp.getString(NBT.CUBE));
 										if (cube != null)
 												if (temp.getInteger(NBT.DAMAGE) >= cube.getDurability()) {
@@ -135,11 +134,48 @@ public class CustomArmor extends ItemArmor implements ISpecialArmor {
 				if (stack.getTagCompound() != null && stack.getTagCompound().hasKey(NBT.AMOUNT)) {
 						if (stack.getItem().equals(VoidRPGItems.armorHelmet)) {
 								int amount = stack.getTagCompound().getInteger(NBT.AMOUNT);
-								for (int a = 0; a <= amount; a++) {
+								CubeData[] data = new CubeData[amount];
+								for (int a = 0; a < amount; a++) {
 										NBTTagCompound temp = stack.getTagCompound().getCompoundTag(Integer.toString(a));
-										MinecraftForge.EVENT_BUS.post(new CubeTickEvent(new CubeData(temp.getInteger(NBT.OFFSETX), temp.getInteger(NBT.OFFSETY), temp.getInteger(NBT.OFFSETZ), CubeRegistry.INSTANCE.getCubesFromName(temp.getString(NBT.CUBE)), temp.getInteger(NBT.DAMAGE)), player, stack));
+										CubeData d = new CubeData(temp.getInteger(NBT.OFFSETX), temp.getInteger(NBT.OFFSETY), temp.getInteger(NBT.OFFSETZ), CubeRegistry.INSTANCE.getCubesFromName(temp.getString(NBT.CUBE)), temp.getInteger(NBT.DAMAGE));
+										final CubeData j = new CubeData(temp.getInteger(NBT.OFFSETX), temp.getInteger(NBT.OFFSETY), temp.getInteger(NBT.OFFSETZ), CubeRegistry.INSTANCE.getCubesFromName(temp.getString(NBT.CUBE)), temp.getInteger(NBT.DAMAGE));
+										MinecraftForge.EVENT_BUS.post(new CubeTickEvent(d, player, stack));
+										if (d.cube != j.cube)
+												temp.setString(NBT.CUBE, d.cube.getUnlocalizedName());
+										if (d.offY != j.offY)
+												temp.setInteger(NBT.OFFSETY, d.offY);
+										if (d.offX != j.offX)
+												temp.setInteger(NBT.OFFSETX, d.offX);
+										if (d.offZ != j.offZ)
+												temp.setInteger(NBT.OFFSETZ, d.offZ);
+										if (d.damage != j.damage)
+												temp.setInteger(NBT.DAMAGE, d.damage);
+										data[a] = d;
 								}
-						}
+								if (Settings.cubeEffects)
+										for (int a = 0; a < amount; a++) {
+												NBTTagCompound temp = stack.getTagCompound().getCompoundTag(Integer.toString(a));
+												if (temp != null && !temp.hasNoTags()) {
+														CubeData d = new CubeData(temp.getInteger(NBT.OFFSETX), temp.getInteger(NBT.OFFSETY), temp.getInteger(NBT.OFFSETZ), CubeRegistry.INSTANCE.getCubesFromName(temp.getString(NBT.CUBE)), temp.getInteger(NBT.DAMAGE));
+														final CubeData j = new CubeData(temp.getInteger(NBT.OFFSETX), temp.getInteger(NBT.OFFSETY), temp.getInteger(NBT.OFFSETZ), CubeRegistry.INSTANCE.getCubesFromName(temp.getString(NBT.CUBE)), temp.getInteger(NBT.DAMAGE));
+														ICube cube = CubeRegistry.INSTANCE.getCubesFromName(temp.getString(NBT.CUBE));
+														if (cube != null && cube.hasEffects(player, stack))
+																cube.applyEffect(d, data);
+														if (d.cube != j.cube)
+																temp.setString(NBT.CUBE, d.cube.getUnlocalizedName());
+														if (d.offY != j.offY)
+																temp.setInteger(NBT.OFFSETY, d.offY);
+														if (d.offX != j.offX)
+																temp.setInteger(NBT.OFFSETX, d.offX);
+														if (d.offZ != j.offZ)
+																temp.setInteger(NBT.OFFSETZ, d.offZ);
+														if (d.damage != j.damage)
+																temp.setInteger(NBT.DAMAGE, d.damage);
+												}
+										}
+						} else if (stack.getItem().equals(VoidRPGItems.armorChestplate)) {
+						} else if (stack.getItem().equals(VoidRPGItems.armorLeggings)) {
+						} else if (stack.getItem().equals(VoidRPGItems.armorBoots)) {}
 				}
 		}
 
@@ -148,8 +184,8 @@ public class CustomArmor extends ItemArmor implements ISpecialArmor {
 				double weight = ArmorHelper.getArmorWeight(stack);
 				int complexity = ArmorHelper.getArmorComplexity(stack);
 				double damage = ArmorHelper.calculateArmorDamage(stack);
-				tip.add(ChatFormatting.AQUA + I18n.format("stat.weight.name") + ": " + ArmorHelper.getArmorWeightColor(weight, stack.getItem()) + weight);
-				tip.add(ChatFormatting.GOLD + I18n.format("stat.complexity.name") + ": " + ArmorHelper.getComplexityColor(complexity, stack.getItem()) + complexity);
-				tip.add(ChatFormatting.RED + I18n.format("stat.durability.name") + ": " + ArmorHelper.getDamageColor(damage) + damage);
+				tip.add(ChatFormatting.AQUA + I18n.format(Local.WEIGHT) + ": " + ArmorHelper.getArmorWeightColor(weight, stack.getItem()) + weight);
+				tip.add(ChatFormatting.GOLD + I18n.format(Local.COMPLEXITY) + ": " + ArmorHelper.getComplexityColor(complexity, stack.getItem()) + complexity);
+				tip.add(ChatFormatting.RED + I18n.format(Local.DURABILITY) + ": " + ArmorHelper.getDamageColor(damage) + damage);
 		}
 }

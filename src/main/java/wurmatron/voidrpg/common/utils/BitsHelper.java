@@ -58,7 +58,7 @@ public class BitsHelper {
 														if (!bit.getBitAt(x, y, z).isAir()) {
 																for (ICube cube : CubeRegistry.cubes)
 																		if (cube.getBlock().equals(bit.getBitAt(x, y, z).getState().getBlock()))
-																				data.add(new CubeData(x, y, z, cube,0));
+																				data.add(new CubeData(x, y, z, cube, 0));
 														}
 												}
 						} catch (Exception e) {
@@ -73,14 +73,14 @@ public class BitsHelper {
 		public static CubeData[] rotateClockwise (CubeData[] cubes) {
 				CubeData[] data = cubes;
 				for (int s = 0; s <= cubes.length - 1; s++)
-						data[s] = new CubeData((cubes[s].offZ * -1) + 15, cubes[s].offY, cubes[s].offX, cubes[s].cube,cubes[s].damage);
+						data[s] = new CubeData((cubes[s].offZ * -1) + 15, cubes[s].offY, cubes[s].offX, cubes[s].cube, cubes[s].damage);
 				return data;
 		}
 
 		public static CubeData[] rotateUp (CubeData[] cubes) {
 				CubeData[] data = cubes;
 				for (int s = 0; s <= cubes.length - 1; s++)
-						data[s] = new CubeData(cubes[s].offX, (cubes[s].offY * -1) + 15, cubes[s].offZ, cubes[s].cube,cubes[s].damage);
+						data[s] = new CubeData(cubes[s].offX, (cubes[s].offY * -1) + 15, cubes[s].offZ, cubes[s].cube, cubes[s].damage);
 				return data;
 		}
 

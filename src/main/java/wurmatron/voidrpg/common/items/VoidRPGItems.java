@@ -4,6 +4,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import wurmatron.voidrpg.client.proxy.ClientProxy;
 
 public class VoidRPGItems {
 
@@ -23,6 +24,7 @@ public class VoidRPGItems {
 
 		private static void registerItem (Item item) {
 				GameRegistry.registerItem(item, item.getUnlocalizedName());
+				ClientProxy.items.add(item);
 		}
 }
 

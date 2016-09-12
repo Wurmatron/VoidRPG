@@ -13,4 +13,8 @@ public class NBT {
 		public static final String RIGHTARM = "armRight";
 		public static final String DAMAGE = "dam";
 		public static final String DURABILITY = "durability";
+		public static final String TIME = "time";
+		public static final String INVENTORY = "inventory";
+		public static final String SLOT = "slot";
+		public static final String ACTIVERECIPE = "activeRecipe";
 }

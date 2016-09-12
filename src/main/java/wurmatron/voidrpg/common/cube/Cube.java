@@ -3,10 +3,11 @@ package wurmatron.voidrpg.common.cube;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import wurmatron.voidrpg.api.cube.CubeData;
 import wurmatron.voidrpg.api.cube.ICube;
-import wurmatron.voidrpg.api.event.CubeTickEvent;
 
 public class Cube implements ICube {
 
@@ -16,14 +17,16 @@ public class Cube implements ICube {
 		private int complexity;
 		private int durability;
 		private Block realBlock;
+		private int maxAmount;
 
-		public Cube (String unlocalizedName, Block block, ResourceLocation texture, double weight, int complexity, int durability) {
+		public Cube (String unlocalizedName, Block block, ResourceLocation texture, double weight, int complexity, int durability, int maxAmount) {
 				this.unlocalizedName = unlocalizedName;
 				this.realBlock = block;
 				this.texture = texture;
 				this.weight = weight;
 				this.complexity = complexity;
 				this.durability = durability;
+				this.maxAmount = maxAmount;
 		}
 
 		@Override
@@ -64,6 +67,11 @@ public class Cube implements ICube {
 		}
 
 		@Override
-		public void applyEffect (CubeTickEvent e) {
+		public void applyEffect (CubeData cube, CubeData[] data) {
+		}
+
+		@Override
+		public int getMaxAmount (Item item) {
+				return maxAmount;
 		}
 }

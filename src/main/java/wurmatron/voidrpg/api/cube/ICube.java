@@ -2,6 +2,7 @@ package wurmatron.voidrpg.api.cube;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import wurmatron.voidrpg.api.event.CubeTickEvent;
@@ -45,7 +46,7 @@ public interface ICube {
 		 * @param stack  Stack that this cube is on
 		 * @return if the cube has special effects (Note: has to be true for applyEffect to work
 		 *
-		 * @see ICube#applyEffect(CubeTickEvent)
+		 * @see ICube#applyEffect(CubeData, CubeData[])
 		 */
 		boolean hasEffects (EntityPlayer player, ItemStack stack);
 
@@ -54,5 +55,12 @@ public interface ICube {
 		 *
 		 * @see CubeTickEvent
 		 */
-		void applyEffect (CubeTickEvent e);
+		void applyEffect (CubeData data, CubeData[] cubes);
+
+		/**
+		 * Maximum amount of this cube that can be on a single piece of armor
+		 *
+		 * @param item Item that is trying to be created
+		 */
+		int getMaxAmount(Item item);
 }

@@ -7,17 +7,19 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartedEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import wurmatron.voidrpg.common.blocks.VoidRPGBlocks;
 import wurmatron.voidrpg.common.config.ConfigHandler;
 import wurmatron.voidrpg.common.config.JsonHandler;
+import wurmatron.voidrpg.common.config.Settings;
 import wurmatron.voidrpg.common.cube.*;
+import wurmatron.voidrpg.common.cube.special.CubeAutoRepair;
 import wurmatron.voidrpg.common.items.VoidRPGItems;
 import wurmatron.voidrpg.common.network.GuiHandler;
 import wurmatron.voidrpg.common.proxy.CommonProxy;
@@ -51,22 +53,26 @@ public class VoidRPG {
 				LogHandler.info("Init");
 				ConfigHandler.loadMainConfig();
 				NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
-				MinecraftForge.EVENT_BUS.register(new CubeEvents());
 				VoidRPGItems.init();
 				VoidRPGBlocks.init();
 				proxy.register();
-				CubeRegistry.INSTANCE.registerCube(new Cube("test", Blocks.IRON_BLOCK, new ResourceLocation("minecraft", "textures/blocks/iron_block.png"), 0.1, 1, 5));
-				CubeRegistry.INSTANCE.registerCube(new Cube("armorLight", VoidRPGBlocks.armorLight, new ResourceLocation("minecraft", "textures/blocks/gold_block.png"), 0.1, 1, 50));
-				CubeRegistry.INSTANCE.registerCube(new Cube("armorHeavy", VoidRPGBlocks.armorReinforced, new ResourceLocation("minecraft", "textures/blocks/diamond_block.png"), 0.5, 5, 200));
-
-				StringCube testJson = new StringCube("jsonTest", "minecraft", "dirt", new ResourceLocation("minecraft", "textures/blocks/dirt.png"), 0.2, 1, 2);
+				CubeRegistry.INSTANCE.registerCube(new Cube("test", Blocks.IRON_BLOCK, new ResourceLocation("minecraft", "textures/blocks/iron_block.png"), 0.1, 1, 5,2000));
+				CubeRegistry.INSTANCE.registerCube(new Cube("armorLight", VoidRPGBlocks.armorLight, new ResourceLocation("minecraft", "textures/blocks/gold_block.png"), 0.1, 1, 50,4096));
+				CubeRegistry.INSTANCE.registerCube(new Cube("armorHeavy", VoidRPGBlocks.armorReinforced, new ResourceLocation("minecraft", "textures/blocks/diamond_block.png"), 0.5, 5, 200,4096));
+				CubeRegistry.INSTANCE.registerCube(new CubeAutoRepair());
+				StringCube testJson = new StringCube("jsonTest", "minecraft", "dirt", new ResourceLocation("minecraft", "textures/blocks/dirt.png"), 0.2, 1, 2,2500);
 				JsonHandler.writeCubeToFile(testJson);
 		}
 
 		@Mod.EventHandler
 		public void onPostInit (FMLPostInitializationEvent e) {
 				LogHandler.info("Post-Init");
-				ConfigHandler.loadJsonCubes();
 				CubeCreatorRecipeHandler.registerRecipe(new CubeCreatorRecipe(new ItemStack(Blocks.IRON_BLOCK, 4), new ItemStack[] {new ItemStack(Blocks.BEACON, 2), new ItemStack(Blocks.IRON_BLOCK, 2)}, 700));
+		}
+
+		@Mod.EventHandler
+		public void onServerStart (FMLServerStartedEvent e) {
+				if (Settings.jsonCubes)
+						ConfigHandler.loadJsonCubes();
 		}
 }

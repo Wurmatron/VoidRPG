@@ -307,7 +307,6 @@ public class ArmorHelper {
 										if (cube != null)
 												durability += temp.getInteger(NBT.DAMAGE) / cube.getDurability();
 								}
-								LogHandler.info("Dur " + durability + " AMT: " + amountOfCubes );
 								return Math.abs((durability / amountOfCubes) - 100);
 						}
 				}

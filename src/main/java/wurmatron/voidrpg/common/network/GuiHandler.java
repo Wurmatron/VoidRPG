@@ -28,7 +28,7 @@ public class GuiHandler implements IGuiHandler {
 				switch (ID) {
 						case (Global.CUBECREATOR_GUI):
 								TileCubeCreator tile = (TileCubeCreator) world.getTileEntity(new BlockPos(x, y, z));
-								return new GuiCubeCreator(player, player.inventory, tile, tile.proccessingTime);
+								return new GuiCubeCreator(player, player.inventory, tile, tile.recipeTimer);
 				}
 				return null;
 		}

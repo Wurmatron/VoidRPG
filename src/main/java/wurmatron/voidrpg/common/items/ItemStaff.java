@@ -21,6 +21,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import wurmatron.voidrpg.VoidRPG;
 import wurmatron.voidrpg.api.cube.CubeData;
+import wurmatron.voidrpg.common.reference.Local;
 import wurmatron.voidrpg.common.reference.NBT;
 import wurmatron.voidrpg.common.utils.ArmorHelper;
 import wurmatron.voidrpg.common.utils.BitsHelper;
@@ -48,7 +49,7 @@ public class ItemStaff extends Item {
 										if (BitsHelper.isValidHelmet(world, ray.getBlockPos())) {
 												EnumFaceDirection face = EnumFaceDirection.getFacing(ray.sideHit);
 												if (face != EnumFaceDirection.DOWN || face != EnumFaceDirection.UP) {
-														player.addChatComponentMessage(new TextComponentTranslation("chat.message.validHelmet").setStyle(new Style().setColor(TextFormatting.AQUA)));
+														player.addChatComponentMessage(new TextComponentTranslation(Local.STAFF_HELMET).setStyle(new Style().setColor(TextFormatting.AQUA)));
 														stack.setItemDamage(getMaxDamage());
 														if (stack.getTagCompound() != null)
 																stack.getTagCompound().setInteger(NBT.DURABILITY, stack.getTagCompound().getInteger(NBT.DURABILITY) - 1);
@@ -75,13 +76,13 @@ public class ItemStaff extends Item {
 														player.inventory.addItemStackToInventory(helmet);
 														return new ActionResult(EnumActionResult.SUCCESS, stack);
 												} else {
-														new ActionResult(EnumActionResult.PASS, stack);
-														player.addChatComponentMessage(new TextComponentTranslation("chat.message.invalid").setStyle(new Style().setColor(TextFormatting.DARK_RED)));
+														player.addChatComponentMessage(new TextComponentTranslation(Local.STAFF_INVALID).setStyle(new Style().setColor(TextFormatting.DARK_RED)));
+														return new ActionResult(EnumActionResult.PASS, stack);
 												}
 										}
 								}
 						} else
-								player.addChatComponentMessage(new TextComponentTranslation("chat.message.charging").setStyle(new Style().setColor(TextFormatting.RED)));
+								player.addChatComponentMessage(new TextComponentTranslation(Local.STAFF_CHARGING).setStyle(new Style().setColor(TextFormatting.RED)));
 				} else {
 						if (stack.getTagCompound() == null) {
 								NBTTagCompound nbt = new NBTTagCompound();
@@ -112,7 +113,7 @@ public class ItemStaff extends Item {
 		@Override
 		public void addInformation (ItemStack stack, EntityPlayer player, List<String> tip, boolean adv) {
 				if (stack.getTagCompound() != null)
-						tip.add(TextFormatting.GOLD + I18n.format("stat.durability.name") + ": " + getColorBasedOnMaxDurability(stack.getTagCompound().getInteger(NBT.DURABILITY), maxDurability) + stack.getTagCompound().getInteger(NBT.DURABILITY));
+						tip.add(TextFormatting.GOLD + I18n.format(NBT.DURABILITY) + ": " + getColorBasedOnMaxDurability(stack.getTagCompound().getInteger(NBT.DURABILITY), maxDurability) + stack.getTagCompound().getInteger(NBT.DURABILITY));
 		}
 
 		private TextFormatting getColorBasedOnMaxDurability (int current, int max) {

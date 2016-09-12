@@ -11,70 +11,72 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.ResourceLocation;
 import wurmatron.voidrpg.api.recipe.ICubeCreatorRecipe;
 import wurmatron.voidrpg.common.cube.CubeCreatorRecipeHandler;
+import wurmatron.voidrpg.common.reference.NBT;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class TileCubeCreator extends TileEntity implements ITickable, IInventory {
 
-		private ItemStack[] inv = new ItemStack[30];
+		private ItemStack[] inventory = new ItemStack[18];
+		private ICubeCreatorRecipe[] validRecipes;
 		private ICubeCreatorRecipe activeRecipe;
-		public int proccessingTime;
+		private int checkTimer;
+		public int recipeTimer;
+		private final int UPDATE_TIMER = 100;
 
 		@Override
 		public void update () {
-				if (activeRecipe != null) {
-						proccessingTime--;
-						if (proccessingTime <= 0) {
+				if (checkTimer <= 0 && inventory != null && inventory.length > 0) {
+						checkTimer = UPDATE_TIMER;
+						validRecipes = checkForValidRecipes();
+				} else if (checkTimer > 0)
+						checkTimer--;
+				if (activeRecipe != null && recipeTimer <= 0) {
+						if (hasRecipeItems(activeRecipe)) {
 								consumeRecipeItems(activeRecipe);
-								setInventorySlotContents(0, activeRecipe.getOutputCube());
-								activeRecipe = null;
+								addOutput(activeRecipe.getOutputCube());
+								if (hasRecipeItems(activeRecipe)) {
+										recipeTimer = activeRecipe.getTimeInTicks();
+								} else
+										activeRecipe = null;
 						}
-				} else
-						checkForValidRecipe();
+				} else if (recipeTimer > 0)
+						recipeTimer--;
 		}
 
 		private void consumeRecipeItems (ICubeCreatorRecipe recipe) {
-				for (ItemStack stored : recipe.getInputs()) {
-						for (int r = 0; r < inv.length; r++) {
-								if (stored.isItemEqual(inv[r])) {
-										setInventorySlotContents(r, null);
-								}
-						}
-				}
-		}
-
-		private boolean checkForValidRecipe () {
-				for (ICubeCreatorRecipe recipe : CubeCreatorRecipeHandler.getRecipes()) {
-						HashMap<ItemStack, Boolean> temp = new HashMap<ItemStack, Boolean>();
+				if (hasRecipeItems(recipe)) {
+						int requiredAmount;
 						for (ItemStack r : recipe.getInputs()) {
-								List<String> test = new ArrayList<String>();
-								for (ItemStack stored : inv) {
-										if (r.isItemEqual(stored))
-												test.add("true");
-										else
-												test.add("false");
-										temp.put(r, test.contains("true") ? true : false);
+								requiredAmount = r.stackSize;
+								for (int slot = 0; slot <= inventory.length; slot++) {
+										ItemStack i = getStackInSlot(slot);
+										if (i != null && r.isItemEqual(i)) {
+												if (requiredAmount < i.stackSize) {
+														ItemStack item = new ItemStack(i.getItem(), i.stackSize - requiredAmount, i.getItemDamage());
+														if (i.getTagCompound() != null)
+																item.setTagCompound(i.getTagCompound());
+														setInventorySlotContents(slot, item);
+														requiredAmount = 0;
+												} else if (requiredAmount == i.stackSize) {
+														setInventorySlotContents(slot, null);
+														requiredAmount = 0;
+												} else if (requiredAmount > i.stackSize) {
+														setInventorySlotContents(slot, null);
+														requiredAmount -= i.stackSize;
+												}
+										}
 								}
 						}
-						for (ItemStack r : recipe.getInputs()) {
-								if (!temp.get(r)) {
-										activeRecipe = null;
-										return false;
-								}
-						}
-						activeRecipe = recipe;
-						proccessingTime = activeRecipe.getTimeInTicks();
-						return true;
-				}
-				activeRecipe = null;
-				return false;
+				} else
+						activeRecipe = null;
 		}
 
 		public void setActiveRecipe (ICubeCreatorRecipe recipe) {
 				this.activeRecipe = recipe;
+				if (recipeTimer <= 0)
+						this.recipeTimer = activeRecipe.getTimeInTicks();
 		}
 
 		public ICubeCreatorRecipe getActiveRecipe () {
@@ -83,13 +85,15 @@ public class TileCubeCreator extends TileEntity implements ITickable, IInventory
 
 		@Override
 		public int getSizeInventory () {
-				return inv.length;
+				return inventory.length;
 		}
 
 		@Nullable
 		@Override
 		public ItemStack getStackInSlot (int index) {
-				return inv[index];
+				if (index < inventory.length)
+						return inventory[index];
+				return null;
 		}
 
 		@Override
@@ -115,10 +119,12 @@ public class TileCubeCreator extends TileEntity implements ITickable, IInventory
 
 		@Override
 		public void setInventorySlotContents (int index, ItemStack stack) {
-				inv[index] = stack;
-				if (stack != null && stack.stackSize > getInventoryStackLimit())
-						stack.stackSize = this.getInventoryStackLimit();
-				markDirty();
+				if (index < inventory.length) {
+						inventory[index] = stack;
+						if (stack != null && stack.stackSize > getInventoryStackLimit())
+								stack.stackSize = getInventoryStackLimit();
+						markDirty();
+				}
 		}
 
 		@Override
@@ -183,43 +189,94 @@ public class TileCubeCreator extends TileEntity implements ITickable, IInventory
 				for (int i = 0; i < getSizeInventory(); ++i) {
 						if (getStackInSlot(i) != null) {
 								NBTTagCompound item = new NBTTagCompound();
-								item.setByte("Slot", (byte) i);
+								item.setByte(NBT.SLOT, (byte) i);
 								getStackInSlot(i).writeToNBT(item);
 								items.appendTag(item);
 						}
 				}
-				compound.setTag("Inventory", items);
+				compound.setTag(NBT.INVENTORY, items);
 				if (activeRecipe != null) {
 						ResourceLocation recipeOutput = Item.REGISTRY.getNameForObject(activeRecipe.getOutputCube().getItem());
-						compound.setString("ActiveRecipe", recipeOutput.getResourceDomain() + ":" + recipeOutput.getResourcePath() + "@" + activeRecipe.getOutputCube().getItemDamage() + "%" + activeRecipe.getOutputCube().stackSize);
+						compound.setString(NBT.ACTIVERECIPE, recipeOutput.getResourceDomain() + ":" + recipeOutput.getResourcePath() + "@" + activeRecipe.getOutputCube().getItemDamage() + "%" + activeRecipe.getOutputCube().stackSize);
 				} else
-						compound.setString("ActiveRecipe", "null");
-				compound.setInteger("Time", proccessingTime);
+						compound.setString(NBT.ACTIVERECIPE, "null");
+				compound.setInteger(NBT.TIME, recipeTimer);
 				return compound;
 		}
 
 		@Override
 		public void readFromNBT (NBTTagCompound compound) {
 				super.readFromNBT(compound);
-				NBTTagList items = compound.getTagList("Inventory", compound.getId());
+				NBTTagList items = compound.getTagList(NBT.INVENTORY, compound.getId());
 				for (int i = 0; i < items.tagCount(); ++i) {
 						NBTTagCompound item = items.getCompoundTagAt(i);
-						byte slot = item.getByte("Slot");
+						byte slot = item.getByte(NBT.SLOT);
 						if (slot >= 0 && slot < getSizeInventory())
 								setInventorySlotContents(slot, ItemStack.loadItemStackFromNBT(item));
 				}
-				if (compound.getString("ActiveRecipe") != "null") {
-						ResourceLocation recipeOutput = new ResourceLocation(compound.getString("ActiveRecipe").substring(0, compound.getString("ActiveRecipe").indexOf(":")), compound.getString("ActiveRecipe").substring(compound.getString("ActiveRecipe").indexOf(":"), compound.getString("ActiveRecipe").indexOf("@")));
-						int stackSize = Integer.getInteger(compound.getString("ActiveRecipe").substring(compound.getString("ActiveRecipe").indexOf("@") - 1, compound.getString("ActiveRecipe").length()));
-						int meta = Integer.getInteger(compound.getString("ActiveRecipe").substring(compound.getString("ActiveRecipe").indexOf("@") + 1, compound.getString("ActiveRecipe").indexOf(":")));
+				if (compound.getString(NBT.ACTIVERECIPE) != "null") {
+						ResourceLocation recipeOutput = new ResourceLocation(compound.getString(NBT.ACTIVERECIPE).substring(0, compound.getString(NBT.ACTIVERECIPE).indexOf(":")), compound.getString(NBT.ACTIVERECIPE).substring(compound.getString(NBT.ACTIVERECIPE).indexOf(":"), compound.getString(NBT.ACTIVERECIPE).indexOf("@")));
+						int stackSize = Integer.getInteger(compound.getString(NBT.ACTIVERECIPE).substring(compound.getString(NBT.ACTIVERECIPE).indexOf("@") - 1, compound.getString(NBT.ACTIVERECIPE).length()));
+						int meta = Integer.getInteger(compound.getString(NBT.ACTIVERECIPE).substring(compound.getString(NBT.ACTIVERECIPE).indexOf("@") + 1, compound.getString(NBT.ACTIVERECIPE).indexOf(":")));
 						ItemStack outputStack = new ItemStack(Item.REGISTRY.getObject(recipeOutput), stackSize, meta);
 						if (outputStack != null) {
 								for (ICubeCreatorRecipe recipe : CubeCreatorRecipeHandler.getRecipes())
 										if (recipe.getOutputCube().isItemEqual(outputStack))
 												activeRecipe = recipe;
 						} else
-								compound.setString("ActiveRecipe", "null");
+								compound.setString(NBT.ACTIVERECIPE, "null");
 				}
-				proccessingTime = compound.getInteger("Time");
+				recipeTimer = compound.getInteger(NBT.TIME);
+		}
+
+		private ICubeCreatorRecipe[] checkForValidRecipes () {
+				if (CubeCreatorRecipeHandler.getRecipes() != null && CubeCreatorRecipeHandler.getRecipes().size() > 0) {
+						ArrayList<ICubeCreatorRecipe> temp = new ArrayList<ICubeCreatorRecipe>();
+						for (ICubeCreatorRecipe r : CubeCreatorRecipeHandler.getRecipes())
+								if (hasRecipeItems(r))
+										temp.add(r);
+						ICubeCreatorRecipe[] recipes = new ICubeCreatorRecipe[temp.size()];
+						if (temp.size() > 0)
+								for (int n = 0; n < temp.size(); n++)
+										recipes[n] = temp.get(n);
+						if (recipes != null && recipes.length > 0 && recipes[0] != null)
+								setActiveRecipe(recipes[0]);
+						return recipes;
+				}
+				return null;
+		}
+
+		private boolean hasRecipeItems (ICubeCreatorRecipe recipe) {
+				if (recipe != null) {
+						ArrayList<Boolean> temp = new ArrayList<Boolean>();
+						for (ItemStack input : recipe.getInputs()) {
+								int amountRequired = input.stackSize;
+								for (ItemStack stack : inventory) {
+										if (stack != null && stack.getItem().equals(input.getItem()) && stack.getItemDamage() == input.getItemDamage())
+												if (input.getTagCompound() != null && stack.getTagCompound() != null && input.getTagCompound().equals(stack.getTagCompound()))
+														amountRequired -= stack.stackSize;
+												else if (input.getTagCompound() == null && stack.getTagCompound() == null)
+														amountRequired -= stack.stackSize;
+								}
+								if (amountRequired <= 0)
+										temp.add(true);
+								else {
+										temp.add(false);
+										break;
+								}
+						}
+						if (temp.contains(false))
+								return false;
+						return true;
+				}
+				return false;
+		}
+
+		// TODO Finish this
+		private void addOutput (ItemStack stack) {
+				if (stack != null)
+						for (int slot = 0; slot < inventory.length; slot++)
+								if (getStackInSlot(slot) == null)
+										setInventorySlotContents(slot, stack);
 		}
 }
