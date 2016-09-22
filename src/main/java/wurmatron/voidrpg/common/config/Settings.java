@@ -6,4 +6,5 @@ public class Settings {
 		public static boolean jsonCubes;
 		public static boolean cubeEffects;
 		public static int helmetMaxComplexity;
+		public static boolean updateCheck;
 }

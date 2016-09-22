@@ -12,4 +12,6 @@ public class Global {
 		public static final String CLIENTPROXY = "wurmatron.voidrpg.client.proxy.ClientProxy";
 		// GUI
 		public static final int CUBECREATOR_GUI = 0;
+		// Update URL
+		public static final String UPDATE_URL = "https://raw.githubusercontent.com/Wurmatron/VoidRPG/master/gradle.properties";
 }

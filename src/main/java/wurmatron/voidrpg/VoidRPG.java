@@ -7,19 +7,22 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLServerStartedEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import wurmatron.voidrpg.common.blocks.VoidRPGBlocks;
+import wurmatron.voidrpg.common.command.VoidRPGCommand;
 import wurmatron.voidrpg.common.config.ConfigHandler;
 import wurmatron.voidrpg.common.config.JsonHandler;
 import wurmatron.voidrpg.common.config.Settings;
 import wurmatron.voidrpg.common.cube.*;
 import wurmatron.voidrpg.common.cube.special.CubeAutoRepair;
+import wurmatron.voidrpg.common.events.PlayerJoinEvent;
 import wurmatron.voidrpg.common.items.VoidRPGItems;
 import wurmatron.voidrpg.common.network.GuiHandler;
 import wurmatron.voidrpg.common.proxy.CommonProxy;
@@ -56,6 +59,7 @@ public class VoidRPG {
 				VoidRPGItems.init();
 				VoidRPGBlocks.init();
 				proxy.register();
+				MinecraftForge.EVENT_BUS.register(new PlayerJoinEvent());
 				CubeRegistry.INSTANCE.registerCube(new Cube("test", Blocks.IRON_BLOCK, new ResourceLocation("minecraft", "textures/blocks/iron_block.png"), 0.1, 1, 5,2000));
 				CubeRegistry.INSTANCE.registerCube(new Cube("armorLight", VoidRPGBlocks.armorLight, new ResourceLocation("minecraft", "textures/blocks/gold_block.png"), 0.1, 1, 50,4096));
 				CubeRegistry.INSTANCE.registerCube(new Cube("armorHeavy", VoidRPGBlocks.armorReinforced, new ResourceLocation("minecraft", "textures/blocks/diamond_block.png"), 0.5, 5, 200,4096));
@@ -71,8 +75,9 @@ public class VoidRPG {
 		}
 
 		@Mod.EventHandler
-		public void onServerStart (FMLServerStartedEvent e) {
+		public void onServerStarting (FMLServerStartingEvent e) {
 				if (Settings.jsonCubes)
 						ConfigHandler.loadJsonCubes();
+				e.registerServerCommand(new VoidRPGCommand());
 		}
 }

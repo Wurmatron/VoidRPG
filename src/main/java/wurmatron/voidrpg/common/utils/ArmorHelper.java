@@ -64,6 +64,7 @@ public class ArmorHelper {
 				ItemStack stack = new ItemStack(item, 1, 0);
 				NBTTagCompound nbt = new NBTTagCompound();
 				int a = 0;
+				LogHandler.info("Base S: " + base.length);
 				for (CubeData c : base) {
 						NBTTagCompound temp = new NBTTagCompound();
 						temp.setInteger(NBT.OFFSETX, c.offX);
@@ -78,30 +79,32 @@ public class ArmorHelper {
 				stack.setTagInfo(NBT.BODY, nbt);
 				NBTTagCompound nbt2 = new NBTTagCompound();
 				int b = 0;
-				for (CubeData c : armLeft) {
-						NBTTagCompound temp = new NBTTagCompound();
-						temp.setInteger(NBT.OFFSETX, c.offX);
-						temp.setInteger(NBT.OFFSETY, c.offY);
-						temp.setInteger(NBT.OFFSETZ, c.offZ);
-						temp.setString(NBT.CUBE, c.cube.getUnlocalizedName());
-						temp.setInteger(NBT.DAMAGE, c.damage);
-						nbt2.setTag(Integer.toString(b), temp);
-						b++;
-				}
+				if (armLeft != null)
+						for (CubeData c : armLeft) {
+								NBTTagCompound temp = new NBTTagCompound();
+								temp.setInteger(NBT.OFFSETX, c.offX);
+								temp.setInteger(NBT.OFFSETY, c.offY);
+								temp.setInteger(NBT.OFFSETZ, c.offZ);
+								temp.setString(NBT.CUBE, c.cube.getUnlocalizedName());
+								temp.setInteger(NBT.DAMAGE, c.damage);
+								nbt2.setTag(Integer.toString(b), temp);
+								b++;
+						}
 				nbt2.setInteger(NBT.AMOUNT, b);
 				stack.setTagInfo(NBT.LEFTARM, nbt2);
 				NBTTagCompound nbt3 = new NBTTagCompound();
 				int d = 0;
-				for (CubeData c : armRight) {
-						NBTTagCompound temp = new NBTTagCompound();
-						temp.setInteger(NBT.OFFSETX, c.offX);
-						temp.setInteger(NBT.OFFSETY, c.offY);
-						temp.setInteger(NBT.OFFSETZ, c.offZ);
-						temp.setString(NBT.CUBE, c.cube.getUnlocalizedName());
-						temp.setInteger(NBT.DAMAGE, c.damage);
-						nbt3.setTag(Integer.toString(d), temp);
-						d++;
-				}
+				if (armRight != null)
+						for (CubeData c : armRight) {
+								NBTTagCompound temp = new NBTTagCompound();
+								temp.setInteger(NBT.OFFSETX, c.offX);
+								temp.setInteger(NBT.OFFSETY, c.offY);
+								temp.setInteger(NBT.OFFSETZ, c.offZ);
+								temp.setString(NBT.CUBE, c.cube.getUnlocalizedName());
+								temp.setInteger(NBT.DAMAGE, c.damage);
+								nbt3.setTag(Integer.toString(d), temp);
+								d++;
+						}
 				nbt3.setInteger(NBT.AMOUNT, d);
 				stack.setTagInfo(NBT.RIGHTARM, nbt3);
 				return stack;

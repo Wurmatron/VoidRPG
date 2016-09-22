@@ -19,6 +19,7 @@ public class ConfigHandler {
 		public static Property debug;
 		public static Property jsonCubes;
 		public static Property cubeEffects;
+		public static Property updateCheck;
 		public static Property helmetMaxComplexity;
 
 		public static void preInit (FMLPreInitializationEvent e) {
@@ -36,6 +37,9 @@ public class ConfigHandler {
 						Settings.jsonCubes = jsonCubes.getBoolean();
 						cubeEffects = mainConfig.get(Configuration.CATEGORY_GENERAL, "cubeEffects", Defaults.CUBEEFFECTS, "Enable Cube Specials");
 						Settings.cubeEffects = cubeEffects.getBoolean();
+						updateCheck = mainConfig.get(Configuration.CATEGORY_GENERAL, "updateCheck", Defaults.UPDATECHECK, "Enables Checking for mod updates");
+						Settings.updateCheck = updateCheck.getBoolean();
+
 						helmetMaxComplexity = mainConfig.get(Configuration.CATEGORY_GENERAL, "helmetMaxComplexity", Defaults.HELMETMAXCOMPLEXITY, "Helmet max complexity");
 						Settings.helmetMaxComplexity = helmetMaxComplexity.getInt();
 						if (mainConfig.hasChanged()) {
@@ -50,8 +54,10 @@ public class ConfigHandler {
 				for (File json : JsonHandler.dir.listFiles()) {
 						if (json.isFile()) {
 								ICube temp = JsonHandler.loadCubeFromFile(json);
-								CubeRegistry.INSTANCE.registerCube(temp);
-								LogHandler.info("Loaded cube '" + temp.getUnlocalizedName() + "' from json");
+								if (!CubeRegistry.cubes.contains(temp)) {
+										CubeRegistry.INSTANCE.registerCube(temp);
+										LogHandler.info("Loaded cube '" + temp.getUnlocalizedName() + "' from json");
+								}
 						}
 				}
 		}

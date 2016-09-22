@@ -7,11 +7,13 @@ import wurmatron.voidrpg.common.tiles.TileCubeCreator;
 
 public class VoidRPGBlocks {
 
+		public static Block bodyBlock;
 		public static Block armorLight;
 		public static Block armorReinforced;
 		public static Block cubeCreator;
 
 		public static void init () {
+				registerBlock(bodyBlock = new BlockBody(Material.BARRIER).setUnlocalizedName("blockBody"));
 				registerBlock(armorLight = new BlockArmor(Material.ANVIL).setUnlocalizedName("blockLightArmor"));
 				registerBlock(armorReinforced = new BlockArmor(Material.ANVIL).setUnlocalizedName("armorReinforced"));
 				registerBlock(cubeCreator = new BlockCubeCreator(Material.ANVIL));
