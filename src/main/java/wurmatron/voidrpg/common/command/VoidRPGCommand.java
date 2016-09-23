@@ -54,6 +54,7 @@ public class VoidRPGCommand implements ICommand {
 				switch (args.length) {
 						case (0): {
 								execute(server, sender, new String[] {"help"});
+								break;
 						}
 						case (1): {
 								if (args.length > 0) {
@@ -79,6 +80,7 @@ public class VoidRPGCommand implements ICommand {
 												}
 										}
 								}
+								break;
 						}
 						case (2): {
 								if (args[0].equalsIgnoreCase("info")) {
@@ -97,6 +99,7 @@ public class VoidRPGCommand implements ICommand {
 														sender.addChatMessage(new TextComponentString("Enter an valid cube name").setStyle(new Style().setColor(TextFormatting.RED)));
 										}
 								}
+								break;
 						}
 				}
 		}

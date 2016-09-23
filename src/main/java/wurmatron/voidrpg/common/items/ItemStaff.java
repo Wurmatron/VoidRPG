@@ -48,7 +48,9 @@ public class ItemStaff extends Item {
 						if (stack.getItemDamage() == 0 && !player.isSneaking()) {
 								RayTraceResult ray = Minecraft.getMinecraft().getRenderViewEntity().rayTrace(5, 1.0F);
 								if (new ChiselAndBitsAPI().isBlockChiseled(world, ray.getBlockPos())) {
-										if (BitsHelper.isValidBoots(world, ray.getBlockPos())) {
+										boolean leggings = BitsHelper.isValidLeggings(world, ray.getBlockPos());
+										LogHandler.info("Clicky " + leggings);
+										if (leggings) {
 												EnumFaceDirection face = EnumFaceDirection.getFacing(ray.sideHit);
 												if (face != EnumFaceDirection.DOWN || face != EnumFaceDirection.UP) {
 														stack.setItemDamage(getMaxDamage());
@@ -59,8 +61,8 @@ public class ItemStaff extends Item {
 																nbt.setInteger(NBT.DURABILITY, maxDurability - 1);
 																stack.setTagCompound(nbt);
 														}
-														if (BitsHelper.isValidBoots(world, ray.getBlockPos())) {
-																ArrayList<ArrayList<CubeData>> bits = BitsHelper.createBootsFromBits(world, ray.getBlockPos());
+														if (BitsHelper.isValidLeggings(world, ray.getBlockPos())) {
+																ArrayList<ArrayList<CubeData>> bits = BitsHelper.createLeggingsFromBits(world, ray.getBlockPos());
 																if (bits != null && !bits.isEmpty()) {
 																		ArrayList<CubeData> left = bits.get(0);
 																		ArrayList<CubeData> right = bits.get(1);
@@ -70,7 +72,7 @@ public class ItemStaff extends Item {
 																				leftCubes[l] = left.get(l);
 																		for (int l = 0; l < right.size(); l++)
 																				rightCubes[l] = right.get(l);
-																		LogHandler.debug("Direction: " + face.name());
+																		LogHandler.debug("Direction: " + face.name() + " Size: " +  bits.size());
 																		if (face == EnumFaceDirection.WEST) {
 																				leftCubes = BitsHelper.rotateClockwise(leftCubes);
 																				leftCubes = BitsHelper.rotateClockwise(leftCubes);
@@ -89,7 +91,7 @@ public class ItemStaff extends Item {
 																				leftCubes = BitsHelper.rotateClockwise(leftCubes);
 																				leftCubes = BitsHelper.rotateClockwise(leftCubes);
 																		}
-																		ItemStack boots = new ArmorHelper().createArmorStack(VoidRPGItems.armorBoots, rightCubes, leftCubes);
+																		ItemStack boots = new ArmorHelper().createArmorStack(VoidRPGItems.armorLeggings, rightCubes, leftCubes);
 																		player.inventory.addItemStackToInventory(boots);
 																		player.addChatComponentMessage(new TextComponentTranslation(Local.STAFF_BOOTS).setStyle(new Style().setColor(TextFormatting.AQUA)));
 																		return new ActionResult(EnumActionResult.SUCCESS, stack);
@@ -126,6 +128,8 @@ public class ItemStaff extends Item {
 						} else if (!player.isSneaking())
 								player.addChatComponentMessage(new TextComponentTranslation(Local.STAFF_CHARGING).setStyle(new Style().setColor(TextFormatting.RED)));
 						else if (player.isSneaking()) {
+								RayTraceResult ray = Minecraft.getMinecraft().getRenderViewEntity().rayTrace(5, 1.0F);
+								boolean leggings = BitsHelper.isValidLeggings(world, ray.getBlockPos());
 								BitsHelper.createBaseArmorBlock(0, world, new BlockPos(player.posX, player.posY - 1, player.posZ));
 						} else {
 								if (stack.getTagCompound() == null) {
