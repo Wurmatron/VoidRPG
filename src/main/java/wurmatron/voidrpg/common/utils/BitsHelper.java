@@ -194,10 +194,13 @@ public class BitsHelper {
 																		for (ICube c : CubeRegistry.INSTANCE.getCubes())
 																				if (c.getBlock().equals(bit.getBitAt(x, y, z).getState().getBlock()))
 																						cube = c;
-																		if (x <= 6 && cube != null)
-																				b.add(new CubeData(x, y, z, cube, 0));
-																		else
+																		LogHandler.info(x + "," + y + "," + z);
+																		if (z >= 7 && cube != null) {
 																				a.add(new CubeData(x, y, z, cube, 0));
+																		}
+																		else {
+																				b.add(new CubeData(x, y, z, cube, 0));
+																		}
 																}
 												}
 								data.add(a);
