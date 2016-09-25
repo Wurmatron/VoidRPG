@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import wurmatron.voidrpg.api.cube.ICube;
 import wurmatron.voidrpg.common.cube.StringCube;
-import wurmatron.voidrpg.common.utils.LogHandler;
 
 import java.io.*;
 import java.util.ArrayList;

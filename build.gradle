@@ -19,7 +19,7 @@ archivesBaseName = mod_name
 minecraft {
     version = "${mc_version}-${forge_version}"
     runDir = "run"
-    mappings = "snapshot_20160518"
+    mappings = "snapshot_20160922"
 	replace "@VERSION@", project.version
     replaceIn "Global.java"
 }

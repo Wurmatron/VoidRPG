@@ -7,9 +7,9 @@ import wurmatron.voidrpg.api.cube.CubeData;
 
 public class CubeTickEvent extends Event {
 
-		public static CubeData cubeData;
-		public static EntityPlayer player;
-		public static ItemStack stack;
+		public final CubeData cubeData;
+		public final EntityPlayer player;
+		public final ItemStack stack;
 
 		/**
 		 * Called Every tick that an cube is on the players armor

@@ -19,17 +19,20 @@ public class GuiHandler implements IGuiHandler {
 								TileCubeCreator tile = (TileCubeCreator) world.getTileEntity(new BlockPos(x, y, z));
 								return new ContainerCubeCreator(player, player.inventory, tile);
 						}
+						default:
+								return new ContainerPlayer(player.inventory, true, player);
 				}
-				return new ContainerPlayer(player.inventory, true, player);
 		}
 
 		@Override
 		public Object getClientGuiElement (int ID, EntityPlayer player, World world, int x, int y, int z) {
 				switch (ID) {
-						case (Global.CUBECREATOR_GUI):
+						case (Global.CUBECREATOR_GUI): {
 								TileCubeCreator tile = (TileCubeCreator) world.getTileEntity(new BlockPos(x, y, z));
 								return new GuiCubeCreator(player, player.inventory, tile, tile.recipeTimer);
+						}
+						default:
+								return null;
 				}
-				return null;
 		}
 }

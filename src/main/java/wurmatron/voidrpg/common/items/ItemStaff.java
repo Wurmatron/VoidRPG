@@ -31,6 +31,8 @@ import wurmatron.voidrpg.common.utils.LogHandler;
 import java.util.ArrayList;
 import java.util.List;
 
+
+// TODO Redo this mess :P
 public class ItemStaff extends Item {
 
 		private static final int maxDurability = 12;
@@ -48,9 +50,9 @@ public class ItemStaff extends Item {
 						if (stack.getItemDamage() == 0 && !player.isSneaking()) {
 								RayTraceResult ray = Minecraft.getMinecraft().getRenderViewEntity().rayTrace(5, 1.0F);
 								if (new ChiselAndBitsAPI().isBlockChiseled(world, ray.getBlockPos())) {
-										boolean leggings = BitsHelper.isValidLeggings(world, ray.getBlockPos());
-										LogHandler.info("Clicky " + leggings);
-										if (leggings) {
+										boolean chest = BitsHelper.isValidChestplate(world, ray.getBlockPos(), ray.getBlockPos().add(1,0,0), ray.getBlockPos().add(-1,0,0));
+										LogHandler.info("Clicky " + chest);
+										if (chest) {
 												EnumFaceDirection face = EnumFaceDirection.getFacing(ray.sideHit);
 												if (face != EnumFaceDirection.DOWN || face != EnumFaceDirection.UP) {
 														stack.setItemDamage(getMaxDamage());
@@ -61,37 +63,73 @@ public class ItemStaff extends Item {
 																nbt.setInteger(NBT.DURABILITY, maxDurability - 1);
 																stack.setTagCompound(nbt);
 														}
-														if (BitsHelper.isValidLeggings(world, ray.getBlockPos())) {
-																ArrayList<ArrayList<CubeData>> bits = BitsHelper.createLeggingsFromBits(world, ray.getBlockPos());
+														if (BitsHelper.isValidChestplate(world, ray.getBlockPos(),ray.getBlockPos().add(1,0,0), ray.getBlockPos().add(-1,0,0))) {
+																ArrayList<ArrayList<CubeData>> bits = BitsHelper.createChestplateFromBit(world, ray.getBlockPos(),ray.getBlockPos().add(1,0,0), ray.getBlockPos().add(-1,0,0));
 																if (bits != null && !bits.isEmpty()) {
-																		ArrayList<CubeData> left = bits.get(0);
-																		ArrayList<CubeData> right = bits.get(1);
-																		CubeData[] leftCubes = new CubeData[left.size()];
-																		CubeData[] rightCubes = new CubeData[right.size()];
-																		for (int l = 0; l < left.size(); l++)
-																				leftCubes[l] = left.get(l);
-																		for (int l = 0; l < right.size(); l++)
-																				rightCubes[l] = right.get(l);
-																		LogHandler.debug("Direction: " + face.name() + " Size: " +  bits.size());
+																		ArrayList<CubeData> body = bits.get(0);
+																		ArrayList<CubeData> leftArm = bits.get(1);
+																		ArrayList<CubeData> rightArm = bits.get(2);
+																		CubeData[] chestData = new CubeData[body.size()];
+																		CubeData[] leftArmData = new CubeData[leftArm.size()];
+																		CubeData[] rightArmData = new CubeData[rightArm.size()];
+																		for(int l = 0; l < body.size(); l++)
+																				chestData[l] = body.get(l);
+																		for(int l = 0; l < leftArm.size(); l++)
+																				leftArmData[l] = leftArm.get(l);
+																		for(int l = 0; l < rightArm.size(); l++)
+																				rightArmData[l] = rightArm.get(l);
 																		if (face == EnumFaceDirection.WEST) {
-																				leftCubes = BitsHelper.rotateClockwise(leftCubes);
-																				leftCubes = BitsHelper.rotateClockwise(leftCubes);
-																				leftCubes = BitsHelper.rotateClockwise(leftCubes);
-																				rightCubes = BitsHelper.rotateClockwise(rightCubes);
-																				rightCubes = BitsHelper.rotateClockwise(rightCubes);
-																				rightCubes = BitsHelper.rotateClockwise(rightCubes);
+																				chestData = BitsHelper.rotateClockwise(chestData);
+																				chestData = BitsHelper.rotateClockwise(chestData);
+																				chestData = BitsHelper.rotateClockwise(chestData);
+																				leftArmData = BitsHelper.rotateClockwise(leftArmData);
+																				leftArmData = BitsHelper.rotateClockwise(leftArmData);
+																				leftArmData = BitsHelper.rotateClockwise(leftArmData);
+																				rightArmData = BitsHelper.rotateClockwise(rightArmData);
+																				rightArmData = BitsHelper.rotateClockwise(rightArmData);
+																				rightArmData = BitsHelper.rotateClockwise(rightArmData);
 																		}
 																		if (face == EnumFaceDirection.EAST) {
-																				rightCubes = BitsHelper.rotateClockwise(rightCubes);
-																				leftCubes = BitsHelper.rotateClockwise(leftCubes);
+																				chestData = BitsHelper.rotateClockwise(chestData);
+																				leftArmData = BitsHelper.rotateClockwise(leftArmData);
+																				rightArmData = BitsHelper.rotateClockwise(rightArmData);
 																		}
 																		if (face == EnumFaceDirection.SOUTH) {
-																				rightCubes = BitsHelper.rotateClockwise(rightCubes);
-																				rightCubes = BitsHelper.rotateClockwise(rightCubes);
-																				leftCubes = BitsHelper.rotateClockwise(leftCubes);
-																				leftCubes = BitsHelper.rotateClockwise(leftCubes);
+																				chestData = BitsHelper.rotateClockwise(chestData);
+																				chestData = BitsHelper.rotateClockwise(chestData);
+																				leftArmData = BitsHelper.rotateClockwise(leftArmData);
+																				leftArmData = BitsHelper.rotateClockwise(leftArmData);
+																				rightArmData = BitsHelper.rotateClockwise(rightArmData);
+																				rightArmData = BitsHelper.rotateClockwise(rightArmData);
 																		}
-																		ItemStack boots = new ArmorHelper().createArmorStack(VoidRPGItems.armorLeggings, rightCubes, leftCubes);
+//																		ArrayList<CubeData> left = bits.get(0);
+//																		ArrayList<CubeData> right = bits.get(1);
+//																		CubeData[] bodyChest = new CubeData[body.size()];
+//																		CubeData[] leftCubes = new CubeData[right.size()];
+//																		for (int l = 0; l < left.size(); l++)
+//																				leftCubes[l] = left.get(l);
+//																		for (int l = 0; l < right.size(); l++)
+//																				rightCubes[l] = right.get(l);
+//																		LogHandler.debug("Direction: " + face.name() + " Size: " +  bits.size());
+//																		if (face == EnumFaceDirection.WEST) {
+//																				leftCubes = BitsHelper.rotateClockwise(leftCubes);
+//																				leftCubes = BitsHelper.rotateClockwise(leftCubes);
+//																				leftCubes = BitsHelper.rotateClockwise(leftCubes);
+//																				rightCubes = BitsHelper.rotateClockwise(rightCubes);
+//																				rightCubes = BitsHelper.rotateClockwise(rightCubes);
+//																				rightCubes = BitsHelper.rotateClockwise(rightCubes);
+//																		}
+//																		if (face == EnumFaceDirection.EAST) {
+//																				rightCubes = BitsHelper.rotateClockwise(rightCubes);
+//																				leftCubes = BitsHelper.rotateClockwise(leftCubes);
+//																		}
+//																		if (face == EnumFaceDirection.SOUTH) {
+//																				rightCubes = BitsHelper.rotateClockwise(rightCubes);
+//																				rightCubes = BitsHelper.rotateClockwise(rightCubes);
+//																				leftCubes = BitsHelper.rotateClockwise(leftCubes);
+//																				leftCubes = BitsHelper.rotateClockwise(leftCubes);
+//																		}
+																		ItemStack boots = new ArmorHelper().createArmorStack(VoidRPGItems.armorChestplate, chestData, leftArmData, rightArmData);
 																		player.inventory.addItemStackToInventory(boots);
 																		player.addChatComponentMessage(new TextComponentTranslation(Local.STAFF_BOOTS).setStyle(new Style().setColor(TextFormatting.AQUA)));
 																		return new ActionResult(EnumActionResult.SUCCESS, stack);
@@ -130,7 +168,9 @@ public class ItemStaff extends Item {
 						else if (player.isSneaking()) {
 								RayTraceResult ray = Minecraft.getMinecraft().getRenderViewEntity().rayTrace(5, 1.0F);
 								boolean leggings = BitsHelper.isValidLeggings(world, ray.getBlockPos());
-								BitsHelper.createBaseArmorBlock(0, world, new BlockPos(player.posX, player.posY - 1, player.posZ));
+								BitsHelper.createChestplateArmModel();
+								BitsHelper.createChestplateChestModel();
+								BitsHelper.createBaseArmorBlock(2, world, new BlockPos(player.posX, player.posY - 1, player.posZ));
 						} else {
 								if (stack.getTagCompound() == null) {
 										NBTTagCompound nbt = new NBTTagCompound();

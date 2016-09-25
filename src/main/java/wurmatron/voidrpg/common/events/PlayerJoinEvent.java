@@ -14,6 +14,6 @@ public class PlayerJoinEvent {
 		@SubscribeEvent
 		public void onPlayerJoin (PlayerEvent.PlayerLoggedInEvent e) {
 				if (Settings.updateCheck && !VersionChecker.isUpdated())
-						e.player.addChatComponentMessage(new TextComponentString("Update detected for VoidRPG " + Global.VERSION + " - > " + VersionChecker.getVersion(Global.UPDATE_URL)).setStyle(new Style().setColor(TextFormatting.GOLD)));
+						e.player.addChatComponentMessage(new TextComponentString("Update found for " + Global.NAME + " Current: " + Global.VERSION + " Latest: " + VersionChecker.getVersion(Global.UPDATE_URL)).setStyle(new Style().setColor(TextFormatting.AQUA)));
 		}
 }

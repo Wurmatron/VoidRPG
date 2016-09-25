@@ -21,6 +21,10 @@ public class ConfigHandler {
 		public static Property cubeEffects;
 		public static Property updateCheck;
 		public static Property helmetMaxComplexity;
+		public static Property chestplateMaxComplexity;
+		public static Property leggingsMaxComplexity;
+		public static Property bootsMaxComplexity;
+		public static Property cubeCreatorUpdatePeriod;
 
 		public static void preInit (FMLPreInitializationEvent e) {
 				location = new File(e.getSuggestedConfigurationFile().getParent() + File.separator + Global.NAME);
@@ -39,9 +43,18 @@ public class ConfigHandler {
 						Settings.cubeEffects = cubeEffects.getBoolean();
 						updateCheck = mainConfig.get(Configuration.CATEGORY_GENERAL, "updateCheck", Defaults.UPDATECHECK, "Enables Checking for mod updates");
 						Settings.updateCheck = updateCheck.getBoolean();
-
-						helmetMaxComplexity = mainConfig.get(Configuration.CATEGORY_GENERAL, "helmetMaxComplexity", Defaults.HELMETMAXCOMPLEXITY, "Helmet max complexity");
+						helmetMaxComplexity = mainConfig.get(Configuration.CATEGORY_GENERAL, "helmetMaxComplexity", Defaults.HELMETMAXCOMPLEXITY, "Helmet Max Complexity");
 						Settings.helmetMaxComplexity = helmetMaxComplexity.getInt();
+						chestplateMaxComplexity = mainConfig.get(Configuration.CATEGORY_GENERAL, "chestplateMaxComplexity", Defaults.CHESTPLATEMAXCOMPLEXITY, "Chestplate Max Complexity");
+						Settings.chestplateMaxComplexity = chestplateMaxComplexity.getInt();
+						leggingsMaxComplexity = mainConfig.get(Configuration.CATEGORY_GENERAL, "leggingsMaxComplexity", Defaults.LEGGINGSMAXCOMPLEXITY, "Leggings Max Complexity");
+						Settings.leggingsMaxComplexity = leggingsMaxComplexity.getInt();
+						bootsMaxComplexity = mainConfig.get(Configuration.CATEGORY_GENERAL, "bootsMaxComplexity", Defaults.BOOTSMAXCOMPLEXITY, "Boots Max Complexity");
+						Settings.bootsMaxComplexity = bootsMaxComplexity.getInt();
+						cubeCreatorUpdatePeriod = mainConfig.get(Configuration.CATEGORY_GENERAL, "cubeCreatorUpdatePeriod", Defaults.CUBECREATORUPDATEPERIOD, "Cube Creator Update Period");
+						Settings.cubeCreatorUpdatePeriod = cubeCreatorUpdatePeriod.getInt();
+
+
 						if (mainConfig.hasChanged()) {
 								LogHandler.info("Config saved");
 								mainConfig.save();

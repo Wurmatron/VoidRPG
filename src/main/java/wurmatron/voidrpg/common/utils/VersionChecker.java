@@ -11,9 +11,7 @@ import java.net.URLConnection;
 public class VersionChecker {
 
 		public static boolean isUpdated () {
-				if (getVersion(Global.UPDATE_URL) != null && getVersion(Global.UPDATE_URL).equals(Global.VERSION) && Settings.updateCheck)
-						return true;
-				return false;
+				return getVersion(Global.UPDATE_URL).equals(Global.VERSION) && Settings.updateCheck || Global.VERSION.equals("@VERSION@") && Settings.updateCheck;
 		}
 
 		public static String getVersion (String updateLink) {
@@ -24,7 +22,7 @@ public class VersionChecker {
 										return t.replace("mod_version=", "");
 						}
 				}
-				return null;
+				return "Check Failed";
 		}
 
 		private static String readURL (String theUrl) {

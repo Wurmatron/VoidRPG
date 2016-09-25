@@ -93,7 +93,8 @@ public class BitsHelper {
 		}};
 
 		private static final ArrayList<Vec3i> leggingsModel = new ArrayList<Vec3i>();
-
+		private static ArrayList<Vec3i> chestplateChestModel = new ArrayList<Vec3i>();
+		private static ArrayList<Vec3i> chestplateArmModel = new ArrayList<Vec3i>();
 
 		public static boolean isValidBoots (World world, BlockPos pos) {
 				if (!world.isRemote && api.isBlockChiseled(world, pos)) {
@@ -135,6 +136,31 @@ public class BitsHelper {
 						} catch (APIExceptions.CannotBeChiseled e) {
 								LogHandler.debug(e.getLocalizedMessage());
 						}
+				}
+				return false;
+		}
+
+		public static boolean isValidChestplate (World world, BlockPos chest, BlockPos leftArm, BlockPos rightArm) {
+				if (!world.isRemote && api.isBlockChiseled(world, chest) && api.isBlockChiseled(world, leftArm) && api.isBlockChiseled(world, rightArm)) {
+						ArrayList<Boolean> temp = new ArrayList<Boolean>();
+						try {
+								IBitAccess chestBlock = api.getBitAccess(world, chest);
+								IBitAccess leftArmBlock = api.getBitAccess(world, chest);
+								IBitAccess rightArmBlock = api.getBitAccess(world, rightArm);
+								for (Vec3i base : chestplateChestModel)
+										if (chestBlock.getBitAt(base.getX(), base.getY(), base.getZ()).equals(bodyBrush))
+												temp.add(true);
+										else
+												temp.add(false);
+								for (Vec3i base : chestplateArmModel)
+										if (leftArmBlock.getBitAt(base.getX(), base.getY(), base.getZ()).equals(bodyBrush) && rightArmBlock.getBitAt(base.getX(), base.getY(), base.getZ()).equals(bodyBrush))
+												temp.add(true);
+										else
+												temp.add(false);
+						} catch (APIExceptions.CannotBeChiseled e) {
+								LogHandler.debug(e.getLocalizedMessage());
+						}
+						return !temp.contains(false);
 				}
 				return false;
 		}
@@ -194,11 +220,9 @@ public class BitsHelper {
 																		for (ICube c : CubeRegistry.INSTANCE.getCubes())
 																				if (c.getBlock().equals(bit.getBitAt(x, y, z).getState().getBlock()))
 																						cube = c;
-																		LogHandler.info(x + "," + y + "," + z);
 																		if (z >= 7 && cube != null) {
 																				a.add(new CubeData(x, y, z, cube, 0));
-																		}
-																		else {
+																		} else {
 																				b.add(new CubeData(x, y, z, cube, 0));
 																		}
 																}
@@ -213,8 +237,77 @@ public class BitsHelper {
 				return null;
 		}
 
-		public static boolean isValidChest () {
-				return false;
+		public static ArrayList<ArrayList<CubeData>> createChestplateFromBit (World world, BlockPos body, BlockPos leftArm, BlockPos rightArm) {
+				if (world != null && body != null && leftArm != null && rightArm != null && !world.isRemote && api.isBlockChiseled(world, body) && api.isBlockChiseled(world, leftArm) && api.isBlockChiseled(world, rightArm)) {
+						try {
+								IBitAccess bodyBit = api.getBitAccess(world, body);
+								IBitAccess leftArmBit = api.getBitAccess(world, leftArm);
+								IBitAccess rightArmBit = api.getBitAccess(world, rightArm);
+								ArrayList<ArrayList<CubeData>> data = new ArrayList<ArrayList<CubeData>>();
+								ArrayList<CubeData> bodyData = new ArrayList<CubeData>();
+								ArrayList<CubeData> leftArmData = new ArrayList<CubeData>();
+								ArrayList<CubeData> rightArmData = new ArrayList<CubeData>();
+								for (int x = 2; x <= 15; x++)
+										for (int y = 0; y <= 15; y++)
+												for (int z = 2; z < 14; z++)
+														if (areValidBits(bodyBit.getBitAt(x, y, z))) {
+																ICube cube = null;
+																for (ICube c : CubeRegistry.INSTANCE.getCubes())
+																		if (c.getBlock().equals(bodyBit.getBitAt(x, y, z).getState().getBlock()))
+																				cube = c;
+																bodyData.add(new CubeData(x, y, z, cube, 0));
+														}
+								for (int x = 2; x <= 14; x++)
+										for (int y = 0; y <= 15; y++)
+												for (int z = 2; z <= 14; z++) {
+														if (areValidBits(leftArmBit.getBitAt(x, y, z))) {
+																ICube cube = null;
+																for (ICube c : CubeRegistry.INSTANCE.getCubes())
+																		if (c.getBlock().equals(leftArmBit.getBitAt(x, y, z).getState().getBlock()))
+																				cube = c;
+																leftArmData.add(new CubeData(x, y, z, cube, 0));
+														}
+														if (areValidBits(rightArmBit.getBitAt(x, y, z))) {
+																ICube cube = null;
+																for (ICube c : CubeRegistry.INSTANCE.getCubes())
+																		if (c.getBlock().equals(rightArmBit.getBitAt(x, y, z).getState().getBlock()))
+																				cube = c;
+																rightArmData.add(new CubeData(x, y, z, cube, 0));
+														}
+												}
+								data.add(bodyData);
+								data.add(leftArmData);
+								data.add(rightArmData);
+								return data;
+						} catch (APIExceptions.CannotBeChiseled e) {
+								LogHandler.debug(e.getLocalizedMessage());
+						}
+				}
+				return null;
+		}
+
+		public static final ArrayList<Vec3i> createChestplateChestModel () {
+				ArrayList<Vec3i> temp = new ArrayList<Vec3i>();
+				for (int x = 0; x <= 15; x++)
+						for (int y = 0; y <= 15; y++)
+								for (int z = 0; z <= 15; z++) {
+										if (x >= 5 && x <= 12 && z >= 6 && z < 10 && y <= 12) {
+												temp.add(new Vec3i(x, y, z));
+										}
+								}
+				chestplateChestModel = temp;
+				return temp;
+		}
+
+		public static final ArrayList<Vec3i> createChestplateArmModel () {
+				ArrayList<Vec3i> temp = new ArrayList<Vec3i>();
+				for (int x = 0; x <= 15; x++)
+						for (int y = 0; y <= 15; y++)
+								for (int z = 0; z <= 15; z++)
+										if (x >= 7 && z >= 7 && y <= 12 && x <= 10 && z <= 10)
+												temp.add(new Vec3i(x, y, z));
+				chestplateArmModel = temp;
+				return temp;
 		}
 
 		public static boolean isValidHelmet () {
@@ -222,9 +315,7 @@ public class BitsHelper {
 		}
 
 		public static boolean areValidBits (IBitBrush bit) {
-				if (bit.getItemStack(1) != null && isValid(bit.getState().getBlock()))
-						return true;
-				return false;
+				return bit.getItemStack(1) != null && isValid(bit.getState().getBlock());
 		}
 
 		public static CubeData[] convertBitsToCubes (World world, BlockPos pos) {
@@ -283,8 +374,9 @@ public class BitsHelper {
 												createLeggingsModel();
 												createModelFromData(block, bootsModel);
 										} catch (APIExceptions.CannotBeChiseled e) {
-												LogHandler.debug("Cannot chisel block @ " + pos.toString());
+												LogHandler.info("Cannot chisel block @ " + pos.toString() + " | " + e.getLocalizedMessage());
 										}
+										break;
 								}
 								// Leggings
 								case (1): {
@@ -293,16 +385,30 @@ public class BitsHelper {
 												IBitAccess block = api.getBitAccess(world, pos);
 												createModelFromData(block, leggingsModel);
 										} catch (APIExceptions.CannotBeChiseled e) {
-												LogHandler.debug("Cannot chisel block @ " + pos.toString());
+												LogHandler.info("Cannot chisel block @ " + pos.toString() + " | " + e.getLocalizedMessage());
 										}
+										break;
 								}
 								// ChestPlate
 								case (2): {
-
+										world.setBlockState(pos, VoidRPGBlocks.bodyBlock.getDefaultState());
+										world.setBlockState(pos.add(1, 0, 0), VoidRPGBlocks.bodyBlock.getDefaultState());
+										world.setBlockState(pos.add(-1, 0, 0), VoidRPGBlocks.bodyBlock.getDefaultState());
+										try {
+												IBitAccess blockBody = api.getBitAccess(world, pos);
+												IBitAccess blockArmA = api.getBitAccess(world, pos.add(1, 0, 0));
+												IBitAccess blockArmB = api.getBitAccess(world, pos.add(-1, 0, 0));
+												createModelFromData(blockBody, chestplateChestModel);
+												createModelFromData(blockArmA, chestplateArmModel);
+												createModelFromData(blockArmB, chestplateArmModel);
+										} catch (APIExceptions.CannotBeChiseled e) {
+												LogHandler.info("Cannot chisel block @ " + pos.toString() + " | " + e.getLocalizedMessage());
+										}
+										break;
 								}
 								// Helmet
 								case (3): {
-
+										break;
 								}
 						}
 				}
@@ -327,7 +433,7 @@ public class BitsHelper {
 								}
 								block.commitChanges(true);
 						} catch (APIExceptions.SpaceOccupied e) {
-								LogHandler.debug(e.getLocalizedMessage());
+								LogHandler.info(e.getLocalizedMessage());
 						}
 				}
 		}

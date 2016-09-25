@@ -10,6 +10,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.ResourceLocation;
 import wurmatron.voidrpg.api.recipe.ICubeCreatorRecipe;
+import wurmatron.voidrpg.common.config.Settings;
 import wurmatron.voidrpg.common.cube.CubeCreatorRecipeHandler;
 import wurmatron.voidrpg.common.reference.NBT;
 
@@ -23,7 +24,8 @@ public class TileCubeCreator extends TileEntity implements ITickable, IInventory
 		private ICubeCreatorRecipe activeRecipe;
 		private int checkTimer;
 		public int recipeTimer;
-		private final int UPDATE_TIMER = 100;
+		private final int UPDATE_TIMER = Settings.cubeCreatorUpdatePeriod * 20;
+		private boolean isFrozen;
 
 		@Override
 		public void update () {
@@ -34,8 +36,11 @@ public class TileCubeCreator extends TileEntity implements ITickable, IInventory
 						checkTimer--;
 				if (activeRecipe != null && recipeTimer <= 0) {
 						if (hasRecipeItems(activeRecipe)) {
-								consumeRecipeItems(activeRecipe);
-								addOutput(activeRecipe.getOutputCube());
+								if (!isFrozen) {
+										consumeRecipeItems(activeRecipe);
+										addOutput(activeRecipe.getOutputCube(), false);
+								} else
+										addOutput(activeRecipe.getOutputCube(), true);
 								if (hasRecipeItems(activeRecipe)) {
 										recipeTimer = activeRecipe.getTimeInTicks();
 								} else
@@ -214,7 +219,7 @@ public class TileCubeCreator extends TileEntity implements ITickable, IInventory
 						if (slot >= 0 && slot < getSizeInventory())
 								setInventorySlotContents(slot, ItemStack.loadItemStackFromNBT(item));
 				}
-				if (compound.getString(NBT.ACTIVERECIPE) != "null") {
+				if (!compound.getString(NBT.ACTIVERECIPE).equals("null")) {
 						ResourceLocation recipeOutput = new ResourceLocation(compound.getString(NBT.ACTIVERECIPE).substring(0, compound.getString(NBT.ACTIVERECIPE).indexOf(":")), compound.getString(NBT.ACTIVERECIPE).substring(compound.getString(NBT.ACTIVERECIPE).indexOf(":"), compound.getString(NBT.ACTIVERECIPE).indexOf("@")));
 						int stackSize = Integer.getInteger(compound.getString(NBT.ACTIVERECIPE).substring(compound.getString(NBT.ACTIVERECIPE).indexOf("@") - 1, compound.getString(NBT.ACTIVERECIPE).length()));
 						int meta = Integer.getInteger(compound.getString(NBT.ACTIVERECIPE).substring(compound.getString(NBT.ACTIVERECIPE).indexOf("@") + 1, compound.getString(NBT.ACTIVERECIPE).indexOf(":")));
@@ -272,11 +277,59 @@ public class TileCubeCreator extends TileEntity implements ITickable, IInventory
 				return false;
 		}
 
-		// TODO Finish this
-		private void addOutput (ItemStack stack) {
-				if (stack != null)
-						for (int slot = 0; slot < inventory.length; slot++)
-								if (getStackInSlot(slot) == null)
-										setInventorySlotContents(slot, stack);
+		private void addOutput (ItemStack stack, boolean checking) {
+				boolean added = false;
+				int amountLeft = stack.stackSize;
+				if (stack != null) {
+						for (int slot = 0; slot < inventory.length; slot++) {
+								if (getStackInSlot(slot) != null && getStackInSlot(slot).isItemEqual(stack) && getStackInSlot(slot).stackSize < 64) {
+										if (getStackInSlot(slot).getTagCompound() == null && stack.getTagCompound() == null || getStackInSlot(slot).getTagCompound() != null && stack.getTagCompound() != null && getStackInSlot(slot).getTagCompound().equals(stack.getTagCompound())) {
+												if (getStackInSlot(slot).stackSize + stack.stackSize <= 64) {
+														ItemStack temp = getStackInSlot(slot);
+														temp.stackSize += stack.stackSize;
+														setInventorySlotContents(slot, temp);
+														amountLeft -= stack.stackSize;
+												} else if (getStackInSlot(slot).stackSize + 1 <= 64) {
+														ItemStack temp = getStackInSlot(slot);
+														int amountTillFull = temp.stackSize;
+														for (int a = 0; a <= 64; a++)
+																if (amountTillFull + a <= stack.getMaxStackSize())
+																		if (amountTillFull + a == stack.getMaxStackSize()) {
+																				amountLeft -= a;
+																				amountTillFull += a;
+																				temp.stackSize = amountTillFull;
+																				if (!checking)
+																						setInventorySlotContents(slot, temp);
+																		}
+														if (!checking)
+																setInventorySlotContents(slot, temp);
+														amountLeft -= stack.stackSize;
+												}
+										}
+										if (amountLeft == 0) {
+												added = true;
+												break;
+										}
+								}
+						}
+						if (!added) {
+								for (int slot = 0; slot < inventory.length; slot++) {
+										if (getStackInSlot(slot) == null) {
+												if (!checking)
+														setInventorySlotContents(slot, stack);
+												amountLeft -= stack.stackSize;
+										}
+										if (amountLeft == 0) {
+												added = true;
+												break;
+										}
+								}
+								// No open slots detected, freeze machine
+								recipeTimer = 1;
+								isFrozen = true;
+						}
+						if (amountLeft == 0)
+								isFrozen = false;
+				}
 		}
 }

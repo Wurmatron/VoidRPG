@@ -33,6 +33,7 @@ import wurmatron.voidrpg.common.utils.ArmorHelper;
 
 import java.util.List;
 
+// TODO Redo this Mess :P
 public class CustomArmor extends ItemArmor implements ISpecialArmor {
 
 		private static ArmorModel modelPlayer;
@@ -79,7 +80,7 @@ public class CustomArmor extends ItemArmor implements ISpecialArmor {
 														NBTTagCompound temp = body.getCompoundTag(Integer.toString(a));
 														ICube cube = CubeRegistry.INSTANCE.getCubesFromName(temp.getString(NBT.CUBE));
 														if (cube != null)
-																modelPlayer.bipedBody.addChild(ArmorHelper.createModelRenderer(model, new CubeData(temp.getInteger(NBT.OFFSETX), temp.getInteger(NBT.OFFSETY), temp.getInteger(NBT.OFFSETZ), cube, temp.getInteger(NBT.DAMAGE))));
+																modelPlayer.bipedBody.addChild(ArmorHelper.createModelRenderer(model, new CubeData(temp.getInteger(NBT.OFFSETX) - 10, temp.getInteger(NBT.OFFSETY), temp.getInteger(NBT.OFFSETZ) - 8, cube, temp.getInteger(NBT.DAMAGE))));
 												}
 										}
 										NBTTagCompound leftArm = stack.getTagCompound().getCompoundTag(NBT.LEFTARM);
@@ -89,7 +90,7 @@ public class CustomArmor extends ItemArmor implements ISpecialArmor {
 														NBTTagCompound temp = leftArm.getCompoundTag(Integer.toString(a));
 														ICube cube = CubeRegistry.INSTANCE.getCubesFromName(temp.getString(NBT.CUBE));
 														if (cube != null)
-																modelPlayer.bipedLeftArm.addChild(ArmorHelper.createModelRenderer(model, new CubeData(temp.getInteger(NBT.OFFSETX), temp.getInteger(NBT.OFFSETY), temp.getInteger(NBT.OFFSETZ) - 32, cube, temp.getInteger(NBT.DAMAGE))));
+																modelPlayer.bipedLeftArm.addChild(ArmorHelper.createModelRenderer(model, new CubeData(temp.getInteger(NBT.OFFSETX) - 8 , temp.getInteger(NBT.OFFSETY) - 3, temp.getInteger(NBT.OFFSETZ) - 9, cube, temp.getInteger(NBT.DAMAGE))));
 												}
 										}
 										NBTTagCompound rightArm = stack.getTagCompound().getCompoundTag(NBT.RIGHTARM);
@@ -99,7 +100,7 @@ public class CustomArmor extends ItemArmor implements ISpecialArmor {
 														NBTTagCompound temp = rightArm.getCompoundTag(Integer.toString(a));
 														ICube cube = CubeRegistry.INSTANCE.getCubesFromName(temp.getString(NBT.CUBE));
 														if (cube != null)
-																modelPlayer.bipedRightArm.addChild(ArmorHelper.createModelRenderer(model, new CubeData(temp.getInteger(NBT.OFFSETX) - 8, temp.getInteger(NBT.OFFSETY) - 14, temp.getInteger(NBT.OFFSETZ) - 8, cube, temp.getInteger(NBT.DAMAGE))));
+																modelPlayer.bipedRightArm.addChild(ArmorHelper.createModelRenderer(model, new CubeData(temp.getInteger(NBT.OFFSETX) - 10, temp.getInteger(NBT.OFFSETY) - 3, temp.getInteger(NBT.OFFSETZ) - 9, cube, temp.getInteger(NBT.DAMAGE))));
 												}
 										}
 								} else if (stack.getItem().equals(VoidRPGItems.armorLeggings)) {

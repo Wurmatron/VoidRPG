@@ -7,4 +7,8 @@ public class Settings {
 		public static boolean cubeEffects;
 		public static int helmetMaxComplexity;
 		public static boolean updateCheck;
+		public static int chestplateMaxComplexity;
+		public static int leggingsMaxComplexity;
+		public static int bootsMaxComplexity;
+		public static int cubeCreatorUpdatePeriod;
 }
