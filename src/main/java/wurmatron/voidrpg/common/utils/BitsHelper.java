@@ -95,6 +95,7 @@ public class BitsHelper {
 		private static final ArrayList<Vec3i> leggingsModel = new ArrayList<Vec3i>();
 		private static ArrayList<Vec3i> chestplateChestModel = new ArrayList<Vec3i>();
 		private static ArrayList<Vec3i> chestplateArmModel = new ArrayList<Vec3i>();
+		private static ArrayList<Vec3i> helmetModel = new ArrayList<Vec3i>();
 
 		public static boolean isValidBoots (World world, BlockPos pos) {
 				if (!world.isRemote && api.isBlockChiseled(world, pos)) {
@@ -140,6 +141,26 @@ public class BitsHelper {
 				return false;
 		}
 
+		public static boolean isValidHelmet (World world, BlockPos pos) {
+				if (!world.isRemote && api.isBlockChiseled(world, pos)) {
+						ArrayList<Boolean> temp = new ArrayList<Boolean>();
+						try {
+								IBitAccess bit = api.getBitAccess(world, pos);
+								createHelmetModel();
+								for (Vec3i model : helmetModel) {
+										if (!bit.getBitAt(model.getX(), model.getY(), model.getZ()).isAir() && bit.getBitAt(model.getX(), model.getY(), model.getZ()).getState().getBlock().equals(VoidRPGBlocks.bodyBlock))
+												temp.add(true);
+										else
+												temp.add(false);
+								}
+						} catch (APIExceptions.CannotBeChiseled e) {
+								LogHandler.info(e.getLocalizedMessage());
+						}
+						return !temp.contains(false);
+				}
+				return false;
+		}
+
 		public static boolean isValidChestplate (World world, BlockPos chest, BlockPos leftArm, BlockPos rightArm) {
 				if (!world.isRemote && api.isBlockChiseled(world, chest) && api.isBlockChiseled(world, leftArm) && api.isBlockChiseled(world, rightArm)) {
 						ArrayList<Boolean> temp = new ArrayList<Boolean>();
@@ -172,6 +193,15 @@ public class BitsHelper {
 										if (x >= 5 && x <= 8 && y <= 12 && z >= 3 && z <= 10)
 												leggingsModel.add(new Vec3i(x, y, z));
 				return leggingsModel;
+		}
+
+		public static ArrayList<Vec3i> createHelmetModel () {
+				for (int x = 3; x <= 15; x++)
+						for (int y = 0; y <= 15; y++)
+								for (int z = 3; z <= 15; z++)
+										if (x < 12 && y < 8 && z < 12)
+												helmetModel.add(new Vec3i(x, y, z));
+				return helmetModel;
 		}
 
 		public static ArrayList<ArrayList<CubeData>> createBootsFromBits (World world, BlockPos pos) {
@@ -310,10 +340,6 @@ public class BitsHelper {
 				return temp;
 		}
 
-		public static boolean isValidHelmet () {
-				return false;
-		}
-
 		public static boolean areValidBits (IBitBrush bit) {
 				return bit.getItemStack(1) != null && isValid(bit.getState().getBlock());
 		}
@@ -346,6 +372,29 @@ public class BitsHelper {
 				for (int s = 0; s < cubes.length; s++)
 						data[s] = new CubeData((cubes[s].offZ * -1) + 15, cubes[s].offY, cubes[s].offX, cubes[s].cube, cubes[s].damage);
 				return data;
+		}
+
+		public static ArrayList<CubeData> createHelmetFromBits (World world, BlockPos pos) {
+				if (world != null && pos != null && !world.isRemote && isValidHelmet(world, pos) && api.isBlockChiseled(world, pos)) {
+						ArrayList<CubeData> temp = new ArrayList<CubeData>();
+						try {
+								IBitAccess bit = api.getBitAccess(world, pos);
+								for (int x = 0; x <= 15; x++)
+										for (int y = 0; y <= 15; y++)
+												for (int z = 0; z <= 15; z++)
+														if (areValidBits(bit.getBitAt(x, y, z))) {
+																ICube cube = null;
+																for (ICube c : CubeRegistry.INSTANCE.getCubes())
+																		if (c.getBlock().equals(bit.getBitAt(x, y, z).getState().getBlock()))
+																				cube = c;
+																temp.add(new CubeData(x, y, z, cube, 0));
+														}
+								return temp;
+						} catch (APIExceptions.CannotBeChiseled e) {
+								LogHandler.debug(e.getLocalizedMessage());
+						}
+				}
+				return null;
 		}
 
 		public static CubeData[] rotateUp (CubeData[] cubes) {
@@ -408,6 +457,14 @@ public class BitsHelper {
 								}
 								// Helmet
 								case (3): {
+										world.setBlockState(pos, VoidRPGBlocks.bodyBlock.getDefaultState());
+										try {
+												IBitAccess block = api.getBitAccess(world, pos);
+												createHelmetModel();
+												createModelFromData(block, helmetModel);
+										} catch (APIExceptions.CannotBeChiseled e) {
+												LogHandler.info("Cannot chisel block @ " + pos.toString() + " | " + e.getLocalizedMessage());
+										}
 										break;
 								}
 						}

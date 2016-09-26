@@ -50,9 +50,9 @@ public class ItemStaff extends Item {
 						if (stack.getItemDamage() == 0 && !player.isSneaking()) {
 								RayTraceResult ray = Minecraft.getMinecraft().getRenderViewEntity().rayTrace(5, 1.0F);
 								if (new ChiselAndBitsAPI().isBlockChiseled(world, ray.getBlockPos())) {
-										boolean chest = BitsHelper.isValidChestplate(world, ray.getBlockPos(), ray.getBlockPos().add(1,0,0), ray.getBlockPos().add(-1,0,0));
-										LogHandler.info("Clicky " + chest);
-										if (chest) {
+										boolean helmet = BitsHelper.isValidHelmet(world, ray.getBlockPos());
+										LogHandler.info("Clicky " + helmet);
+										if (helmet) {
 												EnumFaceDirection face = EnumFaceDirection.getFacing(ray.sideHit);
 												if (face != EnumFaceDirection.DOWN || face != EnumFaceDirection.UP) {
 														stack.setItemDamage(getMaxDamage());
@@ -63,78 +63,65 @@ public class ItemStaff extends Item {
 																nbt.setInteger(NBT.DURABILITY, maxDurability - 1);
 																stack.setTagCompound(nbt);
 														}
-														if (BitsHelper.isValidChestplate(world, ray.getBlockPos(),ray.getBlockPos().add(1,0,0), ray.getBlockPos().add(-1,0,0))) {
-																ArrayList<ArrayList<CubeData>> bits = BitsHelper.createChestplateFromBit(world, ray.getBlockPos(),ray.getBlockPos().add(1,0,0), ray.getBlockPos().add(-1,0,0));
+														if (BitsHelper.isValidHelmet(world, ray.getBlockPos())) {
+																LogHandler.info("Helmet");
+																ArrayList<CubeData> bits = BitsHelper.createHelmetFromBits(world, ray.getBlockPos());
 																if (bits != null && !bits.isEmpty()) {
-																		ArrayList<CubeData> body = bits.get(0);
-																		ArrayList<CubeData> leftArm = bits.get(1);
-																		ArrayList<CubeData> rightArm = bits.get(2);
-																		CubeData[] chestData = new CubeData[body.size()];
-																		CubeData[] leftArmData = new CubeData[leftArm.size()];
-																		CubeData[] rightArmData = new CubeData[rightArm.size()];
-																		for(int l = 0; l < body.size(); l++)
-																				chestData[l] = body.get(l);
-																		for(int l = 0; l < leftArm.size(); l++)
-																				leftArmData[l] = leftArm.get(l);
-																		for(int l = 0; l < rightArm.size(); l++)
-																				rightArmData[l] = rightArm.get(l);
-																		if (face == EnumFaceDirection.WEST) {
-																				chestData = BitsHelper.rotateClockwise(chestData);
-																				chestData = BitsHelper.rotateClockwise(chestData);
-																				chestData = BitsHelper.rotateClockwise(chestData);
-																				leftArmData = BitsHelper.rotateClockwise(leftArmData);
-																				leftArmData = BitsHelper.rotateClockwise(leftArmData);
-																				leftArmData = BitsHelper.rotateClockwise(leftArmData);
-																				rightArmData = BitsHelper.rotateClockwise(rightArmData);
-																				rightArmData = BitsHelper.rotateClockwise(rightArmData);
-																				rightArmData = BitsHelper.rotateClockwise(rightArmData);
+																		LogHandler.info("Helmet is Valid");
+
+																		if (bits != null && !bits.isEmpty()) {
+																				CubeData[] data = new CubeData[bits.size()];
+																				for (int l = 0; l < bits.size(); l++)
+																						data[l] = bits.get(l);
+																				if (face == EnumFaceDirection.WEST) {
+																						data = BitsHelper.rotateClockwise(data);
+																						data = BitsHelper.rotateClockwise(data);
+																						data = BitsHelper.rotateClockwise(data);
+//																				leftArmData = BitsHelper.rotateClockwise(leftArmData);
+//																				leftArmData = BitsHelper.rotateClockwise(leftArmData);
+//																				leftArmData = BitsHelper.rotateClockwise(leftArmData);
+//																				rightArmData = BitsHelper.rotateClockwise(rightArmData);
+//																				rightArmData = BitsHelper.rotateClockwise(rightArmData);
+//																				rightArmData = BitsHelper.rotateClockwise(rightArmData);
+																				}
+																				if (face == EnumFaceDirection.EAST) {
+																						data = BitsHelper.rotateClockwise(data);
+//																				leftArmData = BitsHelper.rotateClockwise(leftArmData);
+//																				rightArmData = BitsHelper.rotateClockwise(rightArmData);
+																				}
+																				if (face == EnumFaceDirection.SOUTH) {
+																						data = BitsHelper.rotateClockwise(data);
+																						data = BitsHelper.rotateClockwise(data);
+//																				leftArmData = BitsHelper.rotateClockwise(leftArmData);
+//																				leftArmData = BitsHelper.rotateClockwise(leftArmData);
+//																				rightArmData = BitsHelper.rotateClockwise(rightArmData);
+//																				rightArmData = BitsHelper.rotateClockwise(rightArmData);
+																				}
+																				LogHandler.debug("Direction: " + face.name() + " Size: " + bits.size());
+																				if (face == EnumFaceDirection.WEST) {
+																						data = BitsHelper.rotateClockwise(data);
+																						data = BitsHelper.rotateClockwise(data);
+																						data = BitsHelper.rotateClockwise(data);
+//																						rightCubes = BitsHelper.rotateClockwise(rightCubes);
+//																						rightCubes = BitsHelper.rotateClockwise(rightCubes);
+//																						rightCubes = BitsHelper.rotateClockwise(rightCubes);
+																				}
+																				if (face == EnumFaceDirection.EAST) {
+																						data = BitsHelper.rotateClockwise(data);
+//																						leftCubes = BitsHelper.rotateClockwise(leftCubes);
+																				}
+																				if (face == EnumFaceDirection.SOUTH) {
+																						data = BitsHelper.rotateClockwise(data);
+																						data = BitsHelper.rotateClockwise(data);
+//																						leftCubes = BitsHelper.rotateClockwise(leftCubes);
+//																						leftCubes = BitsHelper.rotateClockwise(leftCubes);
+																				}
+																				ItemStack boots = new ArmorHelper().createArmorStack(VoidRPGItems.armorHelmet, data);
+																				player.inventory.addItemStackToInventory(boots);
+																				player.addChatComponentMessage(new TextComponentTranslation(Local.STAFF_BOOTS).setStyle(new Style().setColor(TextFormatting.AQUA)));
+																				return new ActionResult(EnumActionResult.SUCCESS, stack);
 																		}
-																		if (face == EnumFaceDirection.EAST) {
-																				chestData = BitsHelper.rotateClockwise(chestData);
-																				leftArmData = BitsHelper.rotateClockwise(leftArmData);
-																				rightArmData = BitsHelper.rotateClockwise(rightArmData);
-																		}
-																		if (face == EnumFaceDirection.SOUTH) {
-																				chestData = BitsHelper.rotateClockwise(chestData);
-																				chestData = BitsHelper.rotateClockwise(chestData);
-																				leftArmData = BitsHelper.rotateClockwise(leftArmData);
-																				leftArmData = BitsHelper.rotateClockwise(leftArmData);
-																				rightArmData = BitsHelper.rotateClockwise(rightArmData);
-																				rightArmData = BitsHelper.rotateClockwise(rightArmData);
-																		}
-//																		ArrayList<CubeData> left = bits.get(0);
-//																		ArrayList<CubeData> right = bits.get(1);
-//																		CubeData[] bodyChest = new CubeData[body.size()];
-//																		CubeData[] leftCubes = new CubeData[right.size()];
-//																		for (int l = 0; l < left.size(); l++)
-//																				leftCubes[l] = left.get(l);
-//																		for (int l = 0; l < right.size(); l++)
-//																				rightCubes[l] = right.get(l);
-//																		LogHandler.debug("Direction: " + face.name() + " Size: " +  bits.size());
-//																		if (face == EnumFaceDirection.WEST) {
-//																				leftCubes = BitsHelper.rotateClockwise(leftCubes);
-//																				leftCubes = BitsHelper.rotateClockwise(leftCubes);
-//																				leftCubes = BitsHelper.rotateClockwise(leftCubes);
-//																				rightCubes = BitsHelper.rotateClockwise(rightCubes);
-//																				rightCubes = BitsHelper.rotateClockwise(rightCubes);
-//																				rightCubes = BitsHelper.rotateClockwise(rightCubes);
-//																		}
-//																		if (face == EnumFaceDirection.EAST) {
-//																				rightCubes = BitsHelper.rotateClockwise(rightCubes);
-//																				leftCubes = BitsHelper.rotateClockwise(leftCubes);
-//																		}
-//																		if (face == EnumFaceDirection.SOUTH) {
-//																				rightCubes = BitsHelper.rotateClockwise(rightCubes);
-//																				rightCubes = BitsHelper.rotateClockwise(rightCubes);
-//																				leftCubes = BitsHelper.rotateClockwise(leftCubes);
-//																				leftCubes = BitsHelper.rotateClockwise(leftCubes);
-//																		}
-																		ItemStack boots = new ArmorHelper().createArmorStack(VoidRPGItems.armorChestplate, chestData, leftArmData, rightArmData);
-																		player.inventory.addItemStackToInventory(boots);
-																		player.addChatComponentMessage(new TextComponentTranslation(Local.STAFF_BOOTS).setStyle(new Style().setColor(TextFormatting.AQUA)));
-																		return new ActionResult(EnumActionResult.SUCCESS, stack);
 																}
-														}
 //														ArrayList<ArrayList<CubeData>> bits = null;
 //														if (BitsHelper.isValidBoots(world, ray.getBlockPos()))
 //																bits = BitsHelper.createBootsFromBits(world, ray.getBlockPos());
@@ -157,9 +144,10 @@ public class ItemStaff extends Item {
 //																ItemStack helmet = new ArmorHelper().createArmorStack(VoidRPGItems.armorBoots, data, data);
 //																player.inventory.addItemStackToInventory(helmet);
 //																return new ActionResult(EnumActionResult.SUCCESS, stack);
-												} else {
-														player.addChatComponentMessage(new TextComponentTranslation(Local.STAFF_INVALID).setStyle(new Style().setColor(TextFormatting.DARK_RED)));
-														return new ActionResult(EnumActionResult.PASS, stack);
+														} else {
+																player.addChatComponentMessage(new TextComponentTranslation(Local.STAFF_INVALID).setStyle(new Style().setColor(TextFormatting.DARK_RED)));
+																return new ActionResult(EnumActionResult.PASS, stack);
+														}
 												}
 										}
 								}
@@ -167,10 +155,8 @@ public class ItemStaff extends Item {
 								player.addChatComponentMessage(new TextComponentTranslation(Local.STAFF_CHARGING).setStyle(new Style().setColor(TextFormatting.RED)));
 						else if (player.isSneaking()) {
 								RayTraceResult ray = Minecraft.getMinecraft().getRenderViewEntity().rayTrace(5, 1.0F);
-								boolean leggings = BitsHelper.isValidLeggings(world, ray.getBlockPos());
-								BitsHelper.createChestplateArmModel();
-								BitsHelper.createChestplateChestModel();
-								BitsHelper.createBaseArmorBlock(2, world, new BlockPos(player.posX, player.posY - 1, player.posZ));
+								BitsHelper.createHelmetModel();
+								BitsHelper.createBaseArmorBlock(3, world, new BlockPos(player.posX, player.posY - 1, player.posZ));
 						} else {
 								if (stack.getTagCompound() == null) {
 										NBTTagCompound nbt = new NBTTagCompound();
