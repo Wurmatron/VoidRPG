@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class ArmorHelper {
 
-		private CubeRegistry registry = new CubeRegistry();
+		private final CubeRegistry registry = new CubeRegistry();
 
 		public static ModelRenderer createModelRenderer (ModelBase base, final CubeData data) {
 				ModelRenderer model = new ModelRenderer(base) {

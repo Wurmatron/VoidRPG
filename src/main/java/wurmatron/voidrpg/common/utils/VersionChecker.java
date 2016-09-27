@@ -11,7 +11,7 @@ import java.net.URLConnection;
 public class VersionChecker {
 
 		public static boolean isUpdated () {
-				return getVersion(Global.UPDATE_URL).equals(Global.VERSION) && Settings.updateCheck || Global.VERSION.equals("@VERSION@") && Settings.updateCheck;
+				return Global.VERSION.equals("@VERSION@") && Settings.updateCheck || getVersion(Global.UPDATE_URL).equals(Global.VERSION) && Settings.updateCheck;
 		}
 
 		public static String getVersion (String updateLink) {
