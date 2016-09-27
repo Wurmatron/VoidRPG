@@ -13,6 +13,7 @@ public class VoidRPGItems {
 		public static Item armorChestplate;
 		public static Item armorLeggings;
 		public static Item armorBoots;
+		public static Item itemModelPlacer;
 
 		public static void init () {
 				registerItem(itemStaff = new ItemStaff());
@@ -20,6 +21,7 @@ public class VoidRPGItems {
 				registerItem(armorChestplate = new CustomArmor(ItemArmor.ArmorMaterial.DIAMOND, 1, EntityEquipmentSlot.CHEST));
 				registerItem(armorLeggings = new CustomArmor(ItemArmor.ArmorMaterial.DIAMOND, 2, EntityEquipmentSlot.LEGS));
 				registerItem(armorBoots = new CustomArmor(ItemArmor.ArmorMaterial.DIAMOND, 3, EntityEquipmentSlot.FEET));
+				registerItem(itemModelPlacer = new ItemModelPlacer());
 		}
 
 		private static void registerItem (Item item) {

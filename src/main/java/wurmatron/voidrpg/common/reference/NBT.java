@@ -17,4 +17,5 @@ public class NBT {
 		public static final String INVENTORY = "inventory";
 		public static final String SLOT = "slot";
 		public static final String ACTIVERECIPE = "activeRecipe";
+		public static final String TYPE = "type";
 }

@@ -420,7 +420,6 @@ public class BitsHelper {
 										world.setBlockState(pos, VoidRPGBlocks.bodyBlock.getDefaultState());
 										try {
 												IBitAccess block = api.getBitAccess(world, pos);
-												createLeggingsModel();
 												createModelFromData(block, bootsModel);
 										} catch (APIExceptions.CannotBeChiseled e) {
 												LogHandler.info("Cannot chisel block @ " + pos.toString() + " | " + e.getLocalizedMessage());
@@ -432,6 +431,7 @@ public class BitsHelper {
 										world.setBlockState(pos, VoidRPGBlocks.bodyBlock.getDefaultState());
 										try {
 												IBitAccess block = api.getBitAccess(world, pos);
+												createLeggingsModel();
 												createModelFromData(block, leggingsModel);
 										} catch (APIExceptions.CannotBeChiseled e) {
 												LogHandler.info("Cannot chisel block @ " + pos.toString() + " | " + e.getLocalizedMessage());
@@ -444,6 +444,8 @@ public class BitsHelper {
 										world.setBlockState(pos.add(1, 0, 0), VoidRPGBlocks.bodyBlock.getDefaultState());
 										world.setBlockState(pos.add(-1, 0, 0), VoidRPGBlocks.bodyBlock.getDefaultState());
 										try {
+												createChestplateArmModel();
+												createChestplateChestModel();
 												IBitAccess blockBody = api.getBitAccess(world, pos);
 												IBitAccess blockArmA = api.getBitAccess(world, pos.add(1, 0, 0));
 												IBitAccess blockArmB = api.getBitAccess(world, pos.add(-1, 0, 0));

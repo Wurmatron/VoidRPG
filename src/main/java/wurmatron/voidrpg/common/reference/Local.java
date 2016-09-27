@@ -18,6 +18,7 @@ public class Local {
 		public static final String MAXAMOUNT_CHEST = "stat.maxChest.name";
 		public static final String MAXAMOUNT_LEGS = "stat.maxLegs.name";
 		public static final String MAXAMOUNT_BOOTS = "stat.maxBoots.name";
+		public static final String PLACMENT_TYPE = "tooltip.placmenttype.name";
 
 		@SideOnly (Side.CLIENT)
 		public static String transtate (String key) {
