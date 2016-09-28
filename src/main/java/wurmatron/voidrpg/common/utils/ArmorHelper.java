@@ -64,7 +64,6 @@ public class ArmorHelper {
 				ItemStack stack = new ItemStack(item, 1, 0);
 				NBTTagCompound nbt = new NBTTagCompound();
 				int a = 0;
-				LogHandler.info("Base S: " + base.length);
 				for (CubeData c : base) {
 						NBTTagCompound temp = new NBTTagCompound();
 						temp.setInteger(NBT.OFFSETX, c.offX);

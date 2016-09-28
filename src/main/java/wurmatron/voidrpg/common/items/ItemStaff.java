@@ -80,6 +80,10 @@ public class ItemStaff extends Item {
 								for (int c = 0; c < data.size(); c++)
 										temp[c] = data.get(c);
 								temp = correctForFace(EnumFaceDirection.getFacing(ray.sideHit), temp);
+								temp = BitsHelper.rotateUp(temp);
+								temp = BitsHelper.rotateUp(temp);
+								temp = BitsHelper.rotateUp(temp);
+								temp = BitsHelper.rotateUp(temp);
 								if (temp != null && data.size() > 0)
 										return helper.createArmorStack(VoidRPGItems.armorHelmet, temp);
 						}
@@ -102,6 +106,8 @@ public class ItemStaff extends Item {
 						chest = correctForFace(EnumFaceDirection.getFacing(ray.sideHit), chest);
 						left = correctForFace(EnumFaceDirection.getFacing(ray.sideHit), left);
 						right = correctForFace(EnumFaceDirection.getFacing(ray.sideHit), right);
+						left = BitsHelper.rotateUp(left);
+						right = BitsHelper.rotateUp(right);
 						if (chest != null && left != null && right != null && chest.length > 0 && left.length > 0 && right.length > 0)
 								return helper.createArmorStack(VoidRPGItems.armorChestplate, chest, left, right);
 				}
@@ -120,7 +126,7 @@ public class ItemStaff extends Item {
 						left = correctForFace(EnumFaceDirection.getFacing(ray.sideHit), left);
 						right = correctForFace(EnumFaceDirection.getFacing(ray.sideHit), right);
 						if (data.size() > 0 && left.length > 0 && right.length > 0)
-								return helper.createArmorStack(VoidRPGItems.armorLeggings, left, right);
+								return helper.createArmorStack(VoidRPGItems.armorLeggings, right, left);
 				}
 				return null;
 		}
@@ -144,11 +150,11 @@ public class ItemStaff extends Item {
 
 		private CubeData[] correctForFace (EnumFaceDirection face, CubeData[] data) {
 				if (face != EnumFaceDirection.DOWN || face != EnumFaceDirection.UP) {
-						if (face.equals(EnumFaceDirection.WEST)) {
+						if (face.equals(EnumFaceDirection.EAST)) {
 								data = BitsHelper.rotateClockwise(data);
 								data = BitsHelper.rotateClockwise(data);
 								data = BitsHelper.rotateClockwise(data);
-						} else if (face.equals(EnumFaceDirection.EAST))
+						} else if (face.equals(EnumFaceDirection.WEST))
 								data = BitsHelper.rotateClockwise(data);
 						else if (face.equals(EnumFaceDirection.SOUTH)) {
 								data = BitsHelper.rotateClockwise(data);

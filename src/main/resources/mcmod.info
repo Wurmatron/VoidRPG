@@ -5,10 +5,10 @@
   "description": "",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "",
+  "url": "https://github.com/Wurmatron/VoidRPG",
   "updateUrl": "",
   "authorList": ["Wurmatron"],
-  "credits": "",
+  "credits": "Special Thanks to Troykoffeman",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []
