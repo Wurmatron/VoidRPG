@@ -220,9 +220,9 @@ public class BitsHelper {
 																		if (c.getBlock().equals(bit.getBitAt(x, y, z).getState().getBlock()))
 																				cube = c;
 																if (x <= 6 && cube != null)
-																		b.add(new CubeData(x, y, z, cube, 0));
-																else
 																		a.add(new CubeData(x, y, z, cube, 0));
+																else
+																		b.add(new CubeData(x, y, z, cube, 0));
 														}
 								data.add(a);
 								data.add(b);
