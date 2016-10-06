@@ -241,8 +241,8 @@ public class BitsHelper {
 								ArrayList<ArrayList<CubeData>> data = new ArrayList<ArrayList<CubeData>>();
 								ArrayList<CubeData> a = new ArrayList<CubeData>();
 								ArrayList<CubeData> b = new ArrayList<CubeData>();
-								for (int x = 3; x <= 15; x++)
-										for (int z = 3; z <= 15; z++)
+								for (int x = 1; x <= 15; x++)
+										for (int z = 1; z <= 15; z++)
 												for (int y = 0; y <= 12; y++) {
 														if (!bit.getBitAt(x, y, z).isAir())
 																if (areValidBits(bit.getBitAt(x, y, z))) {
@@ -495,5 +495,18 @@ public class BitsHelper {
 								LogHandler.info(e.getLocalizedMessage());
 						}
 				}
+		}
+
+		public static CubeData[] translate (CubeData[] data, Vec3i vec) {
+				if (data != null && data.length > 0 && vec != null) {
+						ArrayList<CubeData> translated = new ArrayList<CubeData>();
+						for (CubeData d : data)
+								translated.add(new CubeData(d.offX + vec.getX(), d.offY + vec.getY(), d.offZ + vec.getZ(), d.cube, d.damage));
+						CubeData[] temp = new CubeData[translated.size()];
+						for (int f = 0; f < translated.size(); f++)
+								temp[f] = translated.get(f);
+						return temp;
+				}
+				return null;
 		}
 }

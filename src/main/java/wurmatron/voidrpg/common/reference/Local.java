@@ -15,4 +15,5 @@ public class Local {
 		public static final String MAXAMOUNT_LEGS = "stat.maxLegs.name";
 		public static final String MAXAMOUNT_BOOTS = "stat.maxBoots.name";
 		public static final String PLACMENT_TYPE = "tooltip.placmenttype.name";
+		public static final String STAFF_WRONG_PANTS = "chat.message.invalidPants";
 }
