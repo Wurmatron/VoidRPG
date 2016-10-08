@@ -326,4 +326,50 @@ public class ArmorHelper {
 						return ChatFormatting.DARK_RED;
 				return ChatFormatting.BLUE;
 		}
+
+		public CubeData[] getHelmetCubes (ItemStack stack) {
+				if (stack != null && stack.getTagCompound() != null && !stack.getTagCompound().hasNoTags())
+						if (stack.getItem().equals(VoidRPGItems.armorHelmet))
+								return getCubesFromNBT(stack.getTagCompound());
+				return null;
+		}
+
+		public CubeData[] getChestplateCubes (ItemStack stack, String type) {
+				if (stack != null && stack.getTagCompound() != null && !stack.getTagCompound().hasNoTags()) {
+						if (stack.getItem().equals(VoidRPGItems.armorChestplate))
+								return getCubesFromNBT(stack.getTagCompound().getCompoundTag(type));
+				}
+				return null;
+		}
+
+		public CubeData[] getLeggingsCubes (ItemStack stack, String type) {
+				if (stack != null && stack.getTagCompound() != null && !stack.getTagCompound().hasNoTags()) {
+						if (stack.getItem().equals(VoidRPGItems.armorLeggings) || stack.getItem().equals(VoidRPGItems.armorBoots))
+								return getCubesFromNBT(stack.getTagCompound().getCompoundTag(type));
+				}
+				return null;
+		}
+
+		public CubeData[] getBootsCubes (ItemStack stack, String type) {
+				return getLeggingsCubes(stack, type);
+		}
+
+		public CubeData[] getCubesFromNBT (NBTTagCompound nbt) {
+				if (nbt != null && !nbt.hasNoTags()) {
+						ArrayList<CubeData> cubes = new ArrayList<>();
+						NBTTagCompound data = nbt;
+						int amount = data.getInteger(NBT.AMOUNT);
+						for (int amt = 0; amt < amount; amt++) {
+								NBTTagCompound temp = data.getCompoundTag(Integer.toString(amt));
+								ICube cube = CubeRegistry.INSTANCE.getCubesFromName(temp.getString(NBT.CUBE));
+								if (cube != null)
+										cubes.add(new CubeData(temp.getInteger(NBT.OFFSETX), temp.getInteger(NBT.OFFSETY), temp.getInteger(NBT.OFFSETZ), cube, temp.getInteger(NBT.DAMAGE)));
+						}
+						CubeData[] temp = new CubeData[cubes.size()];
+						for (int c = 0; c < cubes.size(); c++)
+								temp[c] = cubes.get(c);
+						return temp;
+				}
+				return null;
+		}
 }

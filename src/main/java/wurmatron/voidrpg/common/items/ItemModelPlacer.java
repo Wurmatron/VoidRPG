@@ -10,6 +10,7 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -47,9 +48,9 @@ public class ItemModelPlacer extends Item {
 								return EnumActionResult.SUCCESS;
 						} else {
 								if (temp != null)
-										player.addChatComponentMessage(new TextComponentString(I18n.format(Local.PLACER_BLOCK) + " " + I18n.format(temp.getUnlocalizedName())));
+										player.addChatComponentMessage(new TextComponentString(I18n.format(Local.PLACER_BLOCK) + " " + I18n.format(new ItemStack(temp).getDisplayName())).setStyle(new Style().setColor(TextFormatting.AQUA)));
 								else
-										player.addChatComponentMessage(new TextComponentString(I18n.format(Local.PLACER_BLOCK) + " " + I18n.format(defaultBlock.getUnlocalizedName())));
+										player.addChatComponentMessage(new TextComponentString(I18n.format(Local.PLACER_BLOCK) + " " + I18n.format(new ItemStack(defaultBlock).getDisplayName())).setStyle(new Style().setColor(TextFormatting.AQUA)));
 						}
 				}
 				return EnumActionResult.FAIL;
