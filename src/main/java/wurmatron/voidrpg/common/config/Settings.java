@@ -11,4 +11,5 @@ public class Settings {
 		public static int leggingsMaxComplexity;
 		public static int bootsMaxComplexity;
 		public static int cubeCreatorUpdatePeriod;
+		public static String MODELPLACERBLOCK;
 }

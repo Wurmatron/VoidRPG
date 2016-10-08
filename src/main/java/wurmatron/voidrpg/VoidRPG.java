@@ -3,7 +3,6 @@ package wurmatron.voidrpg;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -41,7 +40,7 @@ public class VoidRPG {
 		public static final CreativeTabs tabVoidRPG = new CreativeTabs("tabVoidRPG") {
 				@Override
 				public Item getTabIconItem () {
-						return Items.ENDER_EYE;
+						return VoidRPGItems.itemStaff;
 				}
 		};
 
@@ -49,6 +48,9 @@ public class VoidRPG {
 		public void onPreInit (FMLPreInitializationEvent e) {
 				LogHandler.info("Pre-Init");
 				ConfigHandler.preInit(e);
+				VoidRPGBlocks.init();
+				VoidRPGItems.init();
+				proxy.register();
 		}
 
 		@Mod.EventHandler
@@ -56,9 +58,6 @@ public class VoidRPG {
 				LogHandler.info("Init");
 				ConfigHandler.loadMainConfig();
 				NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
-				VoidRPGItems.init();
-				VoidRPGBlocks.init();
-				proxy.register();
 				MinecraftForge.EVENT_BUS.register(new PlayerJoinEvent());
 				CubeRegistry.INSTANCE.registerCube(new Cube("test", Blocks.IRON_BLOCK, new ResourceLocation("minecraft", "textures/blocks/iron_block.png"), 0.1, 1, 5,2000));
 				CubeRegistry.INSTANCE.registerCube(new Cube("armorLight", VoidRPGBlocks.armorLight, new ResourceLocation("minecraft", "textures/blocks/gold_block.png"), 0.1, 1, 50,4096));

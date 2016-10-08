@@ -25,6 +25,7 @@ public class ConfigHandler {
 		public static Property leggingsMaxComplexity;
 		public static Property bootsMaxComplexity;
 		public static Property cubeCreatorUpdatePeriod;
+		public static Property modelPlacerBlock;
 
 		public static void preInit (FMLPreInitializationEvent e) {
 				location = new File(e.getSuggestedConfigurationFile().getParent() + File.separator + Global.NAME);
@@ -53,7 +54,8 @@ public class ConfigHandler {
 						Settings.bootsMaxComplexity = bootsMaxComplexity.getInt();
 						cubeCreatorUpdatePeriod = mainConfig.get(Configuration.CATEGORY_GENERAL, "cubeCreatorUpdatePeriod", Defaults.CUBECREATORUPDATEPERIOD, "Cube Creator Update Period");
 						Settings.cubeCreatorUpdatePeriod = cubeCreatorUpdatePeriod.getInt();
-
+						modelPlacerBlock = mainConfig.get(Configuration.CATEGORY_GENERAL, "modelPlacerBlock", Defaults.MODELPLACERBLOCK, "Block that can model can be placed on");
+						Settings.MODELPLACERBLOCK = modelPlacerBlock.getString();
 
 						if (mainConfig.hasChanged()) {
 								LogHandler.info("Config saved");

@@ -4,6 +4,7 @@ package wurmatron.voidrpg.common.items;
 import mod.chiselsandbits.core.api.ChiselAndBitsAPI;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.EnumFaceDirection;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -56,15 +57,23 @@ public class ItemStaff extends Item {
 										ItemStack boots = checkAndHandleBoots(world, ray.getBlockPos(), ray, player);
 										if (chestplate != null) {
 												player.inventory.addItemStackToInventory(chestplate);
+												stack.setItemDamage(stack.getMaxDamage());
+												stack.getTagCompound().setInteger(NBT.DURABILITY, stack.getTagCompound().getInteger(NBT.DURABILITY) - 1);
 												player.addChatComponentMessage(new TextComponentTranslation(Local.STAFF_CHESTPLATE).setStyle(new Style().setColor(TextFormatting.AQUA)));
 										} else if (leggings != null) {
 												player.inventory.addItemStackToInventory(leggings);
+												stack.setItemDamage(stack.getMaxDamage());
+												stack.getTagCompound().setInteger(NBT.DURABILITY, stack.getTagCompound().getInteger(NBT.DURABILITY) - 1);
 												player.addChatComponentMessage(new TextComponentTranslation(Local.STAFF_LEGS).setStyle(new Style().setColor(TextFormatting.AQUA)));
 										} else if (helmet != null) {
 												player.inventory.addItemStackToInventory(helmet);
+												stack.setItemDamage(stack.getMaxDamage());
+												stack.getTagCompound().setInteger(NBT.DURABILITY, stack.getTagCompound().getInteger(NBT.DURABILITY) - 1);
 												player.addChatComponentMessage(new TextComponentTranslation(Local.STAFF_HELMET).setStyle(new Style().setColor(TextFormatting.AQUA)));
 										} else if (boots != null) {
 												player.inventory.addItemStackToInventory(boots);
+												stack.setItemDamage(stack.getMaxDamage());
+												stack.getTagCompound().setInteger(NBT.DURABILITY, stack.getTagCompound().getInteger(NBT.DURABILITY) - 1);
 												player.addChatComponentMessage(new TextComponentTranslation(Local.STAFF_BOOTS).setStyle(new Style().setColor(TextFormatting.AQUA)));
 										}
 								}
@@ -234,10 +243,6 @@ public class ItemStaff extends Item {
 				return null;
 		}
 
-		private CubeData[] correctForFace (EnumFaceDirection face, CubeData[] data) {
-				return null;
-		}
-
 		@Override
 		public void onUpdate (ItemStack stack, World world, Entity entity, int slot, boolean isSelected) {
 				if (stack.getTagCompound() != null && stack.getTagCompound().hasKey(NBT.DURABILITY))
@@ -258,7 +263,7 @@ public class ItemStaff extends Item {
 		@Override
 		public void addInformation (ItemStack stack, EntityPlayer player, List<String> tip, boolean adv) {
 				if (stack.getTagCompound() != null)
-						tip.add(TextFormatting.GOLD + "Durability" + ": " + getColorBasedOnMaxDurability(stack.getTagCompound().getInteger(NBT.DURABILITY), MAX_DURABIITY) + stack.getTagCompound().getInteger(NBT.DURABILITY));
+						tip.add(TextFormatting.GOLD + I18n.format(Local.DURABILITY) + ": " + getColorBasedOnMaxDurability(stack.getTagCompound().getInteger(NBT.DURABILITY), MAX_DURABIITY) + stack.getTagCompound().getInteger(NBT.DURABILITY));
 		}
 
 		private TextFormatting getColorBasedOnMaxDurability (int current, int max) {

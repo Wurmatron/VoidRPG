@@ -1,0 +1,41 @@
+# Creative Tab
+itemGroup.tabVoidRPG=VoidRPG
+
+# Items
+item.creationStaff.name=Creation Staff
+item.modelPlacer_0.name=Model Placer (Boots)
+item.modelPlacer_1.name=Model Placer (Leggings)
+item.modelPlacer_2.name=Model Placer (Chestplate)
+item.modelPlacer_3.name=Model Placer (Helmet)
+item.armor_feet.name=Boots
+item.armor_legs.name=Leggings
+item.armor_chest.name=Chestplate
+item.armor_head.name=Helmet
+
+# Blocks
+tile.blockLightArmor.name=Light Armor Block
+tile.armorReinforced.name=Reinforced Armor Block
+tile.cubeCreator.name=Cube Creator
+
+# Tooltips
+tooltip.placmenttype.name=Type
+type.helmet=Helmet
+type.chestplate=Chestplate
+type.leggings=Leggings
+type.boots=Boots
+type.unknown=Unknown
+stat.durability.name=Durability
+stat.weight.name=Weight
+stat.complexity.name=Complexity
+
+# Chat
+chat.message.validHelmet=Creating Helmet
+chat.message.validChestplate=Creating Chestplate
+chat.message.validLeggings=Creating Leggings
+chat.message.validBoots=Creating Boots
+chat.message.charging=Staff Is Still Charging
+chat.message.invalid=Invalid Creation / Model
+chat.message.invalidPants=Would you put your pants on Sideways, I Don't think so.
+chat.message.placmentBlock=To create this model use it on
+
+

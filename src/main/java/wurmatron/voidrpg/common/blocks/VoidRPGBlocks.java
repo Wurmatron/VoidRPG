@@ -3,6 +3,7 @@ package wurmatron.voidrpg.common.blocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import wurmatron.voidrpg.client.proxy.ClientProxy;
 import wurmatron.voidrpg.common.tiles.TileCubeCreator;
 
 public class VoidRPGBlocks {
@@ -23,6 +24,7 @@ public class VoidRPGBlocks {
 
 		private static Block registerBlock (Block block) {
 				GameRegistry.registerBlock(block, block.getUnlocalizedName());
+				ClientProxy.blocks.add(block);
 				return block;
 		}
 }

@@ -42,7 +42,7 @@ public class CustomArmor extends ItemArmor implements ISpecialArmor {
 
 		public CustomArmor (ArmorMaterial mat, int renderIndexIn, EntityEquipmentSlot equipmentSlotIn) {
 				super(mat, renderIndexIn, equipmentSlotIn);
-				setUnlocalizedName("armor_" + equipmentSlotIn.name());
+				setUnlocalizedName("armor_" + equipmentSlotIn.name().toLowerCase());
 				setCreativeTab(VoidRPG.tabVoidRPG);
 		}
 

@@ -10,9 +10,6 @@ public class CubeRegistry {
 		public static ArrayList<ICube> cubes = new ArrayList<ICube>();
 		public static HashMap<String, ICube> cacheNames = new HashMap<String, ICube>();
 
-		public static final String DEFENSE = "Defense";
-		public static final String DECO = "Deco";
-
 		public static CubeRegistry INSTANCE = new CubeRegistry();
 
 		public ArrayList<ICube> getCubes () {
