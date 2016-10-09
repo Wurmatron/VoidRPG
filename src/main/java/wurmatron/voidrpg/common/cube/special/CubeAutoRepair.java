@@ -57,4 +57,9 @@ public class CubeAutoRepair implements ICube {
 		public int getMaxAmount (Item item) {
 				return 200;
 		}
+
+		@Override
+		public int getMinAmount (Item item, double weight) {
+				return 0;
+		}
 }

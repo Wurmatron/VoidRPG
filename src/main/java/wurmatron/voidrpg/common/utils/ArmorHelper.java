@@ -372,4 +372,61 @@ public class ArmorHelper {
 				}
 				return null;
 		}
+
+		public int getCubeAmount (ItemStack item, ICube cube) {
+				if (item.getItem().equals(VoidRPGItems.armorHelmet)) {
+						CubeData[] cubes = getHelmetCubes(item);
+						int amount = 0;
+						for (CubeData data : cubes)
+								if (data.cube.equals(cube))
+										amount++;
+						return amount;
+				}
+				if (item.getItem().equals(VoidRPGItems.armorChestplate)) {
+						CubeData[] body = getChestplateCubes(item, NBT.BODY);
+						int amount = 0;
+						for (CubeData data : body)
+								if (data.cube.equals(cube))
+										amount++;
+						CubeData[] left = getChestplateCubes(item, NBT.LEFTARM);
+						for (CubeData data : left)
+								if (data.cube.equals(cube))
+										amount++;
+						CubeData[] right = getChestplateCubes(item, NBT.RIGHTARM);
+						for (CubeData data : right)
+								if (data.cube.equals(cube))
+										amount++;
+						return amount;
+				}
+				if (item.getItem().equals(VoidRPGItems.armorLeggings)) {
+						CubeData[] left = getLeggingsCubes(item, NBT.LEFTLEG);
+						CubeData[] right = getLeggingsCubes(item, NBT.RIGHTLEG);
+						int amount = 0;
+						for (CubeData data : left)
+								if (data.cube.equals(cube))
+										amount++;
+						for (CubeData data : right)
+								if (data.cube.equals(cube))
+										amount++;
+						return amount;
+				}
+				if (item.getItem().equals(VoidRPGItems.armorBoots)) {
+						CubeData[] left = getBootsCubes(item, NBT.LEFTLEG);
+						CubeData[] right = getBootsCubes(item, NBT.RIGHTLEG);
+						int amount = 0;
+						for (CubeData data : left) {
+								if (data.cube.getUnlocalizedName().equals(cube.getUnlocalizedName()))
+										amount++;
+						}
+						for (CubeData data : right)
+								if (data.cube.getUnlocalizedName().equals(cube.getUnlocalizedName()))
+										amount++;
+						return amount;
+				}
+				return 0;
+		}
+
+		public boolean isCubeActive (ICube cube, ItemStack stack) {
+				return getCubeAmount(stack, cube) >= cube.getMinAmount(stack.getItem(), getArmorWeight(stack));
+		}
 }

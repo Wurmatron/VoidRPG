@@ -62,5 +62,12 @@ public interface ICube {
 		 *
 		 * @param item Item that is trying to be created
 		 */
-		int getMaxAmount(Item item);
+		int getMaxAmount (Item item);
+
+		/**
+		 *
+		 * @param item item that the cube is placed on
+		 * @param weight how much that part of the armor weights
+		 */
+		int getMinAmount (Item item ,double weight);
 }

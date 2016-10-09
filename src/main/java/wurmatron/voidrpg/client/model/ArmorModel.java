@@ -77,7 +77,7 @@ public class ArmorModel extends ModelBiped {
 				return true;
 		}
 
-		public ModelBiped covertDataToModel (ModelBiped base) {
+		public ArmorModel covertDataToModel (ModelBiped base) {
 				if (headCubes != null && headCubes.size() > 0)
 						for (CubeData temp : headCubes)
 								bipedHead.addChild(ArmorHelper.createModelRenderer(base, new CubeData(temp.offX - 8, temp.offY - 16, temp.offZ - 6, temp.cube, temp.damage)));
@@ -127,6 +127,7 @@ public class ArmorModel extends ModelBiped {
 
 		public void clearAndReset (ModelRenderer mr, float x, float y, float z) {
 				mr.cubeList.clear();
+				mr.childModels = null;
 				mr.setRotationPoint(x, y, z);
 		}
 }

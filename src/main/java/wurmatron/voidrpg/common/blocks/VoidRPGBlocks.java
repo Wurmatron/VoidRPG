@@ -11,13 +11,19 @@ public class VoidRPGBlocks {
 		public static Block bodyBlock;
 		public static Block armorLight;
 		public static Block armorReinforced;
+		public static Block cubeWaterWalking;
 		public static Block cubeCreator;
+		public static Block cubeShock;
+		public static Block cubeFlippers;
 
 		public static void init () {
 				registerBlock(bodyBlock = new BlockBody());
 				registerBlock(armorLight = new BlockArmor(Material.ANVIL).setUnlocalizedName("blockLightArmor"));
 				registerBlock(armorReinforced = new BlockArmor(Material.ANVIL).setUnlocalizedName("armorReinforced"));
 				registerBlock(cubeCreator = new BlockCubeCreator(Material.ANVIL));
+				registerBlock(cubeWaterWalking = new BlockArmor(Material.IRON).setUnlocalizedName("cubeWaterWalking"));
+				registerBlock(cubeShock = new BlockArmor(Material.IRON).setUnlocalizedName("cubeShock"));
+				registerBlock(cubeFlippers = new BlockArmor(Material.IRON).setUnlocalizedName("cubeFlippers"));
 
 				GameRegistry.registerTileEntity(TileCubeCreator.class, "cubeCreator");
 		}

@@ -76,39 +76,42 @@ public class CustomArmor extends ItemArmor implements ISpecialArmor {
 		public ModelBiped getArmorModel (EntityLivingBase entity, ItemStack stack, EntityEquipmentSlot slot, ModelBiped _default) {
 				if (entity instanceof EntityPlayer && stack.getTagCompound() != null && !stack.getTagCompound().hasNoTags()) {
 						EntityPlayer player = (EntityPlayer) entity;
+						if (PlayerTickHandlerClient.updateRequirment.contains(player.getGameProfile().getId())) {
+								PlayerTickHandlerClient.updateRequirment.remove(player.getGameProfile().getId());
+								requiresUpdate = true;
+						}
 						if (modelPlayer == null || requiresUpdate) {
 								if (modelPlayer == null)
 										modelPlayer = new ArmorModel();
 								else
 										modelPlayer.clear();
-								requiresUpdate = false;
 						}
-						if (PlayerTickHandlerClient.armorData.get(player.getGameProfile().getId()))
-								modelPlayer.clear();
-						if (stack.getItem().equals(VoidRPGItems.armorHelmet) && modelPlayer.bipedHead.childModels == null) {
-								modelPlayer.addHeadCubes(helper.getHelmetCubes(stack));
-								update = true;
-						} else if (stack.getItem().equals(VoidRPGItems.armorChestplate) && modelPlayer.bipedBody.childModels == null && modelPlayer.bipedLeftArm.childModels == null && modelPlayer.bipedRightArm.childModels == null) {
-								modelPlayer.addBodyCubes(helper.getChestplateCubes(stack, NBT.BODY));
-								modelPlayer.addLeftArmCubes(helper.getChestplateCubes(stack, NBT.LEFTARM));
-								modelPlayer.addRightArmCubes(helper.getChestplateCubes(stack, NBT.RIGHTARM));
-								update = true;
-						} else if (stack.getItem().equals(VoidRPGItems.armorLeggings) && modelPlayer.leftLegCubes.size() == 0 && modelPlayer.rightLegCubes.size() == 0 || stack.getItem().equals(VoidRPGItems.armorLeggings) && modelPlayer.bipedLeftLeg.childModels == null && modelPlayer.bipedRightLeg.childModels == null) {
-								modelPlayer.addLeftLegCubes(helper.getLeggingsCubes(stack, NBT.LEFTLEG));
-								modelPlayer.addRightLegCubes(helper.getLeggingsCubes(stack, NBT.RIGHTLEG));
-								update = true;
-						} else if (stack.getItem().equals(VoidRPGItems.armorBoots) && modelPlayer.leftBootsCubes.size() == 0 && modelPlayer.rightBootsCubes.size() == 0 || stack.getItem().equals(VoidRPGItems.armorBoots) && modelPlayer.bipedLeftLeg.childModels == null && modelPlayer.bipedRightLeg.childModels == null) {
-								modelPlayer.addLeftBootsCubes(helper.getBootsCubes(stack, NBT.LEFTLEG));
-								modelPlayer.addRightBootsCubes(helper.getBootsCubes(stack, NBT.RIGHTLEG));
-								update = true;
-						}
-						if (update) {
+						if (modelPlayer != null)
+								if (stack.getItem().equals(VoidRPGItems.armorHelmet) && modelPlayer.bipedHead.childModels == null) {
+										modelPlayer.addHeadCubes(helper.getHelmetCubes(stack));
+										update = true;
+								} else if (stack.getItem().equals(VoidRPGItems.armorChestplate) && modelPlayer.bipedBody.childModels == null && modelPlayer.bipedLeftArm.childModels == null && modelPlayer.bipedRightArm.childModels == null) {
+										modelPlayer.addBodyCubes(helper.getChestplateCubes(stack, NBT.BODY));
+										modelPlayer.addLeftArmCubes(helper.getChestplateCubes(stack, NBT.LEFTARM));
+										modelPlayer.addRightArmCubes(helper.getChestplateCubes(stack, NBT.RIGHTARM));
+										update = true;
+								} else if (stack.getItem().equals(VoidRPGItems.armorLeggings) && modelPlayer.leftLegCubes.size() == 0 && modelPlayer.rightLegCubes.size() == 0 || stack.getItem().equals(VoidRPGItems.armorLeggings) && modelPlayer.bipedLeftLeg.childModels == null && modelPlayer.bipedRightLeg.childModels == null) {
+										modelPlayer.addLeftLegCubes(helper.getLeggingsCubes(stack, NBT.LEFTLEG));
+										modelPlayer.addRightLegCubes(helper.getLeggingsCubes(stack, NBT.RIGHTLEG));
+										update = true;
+								} else if (stack.getItem().equals(VoidRPGItems.armorBoots) && modelPlayer.leftBootsCubes.size() == 0 && modelPlayer.rightBootsCubes.size() == 0 || stack.getItem().equals(VoidRPGItems.armorBoots) && modelPlayer.bipedLeftLeg.childModels == null && modelPlayer.bipedRightLeg.childModels == null) {
+										modelPlayer.addLeftBootsCubes(helper.getBootsCubes(stack, NBT.LEFTLEG));
+										modelPlayer.addRightBootsCubes(helper.getBootsCubes(stack, NBT.RIGHTLEG));
+										update = true;
+								}
+						if (update || requiresUpdate) {
 								update = false;
-								modelPlayer.covertDataToModel(_default);
+								requiresUpdate = false;
+								modelPlayer=  modelPlayer.covertDataToModel(_default);
 						}
 						return modelPlayer;
 				}
-				return null;
+				return _default;
 		}
 
 		@Override
@@ -122,7 +125,8 @@ public class CustomArmor extends ItemArmor implements ISpecialArmor {
 		}
 
 		@Override
-		public void damageArmor (EntityLivingBase entity, ItemStack stack, DamageSource source, int damage, int slot) {}
+		public void damageArmor (EntityLivingBase entity, ItemStack stack, DamageSource source, int damage, int slot) {
+		}
 
 		@SideOnly (Side.CLIENT)
 		@Override

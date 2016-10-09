@@ -74,4 +74,9 @@ public class Cube implements ICube {
 		public int getMaxAmount (Item item) {
 				return maxAmount;
 		}
+
+		@Override
+		public int getMinAmount (Item item, double weight) {
+				return 0;
+		}
 }
