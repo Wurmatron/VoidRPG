@@ -378,7 +378,7 @@ public class ArmorHelper {
 						CubeData[] cubes = getHelmetCubes(item);
 						int amount = 0;
 						for (CubeData data : cubes)
-								if (data.cube.equals(cube))
+								if (data.cube.getUnlocalizedName().equals(cube.getUnlocalizedName()))
 										amount++;
 						return amount;
 				}
@@ -386,15 +386,15 @@ public class ArmorHelper {
 						CubeData[] body = getChestplateCubes(item, NBT.BODY);
 						int amount = 0;
 						for (CubeData data : body)
-								if (data.cube.equals(cube))
+								if (data.cube.getUnlocalizedName().equals(cube.getUnlocalizedName()))
 										amount++;
 						CubeData[] left = getChestplateCubes(item, NBT.LEFTARM);
 						for (CubeData data : left)
-								if (data.cube.equals(cube))
+								if (data.cube.getUnlocalizedName().equals(cube.getUnlocalizedName()))
 										amount++;
 						CubeData[] right = getChestplateCubes(item, NBT.RIGHTARM);
 						for (CubeData data : right)
-								if (data.cube.equals(cube))
+								if (data.cube.getUnlocalizedName().equals(cube.getUnlocalizedName()))
 										amount++;
 						return amount;
 				}
@@ -403,10 +403,10 @@ public class ArmorHelper {
 						CubeData[] right = getLeggingsCubes(item, NBT.RIGHTLEG);
 						int amount = 0;
 						for (CubeData data : left)
-								if (data.cube.equals(cube))
+								if (data.cube.getUnlocalizedName().equals(cube.getUnlocalizedName()))
 										amount++;
 						for (CubeData data : right)
-								if (data.cube.equals(cube))
+								if (data.cube.getUnlocalizedName().equals(cube.getUnlocalizedName()))
 										amount++;
 						return amount;
 				}

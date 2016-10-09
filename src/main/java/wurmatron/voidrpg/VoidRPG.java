@@ -24,6 +24,9 @@ import wurmatron.voidrpg.common.cube.special.CubeAutoRepair;
 import wurmatron.voidrpg.common.cube.special.bootsOnly.CubeFlippers;
 import wurmatron.voidrpg.common.cube.special.bootsOnly.CubeShock;
 import wurmatron.voidrpg.common.cube.special.bootsOnly.CubeWaterWalk;
+import wurmatron.voidrpg.common.cube.special.chestOnly.CubeGravity;
+import wurmatron.voidrpg.common.cube.special.helmetOnly.CubeVision;
+import wurmatron.voidrpg.common.cube.special.leggingsOnly.CubeMuscle;
 import wurmatron.voidrpg.common.events.PlayerJoinEvent;
 import wurmatron.voidrpg.common.items.VoidRPGItems;
 import wurmatron.voidrpg.common.network.GuiHandler;
@@ -72,6 +75,12 @@ public class VoidRPG {
 				MinecraftForge.EVENT_BUS.register(new CubeShock());
 				CubeRegistry.INSTANCE.registerCube(new CubeFlippers());
 				MinecraftForge.EVENT_BUS.register(new CubeFlippers());
+				CubeRegistry.INSTANCE.registerCube(new CubeMuscle());
+				MinecraftForge.EVENT_BUS.register(new CubeMuscle());
+				CubeRegistry.INSTANCE.registerCube(new CubeGravity());
+				MinecraftForge.EVENT_BUS.register(new CubeGravity());
+				CubeRegistry.INSTANCE.registerCube(new CubeVision());
+				MinecraftForge.EVENT_BUS.register(new CubeVision());
 				StringCube testJson = new StringCube("jsonTest", "minecraft", "dirt", new ResourceLocation("minecraft", "textures/blocks/dirt.png"), 0.2, 1, 2,2500);
 				JsonHandler.writeCubeToFile(testJson);
 		}

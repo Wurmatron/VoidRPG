@@ -68,8 +68,7 @@ public class StringCube implements ICube {
 		}
 
 		@Override
-		public void applyEffect (CubeData cube, CubeData[] data) {
-		}
+		public void applyEffect (CubeData cube, CubeData[] data) {}
 
 		@Override
 		public int getMaxAmount (Item item) {
