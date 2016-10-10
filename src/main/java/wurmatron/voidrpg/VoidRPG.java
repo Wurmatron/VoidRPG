@@ -3,6 +3,7 @@ package wurmatron.voidrpg;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -25,6 +26,7 @@ import wurmatron.voidrpg.common.cube.special.bootsOnly.CubeFlippers;
 import wurmatron.voidrpg.common.cube.special.bootsOnly.CubeShock;
 import wurmatron.voidrpg.common.cube.special.bootsOnly.CubeWaterWalk;
 import wurmatron.voidrpg.common.cube.special.chestOnly.CubeGravity;
+import wurmatron.voidrpg.common.cube.special.chestOnly.CubeJetpack;
 import wurmatron.voidrpg.common.cube.special.helmetOnly.CubeVision;
 import wurmatron.voidrpg.common.cube.special.leggingsOnly.CubeMuscle;
 import wurmatron.voidrpg.common.events.PlayerJoinEvent;
@@ -65,9 +67,9 @@ public class VoidRPG {
 				ConfigHandler.loadMainConfig();
 				NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 				MinecraftForge.EVENT_BUS.register(new PlayerJoinEvent());
-				CubeRegistry.INSTANCE.registerCube(new Cube("test", Blocks.IRON_BLOCK, new ResourceLocation("minecraft", "textures/blocks/iron_block.png"), 0.1, 1, 5,2000));
-				CubeRegistry.INSTANCE.registerCube(new Cube("armorLight", VoidRPGBlocks.armorLight, new ResourceLocation("minecraft", "textures/blocks/gold_block.png"), 0.1, 1, 50,4096));
-				CubeRegistry.INSTANCE.registerCube(new Cube("armorHeavy", VoidRPGBlocks.armorReinforced, new ResourceLocation("minecraft", "textures/blocks/diamond_block.png"), 0.5, 5, 200,4096));
+				CubeRegistry.INSTANCE.registerCube(new Cube("test", Blocks.IRON_BLOCK, new ResourceLocation("minecraft", "textures/blocks/iron_block.png"), 0.1, 1, 5,2000,new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD,EntityEquipmentSlot.CHEST,EntityEquipmentSlot.LEGS,EntityEquipmentSlot.FEET}));
+				CubeRegistry.INSTANCE.registerCube(new Cube("armorLight", VoidRPGBlocks.armorLight, new ResourceLocation("minecraft", "textures/blocks/gold_block.png"), 0.1, 1, 50,4096,new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD,EntityEquipmentSlot.CHEST,EntityEquipmentSlot.LEGS,EntityEquipmentSlot.FEET}));
+				CubeRegistry.INSTANCE.registerCube(new Cube("armorHeavy", VoidRPGBlocks.armorReinforced, new ResourceLocation("minecraft", "textures/blocks/diamond_block.png"), 0.5, 5, 200,4096,new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD,EntityEquipmentSlot.CHEST,EntityEquipmentSlot.LEGS,EntityEquipmentSlot.FEET}));
 				CubeRegistry.INSTANCE.registerCube(new CubeAutoRepair());
 				CubeRegistry.INSTANCE.registerCube(new CubeWaterWalk());
 				MinecraftForge.EVENT_BUS.register(new CubeWaterWalk());
@@ -81,7 +83,8 @@ public class VoidRPG {
 				MinecraftForge.EVENT_BUS.register(new CubeGravity());
 				CubeRegistry.INSTANCE.registerCube(new CubeVision());
 				MinecraftForge.EVENT_BUS.register(new CubeVision());
-				StringCube testJson = new StringCube("jsonTest", "minecraft", "dirt", new ResourceLocation("minecraft", "textures/blocks/dirt.png"), 0.2, 1, 2,2500);
+				CubeRegistry.INSTANCE.registerCube(new CubeJetpack());
+				StringCube testJson = new StringCube("jsonTest", "minecraft", "dirt", new ResourceLocation("minecraft", "textures/blocks/dirt.png"), 0.2, 1, 2,2500, "head,chest,legs,boots");
 				JsonHandler.writeCubeToFile(testJson);
 		}
 

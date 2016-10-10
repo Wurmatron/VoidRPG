@@ -2,19 +2,17 @@ package wurmatron.voidrpg.common.cube.special.helmetOnly;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import wurmatron.voidrpg.api.cube.CubeData;
 import wurmatron.voidrpg.api.cube.ICube;
 import wurmatron.voidrpg.common.blocks.VoidRPGBlocks;
 import wurmatron.voidrpg.common.items.VoidRPGItems;
 import wurmatron.voidrpg.common.reference.Global;
-import wurmatron.voidrpg.common.utils.ArmorHelper;
 
 public class CubeVision implements ICube {
 
@@ -50,11 +48,16 @@ public class CubeVision implements ICube {
 
 		@Override
 		public boolean hasEffects (EntityPlayer player, ItemStack stack) {
-				return false;
+			return true;
 		}
 
 		@Override
-		public void applyEffect (CubeData data, CubeData[] cubes) {
+		public void applyEffect (EntityPlayer player, CubeData data, CubeData[] cubes) {
+				if (player.isPotionActive(Potion.getPotionById(16))) {
+						if (player.getActivePotionEffect(Potion.getPotionById(16)).getDuration() < 60)
+								player.addPotionEffect(new PotionEffect(Potion.getPotionById(16), 200));
+				} else
+						player.addPotionEffect(new PotionEffect(Potion.getPotionById(16), 200));
 		}
 
 		@Override
@@ -69,18 +72,10 @@ public class CubeVision implements ICube {
 				return 0;
 		}
 
-		@SubscribeEvent
-		public void onEntityUpdate (LivingEvent.LivingUpdateEvent e) {
-				if (e.getEntityLiving() instanceof EntityPlayer) {
-						EntityPlayer player = (EntityPlayer) e.getEntityLiving();
-						if (player.inventory != null && player.inventory.armorInventory != null && player.inventory.armorInventory[3] != null && player.inventory.armorInventory[3].getItem().equals(VoidRPGItems.armorHelmet)) {
-								if (new ArmorHelper().isCubeActive(this, player.inventory.armorInventory[3]))
-										if (player.isPotionActive(Potion.getPotionById(16))) {
-													if(player.getActivePotionEffect(Potion.getPotionById(16)).getDuration() < 60)
-															player.addPotionEffect(new PotionEffect(Potion.getPotionById(16), 200));
-										} else
-												player.addPotionEffect(new PotionEffect(Potion.getPotionById(16), 200));
-						}
-				}
+		@Override
+		public boolean getSupportedArmorTypes (EntityEquipmentSlot type) {
+				if (type.equals(EntityEquipmentSlot.HEAD))
+						return true;
+				return false;
 		}
 }

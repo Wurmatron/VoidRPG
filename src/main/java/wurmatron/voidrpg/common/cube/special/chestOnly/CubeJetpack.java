@@ -1,62 +1,58 @@
-package wurmatron.voidrpg.common.cube.special.bootsOnly;
+package wurmatron.voidrpg.common.cube.special.chestOnly;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.input.Keyboard;
 import wurmatron.voidrpg.api.cube.CubeData;
 import wurmatron.voidrpg.api.cube.ICube;
 import wurmatron.voidrpg.common.blocks.VoidRPGBlocks;
 import wurmatron.voidrpg.common.items.VoidRPGItems;
 import wurmatron.voidrpg.common.reference.Global;
 
-public class CubeWaterWalk implements ICube {
-
+public class CubeJetpack implements ICube {
 		@Override
 		public String getUnlocalizedName () {
-				return "waterWalk";
+				return "jetpack";
 		}
 
 		@Override
 		public Block getBlock () {
-				return VoidRPGBlocks.cubeWaterWalking;
+				return VoidRPGBlocks.cubeJetpack;
 		}
 
 		@Override
 		public ResourceLocation getTexture () {
-				return new ResourceLocation(Global.MODID, "textures/cube/waterWalking.png");
+				return new ResourceLocation(Global.MODID, "textures/cube/jetpack.png");
 		}
 
 		@Override
 		public double getWeight () {
-				return 10;
+				return 200;
 		}
 
 		@Override
 		public int getComplexity () {
-				return 20;
+				return 100;
 		}
 
 		@Override
 		public int getDurability () {
-				return 400;
+				return 800;
 		}
 
 		@Override
 		public boolean hasEffects (EntityPlayer player, ItemStack stack) {
-				if (!player.isSneaking() && player.worldObj.getBlockState(player.getPosition().add(0, -1, 0)).getBlock().equals(Blocks.WATER))
-						return true;
-				return false;
+				return true;
 		}
 
 		@Override
 		public void applyEffect (EntityPlayer player, CubeData data, CubeData[] cubes) {
-				player.motionY = 0;
-				player.fallDistance = 0;
-				player.onGround = true;
+				if (Keyboard.isKeyDown(Keyboard.KEY_SPACE))
+						player.motionY += 0.00006;
 		}
 
 		@Override
@@ -66,14 +62,14 @@ public class CubeWaterWalk implements ICube {
 
 		@Override
 		public int getMinAmount (Item item, double weight) {
-				if (item.equals(VoidRPGItems.armorBoots))
-						return 8;
+				if (item.equals(VoidRPGItems.armorChestplate))
+						return 4;
 				return 0;
 		}
 
 		@Override
 		public boolean getSupportedArmorTypes (EntityEquipmentSlot type) {
-				if (type.equals(EntityEquipmentSlot.FEET))
+				if (type.equals(EntityEquipmentSlot.CHEST))
 						return true;
 				return false;
 		}

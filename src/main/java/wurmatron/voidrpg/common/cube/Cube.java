@@ -3,6 +3,7 @@ package wurmatron.voidrpg.common.cube;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -18,8 +19,9 @@ public class Cube implements ICube {
 		private int durability;
 		private Block realBlock;
 		private int maxAmount;
+		private EntityEquipmentSlot[] armorType;
 
-		public Cube (String unlocalizedName, Block block, ResourceLocation texture, double weight, int complexity, int durability, int maxAmount) {
+		public Cube (String unlocalizedName, Block block, ResourceLocation texture, double weight, int complexity, int durability, int maxAmount, EntityEquipmentSlot[] armorType) {
 				this.unlocalizedName = unlocalizedName;
 				this.realBlock = block;
 				this.texture = texture;
@@ -27,6 +29,7 @@ public class Cube implements ICube {
 				this.complexity = complexity;
 				this.durability = durability;
 				this.maxAmount = maxAmount;
+				this.armorType = armorType;
 		}
 
 		@Override
@@ -67,7 +70,7 @@ public class Cube implements ICube {
 		}
 
 		@Override
-		public void applyEffect (CubeData cube, CubeData[] data) {
+		public void applyEffect (EntityPlayer player, CubeData cube, CubeData[] data) {
 		}
 
 		@Override
@@ -78,5 +81,13 @@ public class Cube implements ICube {
 		@Override
 		public int getMinAmount (Item item, double weight) {
 				return 0;
+		}
+
+		@Override
+		public boolean getSupportedArmorTypes (EntityEquipmentSlot type) {
+				for (EntityEquipmentSlot t : armorType)
+						if (type.equals(t))
+								return true;
+				return false;
 		}
 }

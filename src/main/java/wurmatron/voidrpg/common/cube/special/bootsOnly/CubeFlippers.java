@@ -2,17 +2,15 @@ package wurmatron.voidrpg.common.cube.special.bootsOnly;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 import wurmatron.voidrpg.api.cube.CubeData;
 import wurmatron.voidrpg.api.cube.ICube;
 import wurmatron.voidrpg.common.blocks.VoidRPGBlocks;
 import wurmatron.voidrpg.common.items.VoidRPGItems;
 import wurmatron.voidrpg.common.reference.Global;
-import wurmatron.voidrpg.common.utils.ArmorHelper;
 
 public class CubeFlippers implements ICube {
 		@Override
@@ -47,12 +45,16 @@ public class CubeFlippers implements ICube {
 
 		@Override
 		public boolean hasEffects (EntityPlayer player, ItemStack stack) {
+				if (player.isInWater())
+						return true;
 				return false;
 		}
 
 		@Override
-		public void applyEffect (CubeData data, CubeData[] cubes) {
-
+		public void applyEffect (EntityPlayer player, CubeData data, CubeData[] cubes) {
+				player.motionX *= 1.1D;
+				player.motionZ *= 1.1D;
+				player.motionY *= 1.05D;
 		}
 
 		@Override
@@ -67,14 +69,10 @@ public class CubeFlippers implements ICube {
 				return 0;
 		}
 
-		@SubscribeEvent
-		public void onPlayerTick (TickEvent.PlayerTickEvent e) {
-				if (e.player.inventory != null && e.player.inventory.armorInventory[0] != null && e.player.inventory.armorInventory[0].getItem().equals(VoidRPGItems.armorBoots)) {
-						if (e.player.isInWater() && new ArmorHelper().isCubeActive(this, e.player.inventory.armorInventory[0])) {
-								e.player.motionX *= 1.1D;
-								e.player.motionZ *= 1.1D;
-								e.player.motionY *= 1.05D;
-						}
-				}
+		@Override
+		public boolean getSupportedArmorTypes (EntityEquipmentSlot type) {
+				if (type.equals(EntityEquipmentSlot.FEET))
+						return true;
+				return false;
 		}
 }

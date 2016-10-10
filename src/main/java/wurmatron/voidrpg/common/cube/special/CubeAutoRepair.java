@@ -3,6 +3,7 @@ package wurmatron.voidrpg.common.cube.special;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -47,7 +48,7 @@ public class CubeAutoRepair implements ICube {
 		}
 
 		@Override
-		public void applyEffect (CubeData cube, CubeData[] data) {
+		public void applyEffect (EntityPlayer player, CubeData cube, CubeData[] data) {
 				for (CubeData c : data)
 						if (c.damage > 0)
 								c.damage = c.damage--;
@@ -61,5 +62,10 @@ public class CubeAutoRepair implements ICube {
 		@Override
 		public int getMinAmount (Item item, double weight) {
 				return 0;
+		}
+
+		@Override
+		public boolean getSupportedArmorTypes (EntityEquipmentSlot type) {
+				return true;
 		}
 }

@@ -2,6 +2,7 @@ package wurmatron.voidrpg.api.cube;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -41,12 +42,14 @@ public interface ICube {
 
 		/**
 		 * Makes sure that thee cube meets the requirements to have its effect
+		 * Automatically checks for minimum cubes
 		 *
 		 * @param player Player that this cube is on
 		 * @param stack  Stack that this cube is on
 		 * @return if the cube has special effects (Note: has to be true for applyEffect to work
 		 *
-		 * @see ICube#applyEffect(CubeData, CubeData[])
+		 * @see ICube#applyEffect(EntityPlayer, CubeData, CubeData[])
+		 * @see ICube#getMinAmount(Item, double)
 		 */
 		boolean hasEffects (EntityPlayer player, ItemStack stack);
 
@@ -55,7 +58,7 @@ public interface ICube {
 		 *
 		 * @see CubeTickEvent
 		 */
-		void applyEffect (CubeData data, CubeData[] cubes);
+		void applyEffect (EntityPlayer player, CubeData data, CubeData[] cubes);
 
 		/**
 		 * Maximum amount of this cube that can be on a single piece of armor
@@ -65,9 +68,17 @@ public interface ICube {
 		int getMaxAmount (Item item);
 
 		/**
+		 * Minimim Amount of this cube required for its effects to activate
 		 *
-		 * @param item item that the cube is placed on
+		 * @param item   item that the cube is placed on
 		 * @param weight how much that part of the armor weights
 		 */
-		int getMinAmount (Item item ,double weight);
+		int getMinAmount (Item item, double weight);
+
+		/**
+		 * Can this cube be placed on this Item
+		 *
+		 * @param type Type of armor that it is trying to be placed on.
+		 */
+		boolean getSupportedArmorTypes (EntityEquipmentSlot type);
 }

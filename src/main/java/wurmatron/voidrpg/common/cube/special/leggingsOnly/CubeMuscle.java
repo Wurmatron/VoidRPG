@@ -2,17 +2,15 @@ package wurmatron.voidrpg.common.cube.special.leggingsOnly;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 import wurmatron.voidrpg.api.cube.CubeData;
 import wurmatron.voidrpg.api.cube.ICube;
 import wurmatron.voidrpg.common.blocks.VoidRPGBlocks;
 import wurmatron.voidrpg.common.items.VoidRPGItems;
 import wurmatron.voidrpg.common.reference.Global;
-import wurmatron.voidrpg.common.utils.ArmorHelper;
 
 public class CubeMuscle implements ICube {
 
@@ -48,11 +46,14 @@ public class CubeMuscle implements ICube {
 
 		@Override
 		public boolean hasEffects (EntityPlayer player, ItemStack stack) {
-				return false;
+				return true;
 		}
 
 		@Override
-		public void applyEffect (CubeData data, CubeData[] cubes) {
+		public void applyEffect (EntityPlayer player, CubeData data, CubeData[] cubes) {
+				player.motionX *= 1.05D;
+				player.motionZ *= 1.05D;
+				player.motionY *= 1.05D;
 		}
 
 		@Override
@@ -67,14 +68,10 @@ public class CubeMuscle implements ICube {
 				return 0;
 		}
 
-		@SubscribeEvent
-		public void onPlayerTick (TickEvent.PlayerTickEvent e) {
-				if (e.player.inventory != null && e.player.inventory.armorInventory[1] != null && e.player.inventory.armorInventory[1].getItem().equals(VoidRPGItems.armorLeggings)) {
-						if (new ArmorHelper().isCubeActive(this, e.player.inventory.armorInventory[1])) {
-								e.player.motionX *= 1.05D;
-								e.player.motionZ *= 1.05D;
-								e.player.motionY *= 1.05D;
-						}
-				}
+		@Override
+		public boolean getSupportedArmorTypes (EntityEquipmentSlot type) {
+				if (type.equals(EntityEquipmentSlot.LEGS))
+						return true;
+				return false;
 		}
 }

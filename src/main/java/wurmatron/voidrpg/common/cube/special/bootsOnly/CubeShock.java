@@ -2,6 +2,7 @@ package wurmatron.voidrpg.common.cube.special.bootsOnly;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -52,7 +53,7 @@ public class CubeShock implements ICube {
 		}
 
 		@Override
-		public void applyEffect (CubeData data, CubeData[] cubes) {
+		public void applyEffect (EntityPlayer player,CubeData data, CubeData[] cubes) {
 
 		}
 
@@ -66,6 +67,13 @@ public class CubeShock implements ICube {
 				if (item.equals(VoidRPGItems.armorBoots))
 						return 4;
 				return 0;
+		}
+
+		@Override
+		public boolean getSupportedArmorTypes (EntityEquipmentSlot type) {
+				if (type.equals(EntityEquipmentSlot.FEET))
+						return true;
+				return false;
 		}
 
 		@SubscribeEvent
