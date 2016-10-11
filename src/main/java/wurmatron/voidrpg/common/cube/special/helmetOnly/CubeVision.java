@@ -74,8 +74,6 @@ public class CubeVision implements ICube {
 
 		@Override
 		public boolean getSupportedArmorTypes (EntityEquipmentSlot type) {
-				if (type.equals(EntityEquipmentSlot.HEAD))
-						return true;
-				return false;
+				return type.equals(EntityEquipmentSlot.HEAD);
 		}
 }

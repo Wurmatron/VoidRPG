@@ -1,35 +1,34 @@
-package wurmatron.voidrpg.common.cube.special.bootsOnly;
+package wurmatron.voidrpg.common.cube.special.helmetOnly;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.event.entity.living.LivingFallEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import wurmatron.voidrpg.api.cube.CubeData;
 import wurmatron.voidrpg.api.cube.ICube;
 import wurmatron.voidrpg.common.blocks.VoidRPGBlocks;
 import wurmatron.voidrpg.common.items.VoidRPGItems;
 import wurmatron.voidrpg.common.reference.Global;
-import wurmatron.voidrpg.common.utils.ArmorHelper;
 
-public class CubeShock implements ICube {
+public class CubeWaterBreathing implements ICube {
 
 		@Override
 		public String getUnlocalizedName () {
-				return "shock";
+				return "waterBreathing";
 		}
 
 		@Override
 		public Block getBlock () {
-				return VoidRPGBlocks.cubeShock;
+				return VoidRPGBlocks.cubeWaterBreahing;
 		}
 
 		@Override
 		public ResourceLocation getTexture () {
-				return new ResourceLocation(Global.MODID, "textures/cube/shock");
+				return new ResourceLocation(Global.MODID, "textures/cube/waterBreathing.png");
 		}
 
 		@Override
@@ -49,12 +48,16 @@ public class CubeShock implements ICube {
 
 		@Override
 		public boolean hasEffects (EntityPlayer player, ItemStack stack) {
-				return false;
+				return true;
 		}
 
 		@Override
-		public void applyEffect (EntityPlayer player,CubeData data, CubeData[] cubes) {
-
+		public void applyEffect (EntityPlayer player, CubeData data, CubeData[] cubes) {
+				if (player.isPotionActive(Potion.getPotionById(13))) {
+						if (player.getActivePotionEffect(Potion.getPotionById(13)).getDuration() < 60)
+								player.addPotionEffect(new PotionEffect(Potion.getPotionById(13), 200));
+				} else
+						player.addPotionEffect(new PotionEffect(Potion.getPotionById(13), 200));
 		}
 
 		@Override
@@ -64,25 +67,13 @@ public class CubeShock implements ICube {
 
 		@Override
 		public int getMinAmount (Item item, double weight) {
-				if (item.equals(VoidRPGItems.armorBoots))
-						return 4;
+				if (item.equals(VoidRPGItems.armorHelmet))
+						return 8;
 				return 0;
 		}
 
 		@Override
 		public boolean getSupportedArmorTypes (EntityEquipmentSlot type) {
-				return type.equals(EntityEquipmentSlot.FEET);
-		}
-
-		@SubscribeEvent
-		public void onPlayerFall (LivingFallEvent e) {
-				if (e.getEntityLiving() instanceof EntityPlayer) {
-						EntityPlayer player = (EntityPlayer) e.getEntityLiving();
-						if (player.inventory != null && player.inventory.armorInventory[0] != null && player.inventory.armorInventory[0].getItem().equals(VoidRPGItems.armorBoots)) {
-								if (new ArmorHelper().isCubeActive(this, player.inventory.armorInventory[0])) {
-										e.setCanceled(true);
-								}
-						}
-				}
+				return type.equals(EntityEquipmentSlot.HEAD);
 		}
 }

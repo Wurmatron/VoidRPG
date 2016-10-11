@@ -21,6 +21,7 @@ import java.util.ArrayList;
 public class ArmorHelper {
 
 		private final CubeRegistry registry = new CubeRegistry();
+		public static final ArmorHelper instance = new ArmorHelper();
 
 		public static ModelRenderer createModelRenderer (ModelBase base, final CubeData data) {
 				ModelRenderer model = new ModelRenderer(base) {
@@ -374,59 +375,63 @@ public class ArmorHelper {
 		}
 
 		public int getCubeAmount (ItemStack item, ICube cube) {
-				if (item.getItem().equals(VoidRPGItems.armorHelmet)) {
-						CubeData[] cubes = getHelmetCubes(item);
-						int amount = 0;
-						for (CubeData data : cubes)
-								if (data.cube.getUnlocalizedName().equals(cube.getUnlocalizedName()))
-										amount++;
-						return amount;
-				}
-				if (item.getItem().equals(VoidRPGItems.armorChestplate)) {
-						CubeData[] body = getChestplateCubes(item, NBT.BODY);
-						int amount = 0;
-						for (CubeData data : body)
-								if (data.cube.getUnlocalizedName().equals(cube.getUnlocalizedName()))
-										amount++;
-						CubeData[] left = getChestplateCubes(item, NBT.LEFTARM);
-						for (CubeData data : left)
-								if (data.cube.getUnlocalizedName().equals(cube.getUnlocalizedName()))
-										amount++;
-						CubeData[] right = getChestplateCubes(item, NBT.RIGHTARM);
-						for (CubeData data : right)
-								if (data.cube.getUnlocalizedName().equals(cube.getUnlocalizedName()))
-										amount++;
-						return amount;
-				}
-				if (item.getItem().equals(VoidRPGItems.armorLeggings)) {
-						CubeData[] left = getLeggingsCubes(item, NBT.LEFTLEG);
-						CubeData[] right = getLeggingsCubes(item, NBT.RIGHTLEG);
-						int amount = 0;
-						for (CubeData data : left)
-								if (data.cube.getUnlocalizedName().equals(cube.getUnlocalizedName()))
-										amount++;
-						for (CubeData data : right)
-								if (data.cube.getUnlocalizedName().equals(cube.getUnlocalizedName()))
-										amount++;
-						return amount;
-				}
-				if (item.getItem().equals(VoidRPGItems.armorBoots)) {
-						CubeData[] left = getBootsCubes(item, NBT.LEFTLEG);
-						CubeData[] right = getBootsCubes(item, NBT.RIGHTLEG);
-						int amount = 0;
-						for (CubeData data : left) {
-								if (data.cube.getUnlocalizedName().equals(cube.getUnlocalizedName()))
-										amount++;
+				if (item != null) {
+						if (item.getItem().equals(VoidRPGItems.armorHelmet)) {
+								CubeData[] cubes = getHelmetCubes(item);
+								int amount = 0;
+								for (CubeData data : cubes)
+										if (data.cube.getUnlocalizedName().equals(cube.getUnlocalizedName()))
+												amount++;
+								return amount;
 						}
-						for (CubeData data : right)
-								if (data.cube.getUnlocalizedName().equals(cube.getUnlocalizedName()))
-										amount++;
-						return amount;
+						if (item.getItem().equals(VoidRPGItems.armorChestplate)) {
+								CubeData[] body = getChestplateCubes(item, NBT.BODY);
+								int amount = 0;
+								for (CubeData data : body)
+										if (data.cube.getUnlocalizedName().equals(cube.getUnlocalizedName()))
+												amount++;
+								CubeData[] left = getChestplateCubes(item, NBT.LEFTARM);
+								for (CubeData data : left)
+										if (data.cube.getUnlocalizedName().equals(cube.getUnlocalizedName()))
+												amount++;
+								CubeData[] right = getChestplateCubes(item, NBT.RIGHTARM);
+								for (CubeData data : right)
+										if (data.cube.getUnlocalizedName().equals(cube.getUnlocalizedName()))
+												amount++;
+								return amount;
+						}
+						if (item.getItem().equals(VoidRPGItems.armorLeggings)) {
+								CubeData[] left = getLeggingsCubes(item, NBT.LEFTLEG);
+								CubeData[] right = getLeggingsCubes(item, NBT.RIGHTLEG);
+								int amount = 0;
+								for (CubeData data : left)
+										if (data.cube.getUnlocalizedName().equals(cube.getUnlocalizedName()))
+												amount++;
+								for (CubeData data : right)
+										if (data.cube.getUnlocalizedName().equals(cube.getUnlocalizedName()))
+												amount++;
+								return amount;
+						}
+						if (item.getItem().equals(VoidRPGItems.armorBoots)) {
+								CubeData[] left = getBootsCubes(item, NBT.LEFTLEG);
+								CubeData[] right = getBootsCubes(item, NBT.RIGHTLEG);
+								int amount = 0;
+								for (CubeData data : left) {
+										if (data.cube.getUnlocalizedName().equals(cube.getUnlocalizedName()))
+												amount++;
+								}
+								for (CubeData data : right)
+										if (data.cube.getUnlocalizedName().equals(cube.getUnlocalizedName()))
+												amount++;
+								return amount;
+						}
 				}
 				return 0;
 		}
 
 		public boolean isCubeActive (ICube cube, ItemStack stack) {
-				return getCubeAmount(stack, cube) >= cube.getMinAmount(stack.getItem(), getArmorWeight(stack));
+				if (cube != null && stack != null)
+						return getCubeAmount(stack, cube) >= cube.getMinAmount(stack.getItem(), getArmorWeight(stack));
+				return false;
 		}
 }

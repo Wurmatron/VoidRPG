@@ -6,7 +6,6 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import wurmatron.voidrpg.common.items.CustomArmor;
-import wurmatron.voidrpg.common.utils.LogHandler;
 import wurmatron.voidrpg.common.utils.StackHelper;
 
 import java.util.ArrayList;

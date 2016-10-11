@@ -19,6 +19,8 @@ public class VoidRPGBlocks {
 		public static Block cubeGravity;
 		public static Block cubeVision;
 		public static Block cubeJetpack;
+		public static Block cubeWaterBreahing;
+		public static Block cubeMobStealth;
 
 		public static void init () {
 				registerBlock(bodyBlock = new BlockBody());
@@ -32,6 +34,8 @@ public class VoidRPGBlocks {
 				registerBlock(cubeGravity = new BlockArmor(Material.IRON).setUnlocalizedName("cubeGravity"));
 				registerBlock(cubeVision = new BlockArmor(Material.IRON).setUnlocalizedName("cubeVision"));
 				registerBlock(cubeJetpack = new BlockArmor(Material.IRON).setUnlocalizedName("cubeJetpack"));
+				registerBlock(cubeWaterBreahing = new BlockArmor(Material.IRON).setUnlocalizedName("cubeWaterBreahing"));
+				registerBlock(cubeMobStealth = new BlockArmor(Material.IRON).setUnlocalizedName("cubeMobStealth"));
 
 				GameRegistry.registerTileEntity(TileCubeCreator.class, "cubeCreator");
 		}

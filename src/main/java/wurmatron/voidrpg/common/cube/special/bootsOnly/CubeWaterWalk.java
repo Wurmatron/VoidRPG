@@ -47,9 +47,7 @@ public class CubeWaterWalk implements ICube {
 
 		@Override
 		public boolean hasEffects (EntityPlayer player, ItemStack stack) {
-				if (!player.isSneaking() && player.worldObj.getBlockState(player.getPosition().add(0, -1, 0)).getBlock().equals(Blocks.WATER))
-						return true;
-				return false;
+				return !player.isSneaking() && player.worldObj.getBlockState(player.getPosition().add(0, -1, 0)).getBlock().equals(Blocks.WATER) || !player.isSneaking() && player.isInWater();
 		}
 
 		@Override
@@ -73,8 +71,6 @@ public class CubeWaterWalk implements ICube {
 
 		@Override
 		public boolean getSupportedArmorTypes (EntityEquipmentSlot type) {
-				if (type.equals(EntityEquipmentSlot.FEET))
-						return true;
-				return false;
+				return type.equals(EntityEquipmentSlot.FEET);
 		}
 }

@@ -45,9 +45,7 @@ public class CubeFlippers implements ICube {
 
 		@Override
 		public boolean hasEffects (EntityPlayer player, ItemStack stack) {
-				if (player.isInWater())
-						return true;
-				return false;
+				return player.isInWater();
 		}
 
 		@Override
@@ -71,8 +69,6 @@ public class CubeFlippers implements ICube {
 
 		@Override
 		public boolean getSupportedArmorTypes (EntityEquipmentSlot type) {
-				if (type.equals(EntityEquipmentSlot.FEET))
-						return true;
-				return false;
+				return type.equals(EntityEquipmentSlot.FEET);
 		}
 }

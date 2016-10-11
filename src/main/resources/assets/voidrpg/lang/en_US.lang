@@ -16,6 +16,13 @@ item.armor_head.name=Helmet
 tile.blockLightArmor.name=Light Armor Block
 tile.armorReinforced.name=Reinforced Armor Block
 tile.cubeCreator.name=Cube Creator
+tile.cubeWaterWalking.name=Water Walking Cube Block
+tile.cubeShock.name=Shock Cube Block
+tile.cubeFlippers.name=Block of Flippers
+tile.cubeMuscle.name=Cube of Muscles
+tile.cubeGravity.name=Gravity Cube Block
+tile.cubeVision.name=Cube of Vision Block
+tile.cubeJetpack.name=Jetpack Cube block
 
 # Tooltips
 tooltip.placmenttype.name=Type

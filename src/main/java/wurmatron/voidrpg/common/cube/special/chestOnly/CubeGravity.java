@@ -46,9 +46,7 @@ public class CubeGravity implements ICube {
 
 		@Override
 		public boolean hasEffects (EntityPlayer player, ItemStack stack) {
-				if (!player.capabilities.isCreativeMode)
-						return true;
-				return false;
+				return !player.capabilities.isCreativeMode;
 		}
 
 		@Override
@@ -71,8 +69,6 @@ public class CubeGravity implements ICube {
 
 		@Override
 		public boolean getSupportedArmorTypes (EntityEquipmentSlot type) {
-				if (type.equals(EntityEquipmentSlot.CHEST))
-						return true;
-				return false;
+				return type.equals(EntityEquipmentSlot.CHEST);
 		}
 }

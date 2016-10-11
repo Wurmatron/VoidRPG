@@ -1,50 +1,50 @@
-package wurmatron.voidrpg.common.cube.special.bootsOnly;
+package wurmatron.voidrpg.common.cube.special;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.event.entity.living.LivingFallEvent;
+import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import wurmatron.voidrpg.api.cube.CubeData;
 import wurmatron.voidrpg.api.cube.ICube;
 import wurmatron.voidrpg.common.blocks.VoidRPGBlocks;
-import wurmatron.voidrpg.common.items.VoidRPGItems;
 import wurmatron.voidrpg.common.reference.Global;
 import wurmatron.voidrpg.common.utils.ArmorHelper;
 
-public class CubeShock implements ICube {
+public class CubeMobStealth implements ICube {
 
 		@Override
 		public String getUnlocalizedName () {
-				return "shock";
+				return "mobStealth";
 		}
 
 		@Override
 		public Block getBlock () {
-				return VoidRPGBlocks.cubeShock;
+				return VoidRPGBlocks.cubeMobStealth;
 		}
 
 		@Override
 		public ResourceLocation getTexture () {
-				return new ResourceLocation(Global.MODID, "textures/cube/shock");
+				return new ResourceLocation(Global.MODID, "textures/cube/mobStealth.png");
 		}
 
 		@Override
 		public double getWeight () {
-				return 20;
+				return 50;
 		}
 
 		@Override
 		public int getComplexity () {
-				return 10;
+				return 200;
 		}
 
 		@Override
 		public int getDurability () {
-				return 100;
+				return 800;
 		}
 
 		@Override
@@ -53,8 +53,7 @@ public class CubeShock implements ICube {
 		}
 
 		@Override
-		public void applyEffect (EntityPlayer player,CubeData data, CubeData[] cubes) {
-
+		public void applyEffect (EntityPlayer player, CubeData data, CubeData[] cubes) {
 		}
 
 		@Override
@@ -64,23 +63,22 @@ public class CubeShock implements ICube {
 
 		@Override
 		public int getMinAmount (Item item, double weight) {
-				if (item.equals(VoidRPGItems.armorBoots))
-						return 4;
-				return 0;
+				return 12;
 		}
 
 		@Override
 		public boolean getSupportedArmorTypes (EntityEquipmentSlot type) {
-				return type.equals(EntityEquipmentSlot.FEET);
+				return true;
 		}
 
 		@SubscribeEvent
-		public void onPlayerFall (LivingFallEvent e) {
-				if (e.getEntityLiving() instanceof EntityPlayer) {
-						EntityPlayer player = (EntityPlayer) e.getEntityLiving();
-						if (player.inventory != null && player.inventory.armorInventory[0] != null && player.inventory.armorInventory[0].getItem().equals(VoidRPGItems.armorBoots)) {
-								if (new ArmorHelper().isCubeActive(this, player.inventory.armorInventory[0])) {
-										e.setCanceled(true);
+		public void onEntitySetTarget (LivingSetAttackTargetEvent e) {
+				if (e.getTarget() != null && e.getTarget() instanceof EntityPlayer && e.getEntityLiving().getLastAttacker() != e.getTarget()) {
+						EntityPlayer player = (EntityPlayer) e.getTarget();
+						if (player.inventory != null && player.inventory.armorInventory != null) {
+								for (ItemStack inv : player.inventory.armorInventory) {
+										if (ArmorHelper.instance.isCubeActive(this, inv))
+												((EntityLiving) e.getEntity()).setAttackTarget(null);
 								}
 						}
 				}
