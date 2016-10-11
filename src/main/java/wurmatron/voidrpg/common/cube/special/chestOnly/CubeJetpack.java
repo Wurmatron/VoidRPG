@@ -62,13 +62,13 @@ public class CubeJetpack implements ICube {
 
 		@Override
 		public int getMinAmount (Item item, double weight) {
-				if (item.equals(VoidRPGItems.armorChestplate))
+				if (item.equals(VoidRPGItems.armorChestplate) || item.equals(VoidRPGItems.armorBoots))
 						return 4;
 				return 0;
 		}
 
 		@Override
 		public boolean getSupportedArmorTypes (EntityEquipmentSlot type) {
-			return type.equals(EntityEquipmentSlot.CHEST);
+			return type.equals(EntityEquipmentSlot.CHEST) || type.equals(EntityEquipmentSlot.FEET);
 		}
 }
