@@ -23,6 +23,41 @@ tile.cubeMuscle.name=Cube of Muscles
 tile.cubeGravity.name=Gravity Cube Block
 tile.cubeVision.name=Cube of Vision Block
 tile.cubeJetpack.name=Jetpack Cube block
+tile.cubeWaterBreathing.name=Water Breathing Cube
+tile.cubeMobStealth.name=Mob Stealth Cube
+tile.cubeWing.name=Cube of Wings
+tile.armorEnergyShildI.name=Energy Shild I
+tile.armorCardboard.name=Cardboard
+tile.armorNanoTech.name=Cube of Nano Cubes
+tile.armorEnergyShildII.name=Energy Shild II
+tile.armorWood.name=Block of Wood Cubes
+tile.armorCarbon.name=Block of Carbon Cubes
+tile.armorHeavy.name=Heavy Armor Block
+tile.armorLife.name=Block of Life
+tile.armorEnergyShildIII.name=Energy Shild III
+tile.armorBoom.name=Block of Boom Cube
+tile.armorActivePlating.name=Block of Active Plating
+tile.energyStorageI.name=Energy Storage I
+tile.energySolarIII.name=Solar III
+tile.energyStorageII.name=Solar II
+tile.energyTurret.name=Turret Block
+tile.energyAutoRepairIII.name=Auto-Repair III
+tile.energyStorageIII.name=Energy Storage III
+tile.energyAutoRepairI.name=Auto-Repair I
+tile.cubeDamageConverter.name=Damage Converter
+tile.energyReactorII.name=Energy Reactor II
+tile.cubeTrueStealth.name=True Stealth
+tile.energyReactorI.name=Energy Reactor I
+tile.energySolarI.name=Solar I
+tile.energyStorageV.name=Energy Storage V
+tile.energyReactorIII.name=Energy Reactor III
+tile.energyKenetic.name=Kenetic Generator
+tile.cubeHealth.name=Cube of More Health
+tile.cubeTrueVision.name=True Vision
+tile.energySolarII.name=Solar II
+tile.cubeRegen.name=Regeneration Cube
+tile.cubeStealth.name=Stealth
+tile.decoEmerald.name=Emerald Cube
 
 # Tooltips
 tooltip.placmenttype.name=Type
@@ -44,5 +79,25 @@ chat.message.charging=Staff Is Still Charging
 chat.message.invalid=Invalid Creation / Model
 chat.message.invalidPants=Would you put your pants on Sideways, I Don't think so.
 chat.message.placmentBlock=To create this model use it on
+
+# Descriptions
+cube.test.description=This is just an Test cube and will be removed upon release.
+cube.flippers.description=This will allow you to swim in water faster.
+cube.shock.description=This will allow you to degate fall damage. (Only if you are the correct weight)
+cube.waterWalk.description=This will allow you to walk on water.
+cube.gravity.description=This will allow you to fly. (Only if you are the correct weight)
+cube.jetpack.description=This turns your armor into an jetpack (Speed is depended on its weight)
+cube.nightVision.description=Gives the wearer night vision
+cube.waterBreathing.description=Gives the wearer Water Breathing
+cube.autoRepairI.description=This cube will use energy to repair any damaged cubes on the armor thats its placed.
+cube.mobStealth.description=This will make you invisible to most mobs.
+cube.lightArmor.description=Light, but able to protect you will still taking an beating.
+cube.heavyArmor.description=Very heavy, but has great protection.
+cube.reinforcedArmor.description=§0Combination of light and heavy to create a well rounded ration of protection vs its weight
+cube.muscle.description=Used to incress the weaers speed
+cube.life.description=Steals health from any nearby animals and hostiles to give you protection.
+cube.nanoTech.descrption=Able to auto-repair it self along with extremely high protection.
+
+
 
 

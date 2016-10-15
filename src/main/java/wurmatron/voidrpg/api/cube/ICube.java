@@ -81,4 +81,10 @@ public interface ICube {
 		 * @param type Type of armor that it is trying to be placed on.
 		 */
 		boolean getSupportedArmorTypes (EntityEquipmentSlot type);
+
+		/**
+		 * Used for displaying an explination on waht the cube does.
+		 * This should be an locilization key and is automaticlly localized
+		 */
+		String getDescription();
 }

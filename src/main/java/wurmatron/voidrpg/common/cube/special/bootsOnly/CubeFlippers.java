@@ -71,4 +71,10 @@ public class CubeFlippers implements ICube {
 		public boolean getSupportedArmorTypes (EntityEquipmentSlot type) {
 				return type.equals(EntityEquipmentSlot.FEET);
 		}
+
+
+		@Override
+		public String getDescription () {
+				return "cube.flippers.description";
+		}
 }

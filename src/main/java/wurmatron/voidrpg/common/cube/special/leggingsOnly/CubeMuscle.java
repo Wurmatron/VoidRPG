@@ -72,4 +72,9 @@ public class CubeMuscle implements ICube {
 		public boolean getSupportedArmorTypes (EntityEquipmentSlot type) {
 				return type.equals(EntityEquipmentSlot.LEGS);
 		}
+
+		@Override
+		public String getDescription () {
+				return "cube.muscle.description";
+		}
 }

@@ -20,8 +20,9 @@ public class Cube implements ICube {
 		private Block realBlock;
 		private int maxAmount;
 		private EntityEquipmentSlot[] armorType;
+		private String descriptionKey;
 
-		public Cube (String unlocalizedName, Block block, ResourceLocation texture, double weight, int complexity, int durability, int maxAmount, EntityEquipmentSlot[] armorType) {
+		public Cube (String unlocalizedName, Block block, ResourceLocation texture, double weight, int complexity, int durability, int maxAmount, EntityEquipmentSlot[] armorType, String descriptionKey) {
 				this.unlocalizedName = unlocalizedName;
 				this.realBlock = block;
 				this.texture = texture;
@@ -30,6 +31,7 @@ public class Cube implements ICube {
 				this.durability = durability;
 				this.maxAmount = maxAmount;
 				this.armorType = armorType;
+				this.descriptionKey = descriptionKey;
 		}
 
 		@Override
@@ -89,5 +91,10 @@ public class Cube implements ICube {
 						if (type.equals(t))
 								return true;
 				return false;
+		}
+
+		@Override
+		public String getDescription () {
+				return descriptionKey;
 		}
 }

@@ -71,4 +71,10 @@ public class CubeGravity implements ICube {
 		public boolean getSupportedArmorTypes (EntityEquipmentSlot type) {
 				return type.equals(EntityEquipmentSlot.CHEST);
 		}
+
+
+		@Override
+		public String getDescription () {
+				return "cube.gravity.description";
+		}
 }

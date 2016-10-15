@@ -20,8 +20,9 @@ public class StringCube implements ICube {
 		private String blockName;
 		private int maxAmount;
 		private String armorTypes;
+		private String descriptionKey;
 
-		public StringCube (String unlocalizedName, String modid, String blockName, ResourceLocation texture, double weight, int complexity, int durability, int maxAmount, String armorTypes) {
+		public StringCube (String unlocalizedName, String modid, String blockName, ResourceLocation texture, double weight, int complexity, int durability, int maxAmount, String armorTypes, String description) {
 				this.unlocalizedName = unlocalizedName;
 				this.blockModid = modid;
 				this.blockName = blockName;
@@ -31,6 +32,7 @@ public class StringCube implements ICube {
 				this.durability = durability;
 				this.maxAmount = maxAmount;
 				this.armorTypes = armorTypes;
+				this.descriptionKey = description;
 		}
 
 		@Override
@@ -104,5 +106,10 @@ public class StringCube implements ICube {
 				else if (name.equalsIgnoreCase("boots") && type.equals(EntityEquipmentSlot.FEET) || name.equalsIgnoreCase("feet") && type.equals(EntityEquipmentSlot.FEET))
 						return true;
 				return false;
+		}
+
+		@Override
+		public String getDescription () {
+				return descriptionKey;
 		}
 }

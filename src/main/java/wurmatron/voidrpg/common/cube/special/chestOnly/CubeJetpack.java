@@ -71,4 +71,10 @@ public class CubeJetpack implements ICube {
 		public boolean getSupportedArmorTypes (EntityEquipmentSlot type) {
 			return type.equals(EntityEquipmentSlot.CHEST) || type.equals(EntityEquipmentSlot.FEET);
 		}
+
+
+		@Override
+		public String getDescription () {
+				return "cube.jetpack.description";
+		}
 }

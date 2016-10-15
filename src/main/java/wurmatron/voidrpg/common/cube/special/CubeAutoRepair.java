@@ -68,4 +68,10 @@ public class CubeAutoRepair implements ICube {
 		public boolean getSupportedArmorTypes (EntityEquipmentSlot type) {
 				return true;
 		}
+
+
+		@Override
+		public String getDescription () {
+				return "cube.autoRepairI.description";
+		}
 }

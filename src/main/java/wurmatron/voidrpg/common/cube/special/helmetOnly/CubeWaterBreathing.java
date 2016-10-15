@@ -76,4 +76,10 @@ public class CubeWaterBreathing implements ICube {
 		public boolean getSupportedArmorTypes (EntityEquipmentSlot type) {
 				return type.equals(EntityEquipmentSlot.HEAD);
 		}
+
+
+		@Override
+		public String getDescription () {
+				return "cube.waterBreathing.description";
+		}
 }

@@ -73,4 +73,10 @@ public class CubeWaterWalk implements ICube {
 		public boolean getSupportedArmorTypes (EntityEquipmentSlot type) {
 				return type.equals(EntityEquipmentSlot.FEET);
 		}
+
+
+		@Override
+		public String getDescription () {
+				return "cube.waterWalk.description";
+		}
 }

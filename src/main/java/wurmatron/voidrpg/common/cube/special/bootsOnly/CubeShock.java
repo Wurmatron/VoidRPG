@@ -74,6 +74,12 @@ public class CubeShock implements ICube {
 				return type.equals(EntityEquipmentSlot.FEET);
 		}
 
+
+		@Override
+		public String getDescription () {
+				return "cube.shock.description";
+		}
+
 		@SubscribeEvent
 		public void onPlayerFall (LivingFallEvent e) {
 				if (e.getEntityLiving() instanceof EntityPlayer) {
@@ -85,4 +91,6 @@ public class CubeShock implements ICube {
 						}
 				}
 		}
+
+
 }

@@ -34,7 +34,7 @@ import java.util.List;
 
 public class ItemStaff extends Item {
 
-		private static final int MAX_DURABIITY = 8;
+		public static final int MAX_DURABIITY = 8;
 		private static final ChiselAndBitsAPI api = new ChiselAndBitsAPI();
 		private static final ArmorHelper helper = new ArmorHelper();
 
@@ -292,5 +292,17 @@ public class ItemStaff extends Item {
 		@Override
 		public EnumRarity getRarity (ItemStack stack) {
 				return EnumRarity.UNCOMMON;
+		}
+
+		public static ItemStack createStack (int durability) {
+				ItemStack temp = new ItemStack(VoidRPGItems.itemStaff, 1, 0);
+				NBTTagCompound nbt = new NBTTagCompound();
+				nbt.setInteger(NBT.DURABILITY, durability);
+				temp.setTagCompound(nbt);
+				return temp;
+		}
+
+		public static ItemStack createStack () {
+				return createStack(MAX_DURABIITY);
 		}
 }

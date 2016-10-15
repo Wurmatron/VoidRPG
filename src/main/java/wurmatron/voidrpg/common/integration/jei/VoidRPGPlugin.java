@@ -6,6 +6,7 @@ import mezz.jei.api.IModRegistry;
 import mezz.jei.api.JEIPlugin;
 import mezz.jei.api.gui.IAdvancedGuiHandler;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import wurmatron.voidrpg.api.cube.ICube;
 import wurmatron.voidrpg.client.gui.GuiCubeCreator;
@@ -40,12 +41,28 @@ public class VoidRPGPlugin extends BlankModPlugin {
 						}
 				});
 				for (ICube cube : CubeRegistry.INSTANCE.getCubes())
-						registry.addDescription(new ItemStack(cube.getBlock(), 1, 0), "Name: " + I18n.format(cube.getUnlocalizedName()), I18n.format(Local.DURABILITY) + ": " + cube.getDurability(), I18n.format(Local.COMPLEXITY) + ": " + cube.getComplexity(), I18n.format(Local.WEIGHT) + ": " + cube.getWeight());
+						registry.addDescription(new ItemStack(cube.getBlock(), 1, 0), "Name: " + I18n.format(cube.getUnlocalizedName()), I18n.format(Local.DURABILITY) + ": " + cube.getDurability(), I18n.format(Local.COMPLEXITY) + ": " + cube.getComplexity(), I18n.format(Local.WEIGHT) + ": " + cube.getWeight(), I18n.format(Local.PLACMENT_TYPE) + ": " + getValidArmorTypes(cube),"", I18n.format(cube.getDescription()));
 		}
 
 		@Override
-		public void onRuntimeAvailable (@Nonnull IJeiRuntime runtime) {
+		public void onRuntimeAvailable (@Nonnull IJeiRuntime runtime) {}
 
+		private String getValidArmorTypes (ICube cube) {
+				if (cube != null) {
+						String temp = "";
+						if (cube.getSupportedArmorTypes(EntityEquipmentSlot.HEAD))
+								temp += "Helmet, ";
+						if (cube.getSupportedArmorTypes(EntityEquipmentSlot.LEGS))
+								temp += "Leggings, ";
+						if (cube.getSupportedArmorTypes(EntityEquipmentSlot.CHEST))
+								temp += "Chestplate, ";
+						if (cube.getSupportedArmorTypes(EntityEquipmentSlot.FEET))
+								temp += "Boots, ";
+						if (temp.endsWith(","))
+								return temp.substring(0, temp.lastIndexOf(","));
+						return temp;
+				}
+				return "none";
 		}
 
 
