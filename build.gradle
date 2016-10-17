@@ -16,6 +16,9 @@ version = "${mod_version}"
 group= package_group
 archivesBaseName = mod_name
 
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
 minecraft {
     version = "${mc_version}-${forge_version}"
     runDir = "run"

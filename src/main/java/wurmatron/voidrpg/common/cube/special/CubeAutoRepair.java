@@ -51,7 +51,7 @@ public class CubeAutoRepair implements ICube {
 		public void applyEffect (EntityPlayer player, CubeData cube, CubeData[] data) {
 				for (CubeData c : data)
 						if (c.damage > 0)
-								c.damage = c.damage--;
+								c.damage--;
 		}
 
 		@Override

@@ -13,7 +13,7 @@ item.armor_chest.name=Chestplate
 item.armor_head.name=Helmet
 
 # Blocks
-tile.blockLightArmor.name=Light Armor Block
+tile.armorLight.name=Light Armor Block
 tile.armorReinforced.name=Reinforced Armor Block
 tile.cubeCreator.name=Cube Creator
 tile.cubeWaterWalking.name=Water Walking Cube Block
@@ -58,6 +58,24 @@ tile.energySolarII.name=Solar II
 tile.cubeRegen.name=Regeneration Cube
 tile.cubeStealth.name=Stealth
 tile.decoEmerald.name=Emerald Cube
+tile.decoDiamond.name=Diamond Cube
+tile.decoWoolWhite.name=While deco cube
+tile.decoWoolOrange.name=Orange deco cube
+tile.decoWoolMagenta.name=Magenta deco cube
+tile.decoWoolLightBlue.name=Light blue deco cube
+tile.decoWoolYellow.name=Yellow deco cube
+tile.decoWoolLime.name=Lime deco cube
+tile.decoWoolPink.name=Pink deco cube
+tile.decoWoolGray.name=Gray deco cube
+tile.decoWoolLightGray.name=Light Gray deco cube
+tile.decoWoolCyan.name=Cyan deco cube
+tile.decoWoolPurple.name=Purple deco cube
+tile.decoWoolBlue.name=Blue deco cube
+tile.decoWoolBrown.name=Brown deco cube
+tile.decoWoolGreen.name=Green deco cube
+tile.decoWoolRed.name=Red deco cube
+tile.decoWoolBlack.name=Black deco cube
+tile.body.name=Body base
 
 # Tooltips
 tooltip.placmenttype.name=Type
@@ -96,7 +114,7 @@ cube.heavyArmor.description=Very heavy, but has great protection.
 cube.reinforcedArmor.description=§0Combination of light and heavy to create a well rounded ration of protection vs its weight
 cube.muscle.description=Used to incress the weaers speed
 cube.life.description=Steals health from any nearby animals and hostiles to give you protection.
-cube.nanoTech.descrption=Able to auto-repair it self along with extremely high protection.
+cube.nanoTech.descrption=Able to auto-repair it self along with high protection.
 
 
 

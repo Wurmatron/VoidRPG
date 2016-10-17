@@ -78,7 +78,7 @@ public class VoidRPGBlocks {
 		public static void init () {
 				registerBlock(bodyBlock = new BlockBody());
 				// Armor
-				registerBlock(armorLight = new BlockArmor(Material.ANVIL).setUnlocalizedName("blockLightArmor"));
+				registerBlock(armorLight = new BlockArmor(Material.ANVIL).setUnlocalizedName("armorLight"));
 				registerBlock(armorReinforced = new BlockArmor(Material.ANVIL).setUnlocalizedName("armorReinforced"));
 				registerBlock(armorHeavy = new BlockArmor(Material.ANVIL).setUnlocalizedName("armorHeavy"));
 				registerBlock(armorCarbon = new BlockArmor(Material.ANVIL).setUnlocalizedName("armorCarbon"));
@@ -103,27 +103,27 @@ public class VoidRPGBlocks {
 				registerBlock(cubeWaterBreahing = new BlockArmor(Material.IRON).setUnlocalizedName("cubeWaterBreathing"));
 				registerBlock(cubeMobStealth = new BlockArmor(Material.IRON).setUnlocalizedName("cubeMobStealth"));
 				registerBlock(cubeWing = new BlockArmor(Material.IRON).setUnlocalizedName("cubeWing"));
-				registerBlock(cubeTrueStealth = new BlockArmor(Material.ANVIL).setUnlocalizedName("cubeTrueStealth"));
-				registerBlock(energyTurret = new BlockArmor(Material.ANVIL).setUnlocalizedName("energyTurret"));
-				registerBlock(energyStorageI = new BlockArmor(Material.ANVIL).setUnlocalizedName("energyStorageI"));
-				registerBlock(energyStorageII = new BlockArmor(Material.ANVIL).setUnlocalizedName("energyStorageII"));
-				registerBlock(energyStorageIII = new BlockArmor(Material.ANVIL).setUnlocalizedName("energyStorageIII"));
-				registerBlock(energyStorageIV = new BlockArmor(Material.ANVIL).setUnlocalizedName("energyStorageIV"));
-				registerBlock(energyStorageV = new BlockArmor(Material.ANVIL).setUnlocalizedName("energyStorageV"));
-				registerBlock(energyReactorI = new BlockArmor(Material.ANVIL).setUnlocalizedName("energyReactorI"));
-				registerBlock(energyReactorII = new BlockArmor(Material.ANVIL).setUnlocalizedName("energyReactorII"));
-				registerBlock(energyReactorIII = new BlockArmor(Material.ANVIL).setUnlocalizedName("energyReactorIII"));
-				registerBlock(cubeDamageConverter = new BlockArmor(Material.ANVIL).setUnlocalizedName("cubeDamageConverter"));
-				registerBlock(cubeCooldownReduction = new BlockArmor(Material.ANVIL).setUnlocalizedName("cubeCooldownReduction"));
-				registerBlock(cubeTrueVision = new BlockArmor(Material.ANVIL).setUnlocalizedName("cubeTrueVision"));
-				registerBlock(energySolarI = new BlockArmor(Material.ANVIL).setUnlocalizedName("energySolarI"));
-				registerBlock(energySolarII = new BlockArmor(Material.ANVIL).setUnlocalizedName("energySolarII"));
-				registerBlock(energySolarIII = new BlockArmor(Material.ANVIL).setUnlocalizedName("energySolarIII"));
-				registerBlock(energyKenetic = new BlockArmor(Material.ANVIL).setUnlocalizedName("energyKenetic"));
-				registerBlock(energyAutoRepairI = new BlockArmor(Material.ANVIL).setUnlocalizedName("energyAutoRepairI"));
-				registerBlock(energyAutoRepairII = new BlockArmor(Material.ANVIL).setUnlocalizedName("energyAutoRepairII"));
-				registerBlock(energyAutoRepairIII = new BlockArmor(Material.ANVIL).setUnlocalizedName("energyAutoRepairIII"));
-				registerBlock(cubeStealth = new BlockArmor(Material.ANVIL).setUnlocalizedName("cubeStealth"));
+				registerBlock(cubeTrueStealth = new BlockArmor(Material.IRON).setUnlocalizedName("cubeTrueStealth"));
+				registerBlock(energyTurret = new BlockArmor(Material.IRON).setUnlocalizedName("energyTurret"));
+				registerBlock(energyStorageI = new BlockArmor(Material.IRON).setUnlocalizedName("energyStorageI"));
+				registerBlock(energyStorageII = new BlockArmor(Material.IRON).setUnlocalizedName("energyStorageII"));
+				registerBlock(energyStorageIII = new BlockArmor(Material.IRON).setUnlocalizedName("energyStorageIII"));
+				registerBlock(energyStorageIV = new BlockArmor(Material.IRON).setUnlocalizedName("energyStorageIV"));
+				registerBlock(energyStorageV = new BlockArmor(Material.IRON).setUnlocalizedName("energyStorageV"));
+				registerBlock(energyReactorI = new BlockArmor(Material.IRON).setUnlocalizedName("energyReactorI"));
+				registerBlock(energyReactorII = new BlockArmor(Material.IRON).setUnlocalizedName("energyReactorII"));
+				registerBlock(energyReactorIII = new BlockArmor(Material.IRON).setUnlocalizedName("energyReactorIII"));
+				registerBlock(cubeDamageConverter = new BlockArmor(Material.IRON).setUnlocalizedName("cubeDamageConverter"));
+				registerBlock(cubeCooldownReduction = new BlockArmor(Material.IRON).setUnlocalizedName("cubeCooldownReduction"));
+				registerBlock(cubeTrueVision = new BlockArmor(Material.IRON).setUnlocalizedName("cubeTrueVision"));
+				registerBlock(energySolarI = new BlockArmor(Material.IRON).setUnlocalizedName("energySolarI"));
+				registerBlock(energySolarII = new BlockArmor(Material.IRON).setUnlocalizedName("energySolarII"));
+				registerBlock(energySolarIII = new BlockArmor(Material.IRON).setUnlocalizedName("energySolarIII"));
+				registerBlock(energyKenetic = new BlockArmor(Material.IRON).setUnlocalizedName("energyKenetic"));
+				registerBlock(energyAutoRepairI = new BlockArmor(Material.IRON).setUnlocalizedName("energyAutoRepairI"));
+				registerBlock(energyAutoRepairII = new BlockArmor(Material.IRON).setUnlocalizedName("energyAutoRepairII"));
+				registerBlock(energyAutoRepairIII = new BlockArmor(Material.IRON).setUnlocalizedName("energyAutoRepairIII"));
+				registerBlock(cubeStealth = new BlockArmor(Material.IRON).setUnlocalizedName("cubeStealth"));
 				// Deco
 				registerBlock(decoDiamond = new BlockArmor(Material.ANVIL).setUnlocalizedName("decoDiamond"));
 				registerBlock(decoEmerald = new BlockArmor(Material.ANVIL).setUnlocalizedName("decoEmerald"));

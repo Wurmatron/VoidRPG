@@ -280,56 +280,54 @@ public class TileCubeCreator extends TileEntity implements ITickable, IInventory
 		private void addOutput (ItemStack stack, boolean checking) {
 				boolean added = false;
 				int amountLeft = stack.stackSize;
-				if (stack != null) {
-						for (int slot = 0; slot < inventory.length; slot++) {
-								if (getStackInSlot(slot) != null && getStackInSlot(slot).isItemEqual(stack) && getStackInSlot(slot).stackSize < 64) {
-										if (getStackInSlot(slot).getTagCompound() == null && stack.getTagCompound() == null || getStackInSlot(slot).getTagCompound() != null && stack.getTagCompound() != null && getStackInSlot(slot).getTagCompound().equals(stack.getTagCompound())) {
-												if (getStackInSlot(slot).stackSize + stack.stackSize <= 64) {
-														ItemStack temp = getStackInSlot(slot);
-														temp.stackSize += stack.stackSize;
-														setInventorySlotContents(slot, temp);
-														amountLeft -= stack.stackSize;
-												} else if (getStackInSlot(slot).stackSize + 1 <= 64) {
-														ItemStack temp = getStackInSlot(slot);
-														int amountTillFull = temp.stackSize;
-														for (int a = 0; a <= 64; a++)
-																if (amountTillFull + a <= stack.getMaxStackSize())
-																		if (amountTillFull + a == stack.getMaxStackSize()) {
-																				amountLeft -= a;
-																				amountTillFull += a;
-																				temp.stackSize = amountTillFull;
-																				if (!checking)
-																						setInventorySlotContents(slot, temp);
-																		}
-														if (!checking)
-																setInventorySlotContents(slot, temp);
-														amountLeft -= stack.stackSize;
-												}
-										}
-										if (amountLeft == 0) {
-												added = true;
-												break;
-										}
-								}
-						}
-						if (!added) {
-								for (int slot = 0; slot < inventory.length; slot++) {
-										if (getStackInSlot(slot) == null) {
+				for (int slot = 0; slot < inventory.length; slot++) {
+						if (getStackInSlot(slot) != null && getStackInSlot(slot).isItemEqual(stack) && getStackInSlot(slot).stackSize < 64) {
+								if (getStackInSlot(slot).getTagCompound() == null && stack.getTagCompound() == null || getStackInSlot(slot).getTagCompound() != null && stack.getTagCompound() != null && getStackInSlot(slot).getTagCompound().equals(stack.getTagCompound())) {
+										if (getStackInSlot(slot).stackSize + stack.stackSize <= 64) {
+												ItemStack temp = getStackInSlot(slot);
+												temp.stackSize += stack.stackSize;
+												setInventorySlotContents(slot, temp);
+												amountLeft -= stack.stackSize;
+										} else if (getStackInSlot(slot).stackSize + 1 <= 64) {
+												ItemStack temp = getStackInSlot(slot);
+												int amountTillFull = temp.stackSize;
+												for (int a = 0; a <= 64; a++)
+														if (amountTillFull + a <= stack.getMaxStackSize())
+																if (amountTillFull + a == stack.getMaxStackSize()) {
+																		amountLeft -= a;
+																		amountTillFull += a;
+																		temp.stackSize = amountTillFull;
+																		if (!checking)
+																				setInventorySlotContents(slot, temp);
+																}
 												if (!checking)
-														setInventorySlotContents(slot, stack);
+														setInventorySlotContents(slot, temp);
 												amountLeft -= stack.stackSize;
 										}
-										if (amountLeft == 0) {
-												added = true;
-												break;
-										}
 								}
-								// No open slots detected, freeze machine
-								recipeTimer = 1;
-								isFrozen = true;
+								if (amountLeft == 0) {
+										added = true;
+										break;
+								}
 						}
-						if (amountLeft == 0)
-								isFrozen = false;
 				}
+				if (!added) {
+						for (int slot = 0; slot < inventory.length; slot++) {
+								if (getStackInSlot(slot) == null) {
+										if (!checking)
+												setInventorySlotContents(slot, stack);
+										amountLeft -= stack.stackSize;
+								}
+								if (amountLeft == 0) {
+										added = true;
+										break;
+								}
+						}
+						// No open slots detected, freeze machine
+						recipeTimer = 1;
+						isFrozen = true;
+				}
+				if (amountLeft == 0)
+						isFrozen = false;
 		}
 }

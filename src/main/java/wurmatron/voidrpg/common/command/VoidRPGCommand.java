@@ -61,22 +61,27 @@ public class VoidRPGCommand implements ICommand {
 										if (args[0].equalsIgnoreCase("version")) {
 												sender.addChatMessage(new TextComponentString("Current Version " + Global.VERSION).setStyle(new Style().setColor(TextFormatting.GOLD)));
 												sender.addChatMessage(new TextComponentString("Latest Version " + VersionChecker.getVersion(Global.UPDATE_URL)).setStyle(new Style().setColor(TextFormatting.GOLD)));
+										break;
 										} else if (args[0].equalsIgnoreCase("reload")) {
 												ConfigHandler.loadJsonCubes();
 												sender.addChatMessage(new TextComponentString("Reloaded Cube Json's").setStyle(new Style().setColor(TextFormatting.AQUA)));
 												sender.addChatMessage(new TextComponentString("(May require an restart to remove cubes)").setStyle(new Style().setColor(TextFormatting.AQUA)));
+												break;
 										} else if (args[0].equalsIgnoreCase("names") || args[0].equalsIgnoreCase("cubes")) {
 												String temp = "";
 												for (ICube cube : CubeRegistry.cubes)
 														temp = temp + I18n.format(cube.getUnlocalizedName()) + ", ";
 												sender.addChatMessage(new TextComponentString("Cubes: " + temp).setStyle(new Style().setColor(TextFormatting.LIGHT_PURPLE)));
+												break;
 										} else if (args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("?")) {
 												sender.addChatMessage(new TextComponentString("/voidrpg <version | reload | cubes | info>").setStyle(new Style().setColor(TextFormatting.GREEN)));
+												break;
 										} else if (args[0].equalsIgnoreCase("info")) {
 												if (args.length >= 2) {
 												} else {
 														sender.addChatMessage(new TextComponentString("/voidrpg info <cube-name>").setStyle(new Style().setColor(TextFormatting.RED)));
 														execute(server, sender, new String[] {"names"});
+														break;
 												}
 										}
 								}
@@ -97,6 +102,7 @@ public class VoidRPGCommand implements ICommand {
 														sender.addChatMessage(new TextComponentString(I18n.format(Local.MAXAMOUNT_BOOTS) + ": " + cube.getMaxAmount(VoidRPGItems.armorBoots)).setStyle(new Style().setColor(TextFormatting.YELLOW)));
 												} else
 														sender.addChatMessage(new TextComponentString("Enter an valid cube name").setStyle(new Style().setColor(TextFormatting.RED)));
+												break;
 										}
 								}
 								break;

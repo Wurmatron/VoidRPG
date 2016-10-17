@@ -53,7 +53,7 @@ public class CubeNanoTech implements ICube {
 		@Override
 		public void applyEffect (EntityPlayer player, CubeData data, CubeData[] cubes) {
 				if (timer <= 0) {
-						data.damage = data.damage--;
+						data.damage--;
 						timer = 100;
 				} else
 						timer--;

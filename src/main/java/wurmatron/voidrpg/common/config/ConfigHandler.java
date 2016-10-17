@@ -67,7 +67,7 @@ public class ConfigHandler {
 
 		public static void loadJsonCubes () {
 				for (File json : JsonHandler.dir.listFiles()) {
-						if (json.isFile()) {
+						if (json != null && json.isFile()) {
 								ICube temp = JsonHandler.loadCubeFromFile(json);
 								if (!CubeRegistry.cubes.contains(temp)) {
 										CubeRegistry.INSTANCE.registerCube(temp);

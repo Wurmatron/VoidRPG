@@ -88,11 +88,14 @@ public class StringCube implements ICube {
 
 		@Override
 		public boolean getSupportedArmorTypes (EntityEquipmentSlot type) {
-				String[] types = armorTypes.split(",");
-				if (types.length > 0)
-						for (String t : types)
-								if (isValid(type, t))
-										return true;
+				if (type != null && armorTypes != null && armorTypes.length() > 4) {
+						String[] types = armorTypes.split(",");
+						if (types.length > 0)
+								if (types.length > 0)
+										for (String t : types)
+												if (isValid(type, t))
+														return true;
+				}
 				return false;
 		}
 

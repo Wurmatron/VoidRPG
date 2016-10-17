@@ -41,7 +41,10 @@ public class VoidRPGPlugin extends BlankModPlugin {
 						}
 				});
 				for (ICube cube : CubeRegistry.INSTANCE.getCubes())
-						registry.addDescription(new ItemStack(cube.getBlock(), 1, 0), "Name: " + I18n.format(cube.getUnlocalizedName()), I18n.format(Local.DURABILITY) + ": " + cube.getDurability(), I18n.format(Local.COMPLEXITY) + ": " + cube.getComplexity(), I18n.format(Local.WEIGHT) + ": " + cube.getWeight(), I18n.format(Local.PLACMENT_TYPE) + ": " + getValidArmorTypes(cube),"", I18n.format(cube.getDescription()));
+						if (cube.getDescription() != null || cube.getDescription().length() > 0)
+								registry.addDescription(new ItemStack(cube.getBlock(), 1, 0), "Name: " + I18n.format(cube.getUnlocalizedName()), I18n.format(Local.DURABILITY) + ": " + cube.getDurability(), I18n.format(Local.COMPLEXITY) + ": " + cube.getComplexity(), I18n.format(Local.WEIGHT) + ": " + cube.getWeight(), I18n.format(Local.PLACMENT_TYPE) + ": " + getValidArmorTypes(cube), "", I18n.format(cube.getDescription()));
+						else
+								registry.addDescription(new ItemStack(cube.getBlock(), 1, 0), "Name: " + I18n.format(cube.getUnlocalizedName()), I18n.format(Local.DURABILITY) + ": " + cube.getDurability(), I18n.format(Local.COMPLEXITY) + ": " + cube.getComplexity(), I18n.format(Local.WEIGHT) + ": " + cube.getWeight(), I18n.format(Local.PLACMENT_TYPE) + ": " + getValidArmorTypes(cube));
 		}
 
 		@Override

@@ -13,8 +13,6 @@ public class StackHelper {
 										return true;
 						}
 				}
-				if(a == null && b == null)
-						return true;
-				return false;
+				return a == null && b == null;
 		}
 }
