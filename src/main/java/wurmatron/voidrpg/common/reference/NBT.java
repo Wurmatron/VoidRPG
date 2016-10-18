@@ -18,4 +18,5 @@ public class NBT {
 		public static final String SLOT = "slot";
 		public static final String ACTIVERECIPE = "activeRecipe";
 		public static final String TYPE = "type";
+		public static final String ENERGY = "energy";
 }

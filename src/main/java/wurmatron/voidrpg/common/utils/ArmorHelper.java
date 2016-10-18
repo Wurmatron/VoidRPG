@@ -11,6 +11,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import wurmatron.voidrpg.api.cube.CubeData;
 import wurmatron.voidrpg.api.cube.ICube;
+import wurmatron.voidrpg.api.cube.IEnergyCube;
 import wurmatron.voidrpg.common.cube.CubeRegistry;
 import wurmatron.voidrpg.common.items.VoidRPGItems;
 import wurmatron.voidrpg.common.reference.Global;
@@ -433,5 +434,31 @@ public class ArmorHelper {
 				if (cube != null && stack != null)
 						return getCubeAmount(stack, cube) >= cube.getMinAmount(stack.getItem(), getArmorWeight(stack));
 				return false;
+		}
+
+		public ArrayList<ICube> getEnergyCubes (ItemStack stack) {
+				if (stack != null && stack.getTagCompound() != null) {
+						ArrayList<ICube> energyCubes = new ArrayList<>();
+						for (ICube cube : getCubes(stack)) {
+								if (cube instanceof IEnergyCube)
+										energyCubes.add(cube);
+						}
+						return energyCubes;
+				}
+				return null;
+		}
+
+		public long getMaxEnergyStorage (ItemStack stack) {
+				if (stack != null && stack.getTagCompound() != null) {
+						long maxEnergy = 0;
+						for (ICube cube : getEnergyCubes(stack)) {
+								if (cube instanceof IEnergyCube) {
+										IEnergyCube energy = (IEnergyCube) cube;
+										maxEnergy += energy.getStorage();
+								}
+						}
+						return maxEnergy;
+				}
+				return 0;
 		}
 }

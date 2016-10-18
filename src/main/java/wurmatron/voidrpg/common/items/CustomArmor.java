@@ -1,5 +1,8 @@
 package wurmatron.voidrpg.common.items;
 
+import net.darkhax.tesla.api.implementation.BaseTeslaContainer;
+import net.darkhax.tesla.api.implementation.BaseTeslaContainerProvider;
+import net.darkhax.tesla.lib.TeslaUtils;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -7,10 +10,15 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityInject;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import wurmatron.voidrpg.api.cube.CubeData;
@@ -21,6 +29,9 @@ import wurmatron.voidrpg.common.config.Settings;
 import wurmatron.voidrpg.common.reference.Global;
 import wurmatron.voidrpg.common.reference.NBT;
 import wurmatron.voidrpg.common.utils.ArmorHelper;
+import wurmatron.voidrpg.common.utils.energy.TeslaHelper;
+
+import java.util.List;
 
 public class CustomArmor extends ItemArmor implements ISpecialArmor {
 
@@ -28,6 +39,9 @@ public class CustomArmor extends ItemArmor implements ISpecialArmor {
 		private boolean requiresUpdate;
 		private boolean update;
 		private static final ArmorHelper helper = new ArmorHelper();
+
+		@CapabilityInject (BaseTeslaContainerProvider.class)
+		static Capability<BaseTeslaContainerProvider> CAPABILITY = null;
 
 		public CustomArmor (ArmorMaterial material, int index, EntityEquipmentSlot slot) {
 				super(material, index, slot);
@@ -65,6 +79,9 @@ public class CustomArmor extends ItemArmor implements ISpecialArmor {
 								for (CubeData cube : helper.getBootsCubes(stack, NBT.RIGHTLEG))
 										MinecraftForge.EVENT_BUS.post(new CubeTickEvent(cube, player, stack));
 								handleCubeUpdates(player, stack, helper.getBootsCubes(stack, NBT.RIGHTLEG));
+						}
+						if (!stack.getTagCompound().hasKey(NBT.ENERGY)) {
+							TeslaHelper.setMaxCapacity(stack, ArmorHelper.instance.getMaxEnergyStorage(stack));
 						}
 				}
 		}
@@ -134,8 +151,19 @@ public class CustomArmor extends ItemArmor implements ISpecialArmor {
 		private void handleCubeUpdates (EntityPlayer player, ItemStack stack, CubeData[] data) {
 				if (Settings.cubeEffects)
 						for (CubeData cube : data) {
-								if(cube.cube.hasEffects(player,stack) && new ArmorHelper().isCubeActive(cube.cube,stack))
-										cube.cube.applyEffect(player,cube,data);
+								if (cube.cube.hasEffects(player, stack) && new ArmorHelper().isCubeActive(cube.cube, stack))
+										cube.cube.applyEffect(player, cube, data);
 						}
+		}
+
+		@Override
+		public void addInformation (ItemStack stack, EntityPlayer player, List<String> tip, boolean adv) {
+				TeslaUtils.createTooltip(stack, tip);
+		}
+
+		@Optional.Method (modid = "tesla")
+		@Override
+		public ICapabilityProvider initCapabilities (ItemStack stack, NBTTagCompound nbt) {
+				return new BaseTeslaContainerProvider(new BaseTeslaContainer(0, 0, 50, 50));
 		}
 }

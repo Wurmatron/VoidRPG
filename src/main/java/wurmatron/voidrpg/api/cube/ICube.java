@@ -86,5 +86,5 @@ public interface ICube {
 		 * Used for displaying an explination on waht the cube does.
 		 * This should be an locilization key and is automaticlly localized
 		 */
-		String getDescription();
+		String getDescription ();
 }

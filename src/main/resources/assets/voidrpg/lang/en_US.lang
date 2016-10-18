@@ -115,6 +115,37 @@ cube.reinforcedArmor.description=§0Combination of light and heavy to create a w
 cube.muscle.description=Used to incress the weaers speed
 cube.life.description=Steals health from any nearby animals and hostiles to give you protection.
 cube.nanoTech.descrption=Able to auto-repair it self along with high protection.
+cube.decoWoolWhite.description=This is just an basic white cube.
+cube.decoWoolOrange.description=This is just an basic orange cube.
+cube.decoWoolMagenta.description=This is just an basic magenta cube.
+cube.decoWoolLightBlue.description=This is just an basic light blue cube.
+cube.decoWoolYellow.description=This is just an basic yellow cube.
+cube.decoWoolLime.description=This is just an basic lime cube.
+cube.decoWoolPink.description=This is just an basic pink cube.
+cube.decoWoolGray.description=This is just an basic gray cube.
+cube.decoWoolLightGray.description=This is just an basic light gray cube.
+cube.decoWoolCyan.description=This is just an basic cyan cube.
+cube.decoWoolPurple.description=This is just an basic purple cube.
+cube.decoWoolBlue.description=This is just an basic blue cube.
+cube.decoWoolBrown.description=This is just an basic brown cube.
+cube.decoWoolGreen.description=This is just an basic green cube.
+cube.decoWoolRed.description=This is just an basic red cube.
+cube.decoWoolBlack.description=This is just an basic black cube.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
