@@ -50,7 +50,7 @@ public class CubeGravity implements ICube {
 		}
 
 		@Override
-		public void applyEffect (EntityPlayer player, CubeData data, CubeData[] cubes) {
+		public void applyEffect (EntityPlayer player, CubeData data, CubeData[] cubes, ItemStack stack) {
 				// TODO Need to disable this somehow
 				player.capabilities.allowFlying = true;
 		}

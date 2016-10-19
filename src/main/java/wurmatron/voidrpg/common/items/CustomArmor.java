@@ -15,8 +15,6 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.relauncher.Side;
@@ -39,9 +37,6 @@ public class CustomArmor extends ItemArmor implements ISpecialArmor {
 		private boolean requiresUpdate;
 		private boolean update;
 		private static final ArmorHelper helper = new ArmorHelper();
-
-		@CapabilityInject (BaseTeslaContainerProvider.class)
-		static Capability<BaseTeslaContainerProvider> CAPABILITY = null;
 
 		public CustomArmor (ArmorMaterial material, int index, EntityEquipmentSlot slot) {
 				super(material, index, slot);
@@ -152,7 +147,7 @@ public class CustomArmor extends ItemArmor implements ISpecialArmor {
 				if (Settings.cubeEffects)
 						for (CubeData cube : data) {
 								if (cube.cube.hasEffects(player, stack) && new ArmorHelper().isCubeActive(cube.cube, stack))
-										cube.cube.applyEffect(player, cube, data);
+										cube.cube.applyEffect(player, cube, data, stack);
 						}
 		}
 

@@ -13,6 +13,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import wurmatron.voidrpg.api.cube.CubeData;
 import wurmatron.voidrpg.api.cube.ICube;
+import wurmatron.voidrpg.api.cube.IProtectionCube;
 import wurmatron.voidrpg.common.blocks.VoidRPGBlocks;
 import wurmatron.voidrpg.common.items.VoidRPGItems;
 import wurmatron.voidrpg.common.reference.Global;
@@ -21,7 +22,7 @@ import wurmatron.voidrpg.common.utils.ArmorHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CubeLife implements ICube {
+public class CubeLife implements ICube,IProtectionCube {
 
 		@Override
 		public String getUnlocalizedName () {
@@ -59,9 +60,7 @@ public class CubeLife implements ICube {
 		}
 
 		@Override
-		public void applyEffect (EntityPlayer player, CubeData data, CubeData[] cubes) {
-
-		}
+		public void applyEffect (EntityPlayer player, CubeData data, CubeData[] cubes, ItemStack stack) {}
 
 		@Override
 		public int getMaxAmount (Item item) {
@@ -123,5 +122,10 @@ public class CubeLife implements ICube {
 								}
 						}
 				}
+		}
+
+		@Override
+		public int getOverallProtection (EntityPlayer player, DamageSource source) {
+				return 0;
 		}
 }

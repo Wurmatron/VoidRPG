@@ -9,6 +9,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import wurmatron.voidrpg.api.cube.ICube;
+import wurmatron.voidrpg.api.cube.IEnergyCube;
 import wurmatron.voidrpg.client.gui.GuiCubeCreator;
 import wurmatron.voidrpg.common.cube.CubeRegistry;
 import wurmatron.voidrpg.common.reference.Local;
@@ -42,13 +43,18 @@ public class VoidRPGPlugin extends BlankModPlugin {
 				});
 				for (ICube cube : CubeRegistry.INSTANCE.getCubes())
 						if (cube.getDescription() != null || cube.getDescription().length() > 0)
-								registry.addDescription(new ItemStack(cube.getBlock(), 1, 0), "Name: " + I18n.format(cube.getUnlocalizedName()), I18n.format(Local.DURABILITY) + ": " + cube.getDurability(), I18n.format(Local.COMPLEXITY) + ": " + cube.getComplexity(), I18n.format(Local.WEIGHT) + ": " + cube.getWeight(), I18n.format(Local.PLACMENT_TYPE) + ": " + getValidArmorTypes(cube), "", I18n.format(cube.getDescription()));
+								if (cube instanceof IEnergyCube) {
+										IEnergyCube energy = (IEnergyCube) cube;
+										registry.addDescription(new ItemStack(cube.getBlock(), 1, 0), "Name: " + I18n.format(cube.getUnlocalizedName()), I18n.format(Local.DURABILITY) + ": " + cube.getDurability(), I18n.format(Local.COMPLEXITY) + ": " + cube.getComplexity(), I18n.format(Local.WEIGHT) + ": " + cube.getWeight(), I18n.format(Local.ENERGY) + ": " + energy.getStorage(),I18n.format(Local.PLACMENT_TYPE) + ": " + getValidArmorTypes(cube), "", I18n.format(cube.getDescription()));
+								} else
+										registry.addDescription(new ItemStack(cube.getBlock(), 1, 0), "Name: " + I18n.format(cube.getUnlocalizedName()), I18n.format(Local.DURABILITY) + ": " + cube.getDurability(), I18n.format(Local.COMPLEXITY) + ": " + cube.getComplexity(), I18n.format(Local.WEIGHT) + ": " + cube.getWeight(), I18n.format(Local.PLACMENT_TYPE) + ": " + getValidArmorTypes(cube), "", I18n.format(cube.getDescription()));
 						else
 								registry.addDescription(new ItemStack(cube.getBlock(), 1, 0), "Name: " + I18n.format(cube.getUnlocalizedName()), I18n.format(Local.DURABILITY) + ": " + cube.getDurability(), I18n.format(Local.COMPLEXITY) + ": " + cube.getComplexity(), I18n.format(Local.WEIGHT) + ": " + cube.getWeight(), I18n.format(Local.PLACMENT_TYPE) + ": " + getValidArmorTypes(cube));
 		}
 
 		@Override
-		public void onRuntimeAvailable (@Nonnull IJeiRuntime runtime) {}
+		public void onRuntimeAvailable (@Nonnull IJeiRuntime runtime) {
+		}
 
 		private String getValidArmorTypes (ICube cube) {
 				if (cube != null) {

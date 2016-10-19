@@ -50,7 +50,7 @@ public class CubeJetpack implements ICube {
 		}
 
 		@Override
-		public void applyEffect (EntityPlayer player, CubeData data, CubeData[] cubes) {
+		public void applyEffect (EntityPlayer player, CubeData data, CubeData[] cubes, ItemStack stack) {
 				if (Keyboard.isKeyDown(Keyboard.KEY_SPACE))
 						player.motionY += 0.00006;
 		}

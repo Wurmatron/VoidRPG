@@ -5,13 +5,15 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import wurmatron.voidrpg.api.cube.CubeData;
 import wurmatron.voidrpg.api.cube.ICube;
+import wurmatron.voidrpg.api.cube.IProtectionCube;
 import wurmatron.voidrpg.common.blocks.VoidRPGBlocks;
 import wurmatron.voidrpg.common.reference.Global;
 
-public class CubeNanoTech implements ICube {
+public class CubeNanoTech implements ICube, IProtectionCube {
 
 		private int timer;
 
@@ -51,7 +53,7 @@ public class CubeNanoTech implements ICube {
 		}
 
 		@Override
-		public void applyEffect (EntityPlayer player, CubeData data, CubeData[] cubes) {
+		public void applyEffect (EntityPlayer player, CubeData data, CubeData[] cubes, ItemStack stack) {
 				if (timer <= 0) {
 						data.damage--;
 						timer = 100;
@@ -77,5 +79,10 @@ public class CubeNanoTech implements ICube {
 		@Override
 		public String getDescription () {
 				return "cube.nanoTech.descrption";
+		}
+
+		@Override
+		public int getOverallProtection (EntityPlayer player, DamageSource source) {
+				return 0;
 		}
 }

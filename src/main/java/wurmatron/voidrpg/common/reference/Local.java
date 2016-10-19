@@ -18,4 +18,5 @@ public class Local {
 		public static final String STAFF_WRONG_PANTS = "chat.message.invalidPants";
 		public static final String PLACER_BLOCK = "chat.message.placmentBlock";
 		public static final String STAFF_DESCRIPTION = "chat.message.staff_description.name";
+		public static final String ENERGY = "stat.energy.name";
 }

@@ -18,9 +18,9 @@ public class VoidRPGBlocks {
 		public static Block armorCardboard;
 		public static Block armorActivePlating;
 		public static Block armorNanoTech;
-		public static Block armorEnergyShildI;
-		public static Block armorEnergyShildII;
-		public static Block armorEnergyShildIII;
+		public static Block armorEnergyShieldI;
+		public static Block armorEnergyShieldII;
+		public static Block armorEnergyShieldIII;
 		public static Block armorLife;
 		// Cube
 		public static Block cubeWaterWalking;
@@ -35,7 +35,6 @@ public class VoidRPGBlocks {
 		public static Block cubeMobStealth;
 		public static Block cubeWing;
 		public static Block cubeTrueStealth;
-		public static Block energyTurret;
 		public static Block energyStorageI;
 		public static Block energyStorageII;
 		public static Block energyStorageIII;
@@ -86,9 +85,9 @@ public class VoidRPGBlocks {
 				registerBlock(armorCardboard = new BlockArmor(Material.ANVIL).setUnlocalizedName("armorCardboard"));
 				registerBlock(armorActivePlating = new BlockArmor(Material.ANVIL).setUnlocalizedName("armorActivePlating"));
 				registerBlock(armorNanoTech = new BlockArmor(Material.ANVIL).setUnlocalizedName("armorNanoTech"));
-				registerBlock(armorEnergyShildI = new BlockArmor(Material.ANVIL).setUnlocalizedName("armorEnergyShildI"));
-				registerBlock(armorEnergyShildII = new BlockArmor(Material.ANVIL).setUnlocalizedName("armorEnergyShildII"));
-				registerBlock(armorEnergyShildIII = new BlockArmor(Material.ANVIL).setUnlocalizedName("armorEnergyShildIII"));
+				registerBlock(armorEnergyShieldI = new BlockArmor(Material.ANVIL).setUnlocalizedName("armorEnergyShieldI"));
+				registerBlock(armorEnergyShieldII = new BlockArmor(Material.ANVIL).setUnlocalizedName("armorEnergyShieldII"));
+				registerBlock(armorEnergyShieldIII = new BlockArmor(Material.ANVIL).setUnlocalizedName("armorEnergyShieldIII"));
 				registerBlock(armorLife = new BlockArmor(Material.ANVIL).setUnlocalizedName("armorLife"));
 				// Machines
 				registerBlock(cubeCreator = new BlockCubeCreator(Material.ANVIL));
@@ -104,7 +103,6 @@ public class VoidRPGBlocks {
 				registerBlock(cubeMobStealth = new BlockArmor(Material.IRON).setUnlocalizedName("cubeMobStealth"));
 				registerBlock(cubeWing = new BlockArmor(Material.IRON).setUnlocalizedName("cubeWing"));
 				registerBlock(cubeTrueStealth = new BlockArmor(Material.IRON).setUnlocalizedName("cubeTrueStealth"));
-				registerBlock(energyTurret = new BlockArmor(Material.IRON).setUnlocalizedName("energyTurret"));
 				registerBlock(energyStorageI = new BlockArmor(Material.IRON).setUnlocalizedName("energyStorageI"));
 				registerBlock(energyStorageII = new BlockArmor(Material.IRON).setUnlocalizedName("energyStorageII"));
 				registerBlock(energyStorageIII = new BlockArmor(Material.IRON).setUnlocalizedName("energyStorageIII"));

@@ -8,6 +8,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -21,16 +22,14 @@ import wurmatron.voidrpg.common.config.ConfigHandler;
 import wurmatron.voidrpg.common.config.JsonHandler;
 import wurmatron.voidrpg.common.config.Settings;
 import wurmatron.voidrpg.common.cube.*;
-import wurmatron.voidrpg.common.cube.special.CubeAutoRepair;
-import wurmatron.voidrpg.common.cube.special.CubeMobStealth;
-import wurmatron.voidrpg.common.cube.special.armor.CubeLife;
-import wurmatron.voidrpg.common.cube.special.armor.CubeNanoTech;
+import wurmatron.voidrpg.common.cube.special.*;
+import wurmatron.voidrpg.common.cube.special.armor.*;
 import wurmatron.voidrpg.common.cube.special.bootsOnly.CubeFlippers;
 import wurmatron.voidrpg.common.cube.special.bootsOnly.CubeShock;
 import wurmatron.voidrpg.common.cube.special.bootsOnly.CubeWaterWalk;
 import wurmatron.voidrpg.common.cube.special.chestOnly.CubeGravity;
 import wurmatron.voidrpg.common.cube.special.chestOnly.CubeJetpack;
-import wurmatron.voidrpg.common.cube.special.energy.CubeEnergyI;
+import wurmatron.voidrpg.common.cube.special.energy.*;
 import wurmatron.voidrpg.common.cube.special.helmetOnly.CubeVision;
 import wurmatron.voidrpg.common.cube.special.helmetOnly.CubeWaterBreathing;
 import wurmatron.voidrpg.common.cube.special.leggingsOnly.CubeMuscle;
@@ -73,12 +72,12 @@ public class VoidRPG {
 				NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 				MinecraftForge.EVENT_BUS.register(new PlayerJoinEvent());
 				CubeRegistry.INSTANCE.registerCube(new Cube("test", Blocks.IRON_BLOCK, new ResourceLocation("minecraft", "textures/blocks/iron_block.png"), 0.1, 1, 5, 2000, new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET}, "cube.test.description"));
-				CubeRegistry.INSTANCE.registerCube(new Cube("armorLight", VoidRPGBlocks.armorLight, new ResourceLocation("minecraft", "textures/blocks/gold_block.png"), 0.1, 1, 50, 4096, new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET}, "cube.lightArmor.description"));
-				CubeRegistry.INSTANCE.registerCube(new Cube("armorHeavy", VoidRPGBlocks.armorReinforced, new ResourceLocation("minecraft", "textures/blocks/diamond_block.png"), 0.5, 5, 200, 4096, new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET}, "cube.heavyArmor.description"));
-				CubeRegistry.INSTANCE.registerCube(new Cube("armorReinforced", VoidRPGBlocks.armorReinforced, new ResourceLocation("minecraft", "textures/blocks/diamond_block.png"), 0.5, 5, 200, 4096, new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET}, "cube.reinforcedArmor.description"));
-				CubeRegistry.INSTANCE.registerCube(new Cube("armorCarbon", VoidRPGBlocks.armorCarbon, new ResourceLocation(Global.MODID, "textures/cube/carbon.png"), 0.5, 5, 200, 4096, new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET}, "cube.carbonArmor.description"));
-				CubeRegistry.INSTANCE.registerCube(new Cube("armorCardboard", VoidRPGBlocks.armorCardboard, new ResourceLocation(Global.MODID, "textures/cube/cardboard.png"), 0.5, 5, 200, 4096, new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET}, "cube.carbonArmor.description"));
-				CubeRegistry.INSTANCE.registerCube(new Cube("armorWood", VoidRPGBlocks.armorWood, new ResourceLocation(Global.MODID, "textures/cube/wood.png"), 0.5, 5, 200, 4096, new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET}, "cube.woodArmor.description"));
+				CubeRegistry.INSTANCE.registerCube(new CubeArmor("armorLight", VoidRPGBlocks.armorLight, new ResourceLocation("minecraft", "textures/blocks/gold_block.png"), 0.1, 1, 50, 4096, new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET}, "cube.lightArmor.description",0));
+				CubeRegistry.INSTANCE.registerCube(new CubeArmor("armorHeavy", VoidRPGBlocks.armorReinforced, new ResourceLocation("minecraft", "textures/blocks/diamond_block.png"), 0.5, 5, 200, 4096, new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET}, "cube.heavyArmor.description",0));
+				CubeRegistry.INSTANCE.registerCube(new CubeArmor("armorReinforced", VoidRPGBlocks.armorReinforced, new ResourceLocation("minecraft", "textures/blocks/diamond_block.png"), 0.5, 5, 200, 4096, new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET}, "cube.reinforcedArmor.description",0));
+				CubeRegistry.INSTANCE.registerCube(new CubeArmor("armorCarbon", VoidRPGBlocks.armorCarbon, new ResourceLocation(Global.MODID, "textures/cube/carbon.png"), 0.5, 5, 200, 4096, new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET}, "cube.carbonArmor.description",0));
+				CubeRegistry.INSTANCE.registerCube(new CubeArmor("armorCardboard", VoidRPGBlocks.armorCardboard, new ResourceLocation(Global.MODID, "textures/cube/cardboard.png"), 0.5, 5, 200, 4096, new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET}, "cube.carbonArmor.description",0));
+				CubeRegistry.INSTANCE.registerCube(new CubeArmor("armorWood", VoidRPGBlocks.armorWood, new ResourceLocation(Global.MODID, "textures/cube/wood.png"), 0.5, 5, 200, 4096, new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET}, "cube.woodArmor.description",0));
 
 				// Deco Cubes
 				CubeRegistry.INSTANCE.registerCube(new Cube("decoDiamond", VoidRPGBlocks.decoDiamond, new ResourceLocation(Global.MODID, "textures/cube/decoDiamond.png"), 4, 0, 9001, 0, new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET}, "cube.decoDiamond.description"));
@@ -115,7 +114,28 @@ public class VoidRPG {
 				CubeRegistry.INSTANCE.registerCube(new CubeLife());
 				MinecraftForge.EVENT_BUS.register(new CubeLife());
 				CubeRegistry.INSTANCE.registerCube(new CubeNanoTech());
-				CubeRegistry.INSTANCE.registerCube(new CubeEnergyI());
+				MinecraftForge.EVENT_BUS.register(new CubeDamageConverter());
+				CubeRegistry.INSTANCE.registerCube(new CubeDamageConverter());
+				if (Loader.isModLoaded("tesla")) {
+						CubeRegistry.INSTANCE.registerCube(new CubeEnergyI());
+						CubeRegistry.INSTANCE.registerCube(new CubeEnergyII());
+						CubeRegistry.INSTANCE.registerCube(new CubeEnergyIII());
+						CubeRegistry.INSTANCE.registerCube(new CubeEnergyIV());
+						CubeRegistry.INSTANCE.registerCube(new CubeEnergyV());
+						CubeRegistry.INSTANCE.registerCube(new CubeAutoRepairII());
+						CubeRegistry.INSTANCE.registerCube(new CubeAutoRepairIII());
+						CubeRegistry.INSTANCE.registerCube(new CubeReactorI());
+						CubeRegistry.INSTANCE.registerCube(new CubeReactorII());
+						CubeRegistry.INSTANCE.registerCube(new CubeReactorIII());
+						CubeRegistry.INSTANCE.registerCube(new CubeStealth());
+						CubeRegistry.INSTANCE.registerCube(new CubeKenetic());
+						CubeRegistry.INSTANCE.registerCube(new CubeSolarI());
+						CubeRegistry.INSTANCE.registerCube(new CubeSolarII());
+						CubeRegistry.INSTANCE.registerCube(new CubeSolarIII());
+						CubeRegistry.INSTANCE.registerCube(new CubeEnergyShieldI());
+						CubeRegistry.INSTANCE.registerCube(new CubeEnergyShieldII());
+						CubeRegistry.INSTANCE.registerCube(new CubeEnergyShieldIII());
+				}
 				StringCube testJson = new StringCube("jsonTest", "minecraft", "dirt", new ResourceLocation("minecraft", "textures/blocks/dirt.png"), 0.2, 1, 2, 2500, "head,chest,legs,boots", "cube.jsonTest.description");
 				JsonHandler.writeCubeToFile(testJson);
 		}

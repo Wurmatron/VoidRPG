@@ -49,7 +49,7 @@ public class CubeFlippers implements ICube {
 		}
 
 		@Override
-		public void applyEffect (EntityPlayer player, CubeData data, CubeData[] cubes) {
+		public void applyEffect (EntityPlayer player, CubeData data, CubeData[] cubes, ItemStack stack) {
 				player.motionX *= 1.1D;
 				player.motionZ *= 1.1D;
 				player.motionY *= 1.05D;

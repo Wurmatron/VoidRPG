@@ -52,7 +52,7 @@ public class CubeVision implements ICube {
 		}
 
 		@Override
-		public void applyEffect (EntityPlayer player, CubeData data, CubeData[] cubes) {
+		public void applyEffect (EntityPlayer player, CubeData data, CubeData[] cubes, ItemStack stack) {
 				if (player.isPotionActive(Potion.getPotionById(16))) {
 						if (player.getActivePotionEffect(Potion.getPotionById(16)).getDuration() < 60)
 								player.addPotionEffect(new PotionEffect(Potion.getPotionById(16), 200));

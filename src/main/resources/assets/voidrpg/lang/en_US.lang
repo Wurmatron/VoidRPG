@@ -26,15 +26,15 @@ tile.cubeJetpack.name=Jetpack Cube block
 tile.cubeWaterBreathing.name=Water Breathing Cube
 tile.cubeMobStealth.name=Mob Stealth Cube
 tile.cubeWing.name=Cube of Wings
-tile.armorEnergyShildI.name=Energy Shild I
+tile.armorEnergyShieldI.name=Energy Shield I
 tile.armorCardboard.name=Cardboard
 tile.armorNanoTech.name=Cube of Nano Cubes
-tile.armorEnergyShildII.name=Energy Shild II
+tile.armorEnergyShieldII.name=Energy Shield II
 tile.armorWood.name=Block of Wood Cubes
 tile.armorCarbon.name=Block of Carbon Cubes
 tile.armorHeavy.name=Heavy Armor Block
 tile.armorLife.name=Block of Life
-tile.armorEnergyShildIII.name=Energy Shild III
+tile.armorEnergyShieldIII.name=Energy Shield III
 tile.armorBoom.name=Block of Boom Cube
 tile.armorActivePlating.name=Block of Active Plating
 tile.energyStorageI.name=Energy Storage I
@@ -43,7 +43,10 @@ tile.energyStorageII.name=Solar II
 tile.energyTurret.name=Turret Block
 tile.energyAutoRepairIII.name=Auto-Repair III
 tile.energyStorageIII.name=Energy Storage III
+tile.energyStorageIV.name=Energy Storage IV
+tile.energyStorageV.name=Energy Storage V
 tile.energyAutoRepairI.name=Auto-Repair I
+tile.energyAutoRepairII.name=Auto-Repair II
 tile.cubeDamageConverter.name=Damage Converter
 tile.energyReactorII.name=Energy Reactor II
 tile.cubeTrueStealth.name=True Stealth
@@ -76,6 +79,7 @@ tile.decoWoolGreen.name=Green deco cube
 tile.decoWoolRed.name=Red deco cube
 tile.decoWoolBlack.name=Black deco cube
 tile.body.name=Body base
+tile.cubeCooldownReduction.name=Cooldown Reduction
 
 # Tooltips
 tooltip.placmenttype.name=Type
@@ -87,6 +91,7 @@ type.unknown=Unknown
 stat.durability.name=Durability
 stat.weight.name=Weight
 stat.complexity.name=Complexity
+stat.energy.name=Energy Storage
 
 # Chat
 chat.message.validHelmet=Creating Helmet
