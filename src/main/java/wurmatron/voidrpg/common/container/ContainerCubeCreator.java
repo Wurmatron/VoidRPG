@@ -19,12 +19,20 @@ public class ContainerCubeCreator extends Container {
 				this.inv = blockInv;
 				for (int i = 0; i < 3; ++i)
 						for (int j = 0; j < 9; ++j)
-								addSlotToContainer(new Slot(playerInv, j + i * 9 + 9, 8 + j * 18, 103 + (i * 18)));
+								addSlotToContainer(new Slot(playerInv, j + i * 9 + 9, 9 + j * 18, 98 + (i * 18)));
 				for (int i = 0; i < 9; ++i)
-						addSlotToContainer(new Slot(playerInv, i, 8 + i * 18, 161));
-				for (int x = 0; x < 3; x++)
-						for (int y = 0; y < 6; y++)
-								addSlotToContainer(new SlotInput(blockInv, y + x * 6, 155 + x * 18,-13 + (y * 18)));
+						addSlotToContainer(new Slot(playerInv, i, 9 + i * 18, 156));
+				addSlotToContainer(new SlotOutput(blockInv, 0, 81, 36));
+				addSlotToContainer(new SlotInput(blockInv, 1, 63, 72));
+				addSlotToContainer(new SlotInput(blockInv, 2, 99, 72));
+				addSlotToContainer(new SlotInput(blockInv, 3, 117, 54));
+				addSlotToContainer(new SlotInput(blockInv, 4, 45, 54));
+				addSlotToContainer(new SlotInput(blockInv, 5, 45, 18));
+				addSlotToContainer(new SlotInput(blockInv, 6, 63, 0));
+				addSlotToContainer(new SlotInput(blockInv, 7, 99, 0));
+				addSlotToContainer(new SlotInput(blockInv, 8, 117, 18));
+				for (int x = 0; x < 5; x++)
+						addSlotToContainer(new SlotUpgrade(blockInv, 9 +x , 159, -10 + (x * 18)));
 		}
 
 		@Override

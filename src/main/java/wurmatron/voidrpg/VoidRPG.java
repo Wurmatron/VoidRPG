@@ -3,6 +3,7 @@ package wurmatron.voidrpg;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -37,6 +38,7 @@ import wurmatron.voidrpg.common.events.PlayerJoinEvent;
 import wurmatron.voidrpg.common.items.VoidRPGItems;
 import wurmatron.voidrpg.common.network.GuiHandler;
 import wurmatron.voidrpg.common.proxy.CommonProxy;
+import wurmatron.voidrpg.common.recipes.VoidRPGRecipes;
 import wurmatron.voidrpg.common.reference.Global;
 import wurmatron.voidrpg.common.utils.LogHandler;
 
@@ -73,10 +75,10 @@ public class VoidRPG {
 				MinecraftForge.EVENT_BUS.register(new PlayerJoinEvent());
 				CubeRegistry.INSTANCE.registerCube(new Cube("test", Blocks.IRON_BLOCK, new ResourceLocation("minecraft", "textures/blocks/iron_block.png"), 0.1, 1, 5, 2000, new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET}, "cube.test.description"));
 				CubeRegistry.INSTANCE.registerCube(new CubeArmor("armorLight", VoidRPGBlocks.armorLight, new ResourceLocation("minecraft", "textures/blocks/gold_block.png"), 0.1, 1, 50, 4096, new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET}, "cube.lightArmor.description",0));
-				CubeRegistry.INSTANCE.registerCube(new CubeArmor("armorHeavy", VoidRPGBlocks.armorReinforced, new ResourceLocation("minecraft", "textures/blocks/diamond_block.png"), 0.5, 5, 200, 4096, new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET}, "cube.heavyArmor.description",0));
+				CubeRegistry.INSTANCE.registerCube(new CubeArmor("armorHeavy", VoidRPGBlocks.armorHeavy, new ResourceLocation("minecraft", "textures/blocks/diamond_block.png"), 0.5, 5, 200, 4096, new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET}, "cube.heavyArmor.description",0));
 				CubeRegistry.INSTANCE.registerCube(new CubeArmor("armorReinforced", VoidRPGBlocks.armorReinforced, new ResourceLocation("minecraft", "textures/blocks/diamond_block.png"), 0.5, 5, 200, 4096, new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET}, "cube.reinforcedArmor.description",0));
 				CubeRegistry.INSTANCE.registerCube(new CubeArmor("armorCarbon", VoidRPGBlocks.armorCarbon, new ResourceLocation(Global.MODID, "textures/cube/carbon.png"), 0.5, 5, 200, 4096, new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET}, "cube.carbonArmor.description",0));
-				CubeRegistry.INSTANCE.registerCube(new CubeArmor("armorCardboard", VoidRPGBlocks.armorCardboard, new ResourceLocation(Global.MODID, "textures/cube/cardboard.png"), 0.5, 5, 200, 4096, new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET}, "cube.carbonArmor.description",0));
+				CubeRegistry.INSTANCE.registerCube(new CubeArmor("armorCardboard", VoidRPGBlocks.armorCardboard, new ResourceLocation(Global.MODID, "textures/cube/cardboard.png"), 0.5, 5, 200, 4096, new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET}, "cube.cardBoardArmor.description",0));
 				CubeRegistry.INSTANCE.registerCube(new CubeArmor("armorWood", VoidRPGBlocks.armorWood, new ResourceLocation(Global.MODID, "textures/cube/wood.png"), 0.5, 5, 200, 4096, new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET}, "cube.woodArmor.description",0));
 
 				// Deco Cubes
@@ -84,7 +86,7 @@ public class VoidRPG {
 				CubeRegistry.INSTANCE.registerCube(new Cube("decoEmerald", VoidRPGBlocks.decoEmerald, new ResourceLocation(Global.MODID, "textures/cube/decoEmerald.png"), 4, 0, 9001, 0, new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET}, "cube.decoEmerald.description"));
 				CubeRegistry.INSTANCE.registerCube(new Cube("decoWoolWhite", VoidRPGBlocks.decoWoolWhile, new ResourceLocation(Global.MODID, "textures/cube/decoWoolWhite.png"), 4, 0, 9001, 0, new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET}, "cube.decoWoolWhite.description"));
 				CubeRegistry.INSTANCE.registerCube(new Cube("decoWoolOrange", VoidRPGBlocks.decoWoolOrange, new ResourceLocation(Global.MODID, "textures/cube/decoWoolOrange.png"), 4, 0, 9001, 0, new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET}, "cube.decoWoolOrange.description"));
-				CubeRegistry.INSTANCE.registerCube(new Cube("decoWoolMagenta", VoidRPGBlocks.decoWoolMagenta, new ResourceLocation(Global.MODID, "textures/cube/decoWoolManenta.png"), 4, 0, 9001, 0, new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET}, "cube.decoWoolMagenta.description"));
+				CubeRegistry.INSTANCE.registerCube(new Cube("decoWoolMagenta", VoidRPGBlocks.decoWoolMagenta, new ResourceLocation(Global.MODID, "textures/cube/decoWoolMagenta.png"), 4, 0, 9001, 0, new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET}, "cube.decoWoolMagenta.description"));
 				CubeRegistry.INSTANCE.registerCube(new Cube("decoWoolLightBlue", VoidRPGBlocks.decoWoolLightBlue, new ResourceLocation(Global.MODID, "textures/cube/decoWoolLightBlue.png"), 4, 0, 9001, 0, new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET}, "cube.decoWoolLightBlue.description"));
 				CubeRegistry.INSTANCE.registerCube(new Cube("decoWoolYellow", VoidRPGBlocks.decoWoolYellow, new ResourceLocation(Global.MODID, "textures/cube/decoWoolYellow.png"), 4, 0, 9001, 0, new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET}, "cube.decoWoolYellow.description"));
 				CubeRegistry.INSTANCE.registerCube(new Cube("decoWoolLime", VoidRPGBlocks.decoWoolLime, new ResourceLocation(Global.MODID, "textures/cube/decoWoolLime.png"), 4, 0, 9001, 0, new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET}, "cube.decoWoolLime.description"));
@@ -138,12 +140,14 @@ public class VoidRPG {
 				}
 				StringCube testJson = new StringCube("jsonTest", "minecraft", "dirt", new ResourceLocation("minecraft", "textures/blocks/dirt.png"), 0.2, 1, 2, 2500, "head,chest,legs,boots", "cube.jsonTest.description");
 				JsonHandler.writeCubeToFile(testJson);
+				VoidRPGRecipes.init();
 		}
 
 		@Mod.EventHandler
 		public void onPostInit (FMLPostInitializationEvent e) {
 				LogHandler.info("Post-Init");
-				CubeCreatorRecipeHandler.registerRecipe(new CubeCreatorRecipe(new ItemStack(Blocks.IRON_BLOCK, 4), new ItemStack[] {new ItemStack(Blocks.BEACON, 2), new ItemStack(Blocks.IRON_BLOCK, 2)}, 700));
+				CubeCreatorRecipeHandler.registerRecipe(new CubeCreatorRecipe(new ItemStack(Blocks.COAL_BLOCK) , new ItemStack[] {new ItemStack(Blocks.BEDROCK, 4), new ItemStack(Items.COAL)},500));
+				CubeCreatorRecipeHandler.registerRecipe(new CubeCreatorRecipe(new ItemStack(Blocks.GOLD_BLOCK, 4), new ItemStack[] {new ItemStack(Blocks.BEACON, 2), new ItemStack(Blocks.IRON_BLOCK, 2), new ItemStack(Blocks.COAL_BLOCK), new ItemStack(Blocks.COMMAND_BLOCK), new ItemStack(Blocks.DIAMOND_BLOCK),new ItemStack(Blocks.DIAMOND_BLOCK),new ItemStack(Blocks.DIAMOND_BLOCK),new ItemStack(Blocks.DIAMOND_BLOCK)}, 700));
 		}
 
 		@Mod.EventHandler

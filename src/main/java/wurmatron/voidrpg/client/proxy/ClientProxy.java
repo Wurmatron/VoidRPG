@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class ClientProxy extends CommonProxy {
 
 		public static ArrayList<Item> items = new ArrayList();
-		public static ArrayList<Block> blocks = new ArrayList<Block>();
+		public static ArrayList<Block> blocks = new ArrayList();
 
 		@Override
 		public void register () {
@@ -41,5 +41,7 @@ public class ClientProxy extends CommonProxy {
 				ModelLoader.setCustomModelResourceLocation(VoidRPGItems.itemModelPlacer, 1, new ModelResourceLocation(Global.MODID + ":leggings", "inventory"));
 				ModelLoader.setCustomModelResourceLocation(VoidRPGItems.itemModelPlacer, 2, new ModelResourceLocation(Global.MODID + ":chestplate", "inventory"));
 				ModelLoader.setCustomModelResourceLocation(VoidRPGItems.itemModelPlacer, 3, new ModelResourceLocation(Global.MODID + ":helmet", "inventory"));
+				for (int s = 0; s < VoidRPGItems.materials.length; s++)
+						ModelLoader.setCustomModelResourceLocation(VoidRPGItems.itemMaterial, s, new ModelResourceLocation(Global.MODID + ":" + VoidRPGItems.materials[s], "inventory"));
 		}
 }

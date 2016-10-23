@@ -75,9 +75,8 @@ public class CustomArmor extends ItemArmor implements ISpecialArmor {
 										MinecraftForge.EVENT_BUS.post(new CubeTickEvent(cube, player, stack));
 								handleCubeUpdates(player, stack, helper.getBootsCubes(stack, NBT.RIGHTLEG));
 						}
-						if (!stack.getTagCompound().hasKey(NBT.ENERGY)) {
+						if (!stack.getTagCompound().hasKey(NBT.ENERGY))
 							TeslaHelper.setMaxCapacity(stack, ArmorHelper.instance.getMaxEnergyStorage(stack));
-						}
 				}
 		}
 
@@ -89,12 +88,11 @@ public class CustomArmor extends ItemArmor implements ISpecialArmor {
 								PlayerTickHandlerClient.updateRequirment.remove(player.getGameProfile().getId());
 								requiresUpdate = true;
 						}
-						if (modelPlayer == null || requiresUpdate) {
+						if (modelPlayer == null || requiresUpdate)
 								if (modelPlayer == null)
 										modelPlayer = new ArmorModel();
 								else
 										modelPlayer.clear();
-						}
 						if (modelPlayer != null)
 								if (stack.getItem().equals(VoidRPGItems.armorHelmet) && modelPlayer.bipedHead.childModels == null) {
 										modelPlayer.addHeadCubes(helper.getHelmetCubes(stack));

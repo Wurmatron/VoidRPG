@@ -14,6 +14,8 @@ public class VoidRPGItems {
 		public static Item armorLeggings;
 		public static Item armorBoots;
 		public static Item itemModelPlacer;
+		public static Item itemMaterial;
+		public static final String[] materials = new String[] {"creationCrystal"};
 
 		public static void init () {
 				registerItem(itemStaff = new ItemStaff());
@@ -22,6 +24,7 @@ public class VoidRPGItems {
 				registerItem(armorLeggings = new CustomArmor(ItemArmor.ArmorMaterial.DIAMOND, 2, EntityEquipmentSlot.LEGS));
 				registerItem(armorBoots = new CustomArmor(ItemArmor.ArmorMaterial.DIAMOND, 3, EntityEquipmentSlot.FEET));
 				registerItem(itemModelPlacer = new ItemModelPlacer());
+				GameRegistry.registerItem(itemMaterial = new ItemMaterial(materials));
 		}
 
 		private static void registerItem (Item item) {

@@ -4,7 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import wurmatron.voidrpg.client.proxy.ClientProxy;
-import wurmatron.voidrpg.common.tiles.TileCubeCreator;
+import wurmatron.voidrpg.common.tile.TileCubeCreator;
 
 public class VoidRPGBlocks {
 

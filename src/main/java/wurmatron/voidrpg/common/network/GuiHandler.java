@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.network.IGuiHandler;
 import wurmatron.voidrpg.client.gui.GuiCubeCreator;
 import wurmatron.voidrpg.common.container.ContainerCubeCreator;
 import wurmatron.voidrpg.common.reference.Global;
-import wurmatron.voidrpg.common.tiles.TileCubeCreator;
+import wurmatron.voidrpg.common.tile.TileCubeCreator;
 
 public class GuiHandler implements IGuiHandler {
 
@@ -29,7 +29,7 @@ public class GuiHandler implements IGuiHandler {
 				switch (ID) {
 						case (Global.CUBECREATOR_GUI): {
 								TileCubeCreator tile = (TileCubeCreator) world.getTileEntity(new BlockPos(x, y, z));
-								return new GuiCubeCreator(player, player.inventory, tile, tile.recipeTimer);
+								return new GuiCubeCreator(player, player.inventory, tile,0);
 						}
 						default:
 								return null;

@@ -13,7 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import wurmatron.voidrpg.VoidRPG;
 import wurmatron.voidrpg.common.reference.Global;
-import wurmatron.voidrpg.common.tiles.TileCubeCreator;
+import wurmatron.voidrpg.common.tile.TileCubeCreator;
 
 import javax.annotation.Nullable;
 

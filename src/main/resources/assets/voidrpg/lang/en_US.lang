@@ -11,6 +11,7 @@ item.armor_feet.name=Boots
 item.armor_legs.name=Leggings
 item.armor_chest.name=Chestplate
 item.armor_head.name=Helmet
+item.creationCrystal.name=Creation crystal
 
 # Blocks
 tile.armorLight.name=Light Armor Block
@@ -136,22 +137,25 @@ cube.decoWoolBrown.description=This is just an basic brown cube.
 cube.decoWoolGreen.description=This is just an basic green cube.
 cube.decoWoolRed.description=This is just an basic red cube.
 cube.decoWoolBlack.description=This is just an basic black cube.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+cube.carbonArmor.description=Made out of strong carbon bonds this armor block is quite durable and protective.
+cube.woodArmor.description=Created out of logs its not strong or durable but its cheap and more protective then cardboard.
+cube.cardBoardArmor.description=Made out of cardboard its basicly useless but its better than nothing.
+cube.energyShieldI.description=Uses energy to repair it self along with awesome protection.
+cube.energyShieldII.description=Faster version of the Energy Shield I
+cube.energyShieldIII.description=Faster version of the Energy Shield II
+cube.energyI.description=Tier 1 Energy Storage
+cube.energyII.description=Tier 2 Energy Storage
+cube.energyIII.description=Tier 3 Energy Storage
+cube.energyIV.description=Tier 4 Energy Storage
+cube.energyV.description=Tier 5 Energy Storage
+cube.reactorI.description=Converts stored energy into usable energy.
+cube.reactorII.description=Faster and more efficent version of the Mk. I
+cube.reactorIII.description=Faster and more efficent version of the Mk. II
+cube.damageConverter.description=Converts some damage into cube damage.
+cube.solarI.description=Generates power when it can see the sun.
+cube.solarII.description=Better version of the Solar I
+cube.solarIII.description=Better version than the SolarII
+cube.kenetic.description=As you walk it will generate power.
+cube.autoRepairII.description=Repairs Damages cubes faster then the Mk. 1
+cube.autoRepairIII.description=Repairs Damages cubes faster then the Mk. 2
+cube.stealth.description=Gives you unlimited invisibility.

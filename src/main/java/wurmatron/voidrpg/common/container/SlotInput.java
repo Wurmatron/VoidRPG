@@ -14,4 +14,9 @@ public class SlotInput extends Slot {
 		public boolean isItemValid (ItemStack stack) {
 				return true;
 		}
+
+		@Override
+		public boolean canBeHovered () {
+				return super.canBeHovered();
+		}
 }

@@ -9,10 +9,10 @@ import java.util.List;
 
 public class CubeCreatorRecipeHandler {
 
-		private static ArrayList<ICubeCreatorRecipe> recipes = new ArrayList<ICubeCreatorRecipe>();
+		public static ArrayList<ICubeCreatorRecipe> recipes = new ArrayList<>();
 
 		public static void registerRecipe (ICubeCreatorRecipe recipe) {
-				if (!recipes.contains(recipe))
+				if (!recipes.contains(recipe) && recipe.getInputs().length <= 8)
 						recipes.add(recipe);
 		}
 
@@ -22,10 +22,7 @@ public class CubeCreatorRecipeHandler {
 		}
 
 		public static void removeRecipe (ItemStack output) {
-				for (ICubeCreatorRecipe recipe : recipes) {
-						if (recipe.getOutputCube().isItemEqual(output))
-								recipes.remove(recipe);
-				}
+				recipes.stream().filter(recipe -> recipe.getOutputCube().isItemEqual(output)).forEach(recipe -> recipes.remove(recipe));
 		}
 
 		public static List<ICubeCreatorRecipe> getRecipes () {

@@ -16,7 +16,7 @@ public class GuiCubeCreator extends GuiContainer {
 		public GuiCubeCreator (EntityPlayer player, InventoryPlayer inventoryPlayer, IInventory tile, int time) {
 				super(new ContainerCubeCreator(player, inventoryPlayer, tile));
 				this.player = player;
-				setGuiSize(256, 212);
+				setGuiSize(182, 198);
 				this.time = time;
 		}
 
@@ -28,6 +28,6 @@ public class GuiCubeCreator extends GuiContainer {
 		@Override
 		protected void drawGuiContainerBackgroundLayer (float f, int mouseX, int mouseY) {
 				mc.renderEngine.bindTexture(new ResourceLocation(Global.MODID + ":textures/gui/cubeCreator.png"));
-				drawTexturedModalRect((width - 256) / 2, (height - 212) / 2, 0, 0, 256, 212);
-		}
+				drawTexturedModalRect((width - 182) / 2, (height - 198) / 2, 0, 0, 182, 198);
+			}
 }

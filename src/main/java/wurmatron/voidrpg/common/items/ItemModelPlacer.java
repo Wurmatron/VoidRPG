@@ -48,9 +48,9 @@ public class ItemModelPlacer extends Item {
 								return EnumActionResult.SUCCESS;
 						} else {
 								if (temp != null)
-										player.addChatComponentMessage(new TextComponentString(I18n.format(Local.PLACER_BLOCK) + " " + I18n.format(new ItemStack(temp).getDisplayName())).setStyle(new Style().setColor(TextFormatting.AQUA)));
+										player.addChatComponentMessage(new TextComponentString(I18n.format(Local.PLACER_BLOCK) + " '" + I18n.format(new ItemStack(temp).getDisplayName()) + "'").setStyle(new Style().setColor(TextFormatting.AQUA)));
 								else
-										player.addChatComponentMessage(new TextComponentString(I18n.format(Local.PLACER_BLOCK) + " " + I18n.format(new ItemStack(defaultBlock).getDisplayName())).setStyle(new Style().setColor(TextFormatting.AQUA)));
+										player.addChatComponentMessage(new TextComponentString(I18n.format(Local.PLACER_BLOCK) + " '" + I18n.format(new ItemStack(defaultBlock).getDisplayName()) + "'").setStyle(new Style().setColor(TextFormatting.AQUA)));
 						}
 				}
 				return EnumActionResult.FAIL;
