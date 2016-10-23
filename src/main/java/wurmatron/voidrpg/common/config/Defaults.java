@@ -12,4 +12,5 @@ public class Defaults {
 		public static final int BOOTSMAXCOMPLEXITY = 1024;
 		public static final int CUBECREATORUPDATEPERIOD = 5;
 		public static final String MODELPLACERBLOCK = "minecraft:diamond_block";
+		public static final boolean CUSTOMRECIPES = true;
 }

@@ -9,7 +9,7 @@ import java.util.List;
 
 public class CubeCreatorRecipeHandler {
 
-		public static ArrayList<ICubeCreatorRecipe> recipes = new ArrayList<>();
+		private static ArrayList<ICubeCreatorRecipe> recipes = new ArrayList<>();
 
 		public static void registerRecipe (ICubeCreatorRecipe recipe) {
 				if (!recipes.contains(recipe) && recipe.getInputs().length <= 8)

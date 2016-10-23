@@ -4,7 +4,9 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import wurmatron.voidrpg.api.cube.ICube;
+import wurmatron.voidrpg.common.cube.CubeCreatorRecipeHandler;
 import wurmatron.voidrpg.common.cube.CubeRegistry;
+import wurmatron.voidrpg.common.cube.StringCubeCreatorRecipe;
 import wurmatron.voidrpg.common.reference.Global;
 import wurmatron.voidrpg.common.utils.LogHandler;
 
@@ -26,6 +28,7 @@ public class ConfigHandler {
 		public static Property bootsMaxComplexity;
 		public static Property cubeCreatorUpdatePeriod;
 		public static Property modelPlacerBlock;
+		public static Property customRecipes;
 
 		public static void preInit (FMLPreInitializationEvent e) {
 				location = new File(e.getSuggestedConfigurationFile().getParent() + File.separator + Global.NAME);
@@ -56,7 +59,8 @@ public class ConfigHandler {
 						Settings.cubeCreatorUpdatePeriod = cubeCreatorUpdatePeriod.getInt();
 						modelPlacerBlock = mainConfig.get(Configuration.CATEGORY_GENERAL, "modelPlacerBlock", Defaults.MODELPLACERBLOCK, "Block that can model can be placed on");
 						Settings.MODELPLACERBLOCK = modelPlacerBlock.getString();
-
+						customRecipes = mainConfig.get(Configuration.CATEGORY_GENERAL, "customRecipes", Defaults.CUSTOMRECIPES, "Allows for custom recipes using the /Recipes folder in VoidRPG");
+						Settings.customRecipes = customRecipes.getBoolean();
 						if (mainConfig.hasChanged()) {
 								LogHandler.info("Config saved");
 								mainConfig.save();
@@ -66,7 +70,7 @@ public class ConfigHandler {
 		}
 
 		public static void loadJsonCubes () {
-				for (File json : JsonHandler.dir.listFiles()) {
+				for (File json : new File(JsonHandler.dir + File.separator + "Cubes" + File.separator).listFiles()) {
 						if (json != null && json.isFile()) {
 								ICube temp = JsonHandler.loadCubeFromFile(json);
 								if (!CubeRegistry.cubes.contains(temp)) {
@@ -75,5 +79,14 @@ public class ConfigHandler {
 								}
 						}
 				}
+		}
+
+		public static void loadJsonRecipes () {
+				for (File json : new File(JsonHandler.dir + File.separator + "Recipes" + File.separator).listFiles())
+						if (json != null && json.isFile()) {
+								StringCubeCreatorRecipe temp = JsonHandler.loadRecipeFromFile(json);
+								CubeCreatorRecipeHandler.registerRecipe(temp);
+								LogHandler.info("Loaded recipe '" + temp.getOutputCube().getUnlocalizedName() + "' from json");
+						}
 		}
 }

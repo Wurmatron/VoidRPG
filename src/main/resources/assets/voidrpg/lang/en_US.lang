@@ -12,6 +12,10 @@ item.armor_legs.name=Leggings
 item.armor_chest.name=Chestplate
 item.armor_head.name=Helmet
 item.creationCrystal.name=Creation crystal
+item.speedI.name=Speed I Upgrade
+item.speedII.name=Speed II Upgrade
+item.speedIII.name=Speed III Upgrade
+item.upgrade.name=Upgrade
 
 # Blocks
 tile.armorLight.name=Light Armor Block

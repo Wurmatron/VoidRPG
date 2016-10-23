@@ -4,6 +4,8 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.Style;
@@ -15,6 +17,8 @@ import wurmatron.voidrpg.common.cube.CubeRegistry;
 import wurmatron.voidrpg.common.items.VoidRPGItems;
 import wurmatron.voidrpg.common.reference.Global;
 import wurmatron.voidrpg.common.reference.Local;
+import wurmatron.voidrpg.common.utils.LogHandler;
+import wurmatron.voidrpg.common.utils.StackHelper;
 import wurmatron.voidrpg.common.utils.VersionChecker;
 
 import javax.annotation.Nullable;
@@ -74,7 +78,7 @@ public class VoidRPGCommand implements ICommand {
 												sender.addChatMessage(new TextComponentString("Cubes: " + temp).setStyle(new Style().setColor(TextFormatting.LIGHT_PURPLE)));
 												break;
 										} else if (args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("?")) {
-												sender.addChatMessage(new TextComponentString("/voidrpg <version | reload | cubes | info>").setStyle(new Style().setColor(TextFormatting.GREEN)));
+												sender.addChatMessage(new TextComponentString("/voidrpg <version | reload | cubes | info | hand>").setStyle(new Style().setColor(TextFormatting.GREEN)));
 												break;
 										} else if (args[0].equalsIgnoreCase("info")) {
 												if (args.length >= 2) {
@@ -83,6 +87,15 @@ public class VoidRPGCommand implements ICommand {
 														execute(server, sender, new String[] {"names"});
 														break;
 												}
+										} else if(args[0].equalsIgnoreCase("hand") && sender.getCommandSenderEntity() instanceof EntityPlayer) {
+												EntityPlayer player = (EntityPlayer) sender.getCommandSenderEntity();
+												String stack = StackHelper.convert(player.getHeldItemMainhand());
+												sender.addChatMessage(new TextComponentString("Hand: " + stack));
+												ItemStack item = StackHelper.convert(stack);
+												if(item != null) {
+														LogHandler.info("Item: " + item.getUnlocalizedName() + " #" + item.stackSize + " @ " + item.getItemDamage() + " %" + item.getTagCompound());
+												}
+
 										}
 								}
 								break;

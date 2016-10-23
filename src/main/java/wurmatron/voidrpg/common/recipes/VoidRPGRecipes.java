@@ -17,7 +17,6 @@ public class VoidRPGRecipes {
 
 		public static void addMachineRecipes () {
 				addCubeCreatorRecipes();
-				addNanoCreatorRecipes();
 		}
 
 		public static void addRecipes () {
@@ -36,14 +35,12 @@ public class VoidRPGRecipes {
 				GameRegistry.addRecipe(new ShapedOreRecipe(ItemMaterial.createMaterial("creationCrystal"), "XBX", "AXA", "XBX", 'X', Blocks.END_STONE, 'A', Items.BLAZE_ROD, 'B', Items.EMERALD));
 				GameRegistry.addRecipe(new ShapedOreRecipe(ItemMaterial.createMaterial("creationCrystal"), "XAX", "BXB", "XAX", 'X', Blocks.NETHER_BRICK, 'A', Items.CHORUS_FRUIT, 'B', Items.EMERALD));
 				GameRegistry.addRecipe(new ShapedOreRecipe(ItemMaterial.createMaterial("creationCrystal"), "XBX", "AXA", "XBX", 'X', Blocks.NETHER_BRICK, 'A', Items.CHORUS_FRUIT, 'B', Items.EMERALD));
+
 		}
 
 		private static void addShapelessRecipes () {
 		}
 
 		private static void addCubeCreatorRecipes () {
-		}
-
-		private static void addNanoCreatorRecipes () {
 		}
 }

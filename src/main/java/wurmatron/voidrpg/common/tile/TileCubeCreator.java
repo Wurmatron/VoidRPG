@@ -30,8 +30,22 @@ public class TileCubeCreator extends TileEntity implements IInventory, ITickable
 						if (timer <= 0 && activeRecipe != null) {
 								addOutput(activeRecipe.getOutputCube());
 								activeRecipe = null;
-						} else if (timer > 0)
-								timer--;
+						} else if (timer > 0) {
+								int timeBoost = 0;
+								for (int slot = 9; slot <= 13; slot++)
+										if (getStackInSlot(slot) != null && getStackInSlot(slot).getUnlocalizedName().startsWith("speed")) {
+												if (getStackInSlot(slot).getUnlocalizedName().equals("speedI"))
+														timeBoost += 2 * getStackInSlot(slot).stackSize;
+												else if (getStackInSlot(slot).getUnlocalizedName().equals("speedII"))
+														timeBoost += 4 * getStackInSlot(slot).stackSize;
+												else if (getStackInSlot(slot).getUnlocalizedName().equals("speedIII"))
+														timeBoost += 8 * getStackInSlot(slot).stackSize;
+										}
+								if (timeBoost > 0) {
+										timer -= timeBoost;
+								} else
+										timer--;
+						}
 				}
 		}
 
@@ -169,12 +183,12 @@ public class TileCubeCreator extends TileEntity implements IInventory, ITickable
 		}
 
 		private void hasValidRecipe () {
-				for (ICubeCreatorRecipe recipe : CubeCreatorRecipeHandler.recipes) {
+				for (ICubeCreatorRecipe recipe : CubeCreatorRecipeHandler.getRecipes()) {
 						boolean hasItems = true;
 						if (recipe.getInputs() != null && recipe.getOutputCube() != null) {
 								for (ItemStack stack : recipe.getInputs()) {
 										if (!hasStack(stack))
-										hasItems = false;
+												hasItems = false;
 										if (hasItems && activeRecipe == null)
 												setActiveRecipe(recipe);
 								}

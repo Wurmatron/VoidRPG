@@ -43,5 +43,8 @@ public class ClientProxy extends CommonProxy {
 				ModelLoader.setCustomModelResourceLocation(VoidRPGItems.itemModelPlacer, 3, new ModelResourceLocation(Global.MODID + ":helmet", "inventory"));
 				for (int s = 0; s < VoidRPGItems.materials.length; s++)
 						ModelLoader.setCustomModelResourceLocation(VoidRPGItems.itemMaterial, s, new ModelResourceLocation(Global.MODID + ":" + VoidRPGItems.materials[s], "inventory"));
+				for (int s = 0; s < VoidRPGItems.upgrades.length; s++)
+						ModelLoader.setCustomModelResourceLocation(VoidRPGItems.itemUpgrade, s, new ModelResourceLocation(Global.MODID + ":" + VoidRPGItems.upgrades[s], "inventory"));
+
 		}
 }

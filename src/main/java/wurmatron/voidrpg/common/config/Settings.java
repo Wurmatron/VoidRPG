@@ -12,4 +12,5 @@ public class Settings {
 		public static int bootsMaxComplexity;
 		public static int cubeCreatorUpdatePeriod;
 		public static String MODELPLACERBLOCK;
+		public static boolean customRecipes;
 }

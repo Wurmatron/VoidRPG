@@ -15,7 +15,9 @@ public class VoidRPGItems {
 		public static Item armorBoots;
 		public static Item itemModelPlacer;
 		public static Item itemMaterial;
-		public static final String[] materials = new String[] {"creationCrystal"};
+		public static Item itemUpgrade;
+		public static final String[] materials = new String[] {"creationCrystal", "upgrade"};
+		public static final String[] upgrades = new String[] {"speedI", "speedII", "speedIII"};
 
 		public static void init () {
 				registerItem(itemStaff = new ItemStaff());
@@ -25,6 +27,7 @@ public class VoidRPGItems {
 				registerItem(armorBoots = new CustomArmor(ItemArmor.ArmorMaterial.DIAMOND, 3, EntityEquipmentSlot.FEET));
 				registerItem(itemModelPlacer = new ItemModelPlacer());
 				GameRegistry.registerItem(itemMaterial = new ItemMaterial(materials));
+				GameRegistry.registerItem(itemUpgrade = new ItemUpgrade(upgrades));
 		}
 
 		private static void registerItem (Item item) {
