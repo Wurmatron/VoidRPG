@@ -1,6 +1,6 @@
 package wurmatron.voidrpg.common.utils;
 
-import mod.chiselsandbits.items.ItemChiseledBit;
+import mod.chiselsandbits.core.ChiselsAndBits;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTException;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.util.ResourceLocation;
 
 public class StackHelper {
@@ -76,7 +77,7 @@ public class StackHelper {
 				return null;
 		}
 
-		public static IBlockState getStateFromItem (ItemStack block) {
+		public IBlockState getStateFromItem (ItemStack block) {
 				if (block != null && block.getItem() instanceof ItemBlock) {
 						ItemBlock stack = (ItemBlock) block.getItem();
 						return stack.getBlock().getStateFromMeta(stack.getMetadata(block));
@@ -84,7 +85,15 @@ public class StackHelper {
 				return null;
 		}
 
-		public static ItemStack createBitFromBlock (Block block, int count) {
-				return ItemChiseledBit.createStack(Block.getStateId(getStateFromItem(new ItemStack(block))), count, false);
+		public ItemStack createBitFromBlock (Block stack, int count) {
+				if (ChiselsAndBits.getItems().itemBlockBit == null)
+						return null;
+				ItemStack out = new ItemStack(ChiselsAndBits.getItems().itemBlockBit, count);
+				out.setTagInfo("id", new NBTTagInt(Block.getStateId(getStateFromItem(new ItemStack(stack)).getBlock().getDefaultState())));
+				return out;
+		}
+
+		public ItemStack createBitFromBlock (Block block) {
+				return createBitFromBlock(block, 1);
 		}
 }

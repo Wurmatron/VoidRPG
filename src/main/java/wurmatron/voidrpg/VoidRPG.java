@@ -3,10 +3,8 @@ package wurmatron.voidrpg;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
@@ -22,7 +20,10 @@ import wurmatron.voidrpg.common.command.VoidRPGCommand;
 import wurmatron.voidrpg.common.config.ConfigHandler;
 import wurmatron.voidrpg.common.config.JsonHandler;
 import wurmatron.voidrpg.common.config.Settings;
-import wurmatron.voidrpg.common.cube.*;
+import wurmatron.voidrpg.common.cube.Cube;
+import wurmatron.voidrpg.common.cube.CubeArmor;
+import wurmatron.voidrpg.common.cube.CubeRegistry;
+import wurmatron.voidrpg.common.cube.StringCube;
 import wurmatron.voidrpg.common.cube.special.*;
 import wurmatron.voidrpg.common.cube.special.armor.*;
 import wurmatron.voidrpg.common.cube.special.bootsOnly.CubeFlippers;
@@ -41,7 +42,6 @@ import wurmatron.voidrpg.common.proxy.CommonProxy;
 import wurmatron.voidrpg.common.recipes.VoidRPGRecipes;
 import wurmatron.voidrpg.common.reference.Global;
 import wurmatron.voidrpg.common.utils.LogHandler;
-import wurmatron.voidrpg.common.utils.StackHelper;
 
 @Mod (modid = Global.MODID, name = Global.NAME, version = Global.VERSION, guiFactory = Global.GUIFACTORY, dependencies = Global.DEPENDENCIES)
 public class VoidRPG {
@@ -147,11 +147,10 @@ public class VoidRPG {
 		@Mod.EventHandler
 		public void onPostInit (FMLPostInitializationEvent e) {
 				LogHandler.info("Post-Init");
-				CubeCreatorRecipeHandler.registerRecipe(new CubeCreatorRecipe(new ItemStack(Blocks.COAL_BLOCK), new ItemStack[] {new ItemStack(Blocks.BEDROCK, 4), new ItemStack(Items.COAL)}, 500));
-				CubeCreatorRecipeHandler.registerRecipe(new CubeCreatorRecipe(new ItemStack(Blocks.GOLD_BLOCK, 4), new ItemStack[] {new ItemStack(Blocks.BEACON, 2), new ItemStack(Blocks.IRON_BLOCK, 2), new ItemStack(Blocks.COAL_BLOCK), new ItemStack(Blocks.COMMAND_BLOCK), new ItemStack(Blocks.DIAMOND_BLOCK), new ItemStack(Blocks.DIAMOND_BLOCK), new ItemStack(Blocks.DIAMOND_BLOCK), new ItemStack(Blocks.DIAMOND_BLOCK)}, 700));
-				StringCubeCreatorRecipe testRecipe = new StringCubeCreatorRecipe(StackHelper.convert(new ItemStack(Blocks.GOLD_BLOCK, 4)), new String[] {StackHelper.convert(new ItemStack(Blocks.BEDROCK, 2)), StackHelper.convert(new ItemStack(Blocks.COAL_BLOCK, 2))}, 800);
-				JsonHandler.writeRecipeToFile(testRecipe);
-				CubeCreatorRecipeHandler.registerRecipe(new CubeCreatorRecipe(VoidRPGBlocks.armorCarbon, 4, new ItemStack[] {new ItemStack(Items.COAL,16), new ItemStack(Blocks.COAL_BLOCK,8), new ItemStack(Blocks.NETHERRACK,16), new ItemStack(Items.DIAMOND,4), new ItemStack(Items.BLAZE_POWDER,2),  new ItemStack(Blocks.NETHERRACK,16), new ItemStack(Items.COAL,16), new ItemStack(Blocks.COAL_BLOCK,8),},200));
+//				CubeCreatorRecipeHandler.registerRecipe(new CubeCreatorRecipe(new ItemStack(Blocks.COAL_BLOCK), new ItemStack[] {new ItemStack(Blocks.BEDROCK, 4), new ItemStack(Items.COAL)}, 500));
+//				CubeCreatorRecipeHandler.registerRecipe(new CubeCreatorRecipe(new ItemStack(Blocks.GOLD_BLOCK, 4), new ItemStack[] {new ItemStack(Blocks.BEACON, 2), new ItemStack(Blocks.IRON_BLOCK, 2), new ItemStack(Blocks.COAL_BLOCK), new ItemStack(Blocks.COMMAND_BLOCK), new ItemStack(Blocks.DIAMOND_BLOCK), new ItemStack(Blocks.DIAMOND_BLOCK), new ItemStack(Blocks.DIAMOND_BLOCK), new ItemStack(Blocks.DIAMOND_BLOCK)}, 700));
+//				StringCubeCreatorRecipe testRecipe = new StringCubeCreatorRecipe(StackHelper.convert(new ItemStack(Blocks.GOLD_BLOCK, 4)), new String[] {StackHelper.convert(new ItemStack(Blocks.BEDROCK, 2)), StackHelper.convert(new ItemStack(Blocks.COAL_BLOCK, 2))}, 800);
+//				JsonHandler.writeRecipeToFile(testRecipe);
 		}
 
 		@Mod.EventHandler

@@ -18,7 +18,7 @@ public class CubeCreatorRecipe implements ICubeCreatorRecipe {
 		}
 
 		public CubeCreatorRecipe (Block output, int count, ItemStack[] inputs, int timeInTicks) {
-				this.output = StackHelper.createBitFromBlock(output, count);
+				this.output = new StackHelper().createBitFromBlock(output, count);
 				this.inputs = inputs;
 				this.timeInTicks = timeInTicks;
 		}

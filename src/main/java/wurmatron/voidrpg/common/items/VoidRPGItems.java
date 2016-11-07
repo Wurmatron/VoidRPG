@@ -16,7 +16,7 @@ public class VoidRPGItems {
 		public static Item itemModelPlacer;
 		public static Item itemMaterial;
 		public static Item itemUpgrade;
-		public static final String[] materials = new String[] {"creationCrystal", "upgrade"};
+		public static final String[] materials = new String[] {"creationCrystal", "upgrade", "basicArmorPlate", "heavyArmorPlate", "reactiveArmorPlating", "regenerativeArmorPlating", "energyArmorPlating",  "cardboard", "carbonChunk", "flippers","nanoTech", "mechanicalMuscle", "gravityCore", "goggles", "jetpackParts", "thruster", "waterElectrolysisModule", "mindControl", "wings", "battery", "solarPanel", "smallReactor", "largeReactor", "repairBot"};
 		public static final String[] upgrades = new String[] {"speedI", "speedII", "speedIII"};
 
 		public static void init () {

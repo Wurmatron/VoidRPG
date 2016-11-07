@@ -19,17 +19,24 @@ public class ItemMaterial extends Item {
 				setRegistryName("itemMaterial");
 		}
 
+		public static ItemStack createMaterial (String name, int size) {
+				for (int s = 0; s <= materials.length; s++)
+						if (name.equals(materials[s]))
+								return new ItemStack(VoidRPGItems.itemMaterial, size, s);
+				return new ItemStack(VoidRPGItems.itemMaterial, size, -1);
+		}
+
 		public static ItemStack createMaterial (String name) {
 				for (int s = 0; s <= materials.length; s++)
 						if (name.equals(materials[s]))
 								return new ItemStack(VoidRPGItems.itemMaterial, 1, s);
-				return new ItemStack(VoidRPGItems.itemMaterial,1,-1);
+				return new ItemStack(VoidRPGItems.itemMaterial, 1, -1);
 		}
 
 		@Override
 		public void getSubItems (Item item, CreativeTabs tab, List<ItemStack> sub) {
 				for (String i : materials)
-						sub.add(createMaterial(i));
+						sub.add(createMaterial(i, 1));
 		}
 
 		@Override
