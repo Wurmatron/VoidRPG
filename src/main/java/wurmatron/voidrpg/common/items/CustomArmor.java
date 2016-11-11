@@ -80,6 +80,7 @@ public class CustomArmor extends ItemArmor implements ISpecialArmor {
 				}
 		}
 
+		// Created by Wurmatron
 		@Override
 		public ModelBiped getArmorModel (EntityLivingBase entity, ItemStack stack, EntityEquipmentSlot slot, ModelBiped _default) {
 				if (entity instanceof EntityPlayer && stack.getTagCompound() != null && !stack.getTagCompound().hasNoTags()) {
