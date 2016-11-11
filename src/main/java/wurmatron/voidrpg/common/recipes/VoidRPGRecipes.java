@@ -72,6 +72,7 @@ public class VoidRPGRecipes {
 				GameRegistry.addRecipe(new ShapedOreRecipe(ItemMaterial.createMaterial("solarPanel",1), "GGG", "IWI", "IRI", 'G', Blocks.GLASS, 'I', Items.GOLD_INGOT, 'W', new ItemStack(Blocks.WOOL,1,OreDictionary.WILDCARD_VALUE), 'R', Items.REDSTONE));
 				GameRegistry.addRecipe(new ShapedOreRecipe(ItemMaterial.createMaterial("largeReactor",1), "CCC", "CRC", "CCC", 'C', ItemMaterial.createMaterial("nanoTech",1), 'R', ItemMaterial.createMaterial("smallReactor",1)));
 				GameRegistry.addRecipe(new ShapedOreRecipe(ItemUpgrade.createMaterial("speedI"), "BRB", "RAR", "BCB", 'B', Blocks.REDSTONE_BLOCK, 'R', Blocks.LAPIS_BLOCK, 'A', Items.GOLD_INGOT, 'C', Items.DIAMOND));
+				GameRegistry.addRecipe(new ShapedOreRecipe(VoidRPGBlocks.cubeCreator, "BFB", "XAX", "BFB", 'F', Blocks.FURNACE, 'B', Blocks.IRON_BLOCK, 'X', ItemMaterial.createMaterial("creationCrystal",1), 'A', Blocks.CHEST));
 		}
 
 		private static void addShapelessRecipes () {
