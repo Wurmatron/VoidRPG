@@ -28,6 +28,7 @@ import wurmatron.voidrpg.common.reference.Local;
 import wurmatron.voidrpg.common.reference.NBT;
 import wurmatron.voidrpg.common.utils.ArmorHelper;
 import wurmatron.voidrpg.common.utils.BitsHelper;
+import wurmatron.voidrpg.common.utils.LogHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +56,7 @@ public class ItemStaff extends Item {
 										ItemStack chestplate = checkAndHandleChestplate(world, ray.getBlockPos(), ray.getBlockPos().add(1, 0, 0), ray.getBlockPos().add(-1, 0, 0), ray, player);
 										ItemStack leggings = checkAndHandleLeggings(world, ray.getBlockPos(), ray, player);
 										ItemStack boots = checkAndHandleBoots(world, ray.getBlockPos(), ray, player);
+										LogHandler.info("Chest: " + chestplate);
 										if (chestplate != null) {
 												player.inventory.addItemStackToInventory(chestplate);
 												stack.setItemDamage(stack.getMaxDamage());
@@ -98,7 +100,7 @@ public class ItemStaff extends Item {
 		}
 
 		private ItemStack checkAndHandleChestplate (World world, BlockPos body, BlockPos leftArm, BlockPos rightArm, RayTraceResult ray, EntityPlayer player) {
-				if (BitsHelper.isValidChestplate(world, body, leftArm, rightArm)) {
+				if (new BitsHelper().isValidChestplate(world, body, leftArm, rightArm)) {
 						ArrayList<ArrayList<CubeData>> data = BitsHelper.createChestplateFromBit(world, body, leftArm, rightArm);
 						CubeData[] chest = new CubeData[data.get(0).size()];
 						CubeData[] left = new CubeData[data.get(1).size()];
@@ -116,7 +118,7 @@ public class ItemStaff extends Item {
 						right = BitsHelper.rotateUp(right);
 						chest = BitsHelper.rotateUp(chest);
 						chest = BitsHelper.rotateUp(chest);
-						if (chest != null && left != null && right != null && chest.length > 0 && left.length > 0 && right.length > 0)
+						if (chest != null && chest.length > 0 || left != null && left.length > 0 || right != null && right.length > 0 )
 								return helper.createArmorStack(VoidRPGItems.armorChestplate, chest, left, right);
 				}
 				return null;

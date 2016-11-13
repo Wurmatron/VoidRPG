@@ -92,14 +92,14 @@ public class BitsHelper {
 				add(new Vec3i(11, 0, 2));
 		}};
 
-		private static final ArrayList<Vec3i> leggingsModel = new ArrayList<Vec3i>();
-		private static ArrayList<Vec3i> chestplateChestModel = new ArrayList<Vec3i>();
-		private static ArrayList<Vec3i> chestplateArmModel = new ArrayList<Vec3i>();
-		private static ArrayList<Vec3i> helmetModel = new ArrayList<Vec3i>();
+		private static final ArrayList<Vec3i> leggingsModel = new ArrayList<>();
+		private static ArrayList<Vec3i> chestplateChestModel = new ArrayList<>();
+		private static ArrayList<Vec3i> chestplateArmModel = new ArrayList<>();
+		private static ArrayList<Vec3i> helmetModel = new ArrayList<>();
 
 		public static boolean isValidBoots (World world, BlockPos pos) {
 				if (!world.isRemote && api.isBlockChiseled(world, pos)) {
-						ArrayList<Boolean> temp = new ArrayList<Boolean>();
+						ArrayList<Boolean> temp = new ArrayList<>();
 						try {
 								IBitAccess bit = api.getBitAccess(world, pos);
 								for (int x = 0; x <= 15; x++)
@@ -123,7 +123,7 @@ public class BitsHelper {
 
 		public static boolean isValidLeggings (World world, BlockPos pos) {
 				if (!world.isRemote && api.isBlockChiseled(world, pos)) {
-						ArrayList<Boolean> temp = new ArrayList<Boolean>();
+						ArrayList<Boolean> temp = new ArrayList<>();
 						try {
 								IBitAccess bit = api.getBitAccess(world, pos);
 								createLeggingsModel();
@@ -143,7 +143,7 @@ public class BitsHelper {
 
 		public static boolean isValidHelmet (World world, BlockPos pos) {
 				if (!world.isRemote && api.isBlockChiseled(world, pos)) {
-						ArrayList<Boolean> temp = new ArrayList<Boolean>();
+						ArrayList<Boolean> temp = new ArrayList<>();
 						try {
 								IBitAccess bit = api.getBitAccess(world, pos);
 								createHelmetModel();
@@ -161,32 +161,37 @@ public class BitsHelper {
 				return false;
 		}
 
-		public static boolean isValidChestplate (World world, BlockPos chest, BlockPos leftArm, BlockPos rightArm) {
-				if (!world.isRemote && api.isBlockChiseled(world, chest) && api.isBlockChiseled(world, leftArm) && api.isBlockChiseled(world, rightArm)) {
-						ArrayList<Boolean> temp = new ArrayList<Boolean>();
+		public boolean isValidChestplate (World world, BlockPos chest, BlockPos leftArm, BlockPos rightArm) {
+				if (!world.isRemote && new ChiselAndBitsAPI().isBlockChiseled(world, chest) && new ChiselAndBitsAPI().isBlockChiseled(world, leftArm) && new ChiselAndBitsAPI().isBlockChiseled(world, rightArm)) {
+						LogHandler.debug("Phase 1 true");
+						ArrayList<Boolean> temp = new ArrayList<>();
 						try {
-								IBitAccess chestBlock = api.getBitAccess(world, chest);
-								IBitAccess leftArmBlock = api.getBitAccess(world, chest);
-								IBitAccess rightArmBlock = api.getBitAccess(world, rightArm);
+								IBitAccess chestBlock = new ChiselAndBitsAPI().getBitAccess(world, chest);
+								IBitAccess leftArmBlock = new ChiselAndBitsAPI().getBitAccess(world, chest);
+								IBitAccess rightArmBlock = new ChiselAndBitsAPI().getBitAccess(world, rightArm);
 								for (Vec3i base : chestplateChestModel)
-										if (chestBlock.getBitAt(base.getX(), base.getY(), base.getZ()).equals(bodyBrush))
+										if (chestBlock.getBitAt(base.getX(), base.getY(), base.getZ()).getState().getBlock().equals(bodyBrush.getState().getBlock()))
 												temp.add(true);
 										else
 												temp.add(false);
+								LogHandler.debug("Phase 2 " + !temp.contains(false));
 								for (Vec3i base : chestplateArmModel)
-										if (leftArmBlock.getBitAt(base.getX(), base.getY(), base.getZ()).equals(bodyBrush) && rightArmBlock.getBitAt(base.getX(), base.getY(), base.getZ()).equals(bodyBrush))
-												temp.add(true);
-										else
-												temp.add(false);
+										if (!leftArmBlock.getBitAt(base.getX(), base.getY(), base.getZ()).isAir() && !rightArmBlock.getBitAt(base.getX(), base.getY(), base.getZ()).isAir())
+												if (leftArmBlock.getBitAt(base.getX(), base.getY(), base.getZ()).getState().getBlock().equals(bodyBrush.getState().getBlock()) && rightArmBlock.getBitAt(base.getX(), base.getY(), base.getZ()).getState().getBlock().equals(bodyBrush.getState().getBlock()))
+														temp.add(true);
+												else
+														temp.add(false);
+								LogHandler.debug("Phase 3 " + !temp.contains(false));
 						} catch (APIExceptions.CannotBeChiseled e) {
-								LogHandler.debug(e.getLocalizedMessage());
+								LogHandler.info(e.getLocalizedMessage());
 						}
+						LogHandler.debug("Phase 4 " + !temp.contains(false));
 						return !temp.contains(false);
 				}
 				return false;
 		}
 
-		public static ArrayList<Vec3i> createLeggingsModel () {
+		private static ArrayList<Vec3i> createLeggingsModel () {
 				for (int x = 0; x <= 15; x++)
 						for (int y = 0; y <= 15; y++)
 								for (int z = 0; z <= 15; z++)
@@ -195,7 +200,7 @@ public class BitsHelper {
 				return leggingsModel;
 		}
 
-		public static ArrayList<Vec3i> createHelmetModel () {
+		private static ArrayList<Vec3i> createHelmetModel () {
 				for (int x = 3; x <= 15; x++)
 						for (int y = 0; y <= 15; y++)
 								for (int z = 3; z <= 15; z++)
@@ -208,9 +213,9 @@ public class BitsHelper {
 				if (world != null && pos != null && !world.isRemote && isValidBoots(world, pos) && api.isBlockChiseled(world, pos)) {
 						try {
 								IBitAccess bit = api.getBitAccess(world, pos);
-								ArrayList<ArrayList<CubeData>> data = new ArrayList<ArrayList<CubeData>>();
-								ArrayList<CubeData> a = new ArrayList<CubeData>();
-								ArrayList<CubeData> b = new ArrayList<CubeData>();
+								ArrayList<ArrayList<CubeData>> data = new ArrayList<>();
+								ArrayList<CubeData> a = new ArrayList<>();
+								ArrayList<CubeData> b = new ArrayList<>();
 								for (int x = 3; x <= 10; x++)
 										for (int z = 3; z <= 10; z++)
 												for (int y = 1; y <= 6; y++)
@@ -238,9 +243,9 @@ public class BitsHelper {
 				if (world != null && pos != null && !world.isRemote && isValidLeggings(world, pos) && api.isBlockChiseled(world, pos)) {
 						try {
 								IBitAccess bit = api.getBitAccess(world, pos);
-								ArrayList<ArrayList<CubeData>> data = new ArrayList<ArrayList<CubeData>>();
-								ArrayList<CubeData> a = new ArrayList<CubeData>();
-								ArrayList<CubeData> b = new ArrayList<CubeData>();
+								ArrayList<ArrayList<CubeData>> data = new ArrayList<>();
+								ArrayList<CubeData> a = new ArrayList<>();
+								ArrayList<CubeData> b = new ArrayList<>();
 								for (int x = 1; x <= 15; x++)
 										for (int z = 1; z <= 15; z++)
 												for (int y = 0; y <= 12; y++) {
@@ -273,10 +278,10 @@ public class BitsHelper {
 								IBitAccess bodyBit = api.getBitAccess(world, body);
 								IBitAccess leftArmBit = api.getBitAccess(world, leftArm);
 								IBitAccess rightArmBit = api.getBitAccess(world, rightArm);
-								ArrayList<ArrayList<CubeData>> data = new ArrayList<ArrayList<CubeData>>();
-								ArrayList<CubeData> bodyData = new ArrayList<CubeData>();
-								ArrayList<CubeData> leftArmData = new ArrayList<CubeData>();
-								ArrayList<CubeData> rightArmData = new ArrayList<CubeData>();
+								ArrayList<ArrayList<CubeData>> data = new ArrayList<>();
+								ArrayList<CubeData> bodyData = new ArrayList<>();
+								ArrayList<CubeData> leftArmData = new ArrayList<>();
+								ArrayList<CubeData> rightArmData = new ArrayList<>();
 								for (int x = 2; x <= 15; x++)
 										for (int y = 0; y <= 15; y++)
 												for (int z = 2; z < 14; z++)
@@ -308,6 +313,7 @@ public class BitsHelper {
 								data.add(bodyData);
 								data.add(leftArmData);
 								data.add(rightArmData);
+								LogHandler.info("Data: " + data.toString());
 								return data;
 						} catch (APIExceptions.CannotBeChiseled e) {
 								LogHandler.debug(e.getLocalizedMessage());
@@ -316,8 +322,8 @@ public class BitsHelper {
 				return null;
 		}
 
-		public static final ArrayList<Vec3i> createChestplateChestModel () {
-				ArrayList<Vec3i> temp = new ArrayList<Vec3i>();
+		private static final ArrayList<Vec3i> createChestplateChestModel () {
+				ArrayList<Vec3i> temp = new ArrayList<>();
 				for (int x = 0; x <= 15; x++)
 						for (int y = 0; y <= 15; y++)
 								for (int z = 0; z <= 15; z++) {
@@ -329,8 +335,8 @@ public class BitsHelper {
 				return temp;
 		}
 
-		public static final ArrayList<Vec3i> createChestplateArmModel () {
-				ArrayList<Vec3i> temp = new ArrayList<Vec3i>();
+		private static final ArrayList<Vec3i> createChestplateArmModel () {
+				ArrayList<Vec3i> temp = new ArrayList<>();
 				for (int x = 0; x <= 15; x++)
 						for (int y = 0; y <= 15; y++)
 								for (int z = 0; z <= 15; z++)
@@ -340,12 +346,12 @@ public class BitsHelper {
 				return temp;
 		}
 
-		public static boolean areValidBits (IBitBrush bit) {
+		private static boolean areValidBits (IBitBrush bit) {
 				return bit.getItemStack(1) != null && isValid(bit.getState().getBlock());
 		}
 
 		public static CubeData[] convertBitsToCubes (World world, BlockPos pos) {
-				ArrayList<CubeData> data = new ArrayList<CubeData>();
+				ArrayList<CubeData> data = new ArrayList<>();
 				if (!world.isRemote && new ChiselAndBitsAPI().isBlockChiseled(world, pos))
 						try {
 								IBitAccess bit = new ChiselAndBitsAPI().getBitAccess(world, pos);
@@ -376,7 +382,7 @@ public class BitsHelper {
 
 		public static ArrayList<CubeData> createHelmetFromBits (World world, BlockPos pos) {
 				if (world != null && pos != null && !world.isRemote && isValidHelmet(world, pos) && api.isBlockChiseled(world, pos)) {
-						ArrayList<CubeData> temp = new ArrayList<CubeData>();
+						ArrayList<CubeData> temp = new ArrayList<>();
 						try {
 								IBitAccess bit = api.getBitAccess(world, pos);
 								for (int x = 0; x <= 15; x++)
@@ -398,10 +404,13 @@ public class BitsHelper {
 		}
 
 		public static CubeData[] rotateUp (CubeData[] cubes) {
-				CubeData[] data = cubes;
-				for (int s = 0; s < cubes.length; s++)
-						data[s] = new CubeData(cubes[s].offX, (cubes[s].offY * -1) + 15, cubes[s].offZ, cubes[s].cube, cubes[s].damage);
-				return data;
+				if (cubes != null) {
+						CubeData[] data = cubes;
+						for (int s = 0; s < cubes.length; s++)
+								data[s] = new CubeData(cubes[s].offX, (cubes[s].offY * -1) + 15, cubes[s].offZ, cubes[s].cube, cubes[s].damage);
+						return data;
+				}
+				return null;
 		}
 
 		public static boolean isValid (Block block) {
@@ -479,7 +488,7 @@ public class BitsHelper {
 								for (int x = 0; x <= 15; x++) {
 										for (int y = 0; y <= 15; y++)
 												for (int z = 0; z <= 15; z++) {
-														ArrayList<Boolean> temp = new ArrayList<Boolean>();
+														ArrayList<Boolean> temp = new ArrayList<>();
 														for (Vec3i vec : data) {
 																if (!vec.equals(new Vec3i(x, y, z)))
 																		temp.add(false);
@@ -499,7 +508,7 @@ public class BitsHelper {
 
 		public static CubeData[] translate (CubeData[] data, Vec3i vec) {
 				if (data != null && data.length > 0 && vec != null) {
-						ArrayList<CubeData> translated = new ArrayList<CubeData>();
+						ArrayList<CubeData> translated = new ArrayList<>();
 						for (CubeData d : data)
 								translated.add(new CubeData(d.offX + vec.getX(), d.offY + vec.getY(), d.offZ + vec.getZ(), d.cube, d.damage));
 						CubeData[] temp = new CubeData[translated.size()];

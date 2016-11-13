@@ -3,6 +3,8 @@ package wurmatron.voidrpg.common.recipes;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionType;
+import net.minecraft.potion.PotionUtils;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
@@ -64,7 +66,7 @@ public class VoidRPGRecipes {
 				GameRegistry.addRecipe(new ShapedOreRecipe(ItemMaterial.createMaterial("gravityCore",1), "XAX", "ACA", "XAX", 'X', Items.NETHER_STAR, 'A', ItemMaterial.createMaterial("jetpackParts",1), 'C',Blocks.DRAGON_EGG));
 				GameRegistry.addRecipe(new ShapedOreRecipe(ItemMaterial.createMaterial("jetpackParts",4), "BXB", "BAB", "BBB", 'B', Blocks.REDSTONE_BLOCK, 'X', ItemMaterial.createMaterial("creationCrystal",1), 'A', Items.NETHER_STAR));
 				GameRegistry.addRecipe(new ShapedOreRecipe(ItemMaterial.createMaterial("thruster",1), " X ", "XAX", "BBB", 'X', Items.EMERALD, 'A', Blocks.DIAMOND_BLOCK, 'B', Items.BLAZE_POWDER));
-//				GameRegistry.addRecipe(new ShapedOreRecipe(ItemMaterial.createMaterial("waterElectrolysisModule",1)));
+				GameRegistry.addRecipe(new ShapedOreRecipe(ItemMaterial.createMaterial("waterElectrolysisModule",1), "XPX", "PAP", "XPX", 'X', Items.PRISMARINE_SHARD, 'P',  PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionType.getPotionTypeForName("long_water_breathing")), 'A', Items.PRISMARINE_CRYSTALS));
 				GameRegistry.addRecipe(new ShapedOreRecipe(ItemMaterial.createMaterial("mindControl",1), "XAX", "BCB", "XAX", 'X', Blocks.END_STONE, 'A', ItemMaterial.createMaterial("reactiveArmorPlating",1), 'B', Items.EMERALD, 'C', new ItemStack(Items.GOLDEN_APPLE,1,0)));
 				GameRegistry.addRecipe(new ShapedOreRecipe(ItemMaterial.createMaterial("wings",1), "L L", "LSL", "L L", 'L', Items.LEATHER, 'S', Items.BONE));
 				GameRegistry.addRecipe(new ShapedOreRecipe(ItemMaterial.createMaterial("wings",1), "L L", "LSL", "L L", 'L', Items.LEATHER, 'S', Items.STICK));
@@ -133,6 +135,6 @@ public class VoidRPGRecipes {
 				CubeCreatorRecipeHandler.registerRecipe(new CubeCreatorRecipe(VoidRPGBlocks.energyAutoRepairI, 1, new ItemStack[] {ItemMaterial.createMaterial("repairBot", 2), ItemMaterial.createMaterial("repairBot", 2), ItemMaterial.createMaterial("nanoTech", 4), ItemMaterial.createMaterial("nanoTech", 4), ItemMaterial.createMaterial("nanoTech", 4), ItemMaterial.createMaterial("nanoTech", 4), ItemMaterial.createMaterial("repairBot", 2), ItemMaterial.createMaterial("repairBot", 2)}, 12500));
 				CubeCreatorRecipeHandler.registerRecipe(new CubeCreatorRecipe(VoidRPGBlocks.energyAutoRepairII, 1, new ItemStack[] {ItemMaterial.createMaterial("repairBot", 2), ItemMaterial.createMaterial("repairBot", 2), new StackHelper().createBitFromBlock(VoidRPGBlocks.energyAutoRepairI), new StackHelper().createBitFromBlock(VoidRPGBlocks.energyAutoRepairI), new StackHelper().createBitFromBlock(VoidRPGBlocks.energyAutoRepairI), new StackHelper().createBitFromBlock(VoidRPGBlocks.energyAutoRepairI), new StackHelper().createBitFromBlock(VoidRPGBlocks.energyAutoRepairI), ItemMaterial.createMaterial("repairBot", 2)}, 12500));
 				CubeCreatorRecipeHandler.registerRecipe(new CubeCreatorRecipe(VoidRPGBlocks.energyAutoRepairIII, 1, new ItemStack[] {ItemMaterial.createMaterial("repairBot", 8), ItemMaterial.createMaterial("repairBot", 2), new StackHelper().createBitFromBlock(VoidRPGBlocks.energyAutoRepairII), new StackHelper().createBitFromBlock(VoidRPGBlocks.energyAutoRepairII), new StackHelper().createBitFromBlock(VoidRPGBlocks.energyAutoRepairII), new StackHelper().createBitFromBlock(VoidRPGBlocks.energyAutoRepairII), new StackHelper().createBitFromBlock(VoidRPGBlocks.energyAutoRepairII), ItemMaterial.createMaterial("repairBot", 8)}, 12500));
-//				CubeCreatorRecipeHandler.registerRecipe(new CubeCreatorRecipe(VoidRPGBlocks.cubeStealth));
+				CubeCreatorRecipeHandler.registerRecipe(new CubeCreatorRecipe(VoidRPGBlocks.cubeStealth,1, new ItemStack[] {PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionType.getPotionTypeForName("long_night_vision")),PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionType.getPotionTypeForName("long_night_vision")), ItemMaterial.createMaterial("nanoTech", 1),ItemMaterial.createMaterial("nanoTech", 1),ItemMaterial.createMaterial("nanoTech", 1),ItemMaterial.createMaterial("nanoTech", 1),PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionType.getPotionTypeForName("long_night_vision")),PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionType.getPotionTypeForName("long_night_vision"))},4000));
 		}
 }
