@@ -9,5 +9,7 @@ public class BlockArmor extends Block {
 		public BlockArmor (Material material) {
 				super(material);
 				setCreativeTab(VoidRPG.tabVoidRPG);
+				setHardness(5);
+				setResistance(5);
 		}
 }

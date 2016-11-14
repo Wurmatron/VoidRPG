@@ -70,23 +70,39 @@ public class ConfigHandler {
 		}
 
 		public static void loadJsonCubes () {
-				for (File json : new File(JsonHandler.dir + File.separator + "Cubes" + File.separator).listFiles()) {
-						if (json != null && json.isFile()) {
-								ICube temp = JsonHandler.loadCubeFromFile(json);
-								if (!CubeRegistry.cubes.contains(temp)) {
-										CubeRegistry.INSTANCE.registerCube(temp);
-										LogHandler.info("Loaded cube '" + temp.getUnlocalizedName() + "' from json");
+				try {
+						if (new File(JsonHandler.dir + File.separator + "Cubes" + File.separator).listFiles().length > 0) {
+								for (File json : new File(JsonHandler.dir + File.separator + "Cubes" + File.separator).listFiles()) {
+										if (json != null && json.isFile()) {
+												ICube temp = JsonHandler.loadCubeFromFile(json);
+												if (!CubeRegistry.cubes.contains(temp)) {
+														CubeRegistry.INSTANCE.registerCube(temp);
+														LogHandler.info("Loaded cube '" + temp.getUnlocalizedName() + "' from json");
+												}
+										}
 								}
+						} else {
+								LogHandler.info("Unable to load and cubes");
 						}
+				} catch (NullPointerException e) {
+						LogHandler.debug(e.getLocalizedMessage());
 				}
 		}
 
 		public static void loadJsonRecipes () {
-				for (File json : new File(JsonHandler.dir + File.separator + "Recipes" + File.separator).listFiles())
-						if (json != null && json.isFile()) {
-								StringCubeCreatorRecipe temp = JsonHandler.loadRecipeFromFile(json);
-								CubeCreatorRecipeHandler.registerRecipe(temp);
-								LogHandler.info("Loaded recipe '" + temp.getOutputCube().getUnlocalizedName() + "' from json");
+				try {
+						if(new File(JsonHandler.dir + File.separator + "Recipes" + File.separator).listFiles().length > 0) {
+								for (File json : new File(JsonHandler.dir + File.separator + "Recipes" + File.separator).listFiles())
+										if (json != null && json.isFile()) {
+												StringCubeCreatorRecipe temp = JsonHandler.loadRecipeFromFile(json);
+												CubeCreatorRecipeHandler.registerRecipe(temp);
+												LogHandler.info("Loaded recipe '" + temp.getOutputCube().getUnlocalizedName() + "' from json");
+										}
+						} else {
+								LogHandler.info("Error loading json recipes");
 						}
+				} catch (NullPointerException e) {
+						LogHandler.info(e.getLocalizedMessage());
+				}
 		}
 }
