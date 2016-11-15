@@ -1,5 +1,5 @@
 {
-    "parent":"voidrpg:block/armorEnergyShieldIII",
+    "parent":"voidrpg:block/energyShieldII",
     "display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],

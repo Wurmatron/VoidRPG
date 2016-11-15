@@ -85,9 +85,9 @@ public class VoidRPGBlocks {
 				registerBlock(armorCardboard = new BlockArmor(Material.ANVIL).setUnlocalizedName("armorCardboard"));
 				registerBlock(armorActivePlating = new BlockArmor(Material.ANVIL).setUnlocalizedName("armorActivePlating"));
 				registerBlock(armorNanoTech = new BlockArmor(Material.ANVIL).setUnlocalizedName("armorNanoTech"));
-				registerBlock(armorEnergyShieldI = new BlockArmor(Material.ANVIL).setUnlocalizedName("armorEnergyShieldI"));
-				registerBlock(armorEnergyShieldII = new BlockArmor(Material.ANVIL).setUnlocalizedName("armorEnergyShieldII"));
-				registerBlock(armorEnergyShieldIII = new BlockArmor(Material.ANVIL).setUnlocalizedName("armorEnergyShieldIII"));
+				registerBlock(armorEnergyShieldI = new BlockArmor(Material.ANVIL).setUnlocalizedName("energyShieldI"));
+				registerBlock(armorEnergyShieldII = new BlockArmor(Material.ANVIL).setUnlocalizedName("energyShieldII"));
+				registerBlock(armorEnergyShieldIII = new BlockArmor(Material.ANVIL).setUnlocalizedName("energyShieldIII"));
 				registerBlock(armorLife = new BlockArmor(Material.ANVIL).setUnlocalizedName("armorLife"));
 				// Machines
 				registerBlock(cubeCreator = new BlockCubeCreator(Material.ANVIL));
