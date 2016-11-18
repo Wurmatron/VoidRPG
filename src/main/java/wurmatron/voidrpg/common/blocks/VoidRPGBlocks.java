@@ -102,7 +102,7 @@ public class VoidRPGBlocks {
 				registerBlock(cubeWaterBreahing = new BlockArmor(Material.IRON).setUnlocalizedName("cubeWaterBreathing"));
 				registerBlock(cubeMobStealth = new BlockArmor(Material.IRON).setUnlocalizedName("cubeMobStealth"));
 				registerBlock(cubeWing = new BlockArmor(Material.IRON).setUnlocalizedName("cubeWing"));
-				registerBlock(cubeTrueStealth = new BlockArmor(Material.IRON).setUnlocalizedName("cubeTrueStealth"));
+//				registerBlock(cubeTrueStealth = new BlockArmor(Material.IRON).setUnlocalizedName("cubeTrueStealth"));
 				registerBlock(energyStorageI = new BlockArmor(Material.IRON).setUnlocalizedName("energyStorageI"));
 				registerBlock(energyStorageII = new BlockArmor(Material.IRON).setUnlocalizedName("energyStorageII"));
 				registerBlock(energyStorageIII = new BlockArmor(Material.IRON).setUnlocalizedName("energyStorageIII"));
@@ -112,8 +112,8 @@ public class VoidRPGBlocks {
 				registerBlock(energyReactorII = new BlockArmor(Material.IRON).setUnlocalizedName("energyReactorII"));
 				registerBlock(energyReactorIII = new BlockArmor(Material.IRON).setUnlocalizedName("energyReactorIII"));
 				registerBlock(cubeDamageConverter = new BlockArmor(Material.IRON).setUnlocalizedName("cubeDamageConverter"));
-				registerBlock(cubeCooldownReduction = new BlockArmor(Material.IRON).setUnlocalizedName("cubeCooldownReduction"));
-				registerBlock(cubeTrueVision = new BlockArmor(Material.IRON).setUnlocalizedName("cubeTrueVision"));
+//				registerBlock(cubeCooldownReduction = new BlockArmor(Material.IRON).setUnlocalizedName("cubeCooldownReduction"));
+//				registerBlock(cubeTrueVision = new BlockArmor(Material.IRON).setUnlocalizedName("cubeTrueVision"));
 				registerBlock(energySolarI = new BlockArmor(Material.IRON).setUnlocalizedName("energySolarI"));
 				registerBlock(energySolarII = new BlockArmor(Material.IRON).setUnlocalizedName("energySolarII"));
 				registerBlock(energySolarIII = new BlockArmor(Material.IRON).setUnlocalizedName("energySolarIII"));
