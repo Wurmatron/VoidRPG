@@ -16,7 +16,8 @@ public class VoidRPGItems {
 		public static Item itemModelPlacer;
 		public static Item itemMaterial;
 		public static Item itemUpgrade;
-		public static final String[] materials = new String[] {"creationCrystal", "upgrade", "basicArmorPlate", "heavyArmorPlate", "reactiveArmorPlating", "regenerativeArmorPlating", "energyArmorPlating",  "cardboard", "carbonChunk", "flippers","nanoTech", "mechanicalMuscle", "gravityCore", "goggles", "jetpackParts", "thruster", "waterElectrolysisModule", "mindControl", "wings", "battery", "solarPanel", "smallReactor", "largeReactor", "repairBot"};
+		public static Item goggles;
+		public static final String[] materials = new String[] {"creationCrystal", "upgrade", "basicArmorPlate", "heavyArmorPlate", "reactiveArmorPlating", "regenerativeArmorPlating", "energyArmorPlating",  "cardboard", "carbonChunk", "flippers","nanoTech", "mechanicalMuscle", "gravityCore", "jetpackParts", "thruster", "waterElectrolysisModule", "mindControl", "wings", "battery", "solarPanel", "smallReactor", "largeReactor", "repairBot"};
 		public static final String[] upgrades = new String[] {"speedI", "speedII", "speedIII"};
 
 		public static void init () {
@@ -26,6 +27,7 @@ public class VoidRPGItems {
 				registerItem(armorLeggings = new CustomArmor(ItemArmor.ArmorMaterial.DIAMOND, 2, EntityEquipmentSlot.LEGS));
 				registerItem(armorBoots = new CustomArmor(ItemArmor.ArmorMaterial.DIAMOND, 3, EntityEquipmentSlot.FEET));
 				registerItem(itemModelPlacer = new ItemModelPlacer());
+				registerItem(goggles = new ItemGoggles());
 				GameRegistry.registerItem(itemMaterial = new ItemMaterial(materials));
 				GameRegistry.registerItem(itemUpgrade = new ItemUpgrade(upgrades));
 		}

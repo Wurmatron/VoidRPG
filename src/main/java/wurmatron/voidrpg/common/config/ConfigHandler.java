@@ -29,6 +29,7 @@ public class ConfigHandler {
 		public static Property cubeCreatorUpdatePeriod;
 		public static Property modelPlacerBlock;
 		public static Property customRecipes;
+		public static Property requiresReactor;
 
 		public static void preInit (FMLPreInitializationEvent e) {
 				location = new File(e.getSuggestedConfigurationFile().getParent() + File.separator + Global.NAME);
@@ -61,6 +62,8 @@ public class ConfigHandler {
 						Settings.MODELPLACERBLOCK = modelPlacerBlock.getString();
 						customRecipes = mainConfig.get(Configuration.CATEGORY_GENERAL, "customRecipes", Defaults.CUSTOMRECIPES, "Allows for custom recipes using the /Recipes folder in VoidRPG");
 						Settings.customRecipes = customRecipes.getBoolean();
+						requiresReactor = mainConfig.get(Configuration.CATEGORY_GENERAL, "requiresReactor", Defaults.REQUIRESREACTOR, "Is a reactor required for energy cubes to run?");
+						Settings.requiresReactor = requiresReactor.getBoolean();
 						if (mainConfig.hasChanged()) {
 								LogHandler.info("Config saved");
 								mainConfig.save();

@@ -11,24 +11,26 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.potion.Potion;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import wurmatron.voidrpg.api.cube.CubeData;
-import wurmatron.voidrpg.api.event.CubeTickEvent;
+import org.lwjgl.input.Keyboard;
+import wurmatron.voidrpg.api.cube.ICube;
 import wurmatron.voidrpg.client.events.PlayerTickHandlerClient;
 import wurmatron.voidrpg.client.model.ArmorModel;
-import wurmatron.voidrpg.common.config.Settings;
 import wurmatron.voidrpg.common.reference.Global;
 import wurmatron.voidrpg.common.reference.NBT;
 import wurmatron.voidrpg.common.utils.ArmorHelper;
-import wurmatron.voidrpg.common.utils.energy.TeslaHelper;
+import wurmatron.voidrpg.common.utils.CustomArmorHelper;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class CustomArmor extends ItemArmor implements ISpecialArmor {
@@ -37,6 +39,7 @@ public class CustomArmor extends ItemArmor implements ISpecialArmor {
 		private boolean requiresUpdate;
 		private boolean update;
 		private static final ArmorHelper helper = new ArmorHelper();
+		private static final CustomArmorHelper armorHelper = new CustomArmorHelper();
 
 		public CustomArmor (ArmorMaterial material, int index, EntityEquipmentSlot slot) {
 				super(material, index, slot);
@@ -45,80 +48,49 @@ public class CustomArmor extends ItemArmor implements ISpecialArmor {
 
 		@Override
 		public void onArmorTick (World world, EntityPlayer player, ItemStack stack) {
-				if (stack != null && stack.getTagCompound() != null && !stack.getTagCompound().hasNoTags()) {
-						if (stack.getItem().equals(VoidRPGItems.armorHelmet)) {
-								for (CubeData cube : helper.getHelmetCubes(stack))
-										MinecraftForge.EVENT_BUS.post(new CubeTickEvent(cube, player, stack));
-								handleCubeUpdates(player, stack, helper.getHelmetCubes(stack));
-						} else if (stack.getItem().equals(VoidRPGItems.armorChestplate)) {
-								for (CubeData cube : helper.getChestplateCubes(stack, NBT.BODY))
-										MinecraftForge.EVENT_BUS.post(new CubeTickEvent(cube, player, stack));
-								handleCubeUpdates(player, stack, helper.getChestplateCubes(stack, NBT.BODY));
-								for (CubeData cube : helper.getChestplateCubes(stack, NBT.LEFTARM))
-										MinecraftForge.EVENT_BUS.post(new CubeTickEvent(cube, player, stack));
-								handleCubeUpdates(player, stack, helper.getChestplateCubes(stack, NBT.LEFTARM));
-								for (CubeData cube : helper.getChestplateCubes(stack, NBT.RIGHTARM))
-										MinecraftForge.EVENT_BUS.post(new CubeTickEvent(cube, player, stack));
-								handleCubeUpdates(player, stack, helper.getChestplateCubes(stack, NBT.RIGHTARM));
-						} else if (stack.getItem().equals(VoidRPGItems.armorLeggings)) {
-								for (CubeData cube : helper.getLeggingsCubes(stack, NBT.LEFTLEG))
-										MinecraftForge.EVENT_BUS.post(new CubeTickEvent(cube, player, stack));
-								handleCubeUpdates(player, stack, helper.getLeggingsCubes(stack, NBT.LEFTLEG));
-								for (CubeData cube : helper.getLeggingsCubes(stack, NBT.RIGHTLEG))
-										MinecraftForge.EVENT_BUS.post(new CubeTickEvent(cube, player, stack));
-								handleCubeUpdates(player, stack, helper.getLeggingsCubes(stack, NBT.RIGHTLEG));
-						} else if (stack.getItem().equals(VoidRPGItems.armorBoots)) {
-								for (CubeData cube : helper.getBootsCubes(stack, NBT.LEFTLEG))
-										MinecraftForge.EVENT_BUS.post(new CubeTickEvent(cube, player, stack));
-								handleCubeUpdates(player, stack, helper.getBootsCubes(stack, NBT.LEFTLEG));
-								for (CubeData cube : helper.getBootsCubes(stack, NBT.RIGHTLEG))
-										MinecraftForge.EVENT_BUS.post(new CubeTickEvent(cube, player, stack));
-								handleCubeUpdates(player, stack, helper.getBootsCubes(stack, NBT.RIGHTLEG));
-						}
-						if (!stack.getTagCompound().hasKey(NBT.ENERGY))
-							TeslaHelper.setMaxCapacity(stack, ArmorHelper.instance.getMaxEnergyStorage(stack));
-				}
+				armorHelper.onArmorTick(world, player, stack);
 		}
 
 		// Created by Wurmatron
 		@Override
 		public ModelBiped getArmorModel (EntityLivingBase entity, ItemStack stack, EntityEquipmentSlot slot, ModelBiped _default) {
-				if (entity instanceof EntityPlayer && stack.getTagCompound() != null && !stack.getTagCompound().hasNoTags()) {
-						EntityPlayer player = (EntityPlayer) entity;
-						if (PlayerTickHandlerClient.updateRequirment.contains(player.getGameProfile().getId())) {
-								PlayerTickHandlerClient.updateRequirment.remove(player.getGameProfile().getId());
-								requiresUpdate = true;
-						}
-						if (modelPlayer == null || requiresUpdate)
-								if (modelPlayer == null)
-										modelPlayer = new ArmorModel();
-								else
-										modelPlayer.clear();
-						if (modelPlayer != null)
-								if (stack.getItem().equals(VoidRPGItems.armorHelmet) && modelPlayer.bipedHead.childModels == null) {
-										modelPlayer.addHeadCubes(helper.getHelmetCubes(stack));
-										update = true;
-								} else if (stack.getItem().equals(VoidRPGItems.armorChestplate) && modelPlayer.bipedBody.childModels == null && modelPlayer.bipedLeftArm.childModels == null && modelPlayer.bipedRightArm.childModels == null) {
-										modelPlayer.addBodyCubes(helper.getChestplateCubes(stack, NBT.BODY));
-										modelPlayer.addLeftArmCubes(helper.getChestplateCubes(stack, NBT.LEFTARM));
-										modelPlayer.addRightArmCubes(helper.getChestplateCubes(stack, NBT.RIGHTARM));
-										update = true;
-								} else if (stack.getItem().equals(VoidRPGItems.armorLeggings) && modelPlayer.leftLegCubes.size() == 0 && modelPlayer.rightLegCubes.size() == 0 || stack.getItem().equals(VoidRPGItems.armorLeggings) && modelPlayer.bipedLeftLeg.childModels == null && modelPlayer.bipedRightLeg.childModels == null) {
-										modelPlayer.addLeftLegCubes(helper.getLeggingsCubes(stack, NBT.LEFTLEG));
-										modelPlayer.addRightLegCubes(helper.getLeggingsCubes(stack, NBT.RIGHTLEG));
-										update = true;
-								} else if (stack.getItem().equals(VoidRPGItems.armorBoots) && modelPlayer.leftBootsCubes.size() == 0 && modelPlayer.rightBootsCubes.size() == 0 || stack.getItem().equals(VoidRPGItems.armorBoots) && modelPlayer.bipedLeftLeg.childModels == null && modelPlayer.bipedRightLeg.childModels == null) {
-										modelPlayer.addLeftBootsCubes(helper.getBootsCubes(stack, NBT.LEFTLEG));
-										modelPlayer.addRightBootsCubes(helper.getBootsCubes(stack, NBT.RIGHTLEG));
-										update = true;
+				if (!entity.isPotionActive(Potion.getPotionById(14)))
+						if (entity instanceof EntityPlayer && stack.getTagCompound() != null && !stack.getTagCompound().hasNoTags()) {
+								EntityPlayer player = (EntityPlayer) entity;
+								if (PlayerTickHandlerClient.updateRequirment.contains(player.getGameProfile().getId())) {
+										PlayerTickHandlerClient.updateRequirment.remove(player.getGameProfile().getId());
+										requiresUpdate = true;
 								}
-						if (update || requiresUpdate) {
-								update = false;
-								requiresUpdate = false;
-								modelPlayer = modelPlayer.covertDataToModel(_default);
+								if (modelPlayer == null || requiresUpdate)
+										if (modelPlayer == null)
+												modelPlayer = new ArmorModel();
+										else
+												modelPlayer.clear();
+								if (modelPlayer != null)
+										if (stack.getItem().equals(VoidRPGItems.armorHelmet) && modelPlayer.bipedHead.childModels == null) {
+												modelPlayer.addHeadCubes(helper.getHelmetCubes(stack));
+												update = true;
+										} else if (stack.getItem().equals(VoidRPGItems.armorChestplate) && modelPlayer.bipedBody.childModels == null && modelPlayer.bipedLeftArm.childModels == null && modelPlayer.bipedRightArm.childModels == null) {
+												modelPlayer.addBodyCubes(helper.getChestplateCubes(stack, NBT.BODY));
+												modelPlayer.addLeftArmCubes(helper.getChestplateCubes(stack, NBT.LEFTARM));
+												modelPlayer.addRightArmCubes(helper.getChestplateCubes(stack, NBT.RIGHTARM));
+												update = true;
+										} else if (stack.getItem().equals(VoidRPGItems.armorLeggings) && modelPlayer.leftLegCubes.size() == 0 && modelPlayer.rightLegCubes.size() == 0 || stack.getItem().equals(VoidRPGItems.armorLeggings) && modelPlayer.bipedLeftLeg.childModels == null && modelPlayer.bipedRightLeg.childModels == null) {
+												modelPlayer.addLeftLegCubes(helper.getLeggingsCubes(stack, NBT.LEFTLEG));
+												modelPlayer.addRightLegCubes(helper.getLeggingsCubes(stack, NBT.RIGHTLEG));
+												update = true;
+										} else if (stack.getItem().equals(VoidRPGItems.armorBoots) && modelPlayer.leftBootsCubes.size() == 0 && modelPlayer.rightBootsCubes.size() == 0 || stack.getItem().equals(VoidRPGItems.armorBoots) && modelPlayer.bipedLeftLeg.childModels == null && modelPlayer.bipedRightLeg.childModels == null) {
+												modelPlayer.addLeftBootsCubes(helper.getBootsCubes(stack, NBT.LEFTLEG));
+												modelPlayer.addRightBootsCubes(helper.getBootsCubes(stack, NBT.RIGHTLEG));
+												update = true;
+										}
+								if (update || requiresUpdate) {
+										update = false;
+										requiresUpdate = false;
+										modelPlayer = modelPlayer.covertDataToModel(_default);
+								}
+								return modelPlayer;
 						}
-						return modelPlayer;
-				}
 				return _default;
 		}
 
@@ -142,16 +114,26 @@ public class CustomArmor extends ItemArmor implements ISpecialArmor {
 				return Global.MODID + ":" + "textures/models/armor.png";
 		}
 
-		private void handleCubeUpdates (EntityPlayer player, ItemStack stack, CubeData[] data) {
-				if (Settings.cubeEffects)
-						for (CubeData cube : data) {
-								if (cube.cube.hasEffects(player, stack) && new ArmorHelper().isCubeActive(cube.cube, stack))
-										cube.cube.applyEffect(player, cube, data, stack);
-						}
-		}
-
 		@Override
 		public void addInformation (ItemStack stack, EntityPlayer player, List<String> tip, boolean adv) {
+				tip.add(TextFormatting.GRAY + I18n.translateToLocal("stat.reactor.name") + ": " + getActiveReator(stack));
+				tip.add(TextFormatting.GRAY + I18n.translateToLocal("stat.complexity.name") + ": " + helper.getComplexityColor(helper.getArmorComplexity(stack), stack.getItem()) + helper.getArmorComplexity(stack));
+				tip.add(TextFormatting.GRAY + I18n.translateToLocal("stat.weight.name") + ": " + helper.getArmorWeightColor(helper.getWeight(stack), stack.getItem()) + helper.getWeight(stack));
+				if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) || Keyboard.isKeyDown(Keyboard.KEY_RCONTROL)) {
+						HashMap<ICube, Integer> data = new HashMap();
+						for (ICube f : helper.getCubes(stack)) {
+								if (data.containsKey(f)) {
+										int count = (Integer) data.get(f);
+										data.remove(f);
+										count++;
+										data.put(f, count);
+								} else
+										data.put(f, 1);
+						}
+						for (ICube g : data.keySet())
+								tip.add(data.get(g) + "x " + I18n.translateToLocal(g.getUnlocalizedName()));
+				} else
+						tip.add(TextFormatting.AQUA + "Hold ctrl for cubes");
 				TeslaUtils.createTooltip(stack, tip);
 		}
 
@@ -159,5 +141,15 @@ public class CustomArmor extends ItemArmor implements ISpecialArmor {
 		@Override
 		public ICapabilityProvider initCapabilities (ItemStack stack, NBTTagCompound nbt) {
 				return new BaseTeslaContainerProvider(new BaseTeslaContainer(0, 0, 50, 50));
+		}
+
+		private String getActiveReator (ItemStack stack) {
+				String reactor = helper.hasActiveReactor(helper.getCubesFromStack(stack));
+				if (reactor.equalsIgnoreCase("operational"))
+						return TextFormatting.GREEN + reactor;
+				else if (reactor.equalsIgnoreCase("overloaded"))
+						return TextFormatting.YELLOW + reactor;
+				else
+						return TextFormatting.RED + reactor;
 		}
 }

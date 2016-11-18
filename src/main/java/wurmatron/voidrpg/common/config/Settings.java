@@ -13,4 +13,5 @@ public class Settings {
 		public static int cubeCreatorUpdatePeriod;
 		public static String MODELPLACERBLOCK;
 		public static boolean customRecipes;
+		public static boolean requiresReactor;
 }

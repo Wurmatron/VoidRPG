@@ -8,10 +8,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import wurmatron.voidrpg.api.cube.CubeData;
 import wurmatron.voidrpg.api.cube.ICube;
+import wurmatron.voidrpg.api.cube.IEnergyConsumer;
 import wurmatron.voidrpg.common.blocks.VoidRPGBlocks;
 import wurmatron.voidrpg.common.reference.Global;
 
-public class CubeAutoRepair implements ICube {
+public class CubeAutoRepair implements ICube,IEnergyConsumer {
 
 		@Override
 		public String getUnlocalizedName () {
@@ -74,5 +75,15 @@ public class CubeAutoRepair implements ICube {
 		@Override
 		public String getDescription () {
 				return "cube.autoRepairI.description";
+		}
+
+		@Override
+		public int getAmountPerAction () {
+				return 100;
+		}
+
+		@Override
+		public int getPassiveDrain () {
+				return 1;
 		}
 }

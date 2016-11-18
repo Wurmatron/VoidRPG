@@ -1,4 +1,4 @@
-package wurmatron.voidrpg.common.cube.special;
+package wurmatron.voidrpg.common.cube.special.armor;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,21 +12,31 @@ import wurmatron.voidrpg.api.cube.IEnergyConsumer;
 import wurmatron.voidrpg.common.blocks.VoidRPGBlocks;
 import wurmatron.voidrpg.common.reference.Global;
 
-public class CubeAutoRepairIII implements ICube,IEnergyConsumer {
+public class CubeEnergyActivePlating implements ICube,IEnergyConsumer {
+
+		@Override
+		public int getAmountPerAction () {
+				return 100;
+		}
+
+		@Override
+		public int getPassiveDrain () {
+				return 1;
+		}
 
 		@Override
 		public String getUnlocalizedName () {
-				return "autoRepairIII";
+				return "activePlating";
 		}
 
 		@Override
 		public Block getBlock () {
-				return VoidRPGBlocks.energyAutoRepairIII;
+				return VoidRPGBlocks.armorActivePlating;
 		}
 
 		@Override
 		public ResourceLocation getTexture () {
-				return new ResourceLocation(Global.MODID, "textures/cube/auto-repairIII.png");
+				return new ResourceLocation(Global.MODID, "textures/cube/activePlating.png");
 		}
 
 		@Override
@@ -36,29 +46,25 @@ public class CubeAutoRepairIII implements ICube,IEnergyConsumer {
 
 		@Override
 		public int getComplexity () {
-				return 25;
-		}
-
-		@Override
-		public int getDurability () {
 				return 20;
 		}
 
 		@Override
-		public boolean hasEffects (EntityPlayer player, ItemStack stack) {
-				return true;
+		public int getDurability () {
+				return 8000;
 		}
 
 		@Override
-		public void applyEffect (EntityPlayer player, CubeData cube, CubeData[] data, ItemStack stack) {
-				for (CubeData c : data)
-						if (c.damage > 0)
-								c.damage -= 5;
+		public boolean hasEffects (EntityPlayer player, ItemStack stack) {
+				return false;
 		}
+
+		@Override
+		public void applyEffect (EntityPlayer player, CubeData data, CubeData[] cubes, ItemStack stack) {}
 
 		@Override
 		public int getMaxAmount (Item item) {
-				return 200;
+				return 0;
 		}
 
 		@Override
@@ -71,19 +77,8 @@ public class CubeAutoRepairIII implements ICube,IEnergyConsumer {
 				return true;
 		}
 
-
 		@Override
 		public String getDescription () {
-				return "cube.autoRepairII.description";
-		}
-
-		@Override
-		public int getAmountPerAction () {
-				return 500;
-		}
-
-		@Override
-		public int getPassiveDrain () {
-				return 5;
+				return "cube.activePlating.description";
 		}
 }

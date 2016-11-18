@@ -13,4 +13,5 @@ public class Defaults {
 		public static final int CUBECREATORUPDATEPERIOD = 5;
 		public static final String MODELPLACERBLOCK = "minecraft:diamond_block";
 		public static final boolean CUSTOMRECIPES = true;
+		public static final boolean REQUIRESREACTOR = true;
 }

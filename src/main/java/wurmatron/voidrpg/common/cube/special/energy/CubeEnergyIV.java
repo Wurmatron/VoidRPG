@@ -26,7 +26,7 @@ public class CubeEnergyIV implements ICube, IEnergyCube {
 
 		@Override
 		public ResourceLocation getTexture () {
-				return new ResourceLocation(Global.MODID, "texutes/cube/energyIV.png");
+				return new ResourceLocation(Global.MODID, "textures/cube/energyIV.png");
 		}
 
 		@Override

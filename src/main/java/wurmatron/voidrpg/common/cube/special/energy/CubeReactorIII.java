@@ -8,10 +8,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import wurmatron.voidrpg.api.cube.CubeData;
 import wurmatron.voidrpg.api.cube.ICube;
+import wurmatron.voidrpg.api.cube.IReactor;
 import wurmatron.voidrpg.common.blocks.VoidRPGBlocks;
 import wurmatron.voidrpg.common.reference.Global;
 
-public class CubeReactorIII implements ICube {
+public class CubeReactorIII implements ICube,IReactor {
 
 		@Override
 		public String getUnlocalizedName () {
@@ -71,5 +72,10 @@ public class CubeReactorIII implements ICube {
 		@Override
 		public String getDescription () {
 				return "cube.reactorIII.description";
+		}
+
+		@Override
+		public double getMaxPower () {
+				return 100;
 		}
 }

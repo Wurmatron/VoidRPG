@@ -6,7 +6,6 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import org.lwjgl.input.Keyboard;
 import wurmatron.voidrpg.api.cube.CubeData;
 import wurmatron.voidrpg.api.cube.ICube;
 import wurmatron.voidrpg.common.blocks.VoidRPGBlocks;
@@ -51,13 +50,12 @@ public class CubeJetpack implements ICube {
 
 		@Override
 		public void applyEffect (EntityPlayer player, CubeData data, CubeData[] cubes, ItemStack stack) {
-				if (Keyboard.isKeyDown(Keyboard.KEY_SPACE))
-						player.motionY += 0.00006;
+						// TODO FIX this not working
 		}
 
 		@Override
 		public int getMaxAmount (Item item) {
-				return 0;
+				return 5000;
 		}
 
 		@Override

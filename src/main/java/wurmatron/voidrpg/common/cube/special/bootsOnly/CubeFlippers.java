@@ -50,9 +50,8 @@ public class CubeFlippers implements ICube {
 
 		@Override
 		public void applyEffect (EntityPlayer player, CubeData data, CubeData[] cubes, ItemStack stack) {
-				player.motionX *= 1.1D;
-				player.motionZ *= 1.1D;
-				player.motionY *= 1.05D;
+				// TODO Fix this not working
+				//player.setVelocity(player.motionX *= 1.1, player.motionY *1.05, player.motionZ*1.1);
 		}
 
 		@Override

@@ -100,7 +100,6 @@ public class VoidRPG {
 				CubeRegistry.INSTANCE.registerCube(new Cube("decoWoolBrown", VoidRPGBlocks.decoWoolBrown, new ResourceLocation(Global.MODID, "textures/cube/decoWoolBrown.png"), 4, 0, 9001, 0, new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET}, "cube.decoWoolBrown.description"));
 				CubeRegistry.INSTANCE.registerCube(new Cube("decoWoolGreen", VoidRPGBlocks.decoWoolGreen, new ResourceLocation(Global.MODID, "textures/cube/decoWoolGreen.png"), 4, 0, 9001, 0, new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET}, "cube.decoWoolGreen.description"));
 				CubeRegistry.INSTANCE.registerCube(new Cube("decoWoolRed", VoidRPGBlocks.decoWoolRed, new ResourceLocation(Global.MODID, "textures/cube/decoWoolRed.png"), 4, 0, 9001, 0, new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET}, "cube.decoWoolRed.description"));
-				CubeRegistry.INSTANCE.registerCube(new Cube("decoWoolBlack", VoidRPGBlocks.decoWoolBlack, new ResourceLocation(Global.MODID, "textures/cube/decoWoolBlack.png"), 4, 0, 9001, 0, new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET}, "cube.decoWoolBlack.description"));
 
 				CubeRegistry.INSTANCE.registerCube(new CubeAutoRepair());
 				CubeRegistry.INSTANCE.registerCube(new CubeWaterWalk());
@@ -119,6 +118,7 @@ public class VoidRPG {
 				CubeRegistry.INSTANCE.registerCube(new CubeNanoTech());
 				MinecraftForge.EVENT_BUS.register(new CubeDamageConverter());
 				CubeRegistry.INSTANCE.registerCube(new CubeDamageConverter());
+				CubeRegistry.INSTANCE.registerCube(new CubeEnergyActivePlating());
 				if (Loader.isModLoaded("tesla")) {
 						CubeRegistry.INSTANCE.registerCube(new CubeEnergyI());
 						CubeRegistry.INSTANCE.registerCube(new CubeEnergyII());
