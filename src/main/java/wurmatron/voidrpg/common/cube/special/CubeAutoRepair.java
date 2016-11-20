@@ -12,7 +12,7 @@ import wurmatron.voidrpg.api.cube.IEnergyConsumer;
 import wurmatron.voidrpg.common.blocks.VoidRPGBlocks;
 import wurmatron.voidrpg.common.reference.Global;
 
-public class CubeAutoRepair implements ICube,IEnergyConsumer {
+public class CubeAutoRepair implements ICube, IEnergyConsumer {
 
 		@Override
 		public String getUnlocalizedName () {

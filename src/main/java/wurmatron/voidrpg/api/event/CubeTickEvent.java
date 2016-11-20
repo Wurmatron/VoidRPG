@@ -5,6 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import wurmatron.voidrpg.api.cube.CubeData;
 
+//TODO Redundant, remove
 public class CubeTickEvent extends Event {
 
 		public final CubeData cubeData;
@@ -12,7 +13,7 @@ public class CubeTickEvent extends Event {
 		public final ItemStack stack;
 
 		/**
-		 * Called Every tick that an cube is on the players armor
+		 * Called Every tick that a cube is on the players armor
 		 *
 		 * @param data   Location and type of cube
 		 * @param player Player that has the armor with this cube

@@ -24,6 +24,7 @@ import wurmatron.voidrpg.api.cube.CubeData;
 import wurmatron.voidrpg.api.cube.ICube;
 import wurmatron.voidrpg.client.events.PlayerTickHandlerClient;
 import wurmatron.voidrpg.client.model.ArmorModel;
+import wurmatron.voidrpg.common.config.Settings;
 import wurmatron.voidrpg.common.reference.Global;
 import wurmatron.voidrpg.common.reference.Local;
 import wurmatron.voidrpg.common.reference.NBT;
@@ -47,7 +48,9 @@ public class CustomArmor2 extends ItemArmor {
 
 		@Override
 		public void onArmorTick (World world, EntityPlayer player, ItemStack stack) {
-				helper.proccessCubeTick(player, stack);
+			if (Settings.cubeEffects) {
+				helper.processCubeTick(player, stack);
+			}
 		}
 
 		@Override

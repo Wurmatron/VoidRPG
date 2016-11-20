@@ -11,8 +11,31 @@ import net.minecraft.nbt.NBTException;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.util.ResourceLocation;
+import wurmatron.voidrpg.api.cube.CubeData;
+import wurmatron.voidrpg.common.items.CustomArmor2;
 
 public class StackHelper {
+
+	public static boolean areArmorEqual (ItemStack a, ItemStack b) {
+		if (a != null && b != null && a.getItem() instanceof CustomArmor2 && b.getItem() instanceof CustomArmor2) {
+			if (a.isItemEqual(b)) {
+				if (a.getTagCompound() == null && b.getTagCompound() == null)
+					return true;
+				else if (a.getTagCompound() != null && b.getTagCompound() != null) {
+					CubeData[] aData = new ArmorHelper2().getCubeData(a);
+					CubeData[] bData = new ArmorHelper2().getCubeData(b);
+					for (CubeData f : aData) {
+						for (CubeData g : bData) {
+							if (f.cube.equals(g.cube) && f.offX == g.offX && f.offY == g.offY && f.offZ == g.offZ)
+								return true;
+						}
+						return false;
+					}
+				}
+			}
+		}
+		return false;
+	}
 
 		public static boolean areItemsEqual (ItemStack a, ItemStack b) {
 				if (a != null && b != null) {
