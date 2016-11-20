@@ -82,7 +82,7 @@ public class CreateArmourSupervisorThread implements Runnable {
 
     private void dispatchWorkers() {
         for (int i = 0; i < toRemove.size(); i++) {
-            CreateArmourWorker armourworker = new CreateArmourWorker(this, player, toRemove.get(i);
+            CreateArmourWorker armourworker = new CreateArmourWorker(this, player, toRemove.get(i));
             Thread worker = new Thread(armourworker);
             this.workers.put(armourworker, worker);
             worker.start();
