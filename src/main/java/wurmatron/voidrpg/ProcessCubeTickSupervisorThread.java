@@ -1,7 +1,6 @@
 package wurmatron.voidrpg;
 
 import net.minecraft.item.ItemStack;
-import wurmatron.voidrpg.api.cube.CubeData;
 
 import java.util.LinkedList;
 
@@ -18,11 +17,11 @@ public class ProcessCubeTickSupervisorThread implements Runnable {
         }
     };
 
-    private final ProcessCubeTickWorkerThread workers;
+//    public final ProcessCubeTickWorkerThread workers;
 
     public final String armourType;
 
-    public final CubeData[] cubes;
+//    public final CubeData[] cubes;
 
     private ProcessCubeTickSupervisorThread(Thread originalThread, String stackType, ItemStack stack) {
         this.armourType = stackType;

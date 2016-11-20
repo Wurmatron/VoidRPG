@@ -17,7 +17,6 @@ import wurmatron.voidrpg.common.reference.Global;
 import wurmatron.voidrpg.common.reference.Local;
 import wurmatron.voidrpg.common.reference.NBT;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Objects;
 
@@ -343,9 +342,9 @@ public class ArmorHelper2 {
 			abstract class WatcherThread extends Thread {
 				private CreateArmourSupervisorThread cast;
 
-				private ItemStack original;
+				public ItemStack original;
 
-				private EntityPlayer player;
+				public EntityPlayer player;
 
 				public WatcherThread(String name) {
 					super(name);
