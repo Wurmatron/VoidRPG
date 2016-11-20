@@ -14,7 +14,7 @@ import static wurmatron.voidrpg.common.utils.ArmorHelper2.armourInstance;
 /**
  * Created by matthew on 20/11/16.
  */
-public class CreateArmourSupervisorThread implements Runnable {
+public class CreateArmourSupervisorThread extends Thread {
 
     private static final LinkedHashMap<EntityPlayer, CreateArmourSupervisorThread> supervisorThreads = new LinkedHashMap<>();
 
@@ -96,15 +96,20 @@ public class CreateArmourSupervisorThread implements Runnable {
         return null;
     }
 
-    public synchronized void queueOperation(ItemStack stack, CubeData data) {
+    public synchronized void queueOperation(ItemStack stack, CubeData... data) {
         this.timeSinceLastDamaged = System.currentTimeMillis();
         Stack s = stackListContains(stack);
         if (s != null) {
             toRemove.add(new Stack(stack, new LinkedList<CubeData>() {{
-                add(data);
+                for (CubeData brokenCube : data) {
+                    add(brokenCube);
+                }
             }}));
         } else {
-            s.addCube(data);
+//            s.addCube(data);
+            for (CubeData brokenCube : data) {
+                s.addCube(brokenCube);
+            }
         }
         dispatchWorkers();
     }
@@ -113,6 +118,16 @@ public class CreateArmourSupervisorThread implements Runnable {
 
     protected synchronized void queueReturn(ItemStack stack) {
         returnQueue.add(stack);
+    }
+
+    public final synchronized CubeData[] getCubesToRemove(ItemStack stack) {
+        GenericWrapper<CubeData[]> toReturn = new GenericWrapper<CubeData[]>(null, true);
+        workers.forEach((worker, thread) -> {
+            if (worker.getOriginal() == stack) {
+                toReturn.setObj(worker.cubeStack.cubesToRemove.toArray(new CubeData[0]));
+            }
+        });
+        return toReturn.getObj();
     }
 
     public final synchronized ItemStack getQueuedReturn(ItemStack stack, CubeData... removedItems) {
@@ -137,10 +152,15 @@ public class CreateArmourSupervisorThread implements Runnable {
                         }
                     }
                 }
+                synchronized (this) {
+                    this.interrupt();
+                }
             } else {
                 synchronized (superThread) {
                     if (player.worldObj.getWorldTime() % 10 == 0) {
-                        //TODO
+                        workers.forEach((w, t) -> {
+                            w.calc();
+                        });
                     }
                 }
             }

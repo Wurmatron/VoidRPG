@@ -4,6 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import net.minecraft.item.ItemStack;
@@ -26,12 +27,19 @@ public class CreateArmourWorker implements Runnable {
 
     public final Stack cubeStack;
 
+    public final ItemStack original;
+
     public final String type;
+
+//    protected LinkedList<ItemStack> returnQueue = new LinkedList<ItemStack>();
+
+    protected ItemStack returnQueue;
 
     public CreateArmourWorker(CreateArmourSupervisorThread supervisor, EntityPlayer player,
                               Stack stack) {
         this.player = player;
         this.cubeStack = stack;
+        this.original  = cubeStack.stack;
         this.type = stack.getItemStackType();
         CreateArmourWorker.workers.put(supervisor, this);
     }
@@ -42,6 +50,10 @@ public class CreateArmourWorker implements Runnable {
             if (caw.type == stack.getItemStackType()) return caw;
         }
         return new CreateArmourWorker(supervisor, player, stack);
+    }
+
+    public final synchronized ItemStack getOriginal() {
+        return this.original;
     }
 
     public final ItemStack createCubeOnHelmet() {
@@ -90,22 +102,46 @@ public class CreateArmourWorker implements Runnable {
         return armourInstance.createBoots(leftLeg.toArray(new CubeData[0]), rightLeg.toArray(new CubeData[0]));
     }
 
+    private int numCalcs = 0;
+
     public synchronized void calc() {
+        numCalcs++;
+        //TODO Debug, remove
+        System.out.println(numCalcs);
         switch(this.cubeStack.getItemStackType()) {
             case ("head"): {
-                this.createCubeOnHelmet();
+                returnQueue = this.createCubeOnHelmet();
             }
             case ("chest"): {
-                this.createCubeOnChestplace();
+                returnQueue = this.createCubeOnChestplace();
             }
             case ("legs"): {
-                this.createCubeOnLeggings();
+                returnQueue = this.createCubeOnLeggings();
             }
             case ("feet"): {
-                this.createCubeOnBoots();
+                returnQueue = this.createCubeOnBoots();
             }
         }
     }
+
+    protected synchronized ItemStack getReturnQueue() {
+        ItemStack toReturn = returnQueue;
+        this.returnQueue = null;
+        Thread thisThread = Thread.currentThread();
+        synchronized (thisThread) {
+            thisThread.interrupt();
+        }
+        return returnQueue;
+    }
+
+//    protected synchronized ItemStack getQueuedReturn(String type) {
+//        for (ItemStack stack : this.returnQueue) {
+//            if (stack.getItem().getUnlocalizedName().substring(11) == type) {
+//                return stack;
+//            }
+//        }
+//        return null;
+//    }
 
     protected synchronized boolean kill() {
         if (this.cubeStack.cubesToRemove.size() > 0) {

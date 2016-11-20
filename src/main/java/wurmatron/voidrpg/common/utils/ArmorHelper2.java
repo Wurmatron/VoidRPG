@@ -8,6 +8,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import wurmatron.voidrpg.CreateArmourSupervisorThread;
 import wurmatron.voidrpg.api.cube.*;
 import wurmatron.voidrpg.common.config.Settings;
 import wurmatron.voidrpg.common.cube.CubeRegistry;
@@ -17,6 +18,8 @@ import wurmatron.voidrpg.common.reference.Local;
 import wurmatron.voidrpg.common.reference.NBT;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Objects;
 
 public class ArmorHelper2 {
 
@@ -34,16 +37,6 @@ public class ArmorHelper2 {
 				model.addBox(data.offX, data.offY, data.offZ, 1, 1, 1);
 				return model;
 		}
-
-		public final ItemStack createCubeOnHelmet() { return null; }
-
-		public final ItemStack createCubeOnChestplace() { return null; }
-
-//		public final ItemStack createCubeOnLeggingsOrBoots() { return null; }
-
-		public final ItemStack createCubeOnLeggings() { return null; }
-
-		public final ItemStack createCubeOnBoots() { return null; }
 
 		public final ItemStack createHelmet (CubeData[] head) {
 				NBTTagCompound cubes = new NBTTagCompound();
@@ -312,7 +305,8 @@ public class ArmorHelper2 {
 
 		public void processCubeTick(EntityPlayer player, ItemStack stack) {
 //			ProcessCubeTickSupervisorThread supervisorForStack = ProcessCubeTickSupervisorThread.getThreadIfNotExists(Thread.currentThread(), stack);
-
+			CreateArmourSupervisorThread thread = CreateArmourSupervisorThread.getIfNotExists(Thread.currentThread(), player);
+			thread.start();
 			final CubeData[] cubes = getCubeData(stack);
 			for (CubeData data : cubes)
 					if (isActive(data.cube, stack) && data.cube.hasEffects(player, stack)) {
@@ -320,7 +314,7 @@ public class ArmorHelper2 {
 //							MinecraftForge.EVENT_BUS.post(new CubeTickEvent(cubesToRemove, player, stack));
 //							if (cubesToRemove.cube.getDurability() > 0 && cubesToRemove.damage >= cubesToRemove.cube.getDurability())
 								if (data.damage >= data.cube.getDurability())
-									checkAndHandleBrokenCube(player, stack, data);
+									checkAndHandleBrokenCube(thread, player, stack, data);
 					}
 		}
 
@@ -328,105 +322,82 @@ public class ArmorHelper2 {
 			return cube.damage <= cube.cube.getDurability();
 		}
 
-		public void checkAndHandleBrokenCube (EntityPlayer player, ItemStack stack, CubeData cube) {
-			switch(stack.getItem().getUnlocalizedName().substring(11)) {
-				case ("head"): {
-
-				}
-				case ("chest"): {
-
-				}
-				case ("legs"): {
-
-				}
-				case ("feet"): {
-
+	/***
+	 *
+	 * @param player
+	 * @param stack THE ORIGINAL ITEMSTACK
+	 * @return
+	 */
+		public static synchronized int stackIndex(EntityPlayer player, ItemStack stack) {
+			for (int slot = 0; slot < 4; slot++) {
+				if (player.inventory.armorInventory[slot] == stack) {
+					return slot;
 				}
 			}
+			return -1;
 		}
 
-//		public void checkAndHandleBrokenCube (EntityPlayer player, ItemStack stack, CubeData cube) {
-//				switch (stack.getItem().getUnlocalizedName().substring(11)) {
-//						case ("head"): {
-//								ArrayList<CubeData> cubesToRemove = new ArrayList<>();
-//								for (CubeData f : getCubeData(stack))
-//										if (f.damage < f.cube.getDurability())
-//												cubesToRemove.add(f);
-//								CubeData[] output = new CubeData[cubesToRemove.size()];
-//								for (int index = 0; index < cubesToRemove.size(); index++)
-//										output[index] = cubesToRemove.get(index);
-//								for (int slot = 0; slot < 4; slot++)
-//										if (player.inventory.armorInventory[slot] == stack)
-//												player.inventory.setInventorySlotContents(100 + slot, createHelmet(output));
-//								break;
-//						}
-//						case ("chest"): {
-//								ArrayList<CubeData> body = new ArrayList<>();
-//								for (CubeData f : getCubeData(stack, NBT.BODY))
-//										if (f.damage < f.cube.getDurability())
-//												body.add(f);
-//								CubeData[] outputBody = new CubeData[body.size()];
-//								for (int index = 0; index < body.size(); index++)
-//										outputBody[index] = body.get(index);
-//								ArrayList<CubeData> leftArm = new ArrayList<>();
-//								for (CubeData f : getCubeData(stack, NBT.LEFTARM))
-//										if (f.damage < f.cube.getDurability())
-//												leftArm.add(f);
-//								CubeData[] outputLeftArm = new CubeData[leftArm.size()];
-//								for (int index = 0; index < leftArm.size(); index++)
-//										outputLeftArm[index] = leftArm.get(index);
-//								ArrayList<CubeData> rightArm = new ArrayList<>();
-//								for (CubeData f : getCubeData(stack, NBT.RIGHTARM))
-//										if (f.damage < f.cube.getDurability())
-//												rightArm.add(f);
-//								CubeData[] outputRightArm = new CubeData[rightArm.size()];
-//								for (int index = 0; index < rightArm.size(); index++)
-//										outputRightArm[index] = rightArm.get(index);
-//								for (int slot = 0; slot < 4; slot++)
-//										if (player.inventory.armorInventory[slot] == stack)
-//												player.inventory.setInventorySlotContents(100 + slot, createChestplate(outputBody, outputLeftArm, outputRightArm));
-//								break;
-//						}
-//						case ("legs"): {
-//								ArrayList<CubeData> rightLeg = new ArrayList<>();
-//								for (CubeData f : getCubeData(stack, NBT.RIGHTLEG))
-//										if (f.damage < f.cube.getDurability())
-//												rightLeg.add(f);
-//								CubeData[] outputRightArm = new CubeData[rightLeg.size()];
-//								for (int index = 0; index < rightLeg.size(); index++)
-//										outputRightArm[index] = rightLeg.get(index);
-//								ArrayList<CubeData> leftLeg = new ArrayList<>();
-//								for (CubeData f : getCubeData(stack, NBT.LEFTLEG))
-//										if (f.damage < f.cube.getDurability())
-//												leftLeg.add(f);
-//								CubeData[] outputLeftArm = new CubeData[leftLeg.size()];
-//								for (int index = 0; index < leftLeg.size(); index++)
-//										outputLeftArm[index] = leftLeg.get(index);
-//								for (int slot = 0; slot < 4; slot++)
-//										if (player.inventory.armorInventory[slot] == stack)
-//												player.inventory.setInventorySlotContents(100 + slot, createLeggings(outputLeftArm, outputRightArm));
-//								break;
-//						}
-//						case ("feet"): {
-//								ArrayList<CubeData> rightBoots = new ArrayList<>();
-//								for (CubeData f : getCubeData(stack, NBT.RIGHTLEG))
-//										if (f.damage < f.cube.getDurability())
-//												rightBoots.add(f);
-//								CubeData[] outputRightBoots = new CubeData[rightBoots.size()];
-//								for (int index = 0; index < rightBoots.size(); index++)
-//										outputRightBoots[index] = rightBoots.get(index);
-//								ArrayList<CubeData> leftBoots = new ArrayList<>();
-//								for (CubeData f : getCubeData(stack, NBT.LEFTLEG))
-//										if (f.damage < f.cube.getDurability())
-//												leftBoots.add(f);
-//								CubeData[] outputLeftBoots = new CubeData[leftBoots.size()];
-//								for (int index = 0; index < leftBoots.size(); index++)
-//										outputLeftBoots[index] = leftBoots.get(index);
-//								for (int slot = 0; slot < 4; slot++)
-//										if (player.inventory.armorInventory[slot] == stack)
-//												player.inventory.setInventorySlotContents(100 + slot, createLeggings(outputLeftBoots, outputRightBoots));
-//								break;
-//						}
-//				}
-//		}
+		//TODO Link createXArmourMethods to thread handler
+		public void checkAndHandleBrokenCube (CreateArmourSupervisorThread thread, EntityPlayer player, ItemStack stack,
+											  CubeData cube) {
+			abstract class WatcherThread extends Thread {
+				private CreateArmourSupervisorThread cast;
+
+				private ItemStack original;
+
+				private EntityPlayer player;
+
+				public WatcherThread(String name) {
+					super(name);
+				}
+
+				public synchronized Thread initializeThread(
+						CreateArmourSupervisorThread thread, ItemStack original, EntityPlayer player) {
+					this.cast = thread;
+					this.original = original;
+					this.player = player;
+					return this;
+				}
+
+				public LinkedHashMap<ItemStack, CubeData[]> getData() {
+					return new LinkedHashMap<ItemStack, CubeData[]>() {
+						CubeData[] originalQueuedToRemove = cast.getCubesToRemove(original);
+						{
+							put(cast.getQueuedReturn(original, originalQueuedToRemove), originalQueuedToRemove);
+						}
+					};
+				}
+
+				public abstract void exec(ItemStack stack, CubeData[] removedCubes);
+
+				@Override
+				public void run() {
+					while (true) {
+						LinkedHashMap<ItemStack, CubeData[]> data = getData();
+						if (Objects.nonNull(data.keySet().toArray()[0])) {
+							exec(data.keySet().toArray(new ItemStack[0])[0], data.values().toArray(new CubeData[0][])[0]);
+							synchronized (this) {
+								interrupt();
+							}
+							break;
+						} else {
+							continue;
+						}
+					}
+				}
+
+			}
+			if (brokenCube(cube)) {
+				new WatcherThread("Create Helmet Operation Watcher") {
+					@Override
+					public void exec(ItemStack stack, CubeData[] data) {
+						int originalPos = stackIndex(this.player, this.original);
+						if (originalPos >= 0) {
+							this.player.inventory.setInventorySlotContents(100 + originalPos, stack);
+						}
+					}
+				}.initializeThread(thread, stack, player).start();
+				thread.queueOperation(stack, cube);
+			}
+		}
 }
