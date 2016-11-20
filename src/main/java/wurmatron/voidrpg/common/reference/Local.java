@@ -19,4 +19,10 @@ public class Local {
 		public static final String PLACER_BLOCK = "chat.message.placmentBlock";
 		public static final String STAFF_DESCRIPTION = "chat.message.staff_description.name";
 		public static final String ENERGY = "stat.energy.name";
+		public static final String REACTOR_MISSING = "stat.missingReactor.name";
+		public static final String REACTOR_OPERATIONAL = "stat.operationalReactor.name";
+		public static final String REACTOR_LIMITED = "stat.limitedReactor.name";
+		public static final String REACTOR_OVERLOAD = "stat.overloadReactor.name";
+		public static final String REACTOR = "stat.reactor.name";
+		public static final String HOLD_CTRL = "stat.holdCTRL.name";
 }

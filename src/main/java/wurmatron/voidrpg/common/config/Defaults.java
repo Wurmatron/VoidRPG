@@ -14,4 +14,5 @@ public class Defaults {
 		public static final String MODELPLACERBLOCK = "minecraft:diamond_block";
 		public static final boolean CUSTOMRECIPES = true;
 		public static final boolean REQUIRESREACTOR = true;
+		public static final double REACTOROVERRAGE = 0.1;
 }

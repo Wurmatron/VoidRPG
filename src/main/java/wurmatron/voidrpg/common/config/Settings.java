@@ -14,4 +14,5 @@ public class Settings {
 		public static String MODELPLACERBLOCK;
 		public static boolean customRecipes;
 		public static boolean requiresReactor;
+		public static double reactorOverrage;
 }

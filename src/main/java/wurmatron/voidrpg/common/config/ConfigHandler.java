@@ -30,6 +30,7 @@ public class ConfigHandler {
 		public static Property modelPlacerBlock;
 		public static Property customRecipes;
 		public static Property requiresReactor;
+		public static Property reactorOverrage;
 
 		public static void preInit (FMLPreInitializationEvent e) {
 				location = new File(e.getSuggestedConfigurationFile().getParent() + File.separator + Global.NAME);
@@ -64,6 +65,8 @@ public class ConfigHandler {
 						Settings.customRecipes = customRecipes.getBoolean();
 						requiresReactor = mainConfig.get(Configuration.CATEGORY_GENERAL, "requiresReactor", Defaults.REQUIRESREACTOR, "Is a reactor required for energy cubes to run?");
 						Settings.requiresReactor = requiresReactor.getBoolean();
+						reactorOverrage = mainConfig.get(Configuration.CATEGORY_GENERAL, "reactorOverrage", Defaults.REACTOROVERRAGE, "% extrea required for the reactor to function over the passive drain");
+						Settings.reactorOverrage = reactorOverrage.getDouble();
 						if (mainConfig.hasChanged()) {
 								LogHandler.info("Config saved");
 								mainConfig.save();

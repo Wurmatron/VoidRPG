@@ -26,7 +26,7 @@ import wurmatron.voidrpg.VoidRPG;
 import wurmatron.voidrpg.api.cube.CubeData;
 import wurmatron.voidrpg.common.reference.Local;
 import wurmatron.voidrpg.common.reference.NBT;
-import wurmatron.voidrpg.common.utils.ArmorHelper;
+import wurmatron.voidrpg.common.utils.ArmorHelper2;
 import wurmatron.voidrpg.common.utils.BitsHelper;
 import wurmatron.voidrpg.common.utils.LogHandler;
 
@@ -37,7 +37,7 @@ public class ItemStaff extends Item {
 
 		public static final int MAX_DURABIITY = 8;
 		private static final ChiselAndBitsAPI api = new ChiselAndBitsAPI();
-		private static final ArmorHelper helper = new ArmorHelper();
+		private static final ArmorHelper2 helper = new ArmorHelper2();
 
 		public ItemStaff () {
 				setUnlocalizedName("creationStaff");
@@ -93,7 +93,7 @@ public class ItemStaff extends Item {
 										temp[c] = data.get(c);
 								temp = correctHelmet(EnumFaceDirection.getFacing(ray.sideHit), temp, player);
 								if (temp != null && data.size() > 0)
-										return helper.createArmorStack(VoidRPGItems.armorHelmet, temp);
+										return helper.createHelmet(temp);
 						}
 				}
 				return null;
@@ -118,8 +118,8 @@ public class ItemStaff extends Item {
 						right = BitsHelper.rotateUp(right);
 						chest = BitsHelper.rotateUp(chest);
 						chest = BitsHelper.rotateUp(chest);
-						if (chest != null && chest.length > 0 || left != null && left.length > 0 || right != null && right.length > 0 )
-								return helper.createArmorStack(VoidRPGItems.armorChestplate, chest, left, right);
+						if (chest != null && chest.length > 0 || left != null && left.length > 0 || right != null && right.length > 0)
+								return helper.createChestplate(chest, left, right);
 				}
 				return null;
 		}
@@ -136,7 +136,7 @@ public class ItemStaff extends Item {
 						left = correctLeggings(EnumFaceDirection.getFacing(ray.sideHit), left, player);
 						right = correctLeggings(EnumFaceDirection.getFacing(ray.sideHit), right, player);
 						if (data.size() > 0 && left.length > 0 && right.length > 0)
-								return helper.createArmorStack(VoidRPGItems.armorLeggings, right, left);
+								return helper.createLeggings(right, left);
 				}
 				return null;
 		}
@@ -153,7 +153,7 @@ public class ItemStaff extends Item {
 						left = correctBoots(EnumFaceDirection.getFacing(ray.sideHit), left, player);
 						right = correctBoots(EnumFaceDirection.getFacing(ray.sideHit), right, player);
 						if (left != null && right != null && data.size() > 0 && left.length > 0 && right.length > 0)
-								return helper.createArmorStack(VoidRPGItems.armorBoots, left, right);
+								return helper.createBoots(left, right);
 				}
 				return null;
 		}

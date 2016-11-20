@@ -35,6 +35,7 @@ import wurmatron.voidrpg.common.cube.special.energy.*;
 import wurmatron.voidrpg.common.cube.special.helmetOnly.CubeVision;
 import wurmatron.voidrpg.common.cube.special.helmetOnly.CubeWaterBreathing;
 import wurmatron.voidrpg.common.cube.special.leggingsOnly.CubeMuscle;
+import wurmatron.voidrpg.common.events.PlayerHurtEvent;
 import wurmatron.voidrpg.common.events.PlayerJoinEvent;
 import wurmatron.voidrpg.common.items.VoidRPGItems;
 import wurmatron.voidrpg.common.network.GuiHandler;
@@ -142,6 +143,7 @@ public class VoidRPG {
 				StringCube testJson = new StringCube("jsonTest", "minecraft", "dirt", new ResourceLocation("minecraft", "textures/blocks/dirt.png"), 0.2, 1, 2, 2500, "head,chest,legs,boots", "cube.jsonTest.description");
 				JsonHandler.writeCubeToFile(testJson);
 				VoidRPGRecipes.init();
+				MinecraftForge.EVENT_BUS.register(new PlayerHurtEvent());
 		}
 
 		@Mod.EventHandler

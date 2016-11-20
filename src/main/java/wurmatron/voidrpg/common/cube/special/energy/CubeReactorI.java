@@ -75,7 +75,7 @@ public class CubeReactorI implements ICube, IReactor {
 		}
 
 		@Override
-		public double getMaxPower () {
+		public int getMaxPower () {
 				return 5;
 		}
 }

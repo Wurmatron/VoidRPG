@@ -51,4 +51,36 @@ public class CustomArmorHelper {
 		private void fixEnergy (ItemStack stack) {
 				TeslaHelper.setMaxCapacity(stack, ArmorHelper.instance.getMaxEnergyStorage(stack));
 		}
+
+		public void onCubeTick (EntityPlayer player, ItemStack stack) {
+				for (int slot = 0; slot < 4; slot++)
+						if (player.inventory.armorInventory[slot].isItemEqual(stack) && player.inventory.armorInventory[slot].getTagCompound().equals(stack.getTagCompound())) {
+								switch (stack.getItem().getUnlocalizedName().substring(11)) {
+										case ("head"): {
+												CubeData[] head = ArmorHelper.instance.getHelmetCubes(stack);
+												if(head != null && head.length > 0) {
+														int killedCubes = 0;
+														for(int c =0; c < head.length; c++) {
+																if(head[c].damage >= head[c].cube.getDurability()) {
+																		head[c] = null;
+																		killedCubes++;
+																}
+														}
+														if(killedCubes > 0) {
+
+														}
+												}
+										}
+										case ("chest"):
+												proccessCubeData(helper.getChestplateCubes(stack), player, stack);
+												break;
+										case ("legs"):
+												proccessCubeData(helper.getLeggingsCubes(stack), player, stack);
+												break;
+										case ("feet"):
+												proccessCubeData(helper.getBootsCubes(stack), player, stack);
+												break;
+								}
+						}
+		}
 }

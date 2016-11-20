@@ -117,30 +117,32 @@ public class ArmorHelper {
 				ItemStack stack = new ItemStack(item, 1, 0);
 				NBTTagCompound nbt = new NBTTagCompound();
 				int a = 0;
-				for (CubeData c : leftLeg) {
-						NBTTagCompound temp = new NBTTagCompound();
-						temp.setInteger(NBT.OFFSETX, c.offX);
-						temp.setInteger(NBT.OFFSETY, c.offY);
-						temp.setInteger(NBT.OFFSETZ, c.offZ);
-						temp.setString(NBT.CUBE, c.cube.getUnlocalizedName());
-						temp.setInteger(NBT.DAMAGE, c.damage);
-						nbt.setTag(Integer.toString(a), temp);
-						a++;
-				}
+				if (leftLeg != null)
+						for (CubeData c : leftLeg) {
+								NBTTagCompound temp = new NBTTagCompound();
+								temp.setInteger(NBT.OFFSETX, c.offX);
+								temp.setInteger(NBT.OFFSETY, c.offY);
+								temp.setInteger(NBT.OFFSETZ, c.offZ);
+								temp.setString(NBT.CUBE, c.cube.getUnlocalizedName());
+								temp.setInteger(NBT.DAMAGE, c.damage);
+								nbt.setTag(Integer.toString(a), temp);
+								a++;
+						}
 				nbt.setInteger(NBT.AMOUNT, a);
 				stack.setTagInfo(NBT.LEFTLEG, nbt);
 				NBTTagCompound nbt2 = new NBTTagCompound();
 				int b = 0;
-				for (CubeData c : rightLeg) {
-						NBTTagCompound temp = new NBTTagCompound();
-						temp.setInteger(NBT.OFFSETX, c.offX);
-						temp.setInteger(NBT.OFFSETY, c.offY);
-						temp.setInteger(NBT.OFFSETZ, c.offZ);
-						temp.setString(NBT.CUBE, c.cube.getUnlocalizedName());
-						temp.setInteger(NBT.DAMAGE, c.damage);
-						nbt2.setTag(Integer.toString(b), temp);
-						b++;
-				}
+				if (rightLeg != null)
+						for (CubeData c : rightLeg) {
+								NBTTagCompound temp = new NBTTagCompound();
+								temp.setInteger(NBT.OFFSETX, c.offX);
+								temp.setInteger(NBT.OFFSETY, c.offY);
+								temp.setInteger(NBT.OFFSETZ, c.offZ);
+								temp.setString(NBT.CUBE, c.cube.getUnlocalizedName());
+								temp.setInteger(NBT.DAMAGE, c.damage);
+								nbt2.setTag(Integer.toString(b), temp);
+								b++;
+						}
 				nbt2.setInteger(NBT.AMOUNT, b);
 				stack.setTagInfo(NBT.RIGHTLEG, nbt2);
 				return stack;
@@ -156,9 +158,10 @@ public class ArmorHelper {
 				return weight;
 		}
 
+		@Deprecated
 		public ArrayList<ICube> getCubes (ItemStack stack) {
 				ArrayList<ICube> cubes = new ArrayList<>();
-				if(stack != null && stack.getTagCompound() != null && !stack.getTagCompound().hasNoTags()) {
+				if (stack != null && stack.getTagCompound() != null && !stack.getTagCompound().hasNoTags()) {
 						if (stack.getItem().equals(VoidRPGItems.armorHelmet)) {
 								NBTTagCompound data = stack.getTagCompound();
 								if (data != null && !data.hasNoTags()) {
@@ -531,7 +534,6 @@ public class ArmorHelper {
 				return 0;
 		}
 
-		@Deprecated
 		public CubeData[] getCubesFromStack (ItemStack stack) {
 				if (stack != null && stack.getTagCompound() != null && !stack.getTagCompound().hasNoTags())
 						switch (stack.getItem().getUnlocalizedName().substring(11)) {
@@ -546,4 +548,80 @@ public class ArmorHelper {
 						}
 				return null;
 		}
+
+		private CubeData[] overrideCubeData (CubeData[] data, CubeData find, CubeData replacment) {
+				if (data != null && data.length > 0) {
+						CubeData[] output = data;
+						for (int slot = 0; slot < data.length; slot++) {
+								if (data[slot] == find)
+										output[slot] = replacment;
+						}
+						return output;
+				}
+				return data;
+		}
+
+		public ItemStack overrideData (ItemStack stack, CubeData find, CubeData replacment) {
+				if (stack != null && stack.getTagCompound() != null && !stack.getTagCompound().hasNoTags()) {
+						switch (stack.getItem().getUnlocalizedName().substring(11)) {
+								case ("head"): {
+										CubeData[] data = getHelmetCubes(stack);
+										CubeData[] output = data;
+										for (int slot = 0; slot < data.length; slot++) {
+												if (data[slot] == find)
+														output[slot] = replacment;
+										}
+										return createArmorStack(stack.getItem(), output);
+								}
+								case ("chest"): {
+										CubeData[] body = getChestplateCubes(stack, NBT.BODY);
+										CubeData[] left = getChestplateCubes(stack, NBT.LEFTARM);
+										CubeData[] right = getChestplateCubes(stack, NBT.RIGHTARM);
+										CubeData[] bodyOutput = body;
+										for (int slot = 0; slot < body.length; slot++)
+												if (body[slot] == find)
+														bodyOutput[slot] = replacment;
+										CubeData[] leftOutput = left;
+										for (int slot = 0; slot < left.length; slot++)
+												if (left[slot] == find)
+														leftOutput[slot] = replacment;
+										CubeData[] rightOutput = right;
+										for (int slot = 0; slot < right.length; slot++)
+												if (right[slot] == find)
+														rightOutput[slot] = replacment;
+										return createArmorStack(stack.getItem(), body, left, right);
+								}
+								case ("legs"): {
+										CubeData[] left = getLeggingsCubes(stack, NBT.LEFTLEG);
+										CubeData[] right = getLeggingsCubes(stack, NBT.RIGHTARM);
+										CubeData[] leftOutput = left;
+										for (int slot = 0; slot < left.length; slot++)
+												if (left[slot] == find)
+														leftOutput[slot] = replacment;
+										CubeData[] rightOutput = right;
+										for (int slot = 0; slot < right.length; slot++)
+												if (right[slot] == find)
+														rightOutput[slot] = replacment;
+										return createArmorStack(stack.getItem(), left, right);
+								}
+								case ("feet"):
+										CubeData[] left = getBootsCubes(stack, NBT.LEFTLEG);
+										CubeData[] right = getBootsCubes(stack, NBT.RIGHTARM);
+										CubeData[] leftOutput = left;
+										if (left != null && left.length > 0)
+												for (int slot = 0; slot < left.length; slot++)
+														if (left[slot] == find)
+																leftOutput[slot] = replacment;
+										CubeData[] rightOutput = right;
+										if (right != null && right.length > 0)
+												for (int slot = 0; slot < right.length; slot++)
+														if (right[slot] == find)
+																rightOutput[slot] = replacment;
+										return createArmorStack(stack.getItem(), left, right);
+						}
+				}
+				return stack;
+		}
+
+
 }
