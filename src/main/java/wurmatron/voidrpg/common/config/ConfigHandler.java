@@ -32,6 +32,8 @@ public class ConfigHandler {
 		public static Property requiresReactor;
 		public static Property reactorOverrage;
 
+		public static Property supervisorThreadTimeout;
+
 		public static void preInit (FMLPreInitializationEvent e) {
 				location = new File(e.getSuggestedConfigurationFile().getParent() + File.separator + Global.NAME);
 				mainConfig = new Configuration(new File(location + File.separator + "Global.cfg"));
@@ -67,6 +69,8 @@ public class ConfigHandler {
 						Settings.requiresReactor = requiresReactor.getBoolean();
 						reactorOverrage = mainConfig.get(Configuration.CATEGORY_GENERAL, "reactorOverrage", Defaults.REACTOROVERRAGE, "% extrea required for the reactor to function over the passive drain");
 						Settings.reactorOverrage = reactorOverrage.getDouble();
+						supervisorThreadTimeout = mainConfig.get(Configuration.CATEGORY_GENERAL, "supervisorThreadTimeout", Defaults.SUPERVISOR_THREAD_TIMEOUT, "time in seconds for accessory thread timeout.");
+						Settings.supervisorThreadTimeout = supervisorThreadTimeout.getInt();
 						if (mainConfig.hasChanged()) {
 								LogHandler.info("Config saved");
 								mainConfig.save();

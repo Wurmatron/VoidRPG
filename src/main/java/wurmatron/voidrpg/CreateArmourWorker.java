@@ -165,7 +165,7 @@ public class CreateArmourWorker implements Runnable {
         try {
             Thread.currentThread().wait();
         } catch (InterruptedException e) {
-            calc();
+//            calc();
         }
     }
 }

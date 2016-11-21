@@ -51,7 +51,7 @@ public class CubeStealth implements ICube {
 		}
 
 		@Override
-		public void applyEffect (EntityPlayer player, CubeData data, CubeData[] cubes, ItemStack stack) {
+		public void applyEffect(EntityPlayer player, CubeData data, ItemStack stack) {
 				if (player.isPotionActive(Potion.getPotionById(14))) {
 						if (player.getActivePotionEffect(Potion.getPotionById(14)).getDuration() < 60)
 								player.addPotionEffect(new PotionEffect(Potion.getPotionById(14), 200));

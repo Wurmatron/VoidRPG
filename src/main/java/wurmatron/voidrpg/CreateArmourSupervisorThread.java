@@ -4,6 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import wurmatron.voidrpg.api.cube.CubeData;
+import wurmatron.voidrpg.common.config.Settings;
 import wurmatron.voidrpg.common.utils.LogHandler;
 import wurmatron.voidrpg.common.utils.StackHelper;
 
@@ -16,7 +17,8 @@ import static wurmatron.voidrpg.common.utils.ArmorHelper2.armourInstance;
  */
 public class CreateArmourSupervisorThread extends Thread {
 
-    private static final LinkedHashMap<EntityPlayer, CreateArmourSupervisorThread> supervisorThreads = new LinkedHashMap<>();
+    private static final LinkedHashMap<EntityPlayer, CreateArmourSupervisorThread> supervisorThreads =
+            new LinkedHashMap<>();
 
     private final HashMap<CreateArmourWorker, Thread> workers = new HashMap<CreateArmourWorker, Thread>();
 
@@ -60,8 +62,6 @@ public class CreateArmourSupervisorThread extends Thread {
             return stack.getItem().getUnlocalizedName().substring(11);
         }
     }
-
-//    private final LinkedHashMap<ItemStack, List<CubeData>> toRemove = new LinkedHashMap<ItemStack, List<CubeData>>() {};
 
     private final LinkedList<Stack> toRemove = new LinkedList<Stack>();
 
@@ -144,7 +144,8 @@ public class CreateArmourSupervisorThread extends Thread {
     @Override
     public void run() {
         while (true) {
-            if (toRemove.size() <= 0 && Math.round(System.currentTimeMillis() - timeSinceLastDamaged) >= 10000) {
+            if (toRemove.size() <= 0 && timeSinceLastDamaged > 0 && Math.round(System.currentTimeMillis() -
+                    timeSinceLastDamaged) >= (Settings.supervisorThreadTimeout * 1000)) {
                 for (CreateArmourWorker worker : workers.keySet()) {
                     synchronized (worker) {
                         while (!worker.kill()) {
@@ -154,6 +155,7 @@ public class CreateArmourSupervisorThread extends Thread {
                 }
                 synchronized (this) {
                     this.interrupt();
+                    break;
                 }
             } else {
                 synchronized (superThread) {

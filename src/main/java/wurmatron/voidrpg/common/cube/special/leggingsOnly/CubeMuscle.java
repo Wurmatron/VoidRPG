@@ -50,7 +50,7 @@ public class CubeMuscle implements ICube {
 		}
 
 		@Override
-		public void applyEffect (EntityPlayer player, CubeData data, CubeData[] cubes, ItemStack stack) {
+		public void applyEffect(EntityPlayer player, CubeData data, ItemStack stack) {
 				player.motionX *= 1.05D;
 				player.motionZ *= 1.05D;
 				player.motionY *= 1.05D;

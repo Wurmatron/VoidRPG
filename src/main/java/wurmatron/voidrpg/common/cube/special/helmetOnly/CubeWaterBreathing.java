@@ -52,7 +52,7 @@ public class CubeWaterBreathing implements ICube {
 		}
 
 		@Override
-		public void applyEffect (EntityPlayer player, CubeData data, CubeData[] cubes, ItemStack stack) {
+		public void applyEffect(EntityPlayer player, CubeData data, ItemStack stack) {
 				if (player.isPotionActive(Potion.getPotionById(13))) {
 						if (player.getActivePotionEffect(Potion.getPotionById(13)).getDuration() < 60)
 								player.addPotionEffect(new PotionEffect(Potion.getPotionById(13), 200));

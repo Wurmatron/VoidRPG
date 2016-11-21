@@ -42,10 +42,13 @@ import wurmatron.voidrpg.common.network.GuiHandler;
 import wurmatron.voidrpg.common.proxy.CommonProxy;
 import wurmatron.voidrpg.common.recipes.VoidRPGRecipes;
 import wurmatron.voidrpg.common.reference.Global;
+import wurmatron.voidrpg.common.utils.ArmorHelper2;
 import wurmatron.voidrpg.common.utils.LogHandler;
 
 @Mod (modid = Global.MODID, name = Global.NAME, version = Global.VERSION, guiFactory = Global.GUIFACTORY, dependencies = Global.DEPENDENCIES)
 public class VoidRPG {
+
+		public static final ArmorHelper2 armorHelper2 = new ArmorHelper2();
 
 		@Mod.Instance (Global.MODID)
 		public static VoidRPG instance;
@@ -67,6 +70,8 @@ public class VoidRPG {
 				VoidRPGBlocks.init();
 				VoidRPGItems.init();
 				proxy.register();
+				assert ProcessCubeTickSupervisorThread.workerThreadThreshold.size() ==
+						(4096 / ProcessCubeTickSupervisorThread.thresholdIncrementalFactor);
 		}
 
 		@Mod.EventHandler

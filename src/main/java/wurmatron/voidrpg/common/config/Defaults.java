@@ -15,4 +15,5 @@ public class Defaults {
 		public static final boolean CUSTOMRECIPES = true;
 		public static final boolean REQUIRESREACTOR = true;
 		public static final double REACTOROVERRAGE = 0.1;
+		public static final int SUPERVISOR_THREAD_TIMEOUT = 10;
 }

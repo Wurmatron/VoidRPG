@@ -41,7 +41,7 @@ public class CustomArmorHelper {
 				if (data != null && data.length > 0)
 						for (CubeData cube : data) {
 								if (helper.isCubeActive(cube.cube, stack, data) && cube.cube.hasEffects(player, stack)) {
-										cube.cube.applyEffect(player, cube, data, stack);
+										cube.cube.applyEffect(player, cube, stack);
 										MinecraftForge.EVENT_BUS.post(new CubeTickEvent(cube, player, stack));
 								}
 						}

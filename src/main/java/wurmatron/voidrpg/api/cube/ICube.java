@@ -48,7 +48,7 @@ public interface ICube {
 		 * @param stack  Stack that this cube is on
 		 * @return if the cube has special effects (Note: has to be true for applyEffect to work
 		 *
-		 * @see ICube#applyEffect(EntityPlayer, CubeData, CubeData[], ItemStack)
+		 * @see ICube#applyEffect(EntityPlayer, CubeData, ItemStack)
 		 * @see ICube#getMinAmount(Item, double)
 		 */
 		boolean hasEffects (EntityPlayer player, ItemStack stack);
@@ -58,7 +58,7 @@ public interface ICube {
 		 *
 		 * @see CubeTickEvent
 		 */
-		void applyEffect (EntityPlayer player, CubeData data, CubeData[] cubes, ItemStack stack);
+		void applyEffect(EntityPlayer player, CubeData data, ItemStack stack);
 
 		/**
 		 * Maximum amount of this cube that can be on a single piece of armor

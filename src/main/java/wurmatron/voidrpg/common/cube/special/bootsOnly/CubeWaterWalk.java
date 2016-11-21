@@ -51,7 +51,7 @@ public class CubeWaterWalk implements ICube {
 		}
 
 		@Override
-		public void applyEffect (EntityPlayer player, CubeData data, CubeData[] cubes, ItemStack stack) {
+		public void applyEffect(EntityPlayer player, CubeData data, ItemStack stack) {
 				player.motionY = 0;
 				player.fallDistance = 0;
 				player.onGround = true;

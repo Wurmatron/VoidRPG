@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import wurmatron.voidrpg.CreateArmourSupervisorThread;
+import wurmatron.voidrpg.GenericWrapper;
 import wurmatron.voidrpg.api.cube.*;
 import wurmatron.voidrpg.common.config.Settings;
 import wurmatron.voidrpg.common.cube.CubeRegistry;
@@ -18,6 +19,7 @@ import wurmatron.voidrpg.common.reference.Local;
 import wurmatron.voidrpg.common.reference.NBT;
 
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.Objects;
 
 public class ArmorHelper2 {
@@ -302,23 +304,41 @@ public class ArmorHelper2 {
 				return getAmountOfCube(cube, stack) >= cube.getMinAmount(stack.getItem(), weight) && canReactorRun(stack);
 		}
 
+		private static final LinkedList<Double> averageRuntime = new LinkedList<Double>() {
+			@Override
+			public synchronized boolean add(Double d) {
+				boolean toReturn = super.add(d);
+				final GenericWrapper<Double> dd = new GenericWrapper<Double>(0d, true);
+				forEach(ddd -> dd.setObj(dd.getObj()+ddd));
+				LogHandler.info("Average runtime: " + (dd.getObj() / size()));
+				return toReturn;
+			}
+
+			@Override
+			public synchronized Double get(int pos) {
+				return super.get(pos);
+			}
+		};
+
 		public void processCubeTick(EntityPlayer player, ItemStack stack) {
-//			ProcessCubeTickSupervisorThread supervisorForStack = ProcessCubeTickSupervisorThread.getThreadIfNotExists(Thread.currentThread(), stack);
 			CreateArmourSupervisorThread thread = CreateArmourSupervisorThread.getIfNotExists(Thread.currentThread(), player);
-			thread.start();
+			if (thread.getState() != Thread.State.RUNNABLE) {
+				thread.start();
+			}
 			final CubeData[] cubes = getCubeData(stack);
-			for (CubeData data : cubes)
-					if (isActive(data.cube, stack) && data.cube.hasEffects(player, stack)) {
-							data.cube.applyEffect(player, data, getCubeData(stack), stack);
-//							MinecraftForge.EVENT_BUS.post(new CubeTickEvent(cubesToRemove, player, stack));
-//							if (cubesToRemove.cube.getDurability() > 0 && cubesToRemove.damage >= cubesToRemove.cube.getDurability())
-								if (data.damage >= data.cube.getDurability())
-									checkAndHandleBrokenCube(thread, player, stack, data);
-					}
+			double start = System.currentTimeMillis();
+			for (CubeData data : cubes) {
+				if (isActive(data.cube, stack) && data.cube.hasEffects(player, stack)) {
+					data.cube.applyEffect(player, data, stack);
+				}
+				checkAndHandleBrokenCube(thread, player, stack, data);
+			}
+			averageRuntime.add(System.currentTimeMillis() - start);
+			LogHandler.info("Loop took: '" + (averageRuntime.get(averageRuntime.size()-1)) + "' ms to run!");
 		}
 
 		public boolean brokenCube(CubeData cube) {
-			return cube.damage <= cube.cube.getDurability();
+			return cube.damage >= cube.cube.getDurability();
 		}
 
 	/***
@@ -336,7 +356,6 @@ public class ArmorHelper2 {
 			return -1;
 		}
 
-		//TODO Link createXArmourMethods to thread handler
 		public void checkAndHandleBrokenCube (CreateArmourSupervisorThread thread, EntityPlayer player, ItemStack stack,
 											  CubeData cube) {
 			abstract class WatcherThread extends Thread {

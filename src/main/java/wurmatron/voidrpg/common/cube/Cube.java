@@ -72,7 +72,7 @@ public class Cube implements ICube {
 		}
 
 		@Override
-		public void applyEffect (EntityPlayer player, CubeData cube, CubeData[] data, ItemStack stack) {
+		public void applyEffect(EntityPlayer player, CubeData cube, ItemStack stack) {
 		}
 
 		@Override

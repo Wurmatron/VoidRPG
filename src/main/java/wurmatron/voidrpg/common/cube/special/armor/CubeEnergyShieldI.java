@@ -53,7 +53,7 @@ public class CubeEnergyShieldI implements ICube, IProtectionCube {
 		}
 
 		@Override
-		public void applyEffect (EntityPlayer player, CubeData data, CubeData[] cubes, ItemStack stack) {
+		public void applyEffect(EntityPlayer player, CubeData data, ItemStack stack) {
 				if (data.damage > 0 && Loader.isModLoaded("tesla")) {
 						data.damage--;
 						TeslaHelper.consumePower(stack, 10);

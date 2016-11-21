@@ -53,7 +53,7 @@ public class CubeNanoTech implements ICube, IProtectionCube {
 		}
 
 		@Override
-		public void applyEffect (EntityPlayer player, CubeData data, CubeData[] cubes, ItemStack stack) {
+		public void applyEffect(EntityPlayer player, CubeData data, ItemStack stack) {
 				if (timer <= 0) {
 						data.damage--;
 						timer = 100;

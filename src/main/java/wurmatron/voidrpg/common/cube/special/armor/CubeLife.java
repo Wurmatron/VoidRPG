@@ -60,7 +60,7 @@ public class CubeLife implements ICube,IProtectionCube {
 		}
 
 		@Override
-		public void applyEffect (EntityPlayer player, CubeData data, CubeData[] cubes, ItemStack stack) {}
+		public void applyEffect(EntityPlayer player, CubeData data, ItemStack stack) {}
 
 		@Override
 		public int getMaxAmount (Item item) {

@@ -50,10 +50,10 @@ public class CubeAutoRepairIII implements ICube,IEnergyConsumer {
 		}
 
 		@Override
-		public void applyEffect (EntityPlayer player, CubeData cube, CubeData[] data, ItemStack stack) {
-				for (CubeData c : data)
-						if (c.damage > 0)
-								c.damage -= 5;
+		public void applyEffect(EntityPlayer player, CubeData cube, ItemStack stack) {
+//				for (CubeData c : data)
+//						if (c.damage > 0)
+//								c.damage -= 5;
 		}
 
 		@Override

@@ -15,4 +15,5 @@ public class Settings {
 		public static boolean customRecipes;
 		public static boolean requiresReactor;
 		public static double reactorOverrage;
+		public static int supervisorThreadTimeout;
 }

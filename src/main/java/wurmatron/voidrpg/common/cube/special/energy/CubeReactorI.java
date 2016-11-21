@@ -50,7 +50,7 @@ public class CubeReactorI implements ICube, IReactor {
 		}
 
 		@Override
-		public void applyEffect (EntityPlayer player, CubeData data, CubeData[] cubes, ItemStack stack) {
+		public void applyEffect(EntityPlayer player, CubeData data, ItemStack stack) {
 
 		}
 
