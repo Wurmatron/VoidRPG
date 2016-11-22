@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import static java.lang.Thread.interrupted;
 import static wurmatron.voidrpg.ProcessCubeTickSupervisorThread.Range;
 
 /**
@@ -66,27 +67,28 @@ public class ProcessCubeTickWorkerThread implements Runnable {
         return false;
     }
 
-    protected synchronized boolean queueCubes() {
-        if (cubesToProcess == null) {
-            cubesToProcess = new ArrayList<CubeData>() {
-                {
-                    for (int i = threadDomain.lower - 1; i < superThread.cubes.size() && i < threadDomain.getUpperLimit(); i++) {
-                        add(superThread.cubes.get(i));
-                    }
-                }
-            };
-            return true;
-        } else {
-            return false;
-        }
+    protected synchronized boolean queueCubes(CubeData... cubesToAffect) {
+
+//        if (cubesToProcess == null) {
+//            cubesToProcess = new ArrayList<CubeData>() {
+//                {
+//                    for (int i = threadDomain.lower - 1; i < superThread.cubes.size() && i < threadDomain.getUpperLimit(); i++) {
+//                        add(superThread.cubes.get(i));
+//                    }
+//                }
+//            };
+//            return true;
+//        } else {
+//            return false;
+//        }
     }
 
-    protected synchronized boolean clearQueue() {
-        if (finished)  {
-            cubesToProcess = null;
-            this.finished = false;
-        }
-        return false;
+    protected synchronized CubeData[] clearQueue() {
+//        if (finished)  {
+//            cubesToProcess = null;
+//            this.finished = false;
+//        }
+//        return false;
     }
 
     protected synchronized void calc() {
@@ -104,16 +106,23 @@ public class ProcessCubeTickWorkerThread implements Runnable {
 
     @Override
     public void run() {
-        while (!kill) {
-            if (this.cubesToProcess == null) queueCubes();
-            if (finished) {
+        while(!kill) {
+            if (calcsFinished()) {
+                synchronized (this) {
+                    try {
+                        Thread.currentThread().wait();
+                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+                    }
+                }
+            } else {
+                if () {
 
-                try {
-                    wait();
-                } catch (InterruptedException e) {
-                    break;
                 }
             }
+        }
+        synchronized (this) {
+            Thread.currentThread().interrupt();
         }
     }
 

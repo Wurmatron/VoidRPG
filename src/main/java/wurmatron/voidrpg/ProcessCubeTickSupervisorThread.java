@@ -149,10 +149,10 @@ public final class ProcessCubeTickSupervisorThread extends Thread {
                                     Range<Integer> rangeAtI = workerThreadThreshold.get(i);
                                     if (threadNum == i) {
                                         workersToStart.add(new ProcessCubeTickWorkerThread(superThread,
-                                                new Range<Integer>(rangeAtI.getLowerLimit(),
-                                                        (rangeAtI.getUpperLimit() - cubesToProcess.size()))));
+                                                new Range<Integer>(rangeAtI.getLowerLimit(), (rangeAtI.getUpperLimit() - cubesToProcess.size())),
+                                                stack, player));
                                     } else {
-                                        workersToStart.add(new ProcessCubeTickWorkerThread(superThread, rangeAtI));
+                                        workersToStart.add(new ProcessCubeTickWorkerThread(superThread, rangeAtI, stack, player));
                                     }
                                 }
                             }
