@@ -1,5 +1,6 @@
 package wurmatron.voidrpg.common.cube;
 
+import com.sun.corba.se.impl.io.TypeMismatchException;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -22,6 +23,8 @@ public class StringCube implements ICube {
 		private String armorTypes;
 		private String descriptionKey;
 
+		private final Object[] variables;
+
 		public StringCube (String unlocalizedName, String modid, String blockName, ResourceLocation texture, double weight, int complexity, int durability, int maxAmount, String armorTypes, String description) {
 				this.unlocalizedName = unlocalizedName;
 				this.blockModid = modid;
@@ -33,6 +36,8 @@ public class StringCube implements ICube {
 				this.maxAmount = maxAmount;
 				this.armorTypes = armorTypes;
 				this.descriptionKey = description;
+				this.variables = new Object[] {this.unlocalizedName, this.blockModid, this.texture, this.blockName,
+						this.weight, this.complexity, this.durability, this.maxAmount, this.armorTypes, this.descriptionKey};
 		}
 
 		@Override
@@ -114,5 +119,18 @@ public class StringCube implements ICube {
 		@Override
 		public String getDescription () {
 				return descriptionKey;
+		}
+
+		@Override
+		public boolean equals(Object cube) throws TypeMismatchException {
+			StringCube sc = (StringCube)cube;
+			for (int i = 0; i < variables.length; i++) {
+				if (this.variables[i] != sc.variables[i]) {
+					break;
+				} else if (i == variables.length-1) {
+					return true;
+				}
+			}
+			return false;
 		}
 }
