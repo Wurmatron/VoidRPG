@@ -2,11 +2,14 @@ package wurmatron.voidrpg.client.model;
 
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import wurmatron.voidrpg.api.cube.CubeData;
 import wurmatron.voidrpg.common.utils.ArmorHelper;
 
 import java.util.ArrayList;
 
+@SideOnly (Side.CLIENT)
 public class ArmorModel extends ModelBiped {
 
 		public ArrayList<CubeData> headCubes = new ArrayList<>();

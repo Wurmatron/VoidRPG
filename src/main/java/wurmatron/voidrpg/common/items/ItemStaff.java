@@ -28,7 +28,6 @@ import wurmatron.voidrpg.common.reference.Local;
 import wurmatron.voidrpg.common.reference.NBT;
 import wurmatron.voidrpg.common.utils.ArmorHelper2;
 import wurmatron.voidrpg.common.utils.BitsHelper;
-import wurmatron.voidrpg.common.utils.LogHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +45,7 @@ public class ItemStaff extends Item {
 			setMaxDamage(MAX_DURABIITY * 80);
 	}
 
+	/**TODO Fix this for server support **/
 	@Override
 	public ActionResult<ItemStack> onItemRightClick (ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
 		if (!world.isRemote) {

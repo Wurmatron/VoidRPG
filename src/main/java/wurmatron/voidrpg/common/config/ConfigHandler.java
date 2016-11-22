@@ -8,6 +8,7 @@ import wurmatron.voidrpg.common.cube.CubeCreatorRecipeHandler;
 import wurmatron.voidrpg.common.cube.CubeRegistry;
 import wurmatron.voidrpg.common.cube.StringCubeCreatorRecipe;
 import wurmatron.voidrpg.common.reference.Global;
+import wurmatron.voidrpg.common.utils.HashManager;
 import wurmatron.voidrpg.common.utils.LogHandler;
 
 import java.io.File;
@@ -97,6 +98,7 @@ public class ConfigHandler {
 				} catch (NullPointerException e) {
 						LogHandler.debug(e.getLocalizedMessage());
 				}
+			HashManager.reload();
 		}
 
 		public static void loadJsonRecipes () {
