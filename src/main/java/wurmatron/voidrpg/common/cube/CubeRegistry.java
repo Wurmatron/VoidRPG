@@ -15,6 +15,7 @@ public class CubeRegistry {
 	public static HashMap <String, ICube> cacheNames = new HashMap <>();
 
 	public ArrayList <ICube> getCubes () {
+		cubes.forEach(x -> System.out.println(x));
 		return new ArrayList <>(cubes);
 	}
 

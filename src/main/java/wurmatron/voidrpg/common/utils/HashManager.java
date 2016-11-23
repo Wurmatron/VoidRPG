@@ -15,14 +15,18 @@ public class HashManager {
 	public static ArrayList <String> hashes = new ArrayList <>();
 	public static HashMap <String, String> hashValues = new HashMap <>();
 
+	public static int calls = 0;
+
 	public static void init () {
 		for (ICube cube : CubeRegistry.INSTANCE.getCubes()) {
 			if (cube.getClass().equals(StringCube.class)) {
+				calls++;
 				String cubeJson = JsonHandler.convertCubeToJson((StringCube) cube);
 				String hash = new HashManager().createMD5(cubeJson);
 				hashes.add(hash);
 				hashValues.put(hash, cubeJson);
 				LogHandler.info("Hash: " + hash);
+				LogHandler.info("Hash Calculated: " + calls + "times!");
 			}
 		}
 	}
