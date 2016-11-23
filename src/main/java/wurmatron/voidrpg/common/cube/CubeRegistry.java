@@ -9,7 +9,6 @@ import java.util.Set;
 
 public class CubeRegistry {
 
-
 	public static CubeRegistry INSTANCE = new CubeRegistry();
 
 	public static Set <ICube> cubes = new HashSet <>();
@@ -20,7 +19,7 @@ public class CubeRegistry {
 	}
 
 	public <T extends ICube> void registerCube (T cube) {
-		if (! cubes.contains(cube)) {
+		if (!cubes.contains(cube)) {
 			cubes.add(cube);
 		}
 	}

@@ -14,6 +14,6 @@ public class CommonProxy {
 	}
 
 	public IThreadListener getThreadFromContext (MessageContext ctx) {
-		return (IThreadListener) ctx.getServerHandler().playerEntity.mcServer.getServer().getServerThread();
+		return ctx.getServerHandler().playerEntity.getServer();
 	}
 }

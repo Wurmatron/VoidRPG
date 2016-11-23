@@ -35,7 +35,7 @@ public class JsonHandler {
 		return null;
 	}
 
-	public static ICube convertJsonToCube (String json) {
+	public static StringCube convertJsonToCube (String json) {
 		if (json != null)
 			return gson.fromJson(json, StringCube.class);
 		return null;
@@ -146,7 +146,7 @@ public class JsonHandler {
 	}
 
 
-	public static void saveCubeJsonFromServer (StringCube cube, String ip) {
+	public static void writeCubeJsonFromServer (StringCube cube, String ip) {
 		File location = new File(serverDir + File.separator + ip + File.separator + "Cubes" + File.separator + cube.getUnlocalizedName() + ".json");
 		try {
 			if (! new File(serverDir + File.separator + ip + File.separator + "Cubes").exists())

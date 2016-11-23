@@ -38,6 +38,7 @@ import wurmatron.voidrpg.common.events.PlayerHurtEvent;
 import wurmatron.voidrpg.common.events.PlayerJoinEvent;
 import wurmatron.voidrpg.common.items.VoidRPGItems;
 import wurmatron.voidrpg.common.network.GuiHandler;
+import wurmatron.voidrpg.common.network.PacketHandler;
 import wurmatron.voidrpg.common.proxy.CommonProxy;
 import wurmatron.voidrpg.common.recipes.VoidRPGRecipes;
 import wurmatron.voidrpg.common.reference.Global;
@@ -70,6 +71,7 @@ public class VoidRPG {
 				VoidRPGBlocks.init();
 				VoidRPGItems.init();
 				proxy.register();
+			PacketHandler.registerPackets();
 //				assert ProcessCubeTickSupervisorThread.workerThreadThreshold.size() ==
 //						(4096 / ProcessCubeTickSupervisorThread.thresholdIncrementalFactor);
 		}

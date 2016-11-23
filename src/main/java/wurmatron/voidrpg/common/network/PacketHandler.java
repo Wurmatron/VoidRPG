@@ -7,6 +7,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
 import wurmatron.voidrpg.common.network.client.SyncConfigMessage;
+import wurmatron.voidrpg.common.network.server.SendFileMessage;
 import wurmatron.voidrpg.common.reference.Global;
 
 public class PacketHandler {
@@ -16,7 +17,8 @@ public class PacketHandler {
 	private static final SimpleNetworkWrapper wrapper = NetworkRegistry.INSTANCE.newSimpleChannel(Global.MODID);
 
 	public static final void registerPackets () {
-			registerMessage(SyncConfigMessage.class);
+		registerMessage(SyncConfigMessage.class);
+		registerMessage(SendFileMessage.class);
 	}
 
 	private static final <T extends CustomMessage <T> & IMessageHandler <T, IMessage>> void registerMessage (Class <T> clazz) {
