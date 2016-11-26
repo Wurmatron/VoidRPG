@@ -48,9 +48,9 @@ public final class Arrays {
     public static <T> T[] appendElement(T[] original, T... elements) {
         final int emptySize = Arrays.<T>getEmptyPositions(original).size();
         final int sizeWONullElements = original.length-emptySize;
-        T[] toReturn = (T[])Array.newInstance(Arrays.getFirstPopulated(original).getClass()), (sizeWONullElements + elements.length));
-        for (int i = elements.length; i < ) {
-
+        T[] toReturn = (T[])Array.newInstance(Arrays.getFirstPopulated(original).getClass(), (sizeWONullElements + elements.length));
+        for (int i = 0; i < toReturn.length; i++) {
+            toReturn[i] = 4
         }
         for (int i = 0; i < elements.length; i++) {
             toReturn[i] = original[i];
