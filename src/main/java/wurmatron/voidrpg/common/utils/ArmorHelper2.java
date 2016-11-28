@@ -10,6 +10,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import wurmatron.voidrpg.CreateArmourSupervisorThread;
 import wurmatron.voidrpg.GenericWrapper;
+import wurmatron.voidrpg.ProcessCubeTickSupervisorThread;
 import wurmatron.voidrpg.api.cube.*;
 import wurmatron.voidrpg.common.config.Settings;
 import wurmatron.voidrpg.common.cube.CubeRegistry;
@@ -325,16 +326,21 @@ public class ArmorHelper2 {
 			if (thread.getState() != Thread.State.RUNNABLE) {
 				thread.start();
 			}
-			final CubeData[] cubes = getCubeData(stack);
-			double start = System.currentTimeMillis();
-			for (CubeData data : cubes) {
-				if (isActive(data.cube, stack) && data.cube.hasEffects(player, stack)) {
-					data.cube.applyEffect(player, data, stack);
-				}
-				checkAndHandleBrokenCube(thread, player, stack, data);
+			ProcessCubeTickSupervisorThread processor = ProcessCubeTickSupervisorThread.getIfNotExists(thread, Thread.currentThread(), stack, player);
+			processor.checkCubes();
+			if (thread.getState() != Thread.State.RUNNABLE) {
+				thread.start();
 			}
-			averageRuntime.add(System.currentTimeMillis() - start);
-			LogHandler.info("Loop took: '" + (averageRuntime.get(averageRuntime.size()-1)) + "' ms to run!");
+//			final CubeData[] cubes = getCubeData(stack);
+//			double start = System.currentTimeMillis();
+//			for (CubeData data : cubes) {
+//				if (isActive(data.cube, stack) && data.cube.hasEffects(player, stack)) {
+//					data.cube.applyEffect(player, data, stack);
+//				}
+//				checkAndHandleBrokenCube(thread, player, stack, data);
+//			}
+//			averageRuntime.add(System.currentTimeMillis() - start);
+//			LogHandler.info("Loop took: '" + (averageRuntime.get(averageRuntime.size()-1)) + "' ms to run!");
 		}
 
 		public boolean brokenCube(CubeData cube) {

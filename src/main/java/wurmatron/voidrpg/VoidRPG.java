@@ -70,8 +70,8 @@ public class VoidRPG {
 				VoidRPGBlocks.init();
 				VoidRPGItems.init();
 				proxy.register();
-				assert ProcessCubeTickSupervisorThread.workerThreadThreshold.size() ==
-						(4096 / ProcessCubeTickSupervisorThread.thresholdIncrementalFactor);
+//				assert ProcessCubeTickSupervisorThread.workerThreadThreshold.size() ==
+//						(4096 / ProcessCubeTickSupervisorThread.thresholdIncrementalFactor);
 		}
 
 		@Mod.EventHandler

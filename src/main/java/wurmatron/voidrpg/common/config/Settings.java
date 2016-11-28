@@ -16,4 +16,6 @@ public class Settings {
 		public static boolean requiresReactor;
 		public static double reactorOverrage;
 		public static int supervisorThreadTimeout;
+		public static int workerThreadTimeout;
+		public static int thresholdIncrementalFactor;
 }

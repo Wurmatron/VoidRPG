@@ -3,126 +3,138 @@ package wurmatron.voidrpg;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import wurmatron.voidrpg.api.cube.CubeData;
+import wurmatron.voidrpg.common.config.Settings;
 import wurmatron.voidrpg.common.utils.ArmorHelper2;
+import wurmatron.voidrpg.common.utils.Arrays;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-
-import static java.lang.Thread.interrupted;
-import static wurmatron.voidrpg.ProcessCubeTickSupervisorThread.Range;
+import java.util.Objects;
 
 /**
- * Created by matthew on 19/11/16.
+ * Created by matthew on 21/11/16.
  */
-public class ProcessCubeTickWorkerThread implements Runnable {
+public final class ProcessCubeTickWorkerThread extends Thread {
 
-    protected static final LinkedHashMap<ProcessCubeTickSupervisorThread, ProcessCubeTickWorkerThread> workers =
-            new LinkedHashMap<>();
+    public static final LinkedHashMap<ItemStack, List<ProcessCubeTickWorkerThread>> pctwThreads = new LinkedHashMap<>();
 
-    protected static final LinkedHashMap<ProcessCubeTickWorkerThread, Range<Integer>> rangedWorkers =
-            new LinkedHashMap<>();
+    public final ProcessCubeTickSupervisorThread.Range<Integer> range = ProcessCubeTickSupervisorThread.workerThreadThreshhold;
 
-    private static final ArmorHelper2 ahelper = new ArmorHelper2();
+    protected final ItemStack stackApplicant;
 
-    public final ProcessCubeTickSupervisorThread superThread;
+    protected final EntityPlayer playerApplicant;
 
-    public final Range<Integer> threadDomain;
+    protected final CreateArmourSupervisorThread createArmourSupervisorThread;
 
-    private final ItemStack stack;
+    protected final Thread initializerThread;
 
-    private final EntityPlayer player;
+    private final ArmorHelper2 armorHelper2 = new ArmorHelper2();
 
-    private boolean finished = false;
+    private final ArrayList<CubeData> cubesToProcess = new ArrayList<>();
 
-    private ArrayList<CubeData> cubesToProcess;
+    private final ArrayList<CubeData> processedCubes = new ArrayList<>();
 
-    private boolean kill = false;
+    public ProcessCubeTickWorkerThread(CreateArmourSupervisorThread createArmourSupervisorThread, Thread initializerThread, ItemStack stackApplicant, EntityPlayer playerApplicant) {
+        this.createArmourSupervisorThread = createArmourSupervisorThread;
+        this.initializerThread = initializerThread;
+        this.stackApplicant = stackApplicant;
+        this.playerApplicant = playerApplicant;
 
-    public ProcessCubeTickWorkerThread(ProcessCubeTickSupervisorThread superThread, Range<Integer> domain,
-                                       ItemStack stack, EntityPlayer player) {
-        workers.put(superThread, this);
-        rangedWorkers.put(this, domain);
-        this.superThread = superThread;
-        this.threadDomain = domain;
-        this.stack = stack;
-        this.player = player;
+        /**Adding the worker thread to the global map*/
+        List<ProcessCubeTickWorkerThread> inMap = pctwThreads.get(stackApplicant);
+        final ProcessCubeTickWorkerThread selfRefrence = this;
+        if (Objects.nonNull(inMap)) {
+            inMap.add(this);
+        } else {
+            pctwThreads.put(stackApplicant, new ArrayList<ProcessCubeTickWorkerThread>() {{ add(selfRefrence); }});
+        }
     }
 
-    public static final ProcessCubeTickWorkerThread getIfNotExists(ProcessCubeTickSupervisorThread superThread, Range<Integer> domain,
-                                                                   ItemStack stack, EntityPlayer player) {
-        for (ProcessCubeTickWorkerThread pctwt : rangedWorkers.keySet()) {
-            if (Range.compareRanges(rangedWorkers.get(pctwt), domain)) {
-                return pctwt;
+    /**
+     *
+     * @return Will return the next ProcessCubeTickWorkerThread thread with empty spaces in the process queue
+     */
+    public static ProcessCubeTickWorkerThread getIfNotExists(CreateArmourSupervisorThread createArmourSupervisorThread, Thread initializerThread, ItemStack stack, EntityPlayer player) {
+        List<ProcessCubeTickWorkerThread> returned = pctwThreads.get(stack);
+        if (!(returned.size() == 0)) {
+            for (ProcessCubeTickWorkerThread worker : returned) {
+                if (ProcessCubeTickSupervisorThread.workerThreadThreshhold.upperLowerDifference() > worker.occupiedRange().upperLowerDifference()) {
+                    return worker;
+                } else {
+                    break;
+                }
             }
         }
-        return new ProcessCubeTickWorkerThread(superThread, domain, stack, player);
+        return new ProcessCubeTickWorkerThread(createArmourSupervisorThread, initializerThread, stack, player);
     }
 
-    public synchronized boolean kill() {
-        if (cubesToProcess == null) {
-            this.kill = true;
-            return true;
+    public synchronized ProcessCubeTickSupervisorThread.Range<Integer> occupiedRange() {
+        return new ProcessCubeTickSupervisorThread.Range<Integer>(0, Math.abs(cubesToProcess.size()-processedCubes.size()));
+    }
+
+    public synchronized ProcessCubeTickSupervisorThread.Range<Integer> unoccupiedRange() {
+        return ProcessCubeTickSupervisorThread.Range.getDifference(occupiedRange(), ProcessCubeTickSupervisorThread.workerThreadThreshhold);
+    }
+
+    public synchronized CubeData[] queueCubes(CubeData... cubeApplicants) {
+        timeSinceLastExecFinish = -1;
+        final int initialUnoccupied = unoccupiedRange().upperLowerDifference()+1;
+        for (int i = 0; i < initialUnoccupied; i++) {
+            this.cubesToProcess.add(cubeApplicants[i]);
+        }
+        return Arrays.returnPastIndex(cubeApplicants, initialUnoccupied);
+    }
+
+    private double timeSinceLastExecFinish = 0;
+
+    protected synchronized void exec() {
+        cubesToProcess.forEach(cube -> {
+//            if () {
+                synchronized (initializerThread) {
+                    if (armorHelper2.isActive(cube.cube, stackApplicant) && cube.cube.hasEffects(playerApplicant, stackApplicant)) {
+                        cube.cube.applyEffect(playerApplicant, cube, stackApplicant);
+                    }
+                }
+                processedCubes.add(cube);
+				armorHelper2.checkAndHandleBrokenCube(createArmourSupervisorThread, playerApplicant, stackApplicant, cube);
+//            }
+        });
+        cubesToProcess.removeAll(processedCubes);
+        timeSinceLastExecFinish = System.currentTimeMillis();
+    }
+
+//    private boolean run = true;
+
+    protected synchronized boolean kill() {
+        if (cubesToProcess.size() == 0) {
+//            run = false;
+            synchronized (this) {
+                interrupt();
+            }
+            ProcessCubeTickWorkerThread.pctwThreads.get(stackApplicant).remove(this);
         }
         return false;
     }
 
-    protected synchronized boolean queueCubes(CubeData... cubesToAffect) {
-
-//        if (cubesToProcess == null) {
-//            cubesToProcess = new ArrayList<CubeData>() {
-//                {
-//                    for (int i = threadDomain.lower - 1; i < superThread.cubes.size() && i < threadDomain.getUpperLimit(); i++) {
-//                        add(superThread.cubes.get(i));
-//                    }
-//                }
-//            };
-//            return true;
-//        } else {
-//            return false;
-//        }
-    }
-
-    protected synchronized CubeData[] clearQueue() {
-//        if (finished)  {
-//            cubesToProcess = null;
-//            this.finished = false;
-//        }
-//        return false;
-    }
-
-    protected synchronized void calc() {
-        cubesToProcess.forEach(c -> {
-            if (ahelper.isActive(c.cube, stack) && c.cube.hasEffects(player, stack)) {
-                c.cube.applyEffect(player, c, stack);
-            }
-        });
-        this.finished = true;
-    }
-
-    protected synchronized boolean calcsFinished() {
-        return this.finished;
-    }
-
     @Override
     public void run() {
-        while(!kill) {
-            if (calcsFinished()) {
-                synchronized (this) {
-                    try {
-                        Thread.currentThread().wait();
-                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
+        while (true) {
+            if (cubesToProcess.size() == 0) {
+                if ((timeSinceLastExecFinish - System.currentTimeMillis()) > (Settings.workerThreadTimeout * 1000)) {
+                    if (kill()) {
+                        break;
+                    }
+                } else {
+                    synchronized (this) {
+                        try {
+                            wait();
+                        } catch (InterruptedException e) {}
                     }
                 }
             } else {
-                if () {
-
-                }
+                exec();
             }
-        }
-        synchronized (this) {
-            Thread.currentThread().interrupt();
         }
     }
 

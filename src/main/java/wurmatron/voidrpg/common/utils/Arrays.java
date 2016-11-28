@@ -49,8 +49,9 @@ public final class Arrays {
         final int emptySize = Arrays.<T>getEmptyPositions(original).size();
         final int sizeWONullElements = original.length-emptySize;
         T[] toReturn = (T[])Array.newInstance(Arrays.getFirstPopulated(original).getClass(), (sizeWONullElements + elements.length));
-        for (int i = 0; i < toReturn.length; i++) {
-            toReturn[i] = 4
+        for (int i = 0, nup = 0; i < toReturn.length; i++, nup = Arrays.<T>getNextPopulatedPosition(original, i)) {
+            if (nup == -1) break;
+            toReturn[i] = original[nup];
         }
         for (int i = 0; i < elements.length; i++) {
             toReturn[i] = original[i];
@@ -62,10 +63,9 @@ public final class Arrays {
         final int sizeEmpty = Arrays.getEmptyPositions(array).size();
         T[] toReturn = (T[]) Array.<T>newInstance(Arrays.<T>getFirstPopulated(array).getClass(), (array.length - sizeEmpty));
         for (int i = 0; i < array.length; i++) {
-            //TODO Finish
-            if (Objects.nonNull(array[i])) toReturn[]
+            if (Objects.nonNull(array[i])) toReturn[getLastPopulatedPosition(toReturn)] = array[i];
         }
-        return null;
+        return toReturn;
     }
 
     public static <T> int getNextPopulatedPosition(T[] array, final int pos) {
@@ -75,10 +75,24 @@ public final class Arrays {
         return -1;
     }
 
+    public static <T> int getLastPopulatedPosition(T[] array) {
+        for (int i = 0; i >= 0; i--) {
+            if (!(Objects.deepEquals(array[i], null))) return i;
+        }
+        return -1;
+    }
+
     public static <T> T getFirstPopulated(T[] array) {
         final int firstPopPos = getNextPopulatedPosition(array, 0);
         if (!(firstPopPos == -1)) {
             return array[firstPopPos];
+        }
+        return null;
+    }
+
+    public static <T> T getLastPopulated(T[] array) {
+        for (int i = array.length-1; i >= 0; i--) {
+            if (!(getNextPopulatedPosition(array, i) == -1)) return array[i];
         }
         return null;
     }
@@ -97,5 +111,13 @@ public final class Arrays {
             if (Objects.<T>deepEquals(t, element)) return true;
         }
         return false;
+    }
+
+    public static <T> T[] returnPastIndex(T[] array, final int startingIndex) {
+        T[] toReturn = (T[])Array.newInstance(getFirstPopulated(array).getClass(), array.length-startingIndex+1);
+        for (int i = startingIndex; i < array.length; i++) {
+            toReturn[getLastPopulatedPosition(toReturn)+1] = array[i];
+        }
+        return toReturn;
     }
 }

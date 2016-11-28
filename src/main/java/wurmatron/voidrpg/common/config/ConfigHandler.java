@@ -33,6 +33,8 @@ public class ConfigHandler {
 		public static Property reactorOverrage;
 
 		public static Property supervisorThreadTimeout;
+		public static Property workerThreadTimeout;
+		public static Property thresholdIncrementalFactor;
 
 		public static void preInit (FMLPreInitializationEvent e) {
 				location = new File(e.getSuggestedConfigurationFile().getParent() + File.separator + Global.NAME);
@@ -71,6 +73,12 @@ public class ConfigHandler {
 						Settings.reactorOverrage = reactorOverrage.getDouble();
 						supervisorThreadTimeout = mainConfig.get(Configuration.CATEGORY_GENERAL, "supervisorThreadTimeout", Defaults.SUPERVISOR_THREAD_TIMEOUT, "time in seconds for accessory thread timeout.");
 						Settings.supervisorThreadTimeout = supervisorThreadTimeout.getInt();
+						thresholdIncrementalFactor = mainConfig.get(Configuration.CATEGORY_GENERAL, "thresholdIncrementalFactor", Defaults.THRESHOLD_INCREMENTAL_FACTOR, "the number of recurrent operations a " +
+								"single thread worker is allowed to oversee at one time.");
+						Settings.thresholdIncrementalFactor = thresholdIncrementalFactor.getInt();
+						workerThreadTimeout = mainConfig.get(Configuration.CATEGORY_GENERAL, "workerThreadTimeout", Defaults.WORKER_THREAD_TIMEOUT, "time in seconds for a worker thread, bound to an accessory thread," +
+								" to timeout.");
+						Settings.workerThreadTimeout = workerThreadTimeout.getInt();
 						if (mainConfig.hasChanged()) {
 								LogHandler.info("Config saved");
 								mainConfig.save();

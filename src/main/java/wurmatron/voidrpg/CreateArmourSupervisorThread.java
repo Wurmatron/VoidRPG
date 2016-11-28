@@ -24,12 +24,9 @@ public class CreateArmourSupervisorThread extends Thread {
 
     private final Thread superThread;
 
-    private final CreateArmourSupervisorThread supervisor;
+//    private final CreateArmourSupervisorThread supervisor;
 
     private final EntityPlayer player;
-
-    /**Timeout int ticks*/
-    public static final int timeout = 10;
 
     private double timeSinceLastDamaged = 0;
 
@@ -67,7 +64,7 @@ public class CreateArmourSupervisorThread extends Thread {
 
     private CreateArmourSupervisorThread(Thread currentThread, EntityPlayer player) {
         CreateArmourSupervisorThread.supervisorThreads.put(player, this);
-        this.supervisor = this;
+//        this.supervisor = this;
         this.superThread = currentThread;
         this.player = player;
     }
