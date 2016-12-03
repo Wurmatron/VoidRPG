@@ -7,11 +7,13 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import org.apache.logging.log4j.Level;
 import wurmatron.voidrpg.api.cube.CubeData;
 import wurmatron.voidrpg.api.cube.ICube;
 import wurmatron.voidrpg.common.blocks.VoidRPGBlocks;
 import wurmatron.voidrpg.common.items.VoidRPGItems;
 import wurmatron.voidrpg.common.reference.Global;
+import wurmatron.voidrpg.common.utils.LogHandler;
 
 public class CubeWaterWalk implements ICube {
 
@@ -47,11 +49,13 @@ public class CubeWaterWalk implements ICube {
 
 		@Override
 		public boolean hasEffects (EntityPlayer player, ItemStack stack) {
+			LogHandler.info("Water Walking: HAS EFFECTS");
 				return !player.isSneaking() && player.worldObj.getBlockState(player.getPosition().add(0, -1, 0)).getBlock().equals(Blocks.WATER) || !player.isSneaking() && player.isInWater();
 		}
 
 		@Override
 		public void applyEffect(EntityPlayer player, CubeData data, ItemStack stack) {
+				LogHandler.info("Water Walking: APPLY EFFECT");
 				player.motionY = 0;
 				player.fallDistance = 0;
 				player.onGround = true;

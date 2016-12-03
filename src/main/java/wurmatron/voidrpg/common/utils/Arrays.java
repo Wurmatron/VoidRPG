@@ -114,6 +114,11 @@ public final class Arrays {
     }
 
     public static <T> T[] returnPastIndex(T[] array, final int startingIndex) {
+//        System.out.println("Array:" + array);
+//        for (T t : array) {
+//            System.out.println("\t" + t);
+//        }
+//        System.out.println("Starting Index: " + startingIndex);
         T[] toReturn = (T[])Array.newInstance(getFirstPopulated(array).getClass(), array.length-startingIndex+1);
         for (int i = startingIndex; i < array.length; i++) {
             toReturn[getLastPopulatedPosition(toReturn)+1] = array[i];

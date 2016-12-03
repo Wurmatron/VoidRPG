@@ -94,6 +94,7 @@ public class CreateArmourSupervisorThread extends Thread {
     }
 
     public synchronized void queueOperation(ItemStack stack, CubeData... data) {
+        LogHandler.info("CAST: QUEUE OPERATION CALLED");
         this.timeSinceLastDamaged = System.currentTimeMillis();
         Stack s = stackListContains(stack);
         if (s != null) {
@@ -138,6 +139,13 @@ public class CreateArmourSupervisorThread extends Thread {
         return null;
     }
 
+    @Override
+    public void start() {
+        super.start();
+        run();
+    }
+
+    //TODO Finish thread suicides....
     @Override
     public void run() {
         while (true) {

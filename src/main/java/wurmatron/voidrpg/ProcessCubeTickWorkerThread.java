@@ -6,6 +6,7 @@ import wurmatron.voidrpg.api.cube.CubeData;
 import wurmatron.voidrpg.common.config.Settings;
 import wurmatron.voidrpg.common.utils.ArmorHelper2;
 import wurmatron.voidrpg.common.utils.Arrays;
+import wurmatron.voidrpg.common.utils.LogHandler;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -57,12 +58,14 @@ public final class ProcessCubeTickWorkerThread extends Thread {
      */
     public static ProcessCubeTickWorkerThread getIfNotExists(CreateArmourSupervisorThread createArmourSupervisorThread, Thread initializerThread, ItemStack stack, EntityPlayer player) {
         List<ProcessCubeTickWorkerThread> returned = pctwThreads.get(stack);
-        if (!(returned.size() == 0)) {
-            for (ProcessCubeTickWorkerThread worker : returned) {
-                if (ProcessCubeTickSupervisorThread.workerThreadThreshhold.upperLowerDifference() > worker.occupiedRange().upperLowerDifference()) {
-                    return worker;
-                } else {
-                    break;
+        if (Objects.nonNull(returned)) {
+            if (!(returned.size() == 0)) {
+                for (ProcessCubeTickWorkerThread worker : returned) {
+                    if (ProcessCubeTickSupervisorThread.workerThreadThreshhold.upperLowerDifference() > worker.occupiedRange().upperLowerDifference()) {
+                        return worker;
+                    } else {
+                        break;
+                    }
                 }
             }
         }
@@ -78,9 +81,13 @@ public final class ProcessCubeTickWorkerThread extends Thread {
     }
 
     public synchronized CubeData[] queueCubes(CubeData... cubeApplicants) {
+        if (Objects.isNull(Arrays.getFirstPopulated(cubeApplicants))) return null;
+//        System.out.println("Queue Cubes: " + cubeApplicants.length);
+//        System.out.println("Queue Cubes: " + Arrays.getFirstPopulated(cubeApplicants));
         timeSinceLastExecFinish = -1;
         final int initialUnoccupied = unoccupiedRange().upperLowerDifference()+1;
-        for (int i = 0; i < initialUnoccupied; i++) {
+//        cubeApplicants = Arrays.clearEmpty(cubeApplicants);
+        for (int i = 0; i < initialUnoccupied && i < cubeApplicants.length; i++) {
             this.cubesToProcess.add(cubeApplicants[i]);
         }
         return Arrays.returnPastIndex(cubeApplicants, initialUnoccupied);
@@ -89,19 +96,25 @@ public final class ProcessCubeTickWorkerThread extends Thread {
     private double timeSinceLastExecFinish = 0;
 
     protected synchronized void exec() {
+//        LogHandler.info("Worker: " + this.getClass() + ": EXEC CALLED");
+        List<CubeData> toRemove = new ArrayList<>();
         cubesToProcess.forEach(cube -> {
-//            if () {
+            toRemove.add(cube);
+            if (Objects.nonNull(cube)) {
                 synchronized (initializerThread) {
+                    System.out.println("Sync'd");
                     if (armorHelper2.isActive(cube.cube, stackApplicant) && cube.cube.hasEffects(playerApplicant, stackApplicant)) {
                         cube.cube.applyEffect(playerApplicant, cube, stackApplicant);
                     }
                 }
                 processedCubes.add(cube);
 				armorHelper2.checkAndHandleBrokenCube(createArmourSupervisorThread, playerApplicant, stackApplicant, cube);
-//            }
+            }
         });
-        cubesToProcess.removeAll(processedCubes);
+//        cubesToProcess.removeAll(processedCubes);
+        cubesToProcess.removeAll(toRemove);
         timeSinceLastExecFinish = System.currentTimeMillis();
+        System.out.println("Exec Finished");
     }
 
 //    private boolean run = true;
@@ -112,16 +125,21 @@ public final class ProcessCubeTickWorkerThread extends Thread {
             synchronized (this) {
                 interrupt();
             }
-            ProcessCubeTickWorkerThread.pctwThreads.get(stackApplicant).remove(this);
+            List<ProcessCubeTickWorkerThread> list = pctwThreads.get(stackApplicant);
+            list.remove(this);
+            pctwThreads.put(stackApplicant, list);
         }
         return false;
     }
 
     @Override
     public void run() {
+//        LogHandler.info("Worker: " + this.getClass() + ": RUN CALLED");
         while (true) {
+//            System.out.println(cubesToProcess.size());
+//            cubesToProcess.forEach(x -> System.out.println(x));
             if (cubesToProcess.size() == 0) {
-                if ((timeSinceLastExecFinish - System.currentTimeMillis()) > (Settings.workerThreadTimeout * 1000)) {
+                if ((System.currentTimeMillis() - timeSinceLastExecFinish) > (Settings.workerThreadTimeout * 1000)) {
                     if (kill()) {
                         break;
                     }

@@ -51,6 +51,7 @@ public class CubeAutoRepairIII implements ICube,IEnergyConsumer {
 
 		@Override
 		public void applyEffect(EntityPlayer player, CubeData cube, ItemStack stack) {
+			if (cube.damage > 0 && cube.damage < cube.cube.getDurability()) cube.damage -= 5;
 //				for (CubeData c : data)
 //						if (c.damage > 0)
 //								c.damage -= 5;

@@ -14,6 +14,7 @@ import wurmatron.voidrpg.common.blocks.VoidRPGBlocks;
 import wurmatron.voidrpg.common.items.VoidRPGItems;
 import wurmatron.voidrpg.common.reference.Global;
 import wurmatron.voidrpg.common.utils.ArmorHelper;
+import wurmatron.voidrpg.common.utils.ArmorHelper2;
 
 public class CubeShock implements ICube {
 
@@ -85,7 +86,7 @@ public class CubeShock implements ICube {
 				if (e.getEntityLiving() instanceof EntityPlayer) {
 						EntityPlayer player = (EntityPlayer) e.getEntityLiving();
 						if (player.inventory != null && player.inventory.armorInventory[0] != null && player.inventory.armorInventory[0].getItem().equals(VoidRPGItems.armorBoots)) {
-								if (new ArmorHelper().isCubeActive(this, player.inventory.armorInventory[0])) {
+								if (new ArmorHelper2().isActive(this, player.inventory.armorInventory[0])) {
 										e.setCanceled(true);
 								}
 						}

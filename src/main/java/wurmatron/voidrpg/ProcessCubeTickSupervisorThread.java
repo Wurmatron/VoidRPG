@@ -6,10 +6,13 @@ import net.minecraft.item.ItemStack;
 import wurmatron.voidrpg.api.cube.CubeData;
 import wurmatron.voidrpg.common.config.Settings;
 import wurmatron.voidrpg.common.utils.ArmorHelper2;
+import wurmatron.voidrpg.common.utils.Arrays;
+import wurmatron.voidrpg.common.utils.LogHandler;
 import wurmatron.voidrpg.common.utils.StackHelper;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by matthew on 21/11/16.
@@ -273,16 +276,36 @@ public final class ProcessCubeTickSupervisorThread extends Thread {
     }
 
     @Override
+    public void start() {
+        System.out.println(this.getState());
+        super.start();
+        run();
+    }
+
+
+    @Override
     public void run() {
+        LogHandler.info("ProcessCubeTickSupervisor: " + this.getClass() + ": RUN CALLED");
         boolean run = true;
         while (run) {
             if (checkCubes) {
                 CubeData[] overflow = armorHelper.getCubeData(stackApplicant);
+//                System.out.println(overflow.length);
+//                System.out.println(Arrays.getFirstPopulated(overflow));
+                boolean cont = false;
                 do {
+                    if (Objects.isNull(overflow)) break;
+                    cont = false;
                     ProcessCubeTickWorkerThread returned = ProcessCubeTickWorkerThread.getIfNotExists(this.cast, this.initializerThread, this.stackApplicant, this.playerApplicant);
                     overflow = returned.queueCubes(overflow);
+//                    Arrays.removeAll(overflow, overflow);
                     returned.start();
-                } while (overflow.length > 0);
+                    if (Objects.nonNull(overflow)) {
+                        if (overflow.length > 0) {
+                            cont = true;
+                        }
+                    }
+                } while (cont);
                 checkCubes = false;
             } else {
                 if ((System.currentTimeMillis() - lastCallTime) >= (Settings.supervisorThreadTimeout*1000)) {
@@ -301,6 +324,7 @@ public final class ProcessCubeTickSupervisorThread extends Thread {
                     if (!workersLeft) {
                         synchronized (this) {
                             interrupt();
+                            pctsThreads.remove(initializerThread, this);
                             break;
                         }
                     }

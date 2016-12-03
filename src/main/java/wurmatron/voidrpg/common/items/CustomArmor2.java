@@ -29,6 +29,7 @@ import wurmatron.voidrpg.common.reference.Global;
 import wurmatron.voidrpg.common.reference.Local;
 import wurmatron.voidrpg.common.reference.NBT;
 import wurmatron.voidrpg.common.utils.ArmorHelper2;
+import wurmatron.voidrpg.common.utils.LogHandler;
 
 import java.util.HashMap;
 import java.util.List;
@@ -48,7 +49,9 @@ public class CustomArmor2 extends ItemArmor {
 
 		@Override
 		public void onArmorTick (World world, EntityPlayer player, ItemStack stack) {
+			LogHandler.info("Custom Armor 2: ON ARMOR TICK CALL");
 			if (Settings.cubeEffects) {
+				LogHandler.info("Custom Armor 2: If passed...");
 				helper.processCubeTick(player, stack);
 			}
 		}
@@ -104,25 +107,35 @@ public class CustomArmor2 extends ItemArmor {
 
 		@Override
 		public void addInformation (ItemStack stack, EntityPlayer player, List<String> tip, boolean adv) {
+			if (helper.getCubeData(stack) != null && helper.getCubeData(stack).length > 0) {
 				tip.add(TextFormatting.GRAY + I18n.translateToLocal(Local.REACTOR) + ": " + helper.hasValidReactor(stack));
 				tip.add(TextFormatting.GRAY + I18n.translateToLocal(Local.COMPLEXITY) + ": " + helper.getComplexity(stack));
 				tip.add(TextFormatting.GRAY + I18n.translateToLocal(Local.WEIGHT) + ": " + helper.getWeight(stack));
+				double damage = 0d;
+				double maxDamage = 0d;
+				for (CubeData data : helper.getCubeData(stack)) {
+					maxDamage += data.cube.getDurability();
+					damage += data.damage;
+				}
+				int calcDamage = (int) ((maxDamage - damage) / maxDamage) * 100;
+				tip.add(TextFormatting.GRAY + I18n.translateToLocal(Local.DURABILITY) + ": " + calcDamage + "%");
 				if (Keyboard.isKeyDown(Keyboard.KEY_RCONTROL)) {
-						HashMap<ICube, Integer> data = new HashMap <> ();
-						for (CubeData f : helper.getCubeData(stack)) {
-								if (data.containsKey(f.cube)) {
-										int count = data.get(f.cube);
-										data.remove(f.cube);
-										count++;
-										data.put(f.cube, count);
-								} else
-										data.put(f.cube, 1);
-						}
-						tip.addAll(data.keySet().stream().map(g -> data.get(g) + "x " + I18n.translateToLocal(g.getUnlocalizedName())).collect(Collectors.toList()));
-						tip.add("");
+					HashMap<ICube, Integer> data = new HashMap<>();
+					for (CubeData f : helper.getCubeData(stack)) {
+						if (data.containsKey(f.cube)) {
+							int count = data.get(f.cube);
+							data.remove(f.cube);
+							count++;
+							data.put(f.cube, count);
+						} else
+							data.put(f.cube, 1);
+					}
+					tip.addAll(data.keySet().stream().map(g -> data.get(g) + "x " + I18n.translateToLocal(g.getUnlocalizedName())).collect(Collectors.toList()));
+					tip.add("");
 				} else
-						tip.add(TextFormatting.AQUA + I18n.translateToLocal(Local.HOLD_CTRL));
+					tip.add(TextFormatting.AQUA + I18n.translateToLocal(Local.HOLD_CTRL));
 				TeslaUtils.createTooltip(stack, tip);
+			}
 		}
 
 		@Optional.Method (modid = "tesla")

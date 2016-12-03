@@ -154,9 +154,7 @@ public class ArmorHelper2 {
 						}
 						case ("feet"): {
 								CubeData[] leftBoot = getCubeData(stack, NBT.LEFTLEG);
-								LogHandler.info("LEFT: " + leftBoot);
 								CubeData[] rightBoot = getCubeData(stack, NBT.RIGHTLEG);
-								LogHandler.info("RIGHT: " + rightBoot);
 								CubeData[] bootsData = new CubeData[leftBoot.length + rightBoot.length];
 								for (int l = 0; l < leftBoot.length; l++)
 										bootsData[l] = leftBoot[l];
@@ -323,13 +321,15 @@ public class ArmorHelper2 {
 
 		public void processCubeTick(EntityPlayer player, ItemStack stack) {
 			CreateArmourSupervisorThread thread = CreateArmourSupervisorThread.getIfNotExists(Thread.currentThread(), player);
-			if (thread.getState() != Thread.State.RUNNABLE) {
+//			if (thread.getState() != Thread.State.RUNNABLE) {
+			if (!thread.isAlive()) {
 				thread.start();
 			}
 			ProcessCubeTickSupervisorThread processor = ProcessCubeTickSupervisorThread.getIfNotExists(thread, Thread.currentThread(), stack, player);
 			processor.checkCubes();
-			if (thread.getState() != Thread.State.RUNNABLE) {
-				thread.start();
+//			if (thread.getState() != Thread.State.RUNNABLE) {
+			if (!processor.isAlive()) {
+				processor.start();
 			}
 //			final CubeData[] cubes = getCubeData(stack);
 //			double start = System.currentTimeMillis();
@@ -364,6 +364,7 @@ public class ArmorHelper2 {
 
 		public void checkAndHandleBrokenCube (CreateArmourSupervisorThread thread, EntityPlayer player, ItemStack stack,
 											  CubeData cube) {
+			System.out.println("Checking and Handling the broken cubes...");
 			abstract class WatcherThread extends Thread {
 				private CreateArmourSupervisorThread cast;
 
@@ -393,6 +394,12 @@ public class ArmorHelper2 {
 				}
 
 				public abstract void exec(ItemStack stack, CubeData[] removedCubes);
+
+				@Override
+				public void start() {
+					super.start();
+					run();
+				}
 
 				@Override
 				public void run() {
