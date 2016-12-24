@@ -8,12 +8,12 @@ import javax.annotation.Nullable;
 
 public class SlotOutput extends Slot {
 
-		public SlotOutput (IInventory inventoryIn, int index, int xPosition, int yPosition) {
-				super(inventoryIn, index, xPosition, yPosition);
-		}
+    public SlotOutput(IInventory inventoryIn, int index, int xPosition, int yPosition) {
+        super(inventoryIn, index, xPosition, yPosition);
+    }
 
-		@Override
-		public boolean isItemValid (@Nullable ItemStack stack) {
-				return false;
-		}
+    @Override
+    public boolean isItemValid(@Nullable ItemStack stack) {
+        return false;
+    }
 }

@@ -5,10 +5,10 @@ import net.minecraft.block.material.Material;
 
 public class BlockBody extends Block {
 
-		public BlockBody () {
-				super(Material.BARRIER);
-				setUnlocalizedName("body");
-				setResistance(100);
-				setHardness(100);
-		}
+    public BlockBody() {
+        super(Material.BARRIER);
+        setUnlocalizedName("body");
+        setResistance(100);
+        setHardness(100);
+    }
 }

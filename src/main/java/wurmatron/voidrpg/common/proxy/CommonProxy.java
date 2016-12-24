@@ -6,14 +6,14 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class CommonProxy {
 
-	public void register () {
-	}
+    public void register() {
+    }
 
-	public EntityPlayer getPlayerEntity (MessageContext ctx) {
-		return ctx.getServerHandler().playerEntity;
-	}
+    public EntityPlayer getPlayerEntity(MessageContext ctx) {
+        return ctx.getServerHandler().playerEntity;
+    }
 
-	public IThreadListener getThreadFromContext (MessageContext ctx) {
-		return ctx.getServerHandler().playerEntity.getServer();
-	}
+    public IThreadListener getThreadFromContext(MessageContext ctx) {
+        return ctx.getServerHandler().playerEntity.getServer();
+    }
 }

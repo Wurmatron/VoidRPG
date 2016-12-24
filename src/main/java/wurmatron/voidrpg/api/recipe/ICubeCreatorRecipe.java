@@ -4,18 +4,18 @@ import net.minecraft.item.ItemStack;
 
 public interface ICubeCreatorRecipe {
 
-		/**
-		 * Get the output for the recipe
-		 */
-		ItemStack getOutputCube();
+    /**
+     * Get the output for the recipe
+     */
+    ItemStack getOutputCube();
 
-		/**
-		 * Required Items to create the output
-		 */
-		ItemStack[] getInputs();
+    /**
+     * Required Items to create the output
+     */
+    ItemStack[] getInputs();
 
-		/**
-		 * How long it takes for the recipe to finish (in-ticks)
-		 */
-		int getTimeInTicks ();
+    /**
+     * How long it takes for the recipe to finish (in-ticks)
+     */
+    int getTimeInTicks();
 }
