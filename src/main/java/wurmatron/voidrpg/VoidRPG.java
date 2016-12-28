@@ -1,8 +1,12 @@
 package wurmatron.voidrpg;
 
 
+import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Blocks;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -10,8 +14,10 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+import wurmatron.voidrpg.api.cube.ICube;
 import wurmatron.voidrpg.common.blocks.VoidRPGBlocks;
 import wurmatron.voidrpg.common.config.ConfigHandler;
+import wurmatron.voidrpg.common.cube.CubeRegistry;
 import wurmatron.voidrpg.common.items.VoidRPGItems;
 import wurmatron.voidrpg.common.network.GuiHandler;
 import wurmatron.voidrpg.common.proxy.CommonProxy;
@@ -50,6 +56,43 @@ public class VoidRPG {
         ConfigHandler.loadMainConfig();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
         VoidRPGRecipes.init();
+         class CubeTest implements ICube {
+             @Override
+             public String getName() {
+                 return "name";
+             }
+
+             @Override
+             public Block getBlock() {
+                 return Blocks.IRON_BLOCK;
+             }
+
+             @Override
+             public ResourceLocation getTexture() {
+                 return null;
+             }
+
+             @Override
+             public double getWeight() {
+                 return 10;
+             }
+
+             @Override
+             public int getMaxAmount(Item item) {
+                 return 10000000;
+             }
+
+             @Override
+             public boolean getSupportedItem(EntityEquipmentSlot slot, Item item) {
+                 return true;
+             }
+
+             @Override
+             public String getDescription() {
+                 return "";
+             }
+         }
+        CubeRegistry.registerCube(new CubeTest());
     }
 
     @Mod.EventHandler
