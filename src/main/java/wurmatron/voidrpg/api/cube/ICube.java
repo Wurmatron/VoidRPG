@@ -48,4 +48,10 @@ public interface ICube {
      * Should be a localization key. (Will be handles automatically)
      */
     String getDescription();
+
+    /**
+     * Does this cube has a special effect?
+     *
+     */
+    boolean hasEffects();
 }

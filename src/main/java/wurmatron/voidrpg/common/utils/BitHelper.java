@@ -5,14 +5,24 @@ import mod.chiselsandbits.api.IBitAccess;
 import mod.chiselsandbits.api.IBitBrush;
 import mod.chiselsandbits.core.api.ChiselAndBitsAPI;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import wurmatron.voidrpg.api.cube.CubeData;
 import wurmatron.voidrpg.api.cube.ICube;
+import wurmatron.voidrpg.api.cube.IEnergy;
 import wurmatron.voidrpg.common.cube.CubeRegistry;
+import wurmatron.voidrpg.common.reference.Global;
+import wurmatron.voidrpg.common.reference.NBT;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -132,5 +142,73 @@ public class BitHelper {
         data[23] = new CubeData(cube, x - s, y + s, z - s, 0);
         data[24] = new CubeData(cube, x - s, y - s, z - s, 0);
         return data;
+    }
+
+    /**
+     * Returns a sorted NBT version of the CubeData[]
+     * 0 = default cubes
+     * 1 = special / event cubes
+     * 2 = energy storage cubes
+     * 3 = energy production cubes
+     */
+    public static NBTTagCompound[] convertCubesToNBT(CubeData[] data) {
+        NBTTagCompound defaultCubes = new NBTTagCompound();
+        NBTTagCompound specialCubes = new NBTTagCompound();
+        NBTTagCompound energyStorageCubes = new NBTTagCompound();
+        NBTTagCompound energyProductionCubes = new NBTTagCompound();
+        for (CubeData cube : data)
+            if (cube.cube.hasEffects()) {
+                NBTTagCompound nbt = convertCubeDataToNBT(cube);
+                if (!nbt.hasNoTags())
+                    specialCubes.setTag(Integer.toString(specialCubes.getSize() + 1), nbt);
+            } else if (cube.cube instanceof IEnergy) {
+                IEnergy energy = (IEnergy) cube.cube;
+                if (energy.getStorage() > 0) {
+                    NBTTagCompound nbt = convertCubeDataToNBT(cube);
+                    if (!nbt.hasNoTags())
+                        energyStorageCubes.setTag(Integer.toString(energyStorageCubes.getSize() + 1), nbt);
+                } else if (energy.getProductionAmount() > 0) {
+                    NBTTagCompound nbt = convertCubeDataToNBT(cube);
+                    if (!nbt.hasNoTags())
+                        energyProductionCubes.setTag(Integer.toString(energyProductionCubes.getSize() + 1), nbt);
+                }
+            } else {
+                NBTTagCompound nbt = convertCubeDataToNBT(cube);
+                if (!nbt.hasNoTags())
+                    defaultCubes.setTag(Integer.toString(defaultCubes.getSize() + 1), nbt);
+            }
+        return new NBTTagCompound[0];
+    }
+
+    public static NBTTagCompound convertCubeDataToNBT(CubeData data) {
+        NBTTagCompound nbt = new NBTTagCompound();
+        nbt.setInteger(NBT.CUBE_ID, CubeRegistry.getIDForCube(data.cube));
+        nbt.setInteger(NBT.CUBE_X, data.xPos);
+        nbt.setInteger(NBT.CUBE_Y, data.yPos);
+        nbt.setInteger(NBT.CUBE_Z, data.zPos);
+        nbt.setInteger(NBT.CUBE_DAMAGE, data.damage);
+        if (nbt.getInteger(NBT.CUBE_ID) != -1)
+            return nbt;
+        return new NBTTagCompound();
+    }
+
+    public static CubeData readCubeDataFromNBT(NBTTagCompound nbt) {
+        if (!nbt.hasNoTags())
+            return new CubeData(CubeRegistry.getCubeFromID(nbt.getInteger(NBT.CUBE_ID)), nbt.getInteger(NBT.CUBE_X), nbt.getInteger(NBT.CUBE_Y), nbt.getInteger(NBT.CUBE_Z), nbt.getInteger(NBT.CUBE_DAMAGE));
+        return null;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public static ModelRenderer createModelRenderer(ModelBiped base, CubeData data) {
+        ModelRenderer model = new ModelRenderer(base) {
+            @Override
+            public void render(float scale) {
+                Minecraft.getMinecraft().renderEngine.bindTexture(data.cube.getTexture());
+                super.render(scale);
+                Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(Global.MODID, "textures/armor/armor.png"));
+            }
+        };
+        model.addBox(data.xPos, data.yPos, data.zPos, 1, 1, 1, 0.00001f);
+        return model;
     }
 }

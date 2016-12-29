@@ -69,7 +69,7 @@ public class VoidRPG {
 
              @Override
              public ResourceLocation getTexture() {
-                 return null;
+                 return new ResourceLocation(Global.MODID,"textures/cube/TestCube.png");
              }
 
              @Override
@@ -90,6 +90,11 @@ public class VoidRPG {
              @Override
              public String getDescription() {
                  return "";
+             }
+
+             @Override
+             public boolean hasEffects() {
+                 return false;
              }
          }
         CubeRegistry.registerCube(new CubeTest());
