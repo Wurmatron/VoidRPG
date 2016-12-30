@@ -8,7 +8,8 @@ import net.minecraft.item.ItemStack;
 import wurmatron.voidrpg.VoidRPG;
 import wurmatron.voidrpg.api.cube.CubeData;
 import wurmatron.voidrpg.client.model.ArmorModel;
-import wurmatron.voidrpg.common.cube.CubeRegistry;
+import wurmatron.voidrpg.common.utils.DataHelper;
+import wurmatron.voidrpg.common.utils.LogHandler;
 
 public class ItemModelArmor extends ItemArmor {
 
@@ -27,7 +28,10 @@ public class ItemModelArmor extends ItemArmor {
             armorModel = new ArmorModel();
             requiresUpdate = true;
         }
-        armorModel.addHeadCubes(new CubeData[]{new CubeData(CubeRegistry.getCubeFromID(0), 2, 2, 2, 0), new CubeData(CubeRegistry.getCubeFromID(0), 8, 8, 8, 0)});
+        CubeData[] data = DataHelper.getDataFromStack(stack);
+        LogHandler.info("data: " + data.length);
+        armorModel.addHeadCubes(data);
+//        armorModel.addHeadCubes(new CubeData[]{new CubeData(CubeRegistry.getCubeFromID(0), 2, 2, 2, 0), new CubeData(CubeRegistry.getCubeFromID(0), 8, 8, 8, 0)});
         if (requiresUpdate) {
             armorModel.handleData(_default);
             requiresUpdate = false;

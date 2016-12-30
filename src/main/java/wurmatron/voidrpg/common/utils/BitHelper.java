@@ -25,7 +25,6 @@ import wurmatron.voidrpg.common.reference.Global;
 import wurmatron.voidrpg.common.reference.NBT;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class BitHelper {
 
@@ -60,42 +59,89 @@ public class BitHelper {
     public static boolean hasValidModel(World world, BlockPos pos, Vec3i[] model) {
         if (world != null && pos != null && model != null && model.length > 0 && api.isBlockChiseled(world, pos)) {
             ArrayList<Boolean> temp = new ArrayList<>();
+            ArrayList<Boolean> modelTest = new ArrayList<>();
             for (int x = 0; x <= 15; x++)
                 for (int y = 0; y <= 15; y++)
                     for (int z = 0; z <= 15; z++)
                         try {
                             IBitAccess bit = api.getBitAccess(world, pos);
-                            if (!bit.getBitAt(x, y, z).isAir() && !bit.getBitAt(x, y, z).getState().getBlock().equals(bodyBrush.getState().getBlock()) || !bit.getBitAt(x, y, z).isAir() && areValidBits(bit.getBitAt(x, y, z)) || !bit.getBitAt(x, y, z).getState().getBlock().equals(bodyBrush.getState().getBlock()))
-                                temp.add(true);
-                            else if (!bit.getBitAt(x, y, z).isAir() && !bit.getBitAt(x, y, z).getState().getBlock().equals(bodyBrush.getState().getBlock()))
-                                temp.add(false);
+                            if (!bit.getBitAt(x, y, z).isAir()) {
+                                if (areValidBits(bit.getBitAt(x, y, z)))
+                                    temp.add(true);
+                                else if (!bit.getBitAt(x, y, z).getState().getBlock().equals(bodyBrush.getState().getBlock()))
+                                    temp.add(false);
+                            }
                         } catch (APIExceptions.CannotBeChiseled e) {
                             e.printStackTrace();
                         }
-            if (!temp.contains(false))
+            try {
+                IBitAccess bit = api.getBitAccess(world, pos);
+                for (Vec3i vec : model) {
+                    LogHandler.info("Block: " + bit.getBitAt(vec.getX(), vec.getY(), vec.getZ()).getState().getBlock().getUnlocalizedName());
+                    if (bit.getBitAt(vec.getX(), vec.getY(), vec.getZ()).getState().getBlock().equals(bodyBrush.getState().getBlock()))
+                        modelTest.add(true);
+                    else
+                        modelTest.add(false);
+                }
+            } catch (APIExceptions.CannotBeChiseled e) {
+                e.printStackTrace();
+            }
+            int modelValues = 0;
+            for (Boolean t : modelTest) {
+                LogHandler.info("Model Test: " + t);
+                if (t)
+                    modelValues++;
+            }
+            if (!temp.contains(false) && modelValues == model.length)
                 return true;
         }
         return false;
     }
 
     public static ArrayList<CubeData> createDataFromModel(World world, BlockPos pos, Vec3i[] model, int border) {
-        if (model.length > 0 && border > 0) {
+        if (model.length > 0 && border > 0 && hasValidModel(world, pos, model)) {
             ArrayList<CubeData> data = new ArrayList<>();
-            for (Vec3i vec : model)
+            for (Vec3i vec : model) {
                 try {
                     IBitAccess bit = api.getBitAccess(world, pos);
-                    LogHandler.info("Model " + areValidBits(bit.getBitAt(vec.getX(), vec.getY(), vec.getZ())));
-                    if (areValidBits(bit.getBitAt(vec.getX(), vec.getY(), vec.getZ())) || bit.getBitAt(vec.getX(), vec.getY(), vec.getZ()).equals(bodyBrush))
-                        for (int size = 0; size <= border; size++)
-                            Collections.addAll(data, createFillData(getCubeFromBit(bit.getBitAt(vec.getX(), vec.getY(), vec.getZ())), vec.getX(), vec.getY(), vec.getZ(), size));
-                    return data;
+                    for (int x = 1; x < border; x++)
+                        for (int y = 1; y < border; y++)
+                            for (int z = 1; z < border; z++) {
+                                data.add(new CubeData(getCubeFromBit(bit.getBitAt(vec.getX() + x, vec.getY() + y, vec.getZ() + z)), vec.getX() + x, vec.getY() + y, vec.getZ() + z, 0));
+                                data.add(new CubeData(getCubeFromBit(bit.getBitAt(vec.getX() - x, vec.getY() - y, vec.getZ() - z)), vec.getX() - x, vec.getY() - y, vec.getZ() - z, 0));
+                                data.add(new CubeData(getCubeFromBit(bit.getBitAt(vec.getX() - x, vec.getY() + y, vec.getZ() + z)), vec.getX() - x, vec.getY() + y, vec.getZ() + z, 0));
+                                data.add(new CubeData(getCubeFromBit(bit.getBitAt(vec.getX() + x, vec.getY() - y, vec.getZ() + z)), vec.getX() + x, vec.getY() - y, vec.getZ() + z, 0));
+                                data.add(new CubeData(getCubeFromBit(bit.getBitAt(vec.getX() - x, vec.getY() + y, vec.getZ() - z)), vec.getX() + x, vec.getY() + y, vec.getZ() - z, 0));
+                                data.add(new CubeData(getCubeFromBit(bit.getBitAt(vec.getX() - x, vec.getY() - y, vec.getZ() + z)), vec.getX() - x, vec.getY() - y, vec.getZ() + z, 0));
+                                data.add(new CubeData(getCubeFromBit(bit.getBitAt(vec.getX() + x, vec.getY() - y, vec.getZ() + z)), vec.getX() + x, vec.getY() - y, vec.getZ() - z, 0));
+                                data.add(new CubeData(getCubeFromBit(bit.getBitAt(vec.getX() - x, vec.getY() - y, vec.getZ() - z)), vec.getX() - x, vec.getY() - y, vec.getZ() - z, 0));
+                            }
                 } catch (APIExceptions.CannotBeChiseled e) {
                     e.printStackTrace();
                 }
+            }
+            return data;
         }
-        LogHandler.info("Null data");
         return new ArrayList<>();
     }
+
+//    public static ArrayList<CubeData> createDataFromModel(World world, BlockPos pos, Vec3i[] model, int border) {
+//        if (hasValidModel(world,pos,model) && model.length > 0 && border > 0) {
+//            ArrayList<CubeData> data = new ArrayList<>();
+//            for (Vec3i vec : model)
+//                try {
+//                    IBitAccess bit = api.getBitAccess(world, pos);
+//                    if (areValidBits(bit.getBitAt(vec.getX(), vec.getY(), vec.getZ())) || bit.getBitAt(vec.getX(), vec.getY(), vec.getZ()).equals(bodyBrush))
+//                        for (int size = 0; size <= border; size++)
+//                            Collections.addAll(data, createFillData(getCubeFromBit(bit.getBitAt(vec.getX(), vec.getY(), vec.getZ())), vec.getX(), vec.getY(), vec.getZ(), size));
+//                    return data;
+//                } catch (APIExceptions.CannotBeChiseled e) {
+//                    e.printStackTrace();
+//                }
+//        }
+//        LogHandler.info("Null data");
+//        return new ArrayList<>();
+//    }
 
     private static boolean areValidBits(IBitBrush bit) {
         for (ICube cube : CubeRegistry.getCubes())
@@ -109,39 +155,11 @@ public class BitHelper {
     }
 
     private static ICube getCubeFromBit(IBitBrush bit) {
+        if(!bit.isAir())
         for (ICube cube : CubeRegistry.getCubes())
             if (cube.getBlock().equals(bit.getState().getBlock()) && bit.getItemStack(1) != null)
                 return cube;
         return null;
-    }
-
-    private static CubeData[] createFillData(ICube cube, int x, int y, int z, int s) {
-        CubeData[] data = new CubeData[25];
-        data[0] = new CubeData(cube, x, y, z, 0);
-        data[1] = new CubeData(cube, x + s, y, z, 0);
-        data[2] = new CubeData(cube, x - s, y, z, 0);
-        data[3] = new CubeData(cube, x, y + s, z, 0);
-        data[4] = new CubeData(cube, x, y - s, z, 0);
-        data[5] = new CubeData(cube, x + s, y + s, z, 0);
-        data[6] = new CubeData(cube, x + s, y - s, z, 0);
-        data[7] = new CubeData(cube, x - s, y + s, z, 0);
-        data[8] = new CubeData(cube, x, y, z + s, 0);
-        data[9] = new CubeData(cube, x, y, z - s, 0);
-        data[10] = new CubeData(cube, x + s, y, z + s, 0);
-        data[11] = new CubeData(cube, x - s, y, z + s, 0);
-        data[12] = new CubeData(cube, x, y + s, z + s, 0);
-        data[13] = new CubeData(cube, x, y - s, z + s, 0);
-        data[14] = new CubeData(cube, x + s, y, z - s, 0);
-        data[15] = new CubeData(cube, x - s, y, z - s, 0);
-        data[16] = new CubeData(cube, x, y + s, z - s, 0);
-        data[17] = new CubeData(cube, x, y - s, z - s, 0);
-        data[19] = new CubeData(cube, x + s, y + s, z + s, 0);
-        data[20] = new CubeData(cube, x - s, y + s, z + s, 0);
-        data[21] = new CubeData(cube, x - s, y - s, z + s, 0);
-        data[22] = new CubeData(cube, x + s, y + 1, z - s, 0);
-        data[23] = new CubeData(cube, x - s, y + s, z - s, 0);
-        data[24] = new CubeData(cube, x - s, y - s, z - s, 0);
-        return data;
     }
 
     /**
@@ -156,27 +174,32 @@ public class BitHelper {
         NBTTagCompound specialCubes = new NBTTagCompound();
         NBTTagCompound energyStorageCubes = new NBTTagCompound();
         NBTTagCompound energyProductionCubes = new NBTTagCompound();
-        for (CubeData cube : data)
-            if (cube.cube.hasEffects()) {
-                NBTTagCompound nbt = convertCubeDataToNBT(cube);
-                if (!nbt.hasNoTags())
-                    specialCubes.setTag(Integer.toString(specialCubes.getSize() + 1), nbt);
-            } else if (cube.cube instanceof IEnergy) {
-                IEnergy energy = (IEnergy) cube.cube;
-                if (energy.getStorage() > 0) {
+        for (CubeData cube : data) {
+            if (cube != null && cube.cube != null)
+                if (cube.cube.hasEffects()) {
                     NBTTagCompound nbt = convertCubeDataToNBT(cube);
                     if (!nbt.hasNoTags())
-                        energyStorageCubes.setTag(Integer.toString(energyStorageCubes.getSize() + 1), nbt);
-                } else if (energy.getProductionAmount() > 0) {
+                        specialCubes.setTag(Integer.toString(specialCubes.getSize() + 1), nbt);
+                } else if (cube.cube instanceof IEnergy) {
+                    IEnergy energy = (IEnergy) cube.cube;
+                    if (energy.getStorage() > 0) {
+                        NBTTagCompound nbt = convertCubeDataToNBT(cube);
+                        if (!nbt.hasNoTags())
+                            energyStorageCubes.setTag(Integer.toString(energyStorageCubes.getSize() + 1), nbt);
+                    } else if (energy.getProductionAmount() > 0) {
+                        NBTTagCompound nbt = convertCubeDataToNBT(cube);
+                        if (!nbt.hasNoTags())
+                            energyProductionCubes.setTag(Integer.toString(energyProductionCubes.getSize() + 1), nbt);
+                    }
+                } else {
                     NBTTagCompound nbt = convertCubeDataToNBT(cube);
+                    LogHandler.info("NBT Default: " + nbt.toString());
                     if (!nbt.hasNoTags())
-                        energyProductionCubes.setTag(Integer.toString(energyProductionCubes.getSize() + 1), nbt);
+                        defaultCubes.setTag(Integer.toString(defaultCubes.getSize() + 1), nbt);
                 }
-            } else {
-                NBTTagCompound nbt = convertCubeDataToNBT(cube);
-                if (!nbt.hasNoTags())
-                    defaultCubes.setTag(Integer.toString(defaultCubes.getSize() + 1), nbt);
-            }
+        }
+        if (defaultCubes.getSize() > 0)
+            return new NBTTagCompound[]{defaultCubes, specialCubes, energyStorageCubes, energyProductionCubes};
         return new NBTTagCompound[0];
     }
 

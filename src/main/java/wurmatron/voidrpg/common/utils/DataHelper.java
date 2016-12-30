@@ -51,11 +51,13 @@ public class DataHelper {
     // TODO Needs support for multiple storage types not just one
     // Example: Chestplate needs Body, Left and Right Arm == 3
     public static ItemStack addDataToStack(ItemStack stack, CubeData[] data) {
-        if (stack.hasTagCompound() && data != null && data.length > 0) {
+        NBTTagCompound tag = new NBTTagCompound();
+        if (data != null && data.length > 0) {
             NBTTagCompound[] nbt = BitHelper.convertCubesToNBT(data);
             for (int i = 0; i < nbt.length; i++)
-                stack.setTagInfo(Integer.toString(i), nbt[i]);
+                tag.setTag(Integer.toString(i), nbt[i]);
         }
+        stack.setTagCompound(tag);
         return stack;
     }
 

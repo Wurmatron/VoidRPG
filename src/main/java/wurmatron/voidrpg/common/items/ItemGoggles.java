@@ -41,7 +41,7 @@ public class ItemGoggles extends ItemArmor {
     public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
         Vec3i[] vec = new Vec3i[]{new Vec3i(1, 1, 1), new Vec3i(2, 1, 1)};
         RayTraceResult ray = Minecraft.getMinecraft().getRenderViewEntity().rayTrace(5, 1);
-        if (world.getBlockState(ray.getBlockPos()).getBlock() != Blocks.AIR) {
+        if (ray != null && world.getBlockState(ray.getBlockPos()).getBlock() != Blocks.AIR) {
             ArrayList<CubeData> data = BitHelper.createDataFromModel(world, ray.getBlockPos(), vec, 4);
             ItemStack item = DataHelper.addDataToStack(new ItemStack(VoidRPGItems.armorHelmet,1,0),DataHelper.addOffset(data.toArray(new CubeData[0]), 0 ,20,0));
             player.addChatMessage(new TextComponentString("Size: " + data.size()));

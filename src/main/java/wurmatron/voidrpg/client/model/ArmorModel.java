@@ -79,7 +79,8 @@ public class ArmorModel extends ModelBiped {
     public ArmorModel handleData(ModelBiped base) {
         if (headCubes != null && headCubes.size() > 0)
             for (CubeData temp : headCubes)
-                bipedHead.addChild(BitHelper.createModelRenderer(base, DataHelper.addOffset(temp, 0, 0, 0)));
+                if (temp != null)
+                    bipedHead.addChild(BitHelper.createModelRenderer(base, DataHelper.addOffset(temp, 0, 0, 0)));
         if (bodyCubes != null && bodyCubes.size() > 0)
             for (CubeData temp : bodyCubes)
                 base.bipedBody.addChild(BitHelper.createModelRenderer(base, DataHelper.addOffset(temp, 0, 0, 0)));
