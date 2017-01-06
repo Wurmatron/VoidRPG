@@ -37,7 +37,7 @@ public class VoidRPG {
     public static final CreativeTabs tabVoidRPG = new CreativeTabs("tabVoidRPG") {
         @Override
         public Item getTabIconItem() {
-            return VoidRPGItems.itemStaff;
+            return VoidRPGItems.goggles;
         }
     };
 

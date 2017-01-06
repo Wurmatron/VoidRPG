@@ -39,12 +39,16 @@ public class ItemGoggles extends ItemArmor {
     // TODO Create its own item
     @Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
-        Vec3i[] vec = new Vec3i[]{new Vec3i(1, 1, 1), new Vec3i(2, 1, 1)};
+        ArrayList<Vec3i> modelHead = new ArrayList<>();
+        for (int x = 0; x < 15; x++)
+            for (int y = 0; y < 15; y++)
+                for (int z = 0; z < 15; z++)
+                    if (x <= 12 && x > 4 && y <= 8 && z <= 12 && z > 4)
+                        modelHead.add(new Vec3i(x, y, z));
         RayTraceResult ray = Minecraft.getMinecraft().getRenderViewEntity().rayTrace(5, 1);
         if (ray != null && world.getBlockState(ray.getBlockPos()).getBlock() != Blocks.AIR) {
-            ArrayList<CubeData> data = BitHelper.createDataFromModel(world, ray.getBlockPos(), vec, 4);
-            ItemStack item = DataHelper.addDataToStack(new ItemStack(VoidRPGItems.armorHelmet,1,0),DataHelper.addOffset(data.toArray(new CubeData[0]), 0 ,20,0));
-            player.addChatMessage(new TextComponentString("Size: " + data.size()));
+            CubeData[] data = BitHelper.getDataFromModel(world,ray.getBlockPos(),modelHead.toArray(new Vec3i[0]),16,16,16,new Vec3i(0,0,0));
+            ItemStack item = DataHelper.addDataToStack(new ItemStack(VoidRPGItems.armorHelmet, 1, 0), data);
             player.inventory.addItemStackToInventory(item);
         }
         return new ActionResult(EnumActionResult.PASS, stack);
