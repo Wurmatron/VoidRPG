@@ -47,7 +47,7 @@ public class ItemGoggles extends ItemArmor {
                         modelHead.add(new Vec3i(x, y, z));
         RayTraceResult ray = Minecraft.getMinecraft().getRenderViewEntity().rayTrace(5, 1);
         if (ray != null && world.getBlockState(ray.getBlockPos()).getBlock() != Blocks.AIR) {
-            CubeData[] data = BitHelper.getDataFromModel(world,ray.getBlockPos(),modelHead.toArray(new Vec3i[0]),16,16,16,new Vec3i(0,0,0));
+            CubeData[] data = BitHelper.getDataFromModel(world, ray.getBlockPos(), modelHead.toArray(new Vec3i[0]), 16, 16, 16, new Vec3i(0, 0, 0));
             ItemStack item = DataHelper.addDataToStack(new ItemStack(VoidRPGItems.armorHelmet, 1, 0), data);
             player.inventory.addItemStackToInventory(item);
         }

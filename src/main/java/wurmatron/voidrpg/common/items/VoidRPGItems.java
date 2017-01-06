@@ -16,6 +16,7 @@ public class VoidRPGItems {
     public static Item armorChestplate;
     public static Item armorLeggings;
     public static Item armorBoots;
+    public static Item modelPlacer;
     public static final String[] materials = new String[]{"creationCrystal", "upgrade", "basicArmorPlate", "heavyArmorPlate", "reactiveArmorPlating", "regenerativeArmorPlating", "energyArmorPlating", "cardboard", "carbonChunk", "flippers", "nanoTech", "mechanicalMuscle", "gravityCore", "jetpackParts", "thruster", "waterElectrolysisModule", "mindControl", "wings", "battery", "solarPanel", "smallReactor", "largeReactor", "repairBot"};
     public static final String[] upgrades = new String[]{"speedI", "speedII", "speedIII"};
 
@@ -27,6 +28,7 @@ public class VoidRPGItems {
         registerItem(armorChestplate = new ItemModelArmor(ItemArmor.ArmorMaterial.CHAIN, 0, EntityEquipmentSlot.CHEST));
         registerItem(armorLeggings = new ItemModelArmor(ItemArmor.ArmorMaterial.CHAIN, 1, EntityEquipmentSlot.LEGS));
         registerItem(armorBoots = new ItemModelArmor(ItemArmor.ArmorMaterial.CHAIN, 0, EntityEquipmentSlot.FEET));
+        registerItem(modelPlacer = new ItemModelPlacer());
     }
 
     private static void registerItem(Item item) {

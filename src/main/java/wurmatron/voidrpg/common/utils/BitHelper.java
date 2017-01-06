@@ -20,6 +20,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import wurmatron.voidrpg.api.cube.CubeData;
 import wurmatron.voidrpg.api.cube.ICube;
 import wurmatron.voidrpg.api.cube.IEnergy;
+import wurmatron.voidrpg.common.blocks.VoidRPGBlocks;
 import wurmatron.voidrpg.common.cube.CubeRegistry;
 import wurmatron.voidrpg.common.reference.Global;
 import wurmatron.voidrpg.common.reference.NBT;
@@ -45,6 +46,28 @@ public class BitHelper {
         @Override
         public ItemStack getItemStack(int i) {
             return new ItemStack(Blocks.PLANKS, i, 0);
+        }
+
+        @Override
+        public int getStateID() {
+            return 0;
+        }
+    };
+
+    private static final IBitBrush airBrush = new IBitBrush() {
+        @Override
+        public boolean isAir() {
+            return true;
+        }
+
+        @Override
+        public IBlockState getState() {
+            return null;
+        }
+
+        @Override
+        public ItemStack getItemStack(int i) {
+            return new ItemStack(Blocks.AIR, i, 0);
         }
 
         @Override
@@ -131,52 +154,6 @@ public class BitHelper {
             cubes[c] = data.get(c);
         return cubes;
     }
-
-//    public static ArrayList<CubeData> createDataFromModel(World world, BlockPos pos, Vec3i[] model, int border) {
-//        if (model.length > 0 && border > 0 && hasValidModel(world, pos, model)) {
-//            ArrayList<CubeData> data = new ArrayList<>();
-//            for (Vec3i vec : model) {
-//                try {
-//                    IBitAccess bit = api.getBitAccess(world, pos);
-//                    for (int x = 1; x < border; x += 2)
-//                        for (int y = 1; y < border; y += 2)
-//                            for (int z = 1; z < border; z += 2) {
-//                                LogHandler.info("X " + x + " Y " + y + " Z " + z);
-//                                data.add(new CubeData(getCubeFromBit(bit.getBitAt(vec.getX() + x, vec.getY() + y, vec.getZ() + z)), vec.getX() + x, vec.getY() + y, vec.getZ() + z, 0));
-////                                data.add(new CubeData(getCubeFromBit(bit.getBitAt(vec.getX() - x, vec.getY() - y, vec.getZ() - z)), vec.getX() - x, vec.getY() - y, vec.getZ() - z, 0));
-////                                data.add(new CubeData(getCubeFromBit(bit.getBitAt(vec.getX() - x, vec.getY() + y, vec.getZ() + z)), vec.getX() - x, vec.getY() + y, vec.getZ() + z, 0));
-////                                data.add(new CubeData(getCubeFromBit(bit.getBitAt(vec.getX() + x, vec.getY() - y, vec.getZ() + z)), vec.getX() + x, vec.getY() - y, vec.getZ() + z, 0));
-////                                data.add(new CubeData(getCubeFromBit(bit.getBitAt(vec.getX() - x, vec.getY() + y, vec.getZ() - z)), vec.getX() + x, vec.getY() + y, vec.getZ() - z, 0));
-////                                data.add(new CubeData(getCubeFromBit(bit.getBitAt(vec.getX() - x, vec.getY() - y, vec.getZ() + z)), vec.getX() - x, vec.getY() - y, vec.getZ() + z, 0));
-////                                data.add(new CubeData(getCubeFromBit(bit.getBitAt(vec.getX() + x, vec.getY() - y, vec.getZ() + z)), vec.getX() + x, vec.getY() - y, vec.getZ() - z, 0));
-////                                data.add(new CubeData(getCubeFromBit(bit.getBitAt(vec.getX() - x, vec.getY() - y, vec.getZ() - z)), vec.getX() - x, vec.getY() - y, vec.getZ() - z, 0));
-//                            }
-//                } catch (APIExceptions.CannotBeChiseled e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//            return data;
-//        }
-//        return new ArrayList<>();
-//    }
-
-//    public static ArrayList<CubeData> createDataFromModel(World world, BlockPos pos, Vec3i[] model, int border) {
-//        if (hasValidModel(world,pos,model) && model.length > 0 && border > 0) {
-//            ArrayList<CubeData> data = new ArrayList<>();
-//            for (Vec3i vec : model)
-//                try {
-//                    IBitAccess bit = api.getBitAccess(world, pos);
-//                    if (areValidBits(bit.getBitAt(vec.getX(), vec.getY(), vec.getZ())) || bit.getBitAt(vec.getX(), vec.getY(), vec.getZ()).equals(bodyBrush))
-//                        for (int size = 0; size <= border; size++)
-//                            Collections.addAll(data, createFillData(getCubeFromBit(bit.getBitAt(vec.getX(), vec.getY(), vec.getZ())), vec.getX(), vec.getY(), vec.getZ(), size));
-//                    return data;
-//                } catch (APIExceptions.CannotBeChiseled e) {
-//                    e.printStackTrace();
-//                }
-//        }
-//        LogHandler.info("Null data");
-//        return new ArrayList<>();
-//    }
 
     private static boolean areValidBits(IBitBrush bit) {
         for (ICube cube : CubeRegistry.getCubes())
@@ -280,5 +257,41 @@ public class BitHelper {
                     if (!vec.contains(new Vec3i(x, y, z)))
                         output.add(new Vec3i(x, y, z));
         return output.toArray(new Vec3i[0]);
+    }
+
+    public static void createBaseArmorBlock(Vec3i[] model, World world, BlockPos pos) {
+        if (!world.isRemote) {
+            world.setBlockState(pos, VoidRPGBlocks.bodyBlock.getDefaultState());
+            try {
+                IBitAccess block = api.getBitAccess(world, pos);
+                createModelFromData(block, model);
+            } catch (APIExceptions.CannotBeChiseled e) {
+                LogHandler.info("Cannot chisel block @ " + pos.toString() + " | " + e.getLocalizedMessage());
+            }
+        }
+    }
+
+    public static void createModelFromData(IBitAccess block, Vec3i[] data) {
+        if (block != null && data != null && data.length > 0) {
+            try {
+                for (int x = 0; x <= 15; x++) {
+                    for (int y = 0; y <= 15; y++)
+                        for (int z = 0; z <= 15; z++) {
+                            ArrayList<Boolean> temp = new ArrayList<>();
+                            for (Vec3i vec : data) {
+                                if (!vec.equals(new Vec3i(x, y, z)))
+                                    temp.add(false);
+                                else
+                                    temp.add(true);
+                            }
+                            if (!temp.contains(true))
+                                block.setBitAt(x, y, z, airBrush);
+                        }
+                }
+                block.commitChanges(true);
+            } catch (APIExceptions.SpaceOccupied e) {
+                LogHandler.info(e.getLocalizedMessage());
+            }
+        }
     }
 }

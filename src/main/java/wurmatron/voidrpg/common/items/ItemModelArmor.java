@@ -28,11 +28,8 @@ public class ItemModelArmor extends ItemArmor {
             armorModel = new ArmorModel();
             requiresUpdate = true;
         }
-        CubeData[] data = DataHelper.getDataFromStack(stack);
-        LogHandler.info("data: " + data.length);
-        armorModel.addHeadCubes(data);
-//        armorModel.addHeadCubes(new CubeData[]{new CubeData(CubeRegistry.getCubeFromID(0), 2, 2, 2, 0), new CubeData(CubeRegistry.getCubeFromID(0), 8, 8, 8, 0)});
         if (requiresUpdate) {
+            armorModel.addHeadCubes(DataHelper.addOffset(DataHelper.getDataFromStack(stack), 0,20,0));
             armorModel.handleData(_default);
             requiresUpdate = false;
         }
