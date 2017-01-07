@@ -37,14 +37,16 @@ public class DataHelper {
     public static CubeData[] rotateClockwise(CubeData[] cubes) {
         CubeData[] data = new CubeData[cubes.length];
         for (int s = 0; s < cubes.length; s++)
-            data[s] = new CubeData(cubes[s].cube, cubes[s].xPos, cubes[s].yPos, (cubes[s].zPos * -1) + 15, cubes[s].damage);
+            if (cubes[s] != null && cubes[s].cube != null)
+                data[s] = new CubeData(cubes[s].cube, cubes[s].xPos, cubes[s].yPos, (cubes[s].zPos * -1) + 15, cubes[s].damage);
         return data;
     }
 
     public static CubeData[] rotateUp(CubeData[] cubes) {
         CubeData[] data = new CubeData[cubes.length];
         for (int s = 0; s < cubes.length; s++)
-            data[s] = new CubeData(cubes[s].cube, cubes[s].xPos, (cubes[s].yPos * -1) + 15, cubes[s].zPos, cubes[s].damage);
+            if (cubes[s] != null && cubes[s].cube != null)
+                data[s] = new CubeData(cubes[s].cube, cubes[s].xPos, (cubes[s].yPos * -1) + 15, cubes[s].zPos, cubes[s].damage);
         return data;
     }
 

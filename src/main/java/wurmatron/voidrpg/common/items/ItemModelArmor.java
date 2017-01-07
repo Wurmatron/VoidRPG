@@ -24,14 +24,15 @@ public class ItemModelArmor extends ItemArmor {
 
     @Override
     public ModelBiped getArmorModel(EntityLivingBase entity, ItemStack stack, EntityEquipmentSlot slot, ModelBiped _default) {
-        if (armorModel == null) {
-            armorModel = new ArmorModel();
-            requiresUpdate = true;
-        }
         if (requiresUpdate) {
-            armorModel.addHeadCubes(DataHelper.addOffset(DataHelper.getDataFromStack(stack), 0,20,0));
-            armorModel.handleData(_default);
-            requiresUpdate = false;
+            if (armorModel != null) {
+                armorModel.addHeadCubes(DataHelper.rotateUp(DataHelper.getDataFromStack(stack)));
+                armorModel.handleData(_default);
+                requiresUpdate = false;
+            } else {
+                armorModel = new ArmorModel();
+                requiresUpdate = true;
+            }
         }
         return armorModel;
     }

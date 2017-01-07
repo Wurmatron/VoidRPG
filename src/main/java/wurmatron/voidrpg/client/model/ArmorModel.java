@@ -10,25 +10,14 @@ import java.util.Collections;
 
 public class ArmorModel extends ModelBiped {
 
-    public ArrayList<CubeData> headCubes;
-    public ArrayList<CubeData> bodyCubes;
-    public ArrayList<CubeData> leftArmCubes;
-    public ArrayList<CubeData> rightArmCubes;
-    public ArrayList<CubeData> leftLegCubes;
-    public ArrayList<CubeData> rightLegCubes;
-    public ArrayList<CubeData> leftBootsCubes;
-    public ArrayList<CubeData> rightBootsCubes;
-
-    public ArmorModel() {
-        leftArmCubes = new ArrayList<>();
-        headCubes = new ArrayList<>();
-        bodyCubes = new ArrayList<>();
-        rightArmCubes = new ArrayList<>();
-        leftLegCubes = new ArrayList<>();
-        rightLegCubes = new ArrayList<>();
-        leftBootsCubes = new ArrayList<>();
-        rightBootsCubes = new ArrayList<>();
-    }
+    public ArrayList<CubeData> headCubes = new ArrayList<>();
+    public ArrayList<CubeData> bodyCubes = new ArrayList<>();
+    public ArrayList<CubeData> leftArmCubes = new ArrayList<>();
+    public ArrayList<CubeData> rightArmCubes = new ArrayList<>();
+    public ArrayList<CubeData> leftLegCubes = new ArrayList<>();
+    public ArrayList<CubeData> rightLegCubes = new ArrayList<>();
+    public ArrayList<CubeData> leftBootsCubes = new ArrayList<>();
+    public ArrayList<CubeData> rightBootsCubes = new ArrayList<>();
 
     public void addHeadCubes(CubeData[] head) {
         if (head != null && head.length > 0)
