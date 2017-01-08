@@ -6,11 +6,14 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Potion;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.translation.I18n;
 import wurmatron.voidrpg.VoidRPG;
 import wurmatron.voidrpg.client.model.ArmorModel;
+import wurmatron.voidrpg.common.reference.Local;
 import wurmatron.voidrpg.common.utils.DataHelper;
-import wurmatron.voidrpg.common.utils.LogHandler;
+
+import java.util.List;
 
 public class ItemModelArmor extends ItemArmor {
 
@@ -22,7 +25,6 @@ public class ItemModelArmor extends ItemArmor {
         setCreativeTab(VoidRPG.tabVoidRPG);
         setUnlocalizedName("armor" + slot.name().toLowerCase());
     }
-
 
     @Override
     public ModelBiped getArmorModel(EntityLivingBase entity, ItemStack stack, EntityEquipmentSlot slot, ModelBiped _default) {
@@ -36,5 +38,11 @@ public class ItemModelArmor extends ItemArmor {
                 requiresUpdate = true;
             }
         return armorModel;
+    }
+
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tip, boolean adv) {
+        tip.add(TextFormatting.GRAY + I18n.translateToLocal(Local.STAT_WEIGHT) + ": " + TextFormatting.AQUA + DataHelper.getWeight(stack, false));
+        tip.add(TextFormatting.GRAY + I18n.translateToLocal(Local.STAT_DURABILITY) + ": " + TextFormatting.AQUA + (DataHelper.getDurability(stack,false) / DataHelper.getMaxDurability(stack,false)) * 100 + "%");
     }
 }

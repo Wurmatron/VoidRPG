@@ -226,7 +226,7 @@ public class BitHelper {
     }
 
     public static CubeData readCubeDataFromNBT(NBTTagCompound nbt) {
-        if (!nbt.hasNoTags())
+        if (nbt != null && !nbt.hasNoTags())
             return new CubeData(CubeRegistry.getCubeFromID(nbt.getInteger(NBT.CUBE_ID)), nbt.getInteger(NBT.CUBE_X) - 9, nbt.getInteger(NBT.CUBE_Y) + 15, nbt.getInteger(NBT.CUBE_Z) - 9, nbt.getInteger(NBT.CUBE_DAMAGE));
         return null;
     }

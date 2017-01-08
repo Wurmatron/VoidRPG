@@ -3,6 +3,7 @@ package wurmatron.voidrpg.common.utils;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import wurmatron.voidrpg.api.cube.CubeData;
+import wurmatron.voidrpg.common.reference.NBT;
 
 import java.util.ArrayList;
 
@@ -76,6 +77,18 @@ public class DataHelper {
         return new CubeData[0];
     }
 
+    public static CubeData[] getEffectCubes(ItemStack stack) {
+        ArrayList<CubeData> data = new ArrayList<>();
+        if (stack != null && stack.hasTagCompound() && !stack.getTagCompound().hasNoTags()) {
+            NBTTagCompound specialCubes = (NBTTagCompound) stack.getTagCompound().getTag("1");
+            if (!specialCubes.hasNoTags())
+                for (int i = 0; i < specialCubes.getSize(); i++)
+                    data.add(BitHelper.readCubeDataFromNBT((NBTTagCompound) specialCubes.getTag(Integer.toString(i))));
+            return data.toArray(new CubeData[0]);
+        }
+        return new CubeData[0];
+    }
+
     // Unsure if this is needed or not but there may a bug somewhere else :P
     public static <T> T[] removeNull(T[] data) {
         ArrayList<T> temp = new ArrayList();
@@ -83,5 +96,56 @@ public class DataHelper {
             if (f != null)
                 temp.add(f);
         return temp.toArray(data);
+    }
+
+    public static double getWeight(ItemStack stack, boolean update) {
+        if (stack != null && stack.hasTagCompound()) {
+            if (!stack.getTagCompound().hasKey(NBT.WEIGHT))
+                update = true;
+            if (update) {
+                CubeData[] cubes = getDataFromStack(stack);
+                double total = 0;
+                for (CubeData cube : cubes)
+                    if (cube != null && cube.cube != null)
+                        total += cube.cube.getWeight();
+                stack.getTagCompound().setDouble(NBT.WEIGHT, total);
+            }
+            return stack.getTagCompound().getDouble(NBT.WEIGHT);
+        }
+        return -1;
+    }
+
+    public static int getDurability(ItemStack stack, boolean update) {
+        if (stack != null && stack.hasTagCompound()) {
+            if (!stack.getTagCompound().hasKey(NBT.DURABILITY))
+                update = true;
+            if (update) {
+                CubeData[] cubes = getDataFromStack(stack);
+                int damage = 0;
+                for (CubeData cube : cubes)
+                    if (cube != null && cube.cube != null)
+                        damage += cube.damage;
+                stack.getTagCompound().setInteger(NBT.DURABILITY, (getMaxDurability(stack, true) - damage));
+            }
+            return stack.getTagCompound().getInteger(NBT.DURABILITY);
+        }
+        return -1;
+    }
+
+    public static int getMaxDurability(ItemStack stack, boolean update) {
+        if (stack != null && stack.hasTagCompound()) {
+            if (!stack.getTagCompound().hasKey(NBT.MAX_DURABILITY))
+                update = true;
+            if (update) {
+                CubeData[] cubes = getDataFromStack(stack);
+                int total = 0;
+                for (CubeData cube : cubes)
+                    if (cube != null && cube.cube != null)
+                        total += cube.cube.getMaxDurability();
+                stack.getTagCompound().setInteger(NBT.MAX_DURABILITY, total);
+            }
+            return stack.getTagCompound().getInteger(NBT.MAX_DURABILITY);
+        }
+        return -1;
     }
 }

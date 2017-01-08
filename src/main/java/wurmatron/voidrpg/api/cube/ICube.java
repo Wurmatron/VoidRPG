@@ -29,6 +29,11 @@ public interface ICube {
     double getWeight();
 
     /**
+     * Durability of this cube
+     */
+    int getMaxDurability();
+
+    /**
      * Max amount of this cube that can be on a item
      *
      * @param item Item that has a limit
