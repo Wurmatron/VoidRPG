@@ -132,7 +132,6 @@ public class BitHelper {
     }
 
     public static CubeData[] createDataFromModel(World world, BlockPos pos) {
-        int count = 0;
         ArrayList<CubeData> data = new ArrayList<>();
         if (!world.isRemote && api.isBlockChiseled(world, pos))
             try {
@@ -147,30 +146,14 @@ public class BitHelper {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        CubeData[] cubes = new CubeData[data.size()];
-        for (int c = 0; c <= data.size() - 1; c++) {
-            cubes[c] = data.get(c);
-        }
-        return cubes;
+        return data.toArray(new CubeData[0]);
     }
 
     private static boolean areValidBits(IBitBrush bit) {
         for (ICube cube : CubeRegistry.getCubes())
-            if (cube != null)
-                if (cube.getBlock() != null)
-                    if (bit.getState() != null && bit.getState().getBlock() != null)
-                        if (cube.getBlock().equals(bit.getState().getBlock()))
-                            if (bit.getItemStack(1) != null)
-                                return true;
+            if (cube != null && cube.getBlock() != null && bit.getState() != null && bit.getState().getBlock() != null && cube.getBlock().equals(bit.getState().getBlock()) && cube.getBlock().equals(bit.getState().getBlock()) && bit.getItemStack(1) != null)
+                return true;
         return false;
-    }
-
-    private static ICube getCubeFromBit(IBitBrush bit) {
-        if (!bit.isAir())
-            for (ICube cube : CubeRegistry.getCubes())
-                if (cube.getBlock().equals(bit.getState().getBlock()) && bit.getItemStack(1) != null)
-                    return cube;
-        return null;
     }
 
     /**

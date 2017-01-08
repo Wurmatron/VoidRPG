@@ -19,6 +19,7 @@ import wurmatron.voidrpg.api.cube.ICube;
 import wurmatron.voidrpg.common.blocks.VoidRPGBlocks;
 import wurmatron.voidrpg.common.config.ConfigHandler;
 import wurmatron.voidrpg.common.cube.CubeRegistry;
+import wurmatron.voidrpg.common.cube.regular.LightArmor;
 import wurmatron.voidrpg.common.event.LivingTickEvent;
 import wurmatron.voidrpg.common.items.VoidRPGItems;
 import wurmatron.voidrpg.common.network.GuiHandler;
@@ -58,102 +59,8 @@ public class VoidRPG {
         ConfigHandler.loadMainConfig();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
         VoidRPGRecipes.init();
-        class CubeTest implements ICube {
-            @Override
-            public String getName() {
-                return "name";
-            }
-
-            @Override
-            public Block getBlock() {
-                return Blocks.IRON_BLOCK;
-            }
-
-            @Override
-            public ResourceLocation getTexture() {
-                return new ResourceLocation(Global.MODID, "textures/cube/TestCube.png");
-            }
-
-            @Override
-            public double getWeight() {
-                return 10;
-            }
-
-            @Override
-            public int getMaxAmount(Item item) {
-                return 10000000;
-            }
-
-            @Override
-            public boolean getSupportedItem(EntityEquipmentSlot slot, Item item) {
-                return true;
-            }
-
-            @Override
-            public String getDescription() {
-                return "";
-            }
-
-            @Override
-            public boolean hasEffects() {
-                return false;
-            }
-
-            @Override
-            public int getMaxDurability() {
-                return 100;
-            }
-        }
-        CubeRegistry.registerCube(new CubeTest());
-
-        class CubeWaterWalk implements ICube {
-            @Override
-            public String getName() {
-                return "waterWalk";
-            }
-
-            @Override
-            public Block getBlock() {
-                return Blocks.SPONGE;
-            }
-
-            @Override
-            public ResourceLocation getTexture() {
-                return new ResourceLocation(Global.MODID, "textures/cube/WaterWalk.png");
-            }
-
-            @Override
-            public double getWeight() {
-                return 100;
-            }
-
-            @Override
-            public int getMaxAmount(Item item) {
-                return 4096;
-            }
-
-            @Override
-            public boolean getSupportedItem(EntityEquipmentSlot slot, Item item) {
-                return true;
-            }
-
-            @Override
-            public String getDescription() {
-                return "";
-            }
-
-            @Override
-            public boolean hasEffects() {
-                return true;
-            }
-
-            @Override
-            public int getMaxDurability() {
-                return 100;
-            }
-        }
-        CubeRegistry.registerCube(new CubeWaterWalk());
         MinecraftForge.EVENT_BUS.register(new LivingTickEvent());
+        CubeRegistry.registerCube(new LightArmor());
     }
 
     @Mod.EventHandler

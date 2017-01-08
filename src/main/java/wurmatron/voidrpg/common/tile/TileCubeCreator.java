@@ -74,6 +74,7 @@ public class TileCubeCreator extends TileEntity implements IInventory, ITickable
                 list.appendTag(stackTag);
             }
         }
+        nbt.setInteger(NBT.TIMER, timer);
         nbt.setTag(NBT.INVENTORY, list);
         return nbt;
     }
@@ -88,6 +89,7 @@ public class TileCubeCreator extends TileEntity implements IInventory, ITickable
             int slot = stackTag.getByte(NBT.SLOT) & 255;
             setInventorySlotContents(slot, ItemStack.loadItemStackFromNBT(stackTag));
         }
+        timer = nbt.getInteger(NBT.TIMER);
     }
 
     @Override
@@ -204,9 +206,7 @@ public class TileCubeCreator extends TileEntity implements IInventory, ITickable
             if (getStackInSlot(slot) != null && StackHelper.areStacksEqualIgnoreSize(stack, getStackInSlot(slot)))
                 amount += getStackInSlot(slot).stackSize;
         }
-        if (amount >= stack.stackSize)
-            return true;
-        return false;
+        return amount >= stack.stackSize;
     }
 
     private void addOutput(ItemStack stack) {

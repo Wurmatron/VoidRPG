@@ -3,6 +3,7 @@ package wurmatron.voidrpg.common.blocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import wurmatron.voidrpg.client.proxy.ClientProxy;
 import wurmatron.voidrpg.common.tile.TileCubeCreator;
 
 public class VoidRPGBlocks {
@@ -21,7 +22,7 @@ public class VoidRPGBlocks {
     public static Block armorEnergyShieldII;
     public static Block armorEnergyShieldIII;
     public static Block armorLife;
-    // Cube
+    //     Cube
     public static Block cubeWaterWalking;
     public static Block cubeCreator;
     public static Block cubeShock;
@@ -88,9 +89,9 @@ public class VoidRPGBlocks {
         registerBlock(armorEnergyShieldII = new BlockArmor(Material.ANVIL).setUnlocalizedName("energyShieldII"));
         registerBlock(armorEnergyShieldIII = new BlockArmor(Material.ANVIL).setUnlocalizedName("energyShieldIII"));
         registerBlock(armorLife = new BlockArmor(Material.ANVIL).setUnlocalizedName("armorLife"));
-        // Machines
+//        // Machines
         registerBlock(cubeCreator = new BlockCubeCreator(Material.ANVIL));
-        // Cubes
+//        // Cubes
         registerBlock(cubeWaterWalking = new BlockArmor(Material.IRON).setUnlocalizedName("cubeWaterWalking"));
         registerBlock(cubeShock = new BlockArmor(Material.IRON).setUnlocalizedName("cubeShock"));
         registerBlock(cubeFlippers = new BlockArmor(Material.IRON).setUnlocalizedName("cubeFlippers"));
@@ -101,7 +102,7 @@ public class VoidRPGBlocks {
         registerBlock(cubeWaterBreahing = new BlockArmor(Material.IRON).setUnlocalizedName("cubeWaterBreathing"));
         registerBlock(cubeMobStealth = new BlockArmor(Material.IRON).setUnlocalizedName("cubeMobStealth"));
         registerBlock(cubeWing = new BlockArmor(Material.IRON).setUnlocalizedName("cubeWing"));
-//				registerBlock(cubeTrueStealth = new BlockArmor(Material.IRON).setUnlocalizedName("cubeTrueStealth"));
+        registerBlock(cubeTrueStealth = new BlockArmor(Material.IRON).setUnlocalizedName("cubeTrueStealth"));
         registerBlock(energyStorageI = new BlockArmor(Material.IRON).setUnlocalizedName("energyStorageI"));
         registerBlock(energyStorageII = new BlockArmor(Material.IRON).setUnlocalizedName("energyStorageII"));
         registerBlock(energyStorageIII = new BlockArmor(Material.IRON).setUnlocalizedName("energyStorageIII"));
@@ -121,7 +122,7 @@ public class VoidRPGBlocks {
         registerBlock(energyAutoRepairII = new BlockArmor(Material.IRON).setUnlocalizedName("energyAutoRepairII"));
         registerBlock(energyAutoRepairIII = new BlockArmor(Material.IRON).setUnlocalizedName("energyAutoRepairIII"));
         registerBlock(cubeStealth = new BlockArmor(Material.IRON).setUnlocalizedName("cubeStealth"));
-        // Deco
+//        // Deco
         registerBlock(decoDiamond = new BlockArmor(Material.ANVIL).setUnlocalizedName("decoDiamond"));
         registerBlock(decoEmerald = new BlockArmor(Material.ANVIL).setUnlocalizedName("decoEmerald"));
         registerBlock(decoWoolWhile = new BlockArmor(Material.ANVIL).setUnlocalizedName("decoWoolWhite"));
@@ -146,7 +147,7 @@ public class VoidRPGBlocks {
 
     private static Block registerBlock(Block block) {
         GameRegistry.registerBlock(block, block.getUnlocalizedName());
-//				ClientProxy.blocks.add(block);
+        ClientProxy.blocks.add(block);
         return block;
     }
 }

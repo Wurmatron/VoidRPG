@@ -3,6 +3,7 @@ package wurmatron.voidrpg.api.cube;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 
 public interface ICube {
@@ -59,4 +60,9 @@ public interface ICube {
      *
      */
     boolean hasEffects();
+
+    /**
+     * Amount of damage this cube protects the wearer from
+     */
+    double getProtectionPercentage(DamageSource source, double amount);
 }

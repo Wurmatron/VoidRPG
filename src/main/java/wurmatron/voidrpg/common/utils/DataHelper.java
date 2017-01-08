@@ -10,9 +10,8 @@ import java.util.ArrayList;
 public class DataHelper {
 
     public static CubeData addOffset(CubeData cubeData, int x, int y, int z) {
-        if (cubeData != null)
-            if (Math.abs(x) > 0 || Math.abs(y) > 0 || Math.abs(z) > 0)
-                return new CubeData(cubeData.cube, cubeData.xPos + x, cubeData.yPos + y, cubeData.zPos + z, cubeData.damage);
+        if (cubeData != null && Math.abs(x) > 0 || Math.abs(y) > 0 || Math.abs(z) > 0)
+            return new CubeData(cubeData.cube, cubeData.xPos + x, cubeData.yPos + y, cubeData.zPos + z, cubeData.damage);
         return cubeData;
     }
 
@@ -21,6 +20,7 @@ public class DataHelper {
             CubeData[] temp = new CubeData[cubeData.length];
             for (int index = 0; index < cubeData.length; index++)
                 temp[index] = addOffset(cubeData[index], x, y, z);
+            return temp;
         }
         return removeNull(cubeData);
     }

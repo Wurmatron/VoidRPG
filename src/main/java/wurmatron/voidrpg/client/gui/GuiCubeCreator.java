@@ -10,14 +10,9 @@ import wurmatron.voidrpg.common.reference.Global;
 
 public class GuiCubeCreator extends GuiContainer {
 
-    private EntityPlayer player;
-    private int time;
-
     public GuiCubeCreator(EntityPlayer player, InventoryPlayer inventoryPlayer, IInventory tile, int time) {
         super(new ContainerCubeCreator(player, inventoryPlayer, tile));
-        this.player = player;
         setGuiSize(182, 198);
-        this.time = time;
     }
 
     @Override

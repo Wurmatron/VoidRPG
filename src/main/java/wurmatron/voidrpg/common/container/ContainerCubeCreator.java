@@ -9,13 +9,9 @@ import net.minecraft.item.ItemStack;
 
 public class ContainerCubeCreator extends Container {
 
-    private EntityPlayer player;
-    private InventoryPlayer playerInv;
     private IInventory inv;
 
     public ContainerCubeCreator(EntityPlayer player, InventoryPlayer playerInv, IInventory blockInv) {
-        this.player = player;
-        this.playerInv = playerInv;
         this.inv = blockInv;
         for (int i = 0; i < 3; ++i)
             for (int j = 0; j < 9; ++j)

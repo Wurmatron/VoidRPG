@@ -11,4 +11,5 @@ public class NBT {
     public static final String WEIGHT = "weight";
     public static final String DURABILITY = "durability";
     public static final String MAX_DURABILITY = "maxDurability";
+    public static final String TIMER = "timer";
 }
