@@ -81,7 +81,7 @@ public class DataHelper {
         ArrayList<CubeData> data = new ArrayList<>();
         if (stack != null && stack.hasTagCompound() && !stack.getTagCompound().hasNoTags()) {
             NBTTagCompound specialCubes = (NBTTagCompound) stack.getTagCompound().getTag("1");
-            if (!specialCubes.hasNoTags())
+            if (specialCubes != null && !specialCubes.hasNoTags())
                 for (int i = 0; i < specialCubes.getSize(); i++)
                     data.add(BitHelper.readCubeDataFromNBT((NBTTagCompound) specialCubes.getTag(Integer.toString(i))));
             return data.toArray(new CubeData[0]);

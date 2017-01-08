@@ -1,12 +1,8 @@
 package wurmatron.voidrpg;
 
 
-import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Blocks;
-import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -15,11 +11,12 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
-import wurmatron.voidrpg.api.cube.ICube;
 import wurmatron.voidrpg.common.blocks.VoidRPGBlocks;
 import wurmatron.voidrpg.common.config.ConfigHandler;
 import wurmatron.voidrpg.common.cube.CubeRegistry;
 import wurmatron.voidrpg.common.cube.regular.LightArmor;
+import wurmatron.voidrpg.common.cube.special.feet.WaterWalking;
+import wurmatron.voidrpg.common.cube.special.head.NightVision;
 import wurmatron.voidrpg.common.event.LivingTickEvent;
 import wurmatron.voidrpg.common.items.VoidRPGItems;
 import wurmatron.voidrpg.common.network.GuiHandler;
@@ -61,6 +58,8 @@ public class VoidRPG {
         VoidRPGRecipes.init();
         MinecraftForge.EVENT_BUS.register(new LivingTickEvent());
         CubeRegistry.registerCube(new LightArmor());
+        CubeRegistry.registerCube(new WaterWalking());
+        CubeRegistry.registerCube(new NightVision());
     }
 
     @Mod.EventHandler

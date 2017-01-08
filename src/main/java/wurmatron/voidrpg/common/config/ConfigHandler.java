@@ -15,6 +15,7 @@ public class ConfigHandler {
 
     // Global.cfg
     public static Property debug;
+    public static Property cubeCreatorUpdatePeriod;
 
     public static void preInit(FMLPreInitializationEvent e) {
         location = new File(e.getSuggestedConfigurationFile().getParent() + File.separator + Global.NAME);
@@ -27,6 +28,9 @@ public class ConfigHandler {
             LogHandler.info("Loading main config");
             debug = mainConfig.get(Configuration.CATEGORY_GENERAL, "debug", Defaults.DEBUG, "Enable Debug Mode");
             Settings.debug = debug.getBoolean();
+            cubeCreatorUpdatePeriod = mainConfig.get(Configuration.CATEGORY_GENERAL, "cubeCreatorUpdatePeriod", Defaults.CUBECREATORUPDATEPERIOD, "Cube Creator Update Time");
+            Settings.cubeCreatorUpdatePeriod = cubeCreatorUpdatePeriod.getInt();
+
             if (mainConfig.hasChanged()) {
                 LogHandler.info("Config saved");
                 mainConfig.save();

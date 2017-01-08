@@ -43,6 +43,9 @@ public class ItemModelArmor extends ItemArmor {
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tip, boolean adv) {
         tip.add(TextFormatting.GRAY + I18n.translateToLocal(Local.STAT_WEIGHT) + ": " + TextFormatting.AQUA + DataHelper.getWeight(stack, false));
-        tip.add(TextFormatting.GRAY + I18n.translateToLocal(Local.STAT_DURABILITY) + ": " + TextFormatting.AQUA + (DataHelper.getDurability(stack,false) / DataHelper.getMaxDurability(stack,false)) * 100 + "%");
+        int maxDurability = DataHelper.getMaxDurability(stack, false);
+        if (maxDurability <= 0)
+            maxDurability = 1;
+        tip.add(TextFormatting.GRAY + I18n.translateToLocal(Local.STAT_DURABILITY) + ": " + TextFormatting.AQUA + (DataHelper.getDurability(stack, false) / maxDurability) * 100 + "%");
     }
 }

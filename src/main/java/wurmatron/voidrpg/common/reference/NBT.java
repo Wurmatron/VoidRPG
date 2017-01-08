@@ -12,4 +12,5 @@ public class NBT {
     public static final String DURABILITY = "durability";
     public static final String MAX_DURABILITY = "maxDurability";
     public static final String TIMER = "timer";
+    public static final String CAPABILITIES = "capabilities";
 }
