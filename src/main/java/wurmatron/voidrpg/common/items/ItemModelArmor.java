@@ -2,11 +2,12 @@ package wurmatron.voidrpg.common.items;
 
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
 import wurmatron.voidrpg.VoidRPG;
-import wurmatron.voidrpg.api.cube.CubeData;
 import wurmatron.voidrpg.client.model.ArmorModel;
 import wurmatron.voidrpg.common.utils.DataHelper;
 import wurmatron.voidrpg.common.utils.LogHandler;
@@ -22,9 +23,10 @@ public class ItemModelArmor extends ItemArmor {
         setUnlocalizedName("armor" + slot.name().toLowerCase());
     }
 
+
     @Override
     public ModelBiped getArmorModel(EntityLivingBase entity, ItemStack stack, EntityEquipmentSlot slot, ModelBiped _default) {
-        if (requiresUpdate) {
+        if (requiresUpdate)
             if (armorModel != null) {
                 armorModel.addHeadCubes(DataHelper.rotateUp(DataHelper.getDataFromStack(stack)));
                 armorModel.handleData(_default);
@@ -33,7 +35,6 @@ public class ItemModelArmor extends ItemArmor {
                 armorModel = new ArmorModel();
                 requiresUpdate = true;
             }
-        }
         return armorModel;
     }
 }

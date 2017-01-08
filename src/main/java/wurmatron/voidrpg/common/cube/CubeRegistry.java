@@ -22,6 +22,7 @@ public class CubeRegistry {
                 if (cubes[index] == null) {
                     cubes[index] = cube;
                     idCache.put(cube, index);
+                    return;
                 }
     }
 

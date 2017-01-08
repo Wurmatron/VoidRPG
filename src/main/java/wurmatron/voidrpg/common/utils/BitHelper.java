@@ -111,7 +111,6 @@ public class BitHelper {
             }
             int modelValues = 0;
             for (Boolean t : modelTest) {
-                LogHandler.info("Model Test: " + t);
                 if (t)
                     modelValues++;
             }
@@ -133,25 +132,25 @@ public class BitHelper {
     }
 
     public static CubeData[] createDataFromModel(World world, BlockPos pos) {
+        int count = 0;
         ArrayList<CubeData> data = new ArrayList<>();
         if (!world.isRemote && api.isBlockChiseled(world, pos))
             try {
                 IBitAccess bit = api.getBitAccess(world, pos);
                 for (int x = 16; x >= 0; x--)
                     for (int y = 16; y >= 0; y--)
-                        for (int z = 16; z >= 0; z--) {
-                            if (!bit.getBitAt(x, y, z).isAir() && areValidBits(bit.getBitAt(x, y, z))) {
+                        for (int z = 16; z >= 0; z--)
+                            if (!bit.getBitAt(x, y, z).isAir() && areValidBits(bit.getBitAt(x, y, z)))
                                 for (ICube cube : CubeRegistry.getCubes())
-                                    if (cube.getBlock().equals(bit.getBitAt(x, y, z).getState().getBlock()))
+                                    if (cube != null && cube.getBlock() != null && cube.getBlock().getUnlocalizedName().equals(bit.getBitAt(x, y, z).getState().getBlock().getUnlocalizedName()))
                                         data.add(new CubeData(cube, x, y, z, 0));
-                            }
-                        }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         CubeData[] cubes = new CubeData[data.size()];
-        for (int c = 0; c <= data.size() - 1; c++)
+        for (int c = 0; c <= data.size() - 1; c++) {
             cubes[c] = data.get(c);
+        }
         return cubes;
     }
 
@@ -205,7 +204,6 @@ public class BitHelper {
                     }
                 } else {
                     NBTTagCompound nbt = convertCubeDataToNBT(cube);
-                    LogHandler.info("NBT Default: " + nbt.toString());
                     if (!nbt.hasNoTags())
                         defaultCubes.setTag(Integer.toString(defaultCubes.getSize() + 1), nbt);
                 }

@@ -4,24 +4,30 @@ import net.minecraft.client.model.ModelBiped;
 import wurmatron.voidrpg.api.cube.CubeData;
 import wurmatron.voidrpg.common.utils.BitHelper;
 import wurmatron.voidrpg.common.utils.DataHelper;
+import wurmatron.voidrpg.common.utils.LogHandler;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class ArmorModel extends ModelBiped {
 
-    public ArrayList<CubeData> headCubes = new ArrayList<>();
-    public ArrayList<CubeData> bodyCubes = new ArrayList<>();
-    public ArrayList<CubeData> leftArmCubes = new ArrayList<>();
-    public ArrayList<CubeData> rightArmCubes = new ArrayList<>();
-    public ArrayList<CubeData> leftLegCubes = new ArrayList<>();
-    public ArrayList<CubeData> rightLegCubes = new ArrayList<>();
-    public ArrayList<CubeData> leftBootsCubes = new ArrayList<>();
-    public ArrayList<CubeData> rightBootsCubes = new ArrayList<>();
+    private ArrayList<CubeData> headCubes = new ArrayList<>();
+    private ArrayList<CubeData> bodyCubes = new ArrayList<>();
+    private ArrayList<CubeData> leftArmCubes = new ArrayList<>();
+    private ArrayList<CubeData> rightArmCubes = new ArrayList<>();
+    private ArrayList<CubeData> leftLegCubes = new ArrayList<>();
+    private ArrayList<CubeData> rightLegCubes = new ArrayList<>();
+    private ArrayList<CubeData> leftBootsCubes = new ArrayList<>();
+    private ArrayList<CubeData> rightBootsCubes = new ArrayList<>();
+
+    public ArmorModel() {
+        LogHandler.info("New Instance");
+    }
 
     public void addHeadCubes(CubeData[] head) {
         if (head != null && head.length > 0)
             headCubes = checkForRendering(head);
+        LogHandler.info("Handling Head Cubes " + head.length);
     }
 
     public void addBodyCubes(CubeData[] body) {
@@ -69,28 +75,29 @@ public class ArmorModel extends ModelBiped {
         if (headCubes != null && headCubes.size() > 0)
             for (CubeData temp : headCubes)
                 if (temp != null)
-                    bipedHead.addChild(BitHelper.createModelRenderer(base, DataHelper.addOffset(temp, 0, 0, 0)));
-        if (bodyCubes != null && bodyCubes.size() > 0)
-            for (CubeData temp : bodyCubes)
-                base.bipedBody.addChild(BitHelper.createModelRenderer(base, DataHelper.addOffset(temp, 0, 0, 0)));
-        if (leftArmCubes != null && leftArmCubes.size() > 0)
-            for (CubeData temp : leftArmCubes)
-                base.bipedLeftArm.addChild(BitHelper.createModelRenderer(base, DataHelper.addOffset(temp, 0, 0, 0)));
-        if (rightArmCubes != null && rightArmCubes.size() > 0)
-            for (CubeData temp : rightArmCubes)
-                base.bipedRightArm.addChild(BitHelper.createModelRenderer(base, DataHelper.addOffset(temp, 0, 0, 0)));
-        if (leftLegCubes != null && leftLegCubes.size() > 0)
-            for (CubeData temp : leftLegCubes)
-                base.bipedLeftLeg.addChild(BitHelper.createModelRenderer(base, DataHelper.addOffset(temp, 0, 0, 0)));
-        if (rightLegCubes != null && rightLegCubes.size() > 0)
-            for (CubeData temp : rightLegCubes)
-                base.bipedRightLeg.addChild(BitHelper.createModelRenderer(base, DataHelper.addOffset(temp, 0, 0, 0)));
-        if (leftBootsCubes != null && leftBootsCubes.size() > 0)
-            for (CubeData temp : leftBootsCubes)
-                base.bipedLeftLeg.addChild(BitHelper.createModelRenderer(base, DataHelper.addOffset(temp, 0, 12, 0)));
-        if (rightBootsCubes != null)
-            for (CubeData temp : rightBootsCubes)
-                bipedRightLeg.addChild(BitHelper.createModelRenderer(base, DataHelper.addOffset(temp, 0, 12, 0)));
+                    bipedHead.addChild(BitHelper.createModelRenderer(base, temp));
+        LogHandler.info("Handling Data");
+//        if (bodyCubes != null && bodyCubes.size() > 0)
+//            for (CubeData temp : bodyCubes)
+//                bipedBody.addChild(BitHelper.createModelRenderer(base, DataHelper.addOffset(temp, 0, 0, 0)));
+//        if (leftArmCubes != null && leftArmCubes.size() > 0)
+//            for (CubeData temp : leftArmCubes)
+//                bipedLeftArm.addChild(BitHelper.createModelRenderer(base, DataHelper.addOffset(temp, 0, 0, 0)));
+//        if (rightArmCubes != null && rightArmCubes.size() > 0)
+//            for (CubeData temp : rightArmCubes)
+//                bipedRightArm.addChild(BitHelper.createModelRenderer(base, DataHelper.addOffset(temp, 0, 0, 0)));
+//        if (leftLegCubes != null && leftLegCubes.size() > 0)
+//            for (CubeData temp : leftLegCubes)
+//                bipedLeftLeg.addChild(BitHelper.createModelRenderer(base, DataHelper.addOffset(temp, 0, 0, 0)));
+//        if (rightLegCubes != null && rightLegCubes.size() > 0)
+//            for (CubeData temp : rightLegCubes)
+//                bipedRightLeg.addChild(BitHelper.createModelRenderer(base, DataHelper.addOffset(temp, 0, 0, 0)));
+//        if (leftBootsCubes != null && leftBootsCubes.size() > 0)
+//            for (CubeData temp : leftBootsCubes)
+//                bipedLeftLeg.addChild(BitHelper.createModelRenderer(base, DataHelper.addOffset(temp, 0, 12, 0)));
+//        if (rightBootsCubes != null)
+//            for (CubeData temp : rightBootsCubes)
+//                bipedRightLeg.addChild(BitHelper.createModelRenderer(base, DataHelper.addOffset(temp, 0, 12, 0)));
         return this;
     }
 }
