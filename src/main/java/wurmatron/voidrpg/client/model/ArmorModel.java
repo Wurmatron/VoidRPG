@@ -3,7 +3,6 @@ package wurmatron.voidrpg.client.model;
 import net.minecraft.client.model.ModelBiped;
 import wurmatron.voidrpg.api.cube.CubeData;
 import wurmatron.voidrpg.common.utils.BitHelper;
-import wurmatron.voidrpg.common.utils.DataHelper;
 import wurmatron.voidrpg.common.utils.LogHandler;
 
 import java.util.ArrayList;

@@ -81,7 +81,7 @@ public class DataHelper {
         ArrayList<CubeData> data = new ArrayList<>();
         if (stack != null && stack.hasTagCompound() && !stack.getTagCompound().hasNoTags()) {
             NBTTagCompound specialCubes = (NBTTagCompound) stack.getTagCompound().getTag("1");
-            if (specialCubes != null && !specialCubes.hasNoTags())
+            if (!specialCubes.hasNoTags())
                 for (int i = 0; i < specialCubes.getSize(); i++)
                     data.add(BitHelper.readCubeDataFromNBT((NBTTagCompound) specialCubes.getTag(Integer.toString(i))));
             return data.toArray(new CubeData[0]);
@@ -89,8 +89,7 @@ public class DataHelper {
         return new CubeData[0];
     }
 
-    // Unsure if this is needed or not but there may a bug somewhere else :P
-    public static <T> T[] removeNull(T[] data) {
+    private static <T> T[] removeNull(T[] data) {
         ArrayList<T> temp = new ArrayList();
         for (T f : data)
             if (f != null)
@@ -99,10 +98,11 @@ public class DataHelper {
     }
 
     public static double getWeight(ItemStack stack, boolean update) {
+        boolean temp = update;
         if (stack != null && stack.hasTagCompound()) {
             if (!stack.getTagCompound().hasKey(NBT.WEIGHT))
-                update = true;
-            if (update) {
+                temp = true;
+            if (temp) {
                 CubeData[] cubes = getDataFromStack(stack);
                 double total = 0;
                 for (CubeData cube : cubes)
@@ -116,10 +116,11 @@ public class DataHelper {
     }
 
     public static int getDurability(ItemStack stack, boolean update) {
+        boolean temp = update;
         if (stack != null && stack.hasTagCompound()) {
             if (!stack.getTagCompound().hasKey(NBT.DURABILITY))
-                update = true;
-            if (update) {
+                temp = true;
+            if (temp) {
                 CubeData[] cubes = getDataFromStack(stack);
                 int damage = 0;
                 for (CubeData cube : cubes)
@@ -133,10 +134,11 @@ public class DataHelper {
     }
 
     public static int getMaxDurability(ItemStack stack, boolean update) {
+        boolean temp = update;
         if (stack != null && stack.hasTagCompound()) {
             if (!stack.getTagCompound().hasKey(NBT.MAX_DURABILITY))
-                update = true;
-            if (update) {
+                temp = true;
+            if (temp) {
                 CubeData[] cubes = getDataFromStack(stack);
                 int total = 0;
                 for (CubeData cube : cubes)

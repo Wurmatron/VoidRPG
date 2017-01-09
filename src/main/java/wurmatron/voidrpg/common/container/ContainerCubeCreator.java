@@ -38,31 +38,25 @@ public class ContainerCubeCreator extends Container {
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int index) {
-        ItemStack itemstack = null;
-        Slot slot = (Slot) this.inventorySlots.get(index);
+        ItemStack stack = null;
+        Slot slot = inventorySlots.get(index);
         if (slot != null && slot.getHasStack()) {
             ItemStack temp = slot.getStack();
-            itemstack = temp.copy();
+            stack = temp.copy();
             if (index < 0) {
                 if (!this.mergeItemStack(temp, 0, 9, true))
                     return null;
-                slot.onSlotChange(temp, itemstack);
+                slot.onSlotChange(temp, stack);
             }
-
-            if (temp.stackSize == 0) {
-                slot.putStack((ItemStack) null);
-            } else {
+            if (temp.stackSize == 0)
+                slot.putStack(null);
+            else
                 slot.onSlotChanged();
-            }
-
-            if (temp.stackSize == itemstack.stackSize) {
+            if (temp.stackSize == stack.stackSize)
                 return null;
-            }
-
             slot.onPickupFromSlot(player, temp);
         }
-
-        return itemstack;
+        return stack;
     }
 
 
@@ -74,7 +68,7 @@ public class ContainerCubeCreator extends Container {
         ItemStack itemstack1;
         if (stack.isStackable()) {
             while (stack.stackSize > 0 && (!backwards && k < end || backwards && k >= start)) {
-                slot = (Slot) inventorySlots.get(k);
+                slot = inventorySlots.get(k);
                 itemstack1 = slot.getStack();
                 if (!slot.isItemValid(stack)) {
                     k += (backwards ? -1 : 1);
@@ -94,26 +88,20 @@ public class ContainerCubeCreator extends Container {
                         flag1 = true;
                     }
                 }
-
                 k += (backwards ? -1 : 1);
             }
         }
-
         if (stack.stackSize > 0) {
             k = (backwards ? end - 1 : start);
-
             while (!backwards && k < end || backwards && k >= start) {
-                slot = (Slot) inventorySlots.get(k);
+                slot = inventorySlots.get(k);
                 itemstack1 = slot.getStack();
-
                 if (!slot.isItemValid(stack)) {
                     k += (backwards ? -1 : 1);
                     continue;
                 }
-
                 if (itemstack1 == null) {
                     int l = stack.stackSize;
-
                     if (l <= slot.getSlotStackLimit()) {
                         slot.putStack(stack.copy());
                         stack.stackSize = 0;
@@ -127,7 +115,6 @@ public class ContainerCubeCreator extends Container {
                         flag1 = true;
                     }
                 }
-
                 k += (backwards ? -1 : 1);
             }
         }
