@@ -35,6 +35,11 @@ public interface ICube {
     int getMaxDurability();
 
     /**
+     * Complexity of this cube
+     */
+    int getComplexity();
+
+    /**
      * Max amount of this cube that can be on a item
      *
      * @param item Item that has a limit

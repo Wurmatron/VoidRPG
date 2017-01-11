@@ -38,6 +38,11 @@ public class NightVision implements ICube {
     }
 
     @Override
+    public int getComplexity() {
+        return 5;
+    }
+
+    @Override
     public int getMaxAmount(Item item) {
         return 64;
     }

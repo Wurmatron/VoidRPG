@@ -11,7 +11,7 @@ public class ContainerCubeCreator extends Container {
 
     private IInventory inv;
 
-    public ContainerCubeCreator(EntityPlayer player, InventoryPlayer playerInv, IInventory blockInv) {
+    public ContainerCubeCreator(InventoryPlayer playerInv, IInventory blockInv) {
         this.inv = blockInv;
         for (int i = 0; i < 3; ++i)
             for (int j = 0; j < 9; ++j)

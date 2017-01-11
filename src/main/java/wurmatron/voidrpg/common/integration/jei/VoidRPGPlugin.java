@@ -5,13 +5,19 @@ import mezz.jei.api.IJeiRuntime;
 import mezz.jei.api.IModRegistry;
 import mezz.jei.api.JEIPlugin;
 import mezz.jei.api.gui.IAdvancedGuiHandler;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
+import wurmatron.voidrpg.api.cube.ICube;
+import wurmatron.voidrpg.api.cube.IEnergy;
 import wurmatron.voidrpg.api.recipe.ICubeCreatorRecipe;
 import wurmatron.voidrpg.client.gui.GuiCubeCreator;
 import wurmatron.voidrpg.common.blocks.VoidRPGBlocks;
+import wurmatron.voidrpg.common.cube.CubeRegistry;
 import wurmatron.voidrpg.common.integration.jei.cubecreator.CubeCreatorCategory;
 import wurmatron.voidrpg.common.integration.jei.cubecreator.CubeCreatorRecipeHandler;
 import wurmatron.voidrpg.common.integration.jei.cubecreator.CubeCreatorRecipeWrapper;
+import wurmatron.voidrpg.common.reference.Local;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -44,6 +50,16 @@ public class VoidRPGPlugin extends BlankModPlugin {
         registry.addRecipeHandlers(new CubeCreatorRecipeHandler());
         registry.addRecipes(getCubeCreatorRecipes());
         registry.addRecipeCategoryCraftingItem(new ItemStack(VoidRPGBlocks.cubeCreator), "voidrpg.cubecreator");
+        for (ICube cube : CubeRegistry.getCubes())
+            if (cube.getDescription() != null || cube.getDescription().length() > 0)
+                if (cube instanceof IEnergy) {
+                    IEnergy energy = (IEnergy) cube;
+                    registry.addDescription(new ItemStack(cube.getBlock(), 1, 0), "Name: " + I18n.format(cube.getName()), I18n.format(Local.STAT_DURABILITY) + ": " + cube.getMaxDurability(), I18n.format(Local.STAT_COMPLEXITY) + ": " + cube.getComplexity(), I18n.format(Local.STAT_WEIGHT) + ": " + cube.getWeight(), I18n.format(Local.STAT_ENERGY) + ": " + energy.getStorage(), I18n.format(Local.PLACMENT_TYPE) + ": " + getValidArmorTypes(cube), "", I18n.format(cube.getDescription()));
+                } else
+                    registry.addDescription(new ItemStack(cube.getBlock(), 1, 0), "Name: " + I18n.format(cube.getName()), I18n.format(Local.STAT_DURABILITY) + ": " + cube.getMaxDurability(), I18n.format(Local.STAT_COMPLEXITY) + ": " + cube.getComplexity(), I18n.format(Local.STAT_WEIGHT) + ": " + cube.getWeight(), I18n.format(Local.PLACMENT_TYPE) + ": " + getValidArmorTypes(cube), "", I18n.format(cube.getDescription()));
+            else
+                registry.addDescription(new ItemStack(cube.getBlock(), 1, 0), "Name: " + I18n.format(cube.getName()), I18n.format(Local.STAT_DURABILITY) + ": " + cube.getMaxDurability(), I18n.format(Local.STAT_COMPLEXITY) + ": " + cube.getComplexity(), I18n.format(Local.STAT_WEIGHT) + ": " + cube.getWeight(), I18n.format(Local.PLACMENT_TYPE) + ": " + getValidArmorTypes(cube));
+
     }
 
     @Override
@@ -55,5 +71,23 @@ public class VoidRPGPlugin extends BlankModPlugin {
         for (ICubeCreatorRecipe recipe : wurmatron.voidrpg.common.cube.CubeCreatorRecipeHandler.getRecipes())
             recipes.add(new CubeCreatorRecipeWrapper(recipe.getInputs(), recipe.getOutputCube(), recipe.getTimeInTicks()));
         return recipes;
+    }
+
+    private String getValidArmorTypes(ICube cube) {
+        if (cube != null) {
+            String temp = "";
+            if (cube.getSupportedItem(EntityEquipmentSlot.HEAD, null))
+                temp += "Helmet, ";
+            if (cube.getSupportedItem(EntityEquipmentSlot.LEGS, null))
+                temp += "Leggings, ";
+            if (cube.getSupportedItem(EntityEquipmentSlot.CHEST, null))
+                temp += "Chestplate, ";
+            if (cube.getSupportedItem(EntityEquipmentSlot.FEET, null))
+                temp += "Boots, ";
+            if (temp.endsWith(","))
+                return temp.substring(0, temp.lastIndexOf(",") - 1);
+            return temp;
+        }
+        return "none";
     }
 }

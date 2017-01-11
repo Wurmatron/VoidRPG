@@ -32,6 +32,11 @@ public class HeavyArmor implements ICube {
     }
 
     @Override
+    public int getComplexity() {
+        return 1;
+    }
+
+    @Override
     public int getMaxDurability() {
         return 1000;
     }

@@ -9,10 +9,10 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import wurmatron.voidrpg.api.cube.CubeData;
+import wurmatron.voidrpg.common.cube.special.legs.CubeMuscle;
 import wurmatron.voidrpg.common.items.ItemModelArmor;
 import wurmatron.voidrpg.common.reference.NBT;
 import wurmatron.voidrpg.common.utils.DataHelper;
-import wurmatron.voidrpg.common.utils.LogHandler;
 
 public class LivingTickEvent {
 
@@ -31,6 +31,8 @@ public class LivingTickEvent {
                         }
                         if (capabilities.getBoolean("nightVision") && e.getEntityLiving().getActivePotionEffect(Potion.getPotionFromResourceLocation("night_vision")) != null && e.getEntityLiving().getActivePotionEffect(Potion.getPotionFromResourceLocation("night_vision")).getDuration() <= 200 || capabilities.getBoolean("nightVision") && e.getEntityLiving().getActivePotionEffect(Potion.getPotionFromResourceLocation("night_vision")) == null)
                             e.getEntityLiving().addPotionEffect(new PotionEffect(Potion.getPotionFromResourceLocation("night_vision"), 400));
+                        if (capabilities.getBoolean("muscle"))
+                            e.getEntityLiving().moveEntityWithHeading(e.getEntityLiving().moveStrafing, e.getEntityLiving().moveForward * CubeMuscle.MOVEMENT_SPEED);
                     } else if (!stack.getTagCompound().hasNoTags()) {
                         NBTTagCompound capabilities = new NBTTagCompound();
                         CubeData[] specialCubes = DataHelper.getEffectCubes(stack);

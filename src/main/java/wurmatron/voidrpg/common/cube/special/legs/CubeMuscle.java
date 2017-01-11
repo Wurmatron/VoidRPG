@@ -1,5 +1,4 @@
-package wurmatron.voidrpg.common.cube.special.feet;
-
+package wurmatron.voidrpg.common.cube.special.legs;
 
 import net.minecraft.block.Block;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -10,46 +9,48 @@ import wurmatron.voidrpg.api.cube.ICube;
 import wurmatron.voidrpg.common.blocks.VoidRPGBlocks;
 import wurmatron.voidrpg.common.reference.Global;
 
-public class WaterWalking implements ICube {
+public class CubeMuscle implements ICube {
+
+    public static final float MOVEMENT_SPEED = 1.5f;
 
     @Override
     public String getName() {
-        return "waterWalk";
+        return "muscle";
     }
 
     @Override
     public Block getBlock() {
-        return VoidRPGBlocks.cubeWaterWalking;
+        return VoidRPGBlocks.cubeMuscle;
     }
 
     @Override
     public ResourceLocation getTexture() {
-        return new ResourceLocation(Global.MODID,"textures/cube/waterWalking.png");
+        return new ResourceLocation(Global.MODID,"textures/cube/muscle.png");
     }
 
     @Override
     public double getWeight() {
-        return 5;
-    }
-
-    @Override
-    public int getMaxDurability() {
-        return 50;
-    }
-
-    @Override
-    public int getComplexity() {
         return 20;
     }
 
     @Override
+    public int getMaxDurability() {
+        return 8192;
+    }
+
+    @Override
+    public int getComplexity() {
+        return 10;
+    }
+
+    @Override
     public int getMaxAmount(Item item) {
-        return 64;
+        return 24;
     }
 
     @Override
     public boolean getSupportedItem(EntityEquipmentSlot slot, Item item) {
-        return slot.equals(EntityEquipmentSlot.FEET);
+        return slot.equals(EntityEquipmentSlot.LEGS);
     }
 
     @Override

@@ -6,6 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.translation.I18n;
 import wurmatron.voidrpg.VoidRPG;
@@ -37,7 +38,9 @@ public class ItemModelArmor extends ItemArmor {
                 armorModel = new ArmorModel();
                 requiresUpdate = true;
             }
-        return armorModel;
+        if (entity.getActivePotionEffect(Potion.getPotionFromResourceLocation("invisibility")) == null)
+            return armorModel;
+        return null;
     }
 
     @Override

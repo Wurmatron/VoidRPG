@@ -110,12 +110,10 @@ public class BitHelper {
                 e.printStackTrace();
             }
             int modelValues = 0;
-            for (Boolean t : modelTest) {
+            for (Boolean t : modelTest)
                 if (t)
                     modelValues++;
-            }
-            if (!temp.contains(false) && modelValues == model.length)
-                return true;
+            return !temp.contains(false) && modelValues == model.length;
         }
         return false;
     }

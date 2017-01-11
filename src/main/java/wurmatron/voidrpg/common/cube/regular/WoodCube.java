@@ -37,6 +37,11 @@ public class WoodCube implements ICube {
     }
 
     @Override
+    public int getComplexity() {
+        return 1;
+    }
+
+    @Override
     public int getMaxAmount(Item item) {
         return 4096;
     }

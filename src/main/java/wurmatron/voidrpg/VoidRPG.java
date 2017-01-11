@@ -7,9 +7,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import wurmatron.voidrpg.common.blocks.VoidRPGBlocks;
 import wurmatron.voidrpg.common.config.ConfigHandler;
@@ -17,6 +15,7 @@ import wurmatron.voidrpg.common.cube.CubeRegistry;
 import wurmatron.voidrpg.common.cube.regular.*;
 import wurmatron.voidrpg.common.cube.special.feet.WaterWalking;
 import wurmatron.voidrpg.common.cube.special.head.NightVision;
+import wurmatron.voidrpg.common.cube.special.legs.CubeMuscle;
 import wurmatron.voidrpg.common.event.LivingTickEvent;
 import wurmatron.voidrpg.common.items.VoidRPGItems;
 import wurmatron.voidrpg.common.network.GuiHandler;
@@ -65,5 +64,6 @@ public class VoidRPG {
         CubeRegistry.registerCube(new WaterWalking());
         CubeRegistry.registerCube(new NightVision());
         CubeRegistry.registerCube(new CardboardArmor());
+        CubeRegistry.registerCube(new CubeMuscle());
     }
 }
