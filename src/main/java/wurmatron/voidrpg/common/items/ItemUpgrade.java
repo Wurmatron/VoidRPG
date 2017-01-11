@@ -12,7 +12,8 @@ public class ItemUpgrade extends Item {
     private static String[] materials;
 
     public ItemUpgrade(String[] materials) {
-        ItemUpgrade.materials = materials;
+        if (materials != null && materials.length > 0)
+            ItemUpgrade.materials = materials;
         setCreativeTab(VoidRPG.tabVoidRPG);
         setHasSubtypes(true);
         setUnlocalizedName("upgrade");

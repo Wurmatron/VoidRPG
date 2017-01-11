@@ -50,5 +50,6 @@ public class ItemModelArmor extends ItemArmor {
         if (maxDurability <= 0)
             maxDurability = 1;
         tip.add(TextFormatting.GRAY + I18n.translateToLocal(Local.STAT_DURABILITY) + ": " + TextFormatting.AQUA + (DataHelper.getDurability(stack, false) / maxDurability) * 100 + "%");
+        tip.add(TextFormatting.GRAY + I18n.translateToLocal(Local.STAT_COMPLEXITY) + ": " + TextFormatting.AQUA + (DataHelper.getComplexity(stack, false)));
     }
 }

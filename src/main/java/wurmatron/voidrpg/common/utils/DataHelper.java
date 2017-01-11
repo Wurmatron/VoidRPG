@@ -150,4 +150,22 @@ public class DataHelper {
         }
         return -1;
     }
+
+    public static int getComplexity(ItemStack stack, boolean update) {
+        boolean temp = update;
+        if (stack != null && stack.hasTagCompound()) {
+            if (!stack.getTagCompound().hasKey(NBT.COMPLEXITY))
+                temp = true;
+            if (temp) {
+                CubeData[] cubes = getDataFromStack(stack);
+                int complexity = 0;
+                for (CubeData cube : cubes)
+                    if (cube != null && cube.cube != null)
+                        complexity += cube.cube.getComplexity();
+                stack.getTagCompound().setInteger(NBT.COMPLEXITY, complexity);
+            }
+            return stack.getTagCompound().getInteger(NBT.COMPLEXITY);
+        }
+        return -1;
+    }
 }

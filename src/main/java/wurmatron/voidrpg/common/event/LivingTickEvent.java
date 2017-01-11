@@ -33,6 +33,8 @@ public class LivingTickEvent {
                             e.getEntityLiving().addPotionEffect(new PotionEffect(Potion.getPotionFromResourceLocation("night_vision"), 400));
                         if (capabilities.getBoolean("muscle"))
                             e.getEntityLiving().moveEntityWithHeading(e.getEntityLiving().moveStrafing, e.getEntityLiving().moveForward * CubeMuscle.MOVEMENT_SPEED);
+                        if (capabilities.getBoolean("waterBreathing") && e.getEntityLiving().getActivePotionEffect(Potion.getPotionFromResourceLocation("water_breathing")) != null && e.getEntityLiving().getActivePotionEffect(Potion.getPotionFromResourceLocation("water_breathing")).getDuration() <= 200 || capabilities.getBoolean("water_breathing") && e.getEntityLiving().getActivePotionEffect(Potion.getPotionFromResourceLocation("water_breathing")) == null)
+                            e.getEntityLiving().addPotionEffect(new PotionEffect(Potion.getPotionFromResourceLocation("water_breathing"), 400));
                     } else if (!stack.getTagCompound().hasNoTags()) {
                         NBTTagCompound capabilities = new NBTTagCompound();
                         CubeData[] specialCubes = DataHelper.getEffectCubes(stack);

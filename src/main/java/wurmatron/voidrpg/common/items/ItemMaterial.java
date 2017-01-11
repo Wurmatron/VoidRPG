@@ -12,7 +12,8 @@ public class ItemMaterial extends Item {
     private static String[] materials;
 
     public ItemMaterial(String[] materials) {
-        ItemMaterial.materials = materials;
+        if (materials != null && materials.length > 0)
+            ItemMaterial.materials = materials;
         setCreativeTab(VoidRPG.tabVoidRPG);
         setHasSubtypes(true);
         setUnlocalizedName("itemMaterial");
