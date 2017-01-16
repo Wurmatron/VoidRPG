@@ -17,12 +17,11 @@ public class SetTargetEvent {
             EntityPlayer player = (EntityPlayer) e.getTarget();
             if (player.inventory != null && player.inventory.armorInventory != null)
                 for (ItemStack stack : player.inventory.armorInventory)
-                    if (stack != null && stack.getItem() instanceof ItemModelArmor && stack.hasTagCompound())
-                        if (!stack.getTagCompound().hasNoTags() && stack.getTagCompound().hasKey(NBT.CAPABILITIES)) {
-                            NBTTagCompound capabilities = stack.getTagCompound().getCompoundTag(NBT.CAPABILITIES);
-                            if (capabilities.getBoolean("mobStealth"))
-                                ((EntityLiving) e.getEntity()).setAttackTarget(null);
-                        }
+                    if (stack != null && stack.getItem() instanceof ItemModelArmor && stack.hasTagCompound() && !stack.getTagCompound().hasNoTags() && stack.getTagCompound().hasKey(NBT.CAPABILITIES)) {
+                        NBTTagCompound capabilities = stack.getTagCompound().getCompoundTag(NBT.CAPABILITIES);
+                        if (capabilities.getBoolean("mobStealth"))
+                            ((EntityLiving) e.getEntity()).setAttackTarget(null);
+                    }
         }
     }
 }

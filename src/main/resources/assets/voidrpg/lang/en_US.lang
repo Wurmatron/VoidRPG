@@ -4,8 +4,8 @@ itemGroup.tabVoidRPG=VoidRPG
 # Items
 item.creationStaff.name=Creation Staff
 item.modelPlacer_0.name=Model Placer (Boots)
-item.modelPlacer_1.name=Model Placer (Leggings)
-item.modelPlacer_2.name=Model Placer (Chestplate)
+item.modelPlacer_1.name=Model Placer (Chestplate)
+item.modelPlacer_2.name=Model Placer (Leggings)
 item.modelPlacer_3.name=Model Placer (Helmet)
 item.armor_feet.name=Boots
 item.armor_legs.name=Leggings
@@ -110,6 +110,7 @@ tile.cubeCooldownReduction.name=Cooldown Reduction
 
 # Tooltips
 tooltip.placmenttype.name=Type
+tooltip.modeltype.name=Model Type
 type.helmet=Helmet
 type.chestplate=Chestplate
 type.leggings=Leggings

@@ -6,4 +6,5 @@ public class Local {
     public static final String STAT_COMPLEXITY = "stat.complexity.name";
     public static final String STAT_ENERGY = "stat.energy.name";
     public static final String PLACMENT_TYPE = "tooltip.placmenttype.name";
+    public static final String MODEL_TYPE = "tooltip.modeltype.name";
 }

@@ -6,6 +6,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
 import wurmatron.voidrpg.common.container.ContainerCubeCreator;
 import wurmatron.voidrpg.common.reference.Global;
+import wurmatron.voidrpg.common.utils.LogHandler;
 
 public class GuiCubeCreator extends GuiContainer {
 
@@ -20,6 +21,7 @@ public class GuiCubeCreator extends GuiContainer {
     @Override
     public void drawScreen(int mouseX, int mouseY, float f) {
         super.drawScreen(mouseX, mouseY, f);
+        LogHandler.debug("Time: " + time);
     }
 
     @Override

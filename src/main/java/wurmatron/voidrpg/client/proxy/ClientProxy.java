@@ -8,6 +8,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.IThreadListener;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import wurmatron.voidrpg.common.items.ItemModelPlacer;
 import wurmatron.voidrpg.common.items.VoidRPGItems;
 import wurmatron.voidrpg.common.proxy.CommonProxy;
 import wurmatron.voidrpg.common.reference.Global;
@@ -42,7 +43,8 @@ public class ClientProxy extends CommonProxy {
             ModelLoader.setCustomModelResourceLocation(VoidRPGItems.itemMaterial, s, new ModelResourceLocation(Global.MODID + ":" + VoidRPGItems.materials[s], "inventory"));
         for (int s = 0; s < VoidRPGItems.upgrades.length; s++)
             ModelLoader.setCustomModelResourceLocation(VoidRPGItems.itemUpgrade, s, new ModelResourceLocation(Global.MODID + ":" + VoidRPGItems.upgrades[s], "inventory"));
-
+        for(int s = 0; s < 4; s++)
+            ModelLoader.setCustomModelResourceLocation(VoidRPGItems.modelPlacer,s, new ModelResourceLocation(Global.MODID + ":armor_" + ItemModelPlacer.getNameFromMeta(s)));
     }
 
     @Override
