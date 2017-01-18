@@ -69,7 +69,7 @@ public class DataHelper {
         if (stack != null && stack.hasTagCompound() && !stack.getTagCompound().hasNoTags()) {
             for (int i = 0; i < stack.getTagCompound().getSize(); i++) {
                 NBTTagCompound temp = stack.getTagCompound().getCompoundTag(Integer.toString(i));
-                for (int s = 0; s < temp.getSize(); s++)
+                for (int s = 0; s <= temp.getSize(); s++)
                     data.add(BitHelper.readCubeDataFromNBT(temp.getCompoundTag(Integer.toString(s))));
             }
             return removeNull(data.toArray(new CubeData[0]));
