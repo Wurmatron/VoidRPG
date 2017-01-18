@@ -24,6 +24,7 @@ public class VoidRPGItems {
         registerItem(goggles = new ItemGoggles());
         GameRegistry.registerItem(itemMaterial = new ItemMaterial(materials));
         GameRegistry.registerItem(itemUpgrade = new ItemUpgrade(upgrades));
+        registerItem(itemStaff = new ItemStaff());
         registerItem(armorHelmet = new ItemModelArmor(ItemArmor.ArmorMaterial.CHAIN, 0, EntityEquipmentSlot.HEAD));
         registerItem(armorChestplate = new ItemModelArmor(ItemArmor.ArmorMaterial.CHAIN, 0, EntityEquipmentSlot.CHEST));
         registerItem(armorLeggings = new ItemModelArmor(ItemArmor.ArmorMaterial.CHAIN, 1, EntityEquipmentSlot.LEGS));

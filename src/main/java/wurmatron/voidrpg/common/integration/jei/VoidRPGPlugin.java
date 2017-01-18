@@ -40,7 +40,7 @@ public class VoidRPGPlugin extends BlankModPlugin {
 
             @Nullable
             @Override
-            public java.util.List<Rectangle> getGuiExtraAreas(GuiCubeCreator gui) {
+            public List<Rectangle> getGuiExtraAreas(GuiCubeCreator gui) {
                 List<Rectangle> list = new ArrayList<>();
                 list.add(new Rectangle((gui.width - 256) / 2, (gui.height - 212) / 2, 256, 212));
                 return list;

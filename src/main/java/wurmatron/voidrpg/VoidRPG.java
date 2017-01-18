@@ -15,10 +15,12 @@ import wurmatron.voidrpg.common.cube.CubeRegistry;
 import wurmatron.voidrpg.common.cube.regular.*;
 import wurmatron.voidrpg.common.cube.special.LifeSteal;
 import wurmatron.voidrpg.common.cube.special.MobStealth;
+import wurmatron.voidrpg.common.cube.special.feet.FallReduction;
 import wurmatron.voidrpg.common.cube.special.feet.WaterWalking;
 import wurmatron.voidrpg.common.cube.special.head.NightVision;
 import wurmatron.voidrpg.common.cube.special.head.WaterBreathing;
 import wurmatron.voidrpg.common.cube.special.legs.CubeMuscle;
+import wurmatron.voidrpg.common.event.FallEvent;
 import wurmatron.voidrpg.common.event.HurtEvent;
 import wurmatron.voidrpg.common.event.LivingTickEvent;
 import wurmatron.voidrpg.common.event.SetTargetEvent;
@@ -63,6 +65,7 @@ public class VoidRPG {
         MinecraftForge.EVENT_BUS.register(new LivingTickEvent());
         MinecraftForge.EVENT_BUS.register(new HurtEvent());
         MinecraftForge.EVENT_BUS.register(new SetTargetEvent());
+        MinecraftForge.EVENT_BUS.register(new FallEvent());
         CubeRegistry.registerCube(new LightArmor());
         CubeRegistry.registerCube(new HeavyArmor());
         CubeRegistry.registerCube(new CarborArmor());
@@ -75,5 +78,6 @@ public class VoidRPG {
         CubeRegistry.registerCube(new WaterBreathing());
         CubeRegistry.registerCube(new LifeSteal());
         CubeRegistry.registerCube(new MobStealth());
+        CubeRegistry.registerCube(new FallReduction());
     }
 }

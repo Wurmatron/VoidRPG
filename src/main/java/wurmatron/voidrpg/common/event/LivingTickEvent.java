@@ -38,7 +38,7 @@ public class LivingTickEvent {
                     } else if (!stack.getTagCompound().hasNoTags()) {
                         NBTTagCompound capabilities = new NBTTagCompound();
                         CubeData[] specialCubes = DataHelper.getEffectCubes(stack);
-                        if (specialCubes.length > 0) {
+                        if (specialCubes != null && specialCubes.length > 0) {
                             for (CubeData data : specialCubes) {
                                 // Check for Valid Prerequisites for cube to work here
                                 if (data != null && data.cube != null)

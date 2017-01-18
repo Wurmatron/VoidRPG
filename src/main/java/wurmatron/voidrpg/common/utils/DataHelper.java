@@ -79,7 +79,7 @@ public class DataHelper {
 
     public static CubeData[] getEffectCubes(ItemStack stack) {
         ArrayList<CubeData> data = new ArrayList<>();
-        if (stack != null && stack.hasTagCompound() && !stack.getTagCompound().hasNoTags()) {
+        if (stack != null && stack.hasTagCompound() && !stack.getTagCompound().hasNoTags() && stack.getTagCompound().getTag("1") != null) {
             NBTTagCompound specialCubes = (NBTTagCompound) stack.getTagCompound().getTag("1");
             if (!specialCubes.hasNoTags())
                 for (int i = 0; i < specialCubes.getSize(); i++)
