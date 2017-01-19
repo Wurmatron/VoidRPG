@@ -27,34 +27,13 @@ import wurmatron.voidrpg.common.reference.NBT;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class BitHelper {
 
     private static final ChiselAndBitsAPI api = new ChiselAndBitsAPI();
-    public static final ArrayList<Vec3i> modelHead = new ArrayList<>();
-    public static final ArrayList<Vec3i> modelLeggings = new ArrayList<>();
-
-    private static final IBitBrush bodyBrush = new IBitBrush() {
-        @Override
-        public boolean isAir() {
-            return true;
-        }
-
-        @Override
-        public IBlockState getState() {
-            return Blocks.PLANKS.getDefaultState();
-        }
-
-        @Override
-        public ItemStack getItemStack(int i) {
-            return new ItemStack(Blocks.PLANKS, i, 0);
-        }
-
-        @Override
-        public int getStateID() {
-            return 0;
-        }
-    };
+    public static final List<Vec3i> modelHead = new ArrayList<>();
+    public static final List<Vec3i> modelLeggings = new ArrayList<>();
 
     private static final IBitBrush airBrush = new IBitBrush() {
         @Override
@@ -97,7 +76,7 @@ public class BitHelper {
                 LogHandler.info("World");
                 for (Vec3i vec : model) {
                     IBitAccess bit = api.getBitAccess(world, pos);
-                    if (bit != null || bit.getBitAt(vec.getX(), vec.getY(), vec.getZ()).isAir() || !bit.getBitAt(vec.getX(), vec.getY(), vec.getZ()).getState().getBlock().getUnlocalizedName().equals(VoidRPGBlocks.bodyBlock.getUnlocalizedName()))
+                    if (bit != null && bit.getBitAt(vec.getX(), vec.getY(), vec.getZ()).isAir() || bit != null && !bit.getBitAt(vec.getX(), vec.getY(), vec.getZ()).getState().getBlock().getUnlocalizedName().equals(VoidRPGBlocks.bodyBlock.getUnlocalizedName()))
                         return false;
                 }
                 return true;

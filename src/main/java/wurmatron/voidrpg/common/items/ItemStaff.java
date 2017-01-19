@@ -15,9 +15,6 @@ import wurmatron.voidrpg.VoidRPG;
 import wurmatron.voidrpg.api.cube.CubeData;
 import wurmatron.voidrpg.common.utils.BitHelper;
 import wurmatron.voidrpg.common.utils.DataHelper;
-import wurmatron.voidrpg.common.utils.LogHandler;
-
-import java.util.ArrayList;
 
 public class ItemStaff extends Item {
 

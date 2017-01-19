@@ -27,7 +27,7 @@ public class CubeCreatorCategory extends BlankRecipeCategory<CubeCreatorRecipeWr
     @Nonnull
     @Override
     public String getTitle() {
-        return "Cube Creator";
+        return "CubeJson Creator";
     }
 
     @Nonnull

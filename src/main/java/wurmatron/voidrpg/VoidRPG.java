@@ -8,9 +8,11 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import wurmatron.voidrpg.common.blocks.VoidRPGBlocks;
 import wurmatron.voidrpg.common.config.ConfigHandler;
+import wurmatron.voidrpg.common.config.JsonHandler;
 import wurmatron.voidrpg.common.cube.CubeRegistry;
 import wurmatron.voidrpg.common.cube.regular.*;
 import wurmatron.voidrpg.common.cube.special.LifeSteal;
@@ -79,5 +81,10 @@ public class VoidRPG {
         CubeRegistry.registerCube(new LifeSteal());
         CubeRegistry.registerCube(new MobStealth());
         CubeRegistry.registerCube(new FallReduction());
+    }
+
+    @Mod.EventHandler
+    public void onServerStarting(FMLServerStartingEvent e) {
+        JsonHandler.loadJsonCubes();
     }
 }

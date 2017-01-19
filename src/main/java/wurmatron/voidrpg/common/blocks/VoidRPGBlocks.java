@@ -22,7 +22,7 @@ public class VoidRPGBlocks {
     public static Block armorEnergyShieldII;
     public static Block armorEnergyShieldIII;
     public static Block armorLife;
-    //     Cube
+    // Cube
     public static Block cubeWaterWalking;
     public static Block cubeCreator;
     public static Block cubeShock;

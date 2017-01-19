@@ -28,7 +28,7 @@ public class ConfigHandler {
             LogHandler.info("Loading main config");
             debug = mainConfig.get(Configuration.CATEGORY_GENERAL, "debug", Defaults.DEBUG, "Enable Debug Mode");
             Settings.debug = debug.getBoolean();
-            cubeCreatorUpdatePeriod = mainConfig.get(Configuration.CATEGORY_GENERAL, "cubeCreatorUpdatePeriod", Defaults.CUBECREATORUPDATEPERIOD, "Cube Creator Update Time");
+            cubeCreatorUpdatePeriod = mainConfig.get(Configuration.CATEGORY_GENERAL, "cubeCreatorUpdatePeriod", Defaults.CUBECREATORUPDATEPERIOD, "CubeJson Creator Update Time");
             Settings.cubeCreatorUpdatePeriod = cubeCreatorUpdatePeriod.getInt();
 
             if (mainConfig.hasChanged()) {

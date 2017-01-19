@@ -58,6 +58,7 @@ public class ItemModelPlacer extends Item {
                     BitHelper.createBaseArmorBlock(modelBoots.toArray(new Vec3i[0]), world, pos);
                     return EnumActionResult.SUCCESS;
                 }
+                default: return EnumActionResult.PASS;
             }
         }
         return EnumActionResult.FAIL;
