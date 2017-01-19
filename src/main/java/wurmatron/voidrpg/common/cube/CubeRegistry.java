@@ -10,7 +10,7 @@ import java.util.List;
 public class CubeRegistry {
 
     private static ICube[] cubes = new ICube[256];
-    private static HashMap<ICube, Integer> idCache = new HashMap<>();
+    private static HashMap<ICube, Byte> idCache = new HashMap<>();
 
     public static List<ICube> getCubes() {
         return Collections.unmodifiableList(Arrays.asList(cubes));
@@ -18,7 +18,7 @@ public class CubeRegistry {
 
     public static void registerCube(ICube cube) {
         if (!getCubes().contains(cube))
-            for (int index = 0; index < cubes.length; index++)
+            for (byte index = 0; index < cubes.length; index++)
                 if (cubes[index] == null) {
                     cubes[index] = cube;
                     idCache.put(cube, index);
@@ -39,7 +39,7 @@ public class CubeRegistry {
         return null;
     }
 
-    public static int getIDForCube(ICube cube) {
+    public static byte getIDForCube(ICube cube) {
         if (cube != null && idCache.containsKey(cube))
             return idCache.get(cube);
         return -1;

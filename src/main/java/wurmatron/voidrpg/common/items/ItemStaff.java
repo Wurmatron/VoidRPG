@@ -15,6 +15,7 @@ import wurmatron.voidrpg.VoidRPG;
 import wurmatron.voidrpg.api.cube.CubeData;
 import wurmatron.voidrpg.common.utils.BitHelper;
 import wurmatron.voidrpg.common.utils.DataHelper;
+import wurmatron.voidrpg.common.utils.LogHandler;
 
 import java.util.ArrayList;
 
@@ -29,28 +30,15 @@ public class ItemStaff extends Item {
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
-        switch (stack.getItemDamage()) {
-            case (0): {
-                ArrayList<Vec3i> modelHead = new ArrayList<>();
-                for (int x = 0; x < 15; x++)
-                    for (int y = 0; y < 15; y++)
-                        for (int z = 0; z < 15; z++)
-                            if (x <= 12 && x > 4 && y <= 8 && z <= 12 && z > 4)
-                                modelHead.add(new Vec3i(x, y, z));
-                RayTraceResult ray = Minecraft.getMinecraft().getRenderViewEntity().rayTrace(5, 1);
-                if (ray != null && world.getBlockState(ray.getBlockPos()).getBlock() != Blocks.AIR) {
-                    CubeData[] data = BitHelper.getDataFromModel(world, ray.getBlockPos(), modelHead.toArray(new Vec3i[0]), 16, 16, 16, new Vec3i(0, 0, 0));
-                    ItemStack item = DataHelper.addDataToStack(new ItemStack(VoidRPGItems.armorHelmet, 1, 0), data);
-                    player.inventory.addItemStackToInventory(item);
-                }
-                return new ActionResult(EnumActionResult.PASS, stack);
-            }
-            case(1): {
-                ArrayList<Vec3i> modelBoots = new ArrayList<>();
-
+        RayTraceResult ray = Minecraft.getMinecraft().getRenderViewEntity().rayTrace(5, 1);
+        if (ray != null && world.getBlockState(ray.getBlockPos()).getBlock() != Blocks.AIR) {
+            if (BitHelper.hasValidModel(world, ray.getBlockPos(), BitHelper.modelHead.toArray(new Vec3i[0]))) {
+                CubeData[] data = BitHelper.getDataFromModel(world, ray.getBlockPos(), BitHelper.modelHead.toArray(new Vec3i[0]), 16, 16, 16, new Vec3i(0, 0, 0));
+                ItemStack item = DataHelper.addDataToStack(new ItemStack(VoidRPGItems.armorHelmet, 1, 0), data);
+                player.inventory.addItemStackToInventory(item);
             }
         }
-        return new ActionResult(EnumActionResult.FAIL, stack);
+        return new ActionResult(EnumActionResult.PASS, stack);
     }
 
 }

@@ -110,7 +110,7 @@ public class DataHelper {
                         total += cube.cube.getWeight();
                 stack.getTagCompound().setDouble(NBT.WEIGHT, total);
             }
-            return stack.getTagCompound().getDouble(NBT.WEIGHT);
+            return Math.round(stack.getTagCompound().getDouble(NBT.WEIGHT));
         }
         return -1;
     }
