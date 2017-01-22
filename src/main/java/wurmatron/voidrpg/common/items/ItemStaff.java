@@ -15,6 +15,7 @@ import wurmatron.voidrpg.VoidRPG;
 import wurmatron.voidrpg.api.cube.CubeData;
 import wurmatron.voidrpg.common.utils.BitHelper;
 import wurmatron.voidrpg.common.utils.DataHelper;
+import wurmatron.voidrpg.common.utils.LogHandler;
 
 public class ItemStaff extends Item {
 
@@ -29,6 +30,12 @@ public class ItemStaff extends Item {
     public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
         RayTraceResult ray = Minecraft.getMinecraft().getRenderViewEntity().rayTrace(5, 1);
         if (ray != null && world.getBlockState(ray.getBlockPos()).getBlock() != Blocks.AIR) {
+            LogHandler.info("Legs: " + BitHelper.hasValidModel(world,ray.getBlockPos(),BitHelper.modelLeggings.toArray(new Vec3i[0])));
+            if(BitHelper.hasValidModel(world,ray.getBlockPos(),BitHelper.modelLeggings.toArray(new Vec3i[0]))) {
+                CubeData[] data = BitHelper.getDataFromModel(world, ray.getBlockPos(), BitHelper.modelHead.toArray(new Vec3i[0]), 16, 16, 16, new Vec3i(0, 0, 0));
+                ItemStack item = DataHelper.addDataToStack(new ItemStack(VoidRPGItems.armorLeggings, 1, 0), data);
+                player.inventory.addItemStackToInventory(item);
+            }
             if (BitHelper.hasValidModel(world, ray.getBlockPos(), BitHelper.modelHead.toArray(new Vec3i[0]))) {
                 CubeData[] data = BitHelper.getDataFromModel(world, ray.getBlockPos(), BitHelper.modelHead.toArray(new Vec3i[0]), 16, 16, 16, new Vec3i(0, 0, 0));
                 ItemStack item = DataHelper.addDataToStack(new ItemStack(VoidRPGItems.armorHelmet, 1, 0), data);

@@ -36,9 +36,16 @@ public class ItemModelArmor extends ItemArmor {
     public ModelBiped getArmorModel(EntityLivingBase entity, ItemStack stack, EntityEquipmentSlot slot, ModelBiped _default) {
         if (requiresUpdate)
             if (armorModel != null) {
-                armorModel.addHeadCubes(DataHelper.rotateUp(DataHelper.getDataFromStack(stack)));
-                armorModel.handleData(_default);
-                requiresUpdate = false;
+                if (stack.getItem().equals(VoidRPGItems.armorHelmet)) {
+                    armorModel.addHeadCubes(DataHelper.rotateUp(DataHelper.getDataFromStack(stack)));
+                    armorModel.handleData(_default);
+                    requiresUpdate = false;
+                }
+                if (stack.getItem().equals(VoidRPGItems.armorLeggings)) {
+                    armorModel.addLeftLegCubes(DataHelper.rotateUp(DataHelper.getDataFromStack(stack)));
+                    armorModel.handleData(_default);
+                    requiresUpdate = false;
+                }
             } else {
                 armorModel = new ArmorModel();
                 requiresUpdate = true;

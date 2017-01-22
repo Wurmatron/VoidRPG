@@ -16,7 +16,7 @@ public class BasicCube implements ICube {
     private int maxDurability;
     private int complexity;
     private int maxAmount;
-    private EntityEquipmentSlot supported;
+    private EntityEquipmentSlot[] supported;
     private String description;
     private double protection;
 
@@ -28,10 +28,38 @@ public class BasicCube implements ICube {
         this.maxAmount = maxAmount;
         this.complexity = complexity;
         this.maxDurability = maxDurability;
+        this.supported[0] = supported;
+        this.description = description;
+        this.protection = protection;
+    }
+
+    public BasicCube(String name, Block block, ResourceLocation texture, double weight, int maxDurability, int complexity, int maxAmount, EntityEquipmentSlot[] supported, String description, double protection) {
+        this.name = name;
+        this.block = block;
+        this.texture = texture;
+        this.weight = weight;
+        this.maxAmount = maxAmount;
+        this.complexity = complexity;
+        this.maxDurability = maxDurability;
         this.supported = supported;
         this.description = description;
         this.protection = protection;
     }
+
+    public BasicCube(String name, Block block, ResourceLocation texture, double weight, int maxDurability, int complexity, int maxAmount, String description, double protection) {
+        this.name = name;
+        this.block = block;
+        this.texture = texture;
+        this.weight = weight;
+        this.maxAmount = maxAmount;
+        this.complexity = complexity;
+        this.maxDurability = maxDurability;
+        this.supported = new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD,EntityEquipmentSlot.CHEST,EntityEquipmentSlot.LEGS,EntityEquipmentSlot.FEET};
+        this.description = description;
+        this.protection = protection;
+    }
+
+
 
     @Override
     public String getName() {

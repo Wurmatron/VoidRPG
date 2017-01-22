@@ -65,18 +65,19 @@ public class BitHelper {
         if (modelHead.size() <= 0 && modelLeggings.size() <= 0)
             for (int x = 0; x < 15; x++)
                 for (int y = 0; y < 15; y++)
-                    for (int z = 0; z < 15; z++) {
+                    for (int z = 0; z < 15; z++)
                         if (x <= 12 && x > 4 && y <= 8 && z <= 12 && z > 4)
                             modelHead.add(new Vec3i(x, y, z));
-                        if (x <= 12 && x < 4 && y <= 8 && z <= 8 && z >= 4)
-                            modelLeggings.add(new Vec3i(x, y, z));
-                    }
-        if (world != null && pos != null && model != null && model.length > 0 && api.isBlockChiseled(world, pos)) {
+        for (int x = 4; x < 12; x++)
+            for (int y = 0; y < 9; y++)
+                for (int z = 6; z < 10; z++)
+                    modelLeggings.add(new Vec3i(x, y, z));
+        if (world != null && pos != null && model != null && model.length > 0 && api.isBlockChiseled(world, pos) && !world.isRemote) {
             try {
-                LogHandler.info("World");
+                IBitAccess bit = api.getBitAccess(world, pos);
                 for (Vec3i vec : model) {
-                    IBitAccess bit = api.getBitAccess(world, pos);
-                    if (bit != null && bit.getBitAt(vec.getX(), vec.getY(), vec.getZ()).isAir() || bit != null && !bit.getBitAt(vec.getX(), vec.getY(), vec.getZ()).getState().getBlock().getUnlocalizedName().equals(VoidRPGBlocks.bodyBlock.getUnlocalizedName()))
+                    LogHandler.info("Bit: " + bit.getBitAt(vec.getX(), vec.getY(), vec.getZ()).isAir());
+                    if (bit.getBitAt(vec.getX(), vec.getY(), vec.getZ()).isAir() || !bit.getBitAt(vec.getX(), vec.getY(), vec.getZ()).isAir() && !bit.getBitAt(vec.getX(), vec.getY(), vec.getZ()).getState().getBlock().getUnlocalizedName().equalsIgnoreCase(VoidRPGBlocks.bodyBlock.getUnlocalizedName()))
                         return false;
                 }
                 return true;
