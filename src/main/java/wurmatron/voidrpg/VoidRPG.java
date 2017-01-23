@@ -18,6 +18,7 @@ import wurmatron.voidrpg.common.cube.CubeRegistry;
 import wurmatron.voidrpg.common.cube.regular.*;
 import wurmatron.voidrpg.common.cube.special.LifeSteal;
 import wurmatron.voidrpg.common.cube.special.MobStealth;
+import wurmatron.voidrpg.common.cube.special.chest.Gravity;
 import wurmatron.voidrpg.common.cube.special.feet.FallReduction;
 import wurmatron.voidrpg.common.cube.special.feet.WaterWalking;
 import wurmatron.voidrpg.common.cube.special.head.NightVision;
@@ -32,7 +33,6 @@ import wurmatron.voidrpg.common.network.GuiHandler;
 import wurmatron.voidrpg.common.proxy.CommonProxy;
 import wurmatron.voidrpg.common.recipes.VoidRPGRecipes;
 import wurmatron.voidrpg.common.reference.Global;
-import wurmatron.voidrpg.common.utils.DataHelper;
 import wurmatron.voidrpg.common.utils.LogHandler;
 
 @Mod(modid = Global.MODID, name = Global.NAME, version = Global.VERSION, guiFactory = Global.GUIFACTORY, dependencies = Global.DEPENDENCIES)
@@ -83,6 +83,7 @@ public class VoidRPG {
         CubeRegistry.registerCube(new LifeSteal());
         CubeRegistry.registerCube(new MobStealth());
         CubeRegistry.registerCube(new FallReduction());
+        CubeRegistry.registerCube(new Gravity());
         CubeRegistry.registerCube(new BasicCube("decoWhite", VoidRPGBlocks.decoWoolWhile, new ResourceLocation(Global.MODID, "textures/cube/decoWhite.png"), 5.0, 500, 1, 4096, "", 5));
         CubeRegistry.registerCube(new BasicCube("decoOrange", VoidRPGBlocks.decoWoolOrange, new ResourceLocation(Global.MODID, "textures/cube/decoOrange.png"), 5.0, 500, 1, 4096, "", 5));
         CubeRegistry.registerCube(new BasicCube("decoMagenta", VoidRPGBlocks.decoWoolMagenta, new ResourceLocation(Global.MODID, "textures/cube/decoMagenta.png"), 5.0, 500, 1, 4096, "", 5));
