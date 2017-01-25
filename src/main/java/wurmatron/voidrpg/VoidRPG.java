@@ -72,7 +72,7 @@ public class VoidRPG {
         MinecraftForge.EVENT_BUS.register(new FallEvent());
         CubeRegistry.registerCube(new LightArmor());
         CubeRegistry.registerCube(new HeavyArmor());
-        CubeRegistry.registerCube(new CarborArmor());
+        CubeRegistry.registerCube(new CarbonArmor());
         CubeRegistry.registerCube(new CardboardArmor());
         CubeRegistry.registerCube(new WoodCube());
         CubeRegistry.registerCube(new WaterWalking());

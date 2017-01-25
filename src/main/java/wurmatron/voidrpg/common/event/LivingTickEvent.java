@@ -36,12 +36,11 @@ public class LivingTickEvent {
                             e.getEntityLiving().moveEntityWithHeading(e.getEntityLiving().moveStrafing, e.getEntityLiving().moveForward * CubeMuscle.MOVEMENT_SPEED);
                         if (capabilities.getBoolean("waterBreathing") && e.getEntityLiving().getActivePotionEffect(Potion.getPotionFromResourceLocation("water_breathing")) != null && e.getEntityLiving().getActivePotionEffect(Potion.getPotionFromResourceLocation("water_breathing")).getDuration() <= 200 || capabilities.getBoolean("water_breathing") && e.getEntityLiving().getActivePotionEffect(Potion.getPotionFromResourceLocation("water_breathing")) == null)
                             e.getEntityLiving().addPotionEffect(new PotionEffect(Potion.getPotionFromResourceLocation("water_breathing"), 400));
-                        if (capabilities.getBoolean("gravity"))
-                            if (e.getEntityLiving() instanceof EntityPlayer) {
+                        if (capabilities.getBoolean("gravity") && e.getEntityLiving() instanceof EntityPlayer) {
                             // TODO Find a way to disable
-                                EntityPlayer player = (EntityPlayer) e.getEntityLiving();
-                                player.capabilities.allowFlying = true;
-                            }
+                            EntityPlayer player = (EntityPlayer) e.getEntityLiving();
+                            player.capabilities.allowFlying = true;
+                        }
                     } else if (!stack.getTagCompound().hasNoTags()) {
                         NBTTagCompound capabilities = new NBTTagCompound();
                         CubeData[] specialCubes = DataHelper.getEffectCubes(stack);

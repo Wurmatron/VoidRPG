@@ -9,7 +9,7 @@ import wurmatron.voidrpg.api.cube.ICube;
 import wurmatron.voidrpg.common.blocks.VoidRPGBlocks;
 import wurmatron.voidrpg.common.reference.Global;
 
-public class CarborArmor implements ICube {
+public class CarbonArmor implements ICube {
 
     @Override
     public String getName() {
