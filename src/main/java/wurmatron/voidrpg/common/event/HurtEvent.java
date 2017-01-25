@@ -9,9 +9,13 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import wurmatron.voidrpg.api.cube.CubeData;
 import wurmatron.voidrpg.common.items.ItemModelArmor;
 import wurmatron.voidrpg.common.reference.NBT;
+import wurmatron.voidrpg.common.utils.BitHelper;
+import wurmatron.voidrpg.common.utils.DataHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -39,6 +43,15 @@ public class HurtEvent {
                                     }
                                 }
                             }
+                    }
+                    if (capabilities.getBoolean("damageConverter")) {
+                        CubeData[] specialCubes = DataHelper.getEffectCubes(stack);
+                        for (int s = 0; s < specialCubes.length; s++)
+                            if (specialCubes[s].cube.getName().equalsIgnoreCase("damageConverter"))
+                                specialCubes[s] = new CubeData(specialCubes[s].cube, specialCubes[s].xPos, specialCubes[s].yPos, specialCubes[s].zPos, specialCubes[s].damage + 1);
+                        NBTTagCompound nbt = stack.getTagCompound();
+                        nbt.removeTag("1");
+                        nbt.setTag("1", BitHelper.convertCubesToNBT(specialCubes)[1]);
                     }
                 }
             }

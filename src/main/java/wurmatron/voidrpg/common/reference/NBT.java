@@ -14,4 +14,5 @@ public class NBT {
     public static final String COMPLEXITY = "complexity";
     public static final String TIMER = "timer";
     public static final String CAPABILITIES = "capabilities";
+    public static final String REPAIR_TIMER = "repairTimer";
 }
