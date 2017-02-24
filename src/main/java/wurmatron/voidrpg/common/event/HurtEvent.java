@@ -15,7 +15,6 @@ import wurmatron.voidrpg.common.reference.NBT;
 import wurmatron.voidrpg.common.utils.BitHelper;
 import wurmatron.voidrpg.common.utils.DataHelper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 

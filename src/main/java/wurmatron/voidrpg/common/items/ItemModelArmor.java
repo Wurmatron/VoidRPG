@@ -15,6 +15,7 @@ import wurmatron.voidrpg.api.cube.CubeData;
 import wurmatron.voidrpg.api.cube.ICube;
 import wurmatron.voidrpg.client.model.ArmorModel;
 import wurmatron.voidrpg.common.reference.Local;
+import wurmatron.voidrpg.common.reference.NBT;
 import wurmatron.voidrpg.common.utils.DataHelper;
 
 import java.util.HashMap;
@@ -45,6 +46,8 @@ public class ItemModelArmor extends ItemArmor {
                     armorModel.addLeftLegCubes(DataHelper.rotateUp(DataHelper.getDataFromStack(stack)));
                     armorModel.handleData(_default);
                     requiresUpdate = false;
+                } if(stack.getItem().equals(VoidRPGItems.armorChestplate)) {
+                    armorModel.addBodyCubes(DataHelper.rotateUp(DataHelper.getDataFromStack(stack, NBT.BODY)));
                 }
             } else {
                 armorModel = new ArmorModel();
@@ -66,12 +69,12 @@ public class ItemModelArmor extends ItemArmor {
         if (Keyboard.isKeyDown(Keyboard.KEY_RCONTROL)) {
             HashMap<ICube, Integer> data = new HashMap<>();
             for (CubeData f : DataHelper.getDataFromStack(stack)) {
-                if (data.containsKey(f.cube)) {
+                if (f != null && data.containsKey(f.cube)) {
                     int count = data.get(f.cube);
                     data.remove(f.cube);
                     count++;
                     data.put(f.cube, count);
-                } else
+                } else if (f != null)
                     data.put(f.cube, 1);
             }
             tip.addAll(data.keySet().stream().map(g -> data.get(g) + "x " + I18n.translateToLocal(g.getName())).collect(Collectors.toList()));

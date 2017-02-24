@@ -20,7 +20,6 @@ import wurmatron.voidrpg.api.cube.CubeData;
 import wurmatron.voidrpg.common.reference.NBT;
 import wurmatron.voidrpg.common.utils.BitHelper;
 import wurmatron.voidrpg.common.utils.DataHelper;
-import wurmatron.voidrpg.common.utils.LogHandler;
 
 import java.util.List;
 
@@ -40,25 +39,23 @@ public class ItemStaff extends Item {
         if (stack.getTagCompound() != null) {
             RayTraceResult ray = Minecraft.getMinecraft().getRenderViewEntity().rayTrace(5, 1);
             if (ray != null && world.getBlockState(ray.getBlockPos()).getBlock() != Blocks.AIR) {
-                LogHandler.info("Legs: " + BitHelper.hasValidModel(world, ray.getBlockPos(), BitHelper.modelLeggings.toArray(new Vec3i[0])));
-                if (BitHelper.hasValidModel(world, ray.getBlockPos(), BitHelper.modelLeggings.toArray(new Vec3i[0]))) {
-                    CubeData[] data = BitHelper.getDataFromModel(world, ray.getBlockPos(), BitHelper.modelHead.toArray(new Vec3i[0]), 16, 16, 16, new Vec3i(0, 0, 0));
-                    ItemStack item = DataHelper.addDataToStack(new ItemStack(VoidRPGItems.armorLeggings, 1, 0), data);
-                    player.inventory.addItemStackToInventory(item);
-                    stack.getTagCompound().setInteger(NBT.CUBE_DAMAGE, stack.getTagCompound().getInteger(NBT.CUBE_DAMAGE) + 1);
-                }
                 if (BitHelper.hasValidModel(world, ray.getBlockPos(), BitHelper.modelHead.toArray(new Vec3i[0]))) {
                     CubeData[] data = BitHelper.getDataFromModel(world, ray.getBlockPos(), BitHelper.modelHead.toArray(new Vec3i[0]), 16, 16, 16, new Vec3i(0, 0, 0));
-                    ItemStack item = DataHelper.addDataToStack(new ItemStack(VoidRPGItems.armorHelmet, 1, 0), data);
+                    ItemStack item = DataHelper.createHelmetFromData(data);
                     player.inventory.addItemStackToInventory(item);
-                    stack.getTagCompound().setInteger(NBT.CUBE_DAMAGE, stack.getTagCompound().getInteger(NBT.CUBE_DAMAGE) + 1);
+                    stack.getTagCompound().setInteger(NBT.CUBE_DAMAGE, stack.getTagCompound().getInteger(NBT.CUBE_DAMAGE) - 1);
+                }
+                if (BitHelper.hasValidModel(world, ray.getBlockPos(), BitHelper.modelChest.toArray(new Vec3i[0])) && BitHelper.hasValidModel(world, ray.getBlockPos().add(1, 0, 0), BitHelper.modelArm.toArray(new Vec3i[0])) && BitHelper.hasValidModel(world, ray.getBlockPos().add(-1, 0, 0), BitHelper.modelArm.toArray(new Vec3i[0]))) {
+                    CubeData[] bodyData = BitHelper.getDataFromModel(world, ray.getBlockPos(), BitHelper.modelChest.toArray(new Vec3i[0]), 16, 16, 16, new Vec3i(0, 0, 0));
+                    CubeData[] rightArmData = BitHelper.getDataFromModel(world, ray.getBlockPos().add(1,0,0), BitHelper.modelArm.toArray(new Vec3i[0]), 16, 16, 16, new Vec3i(0, 0, 0));
+                    CubeData[] leftArmData = BitHelper.getDataFromModel(world, ray.getBlockPos().add(-1,0,0), BitHelper.modelArm.toArray(new Vec3i[0]), 16, 16, 16, new Vec3i(0, 0, 0));
+                    ItemStack item = DataHelper.createChestplateFromData(bodyData,leftArmData,rightArmData);
+                    player.inventory.addItemStackToInventory(item);
+                    stack.getTagCompound().setInteger(NBT.CUBE_DAMAGE, stack.getTagCompound().getInteger(NBT.CUBE_DAMAGE) - 1);
                 }
             }
-            if (stack.getTagCompound().getInteger(NBT.CUBE_DAMAGE) > MAX_DURABILITY) {
-                ItemStack staff = stack;
-                staff.getTagCompound().setInteger(NBT.CUBE_DAMAGE, stack.getTagCompound().getInteger(NBT.CUBE_DAMAGE) + 1);
-                player.inventory.deleteStack(staff);
-            }
+            if (stack.getTagCompound().getInteger(NBT.CUBE_DAMAGE) < MAX_DURABILITY)
+                player.inventory.deleteStack(stack);
             return new ActionResult(EnumActionResult.PASS, stack);
         }
         return new ActionResult(EnumActionResult.FAIL, stack);

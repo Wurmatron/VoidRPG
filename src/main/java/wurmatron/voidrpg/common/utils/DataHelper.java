@@ -3,6 +3,7 @@ package wurmatron.voidrpg.common.utils;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import wurmatron.voidrpg.api.cube.CubeData;
+import wurmatron.voidrpg.common.items.VoidRPGItems;
 import wurmatron.voidrpg.common.reference.NBT;
 
 import java.util.ArrayList;
@@ -51,12 +52,11 @@ public class DataHelper {
         return data;
     }
 
-    // TODO Needs support for multiple storage types not just one
-    // Example: Chestplate needs Body, Left and Right Arm == 3
-    public static ItemStack addDataToStack(ItemStack stack, CubeData[] data) {
+    public static final ItemStack createHelmetFromData(CubeData[] helmetData) {
+        ItemStack stack = new ItemStack(VoidRPGItems.armorHelmet, 1, 0);
         NBTTagCompound tag = new NBTTagCompound();
-        if (data != null && data.length > 0) {
-            NBTTagCompound[] nbt = BitHelper.convertCubesToNBT(data);
+        if (helmetData != null && helmetData.length > 0) {
+            NBTTagCompound[] nbt = BitHelper.convertCubesToNBT(helmetData);
             for (int i = 0; i < nbt.length; i++)
                 tag.setTag(Integer.toString(i), nbt[i]);
         }
@@ -64,15 +64,83 @@ public class DataHelper {
         return stack;
     }
 
-    public static CubeData[] getDataFromStack(ItemStack stack) {
-        ArrayList<CubeData> data = new ArrayList<>();
-        if (stack != null && stack.hasTagCompound() && !stack.getTagCompound().hasNoTags()) {
-            for (int i = 0; i < stack.getTagCompound().getSize(); i++) {
-                NBTTagCompound temp = stack.getTagCompound().getCompoundTag(Integer.toString(i));
+    // TODO Fix CubeData[] Reader
+    public static final ItemStack createChestplateFromData(CubeData[] chest, CubeData[] leftArm, CubeData[] rightArm) {
+        ItemStack stack = new ItemStack(VoidRPGItems.armorChestplate, 1, 0);
+        NBTTagCompound tag = new NBTTagCompound();
+        NBTTagCompound body = new NBTTagCompound();
+        if (chest != null || leftArm != null || rightArm != null) {
+            NBTTagCompound[] nbtChest = BitHelper.convertCubesToNBT(chest);
+            for (int i = 0; i < nbtChest.length; i++)
+                body.setTag(Integer.toString(i), nbtChest[i]);
+            tag.setTag(NBT.BODY, body);
+        }
+        stack.setTagCompound(tag);
+        return stack;
+    }
+
+    private static final NBTTagCompound[] convertDataToNBT(CubeData[]... cubeData) {
+        NBTTagCompound[] nbt = new NBTTagCompound[cubeData.length];
+        for (int index = 0; index < cubeData.length; index++) {
+            NBTTagCompound tag = new NBTTagCompound();
+            if (cubeData[index] != null && cubeData[index].length > 0) {
+                NBTTagCompound[] d = BitHelper.convertCubesToNBT(cubeData[index]);
+                for (int i = 0; i < d.length; i++)
+                    tag.setTag(Integer.toString(i), nbt[i]);
+                nbt[index] = tag;
+            }
+        }
+        return nbt;
+    }
+
+    private static final NBTTagCompound[] getNBTDataFromStack(ItemStack stack) {
+        if (stack != null && stack.getTagCompound() != null) {
+            ArrayList<CubeData> data = new ArrayList<>();
+            NBTTagCompound[] stackData = getDataFromNBTData(stack.getTagCompound());
+            for (int i = 0; i < stackData.length; i++) {
+                NBTTagCompound temp = stackData[i];
                 for (int s = 0; s <= temp.getSize(); s++)
                     data.add(BitHelper.readCubeDataFromNBT(temp.getCompoundTag(Integer.toString(s))));
             }
-            return removeNull(data.toArray(new CubeData[0]));
+        }
+        return new NBTTagCompound[0];
+    }
+
+    private static final NBTTagCompound[] getDataFromNBTData(NBTTagCompound nbt) {
+        NBTTagCompound[] data = new NBTTagCompound[nbt.getSize()];
+        for (int i = 0; i < nbt.getSize(); i++)
+            data[i] = nbt.getCompoundTag(Integer.toString(i));
+        return data;
+    }
+
+    public static CubeData[] getDataFromStack(ItemStack stack) {
+        return getDataFromStack(stack, "");
+    }
+
+    public static CubeData[] getDataFromStack(ItemStack stack, String type) {
+        ArrayList<CubeData> data = new ArrayList<>();
+        if (type.length() <= 0) {
+            if (stack != null && stack.hasTagCompound() && !stack.getTagCompound().hasNoTags()) {
+                for (int i = 0; i < stack.getTagCompound().getSize(); i++) {
+                    NBTTagCompound temp = stack.getTagCompound().getCompoundTag(Integer.toString(i));
+                    for (int s = 0; s <= temp.getSize(); s++)
+                        data.add(BitHelper.readCubeDataFromNBT(temp.getCompoundTag(Integer.toString(s))));
+                }
+                return removeNull(data.toArray(new CubeData[0]));
+            }
+        } else {
+            if (stack.getItem().equals(VoidRPGItems.armorChestplate)) {
+                if (type.equalsIgnoreCase(NBT.BODY)) {
+                    NBTTagCompound bodyNBT = stack.getTagCompound().getCompoundTag(NBT.BODY);
+                    for (int i = 0; i < bodyNBT.getSize(); i++) {
+                        NBTTagCompound temp = stack.getTagCompound().getCompoundTag(Integer.toString(i));
+                        for (int s = 0; s <= temp.getSize(); s++) {
+                            data.add(BitHelper.readCubeDataFromNBT(temp.getCompoundTag(Integer.toString(s))));
+                        }
+                    }
+                    return removeNull(data.toArray(new CubeData[0]));
+                }
+            }
         }
         return new CubeData[0];
     }

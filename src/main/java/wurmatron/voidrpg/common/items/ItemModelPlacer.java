@@ -41,6 +41,22 @@ public class ItemModelPlacer extends Item {
                     BitHelper.createBaseArmorBlock(modelHead.toArray(new Vec3i[0]), world, pos);
                     return EnumActionResult.SUCCESS;
                 }
+                case (1): {
+                    ArrayList<Vec3i> modelChest = new ArrayList<>();
+                    for (int x = 5; x < 12; x++)
+                        for (int y = 0; y < 12; y++)
+                            for (int z = 6; z < 10; z++)
+                                modelChest.add(new Vec3i(x, y, z));
+                    BitHelper.createBaseArmorBlock(modelChest.toArray(new Vec3i[0]), world, pos);
+                    ArrayList<Vec3i> modelArm = new ArrayList<>();
+                    for (int x = 6; x < 10; x++)
+                        for (int y = 0; y < 12; y++)
+                            for (int z = 6; z < 10; z++)
+                                modelArm.add(new Vec3i(x, y, z));
+                    BitHelper.createBaseArmorBlock(modelArm.toArray(new Vec3i[0]), world, pos.add(1, 0, 0));
+                    BitHelper.createBaseArmorBlock(modelArm.toArray(new Vec3i[0]), world, pos.add(-1, 0, 0));
+                    return EnumActionResult.SUCCESS;
+                }
                 case (2): {
                     ArrayList<Vec3i> modelLegs = new ArrayList<>();
                     for (int x = 4; x < 12; x++)
@@ -50,7 +66,7 @@ public class ItemModelPlacer extends Item {
                     BitHelper.createBaseArmorBlock(modelLegs.toArray(new Vec3i[0]), world, pos);
                     return EnumActionResult.SUCCESS;
                 }
-                case(3): {
+                case (3): {
                     ArrayList<Vec3i> modelBoots = new ArrayList<>();
                     for (int x = 4; x < 12; x++)
                         for (int y = 0; y < 5; y++)
@@ -59,7 +75,8 @@ public class ItemModelPlacer extends Item {
                     BitHelper.createBaseArmorBlock(modelBoots.toArray(new Vec3i[0]), world, pos);
                     return EnumActionResult.SUCCESS;
                 }
-                default: return EnumActionResult.PASS;
+                default:
+                    return EnumActionResult.PASS;
             }
         }
         return EnumActionResult.FAIL;
