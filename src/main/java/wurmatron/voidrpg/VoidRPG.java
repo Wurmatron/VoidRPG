@@ -52,7 +52,7 @@ public class VoidRPG {
 				NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler()); VoidRPGRecipes.init();
 				MinecraftForge.EVENT_BUS.register(new LivingTickEvent()); MinecraftForge.EVENT_BUS.register(new HurtEvent());
 				MinecraftForge.EVENT_BUS.register(new SetTargetEvent()); MinecraftForge.EVENT_BUS.register(new FallEvent());
-				CubeRegistry.addDefaultCubes(); CubeRegistry.addDefaultCubeCreatorRecipes();
+				CubeRegistry.addDefaultCubes();
 		}
 
 		@Mod.EventHandler

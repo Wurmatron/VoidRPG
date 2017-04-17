@@ -9,6 +9,7 @@ import net.minecraft.util.ResourceLocation;
 import wurmatron.voidrpg.api.cube.ICube;
 import wurmatron.voidrpg.common.blocks.VoidRPGBlocks;
 import wurmatron.voidrpg.common.reference.Global;
+import wurmatron.voidrpg.common.reference.Local;
 
 public class LightArmor implements ICube {
 
@@ -54,7 +55,7 @@ public class LightArmor implements ICube {
 
 		@Override
 		public String getDescription() {
-				return "";
+				return Local.CUBED_LIGHT;
 		}
 
 		@Override
