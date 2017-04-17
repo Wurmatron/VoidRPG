@@ -12,27 +12,23 @@ import wurmatron.voidrpg.common.tile.TileCubeCreator;
 
 public class GuiHandler implements IGuiHandler {
 
-    @Override
-    public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-        switch (ID) {
-            case (Global.CUBECREATOR_GUI): {
-                TileCubeCreator tile = (TileCubeCreator) world.getTileEntity(new BlockPos(x, y, z));
-                return new ContainerCubeCreator(player.inventory, tile);
-            }
-            default:
-                return new ContainerPlayer(player.inventory, true, player);
-        }
-    }
+		@Override
+		public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+				switch (ID) {
+						case (Global.CUBECREATOR_GUI): {
+								TileCubeCreator tile = (TileCubeCreator) world.getTileEntity(new BlockPos(x, y, z));
+								return new ContainerCubeCreator(player.inventory, tile);
+						} default: return new ContainerPlayer(player.inventory, true, player);
+				}
+		}
 
-    @Override
-    public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-        switch (ID) {
-            case (Global.CUBECREATOR_GUI): {
-                TileCubeCreator tile = (TileCubeCreator) world.getTileEntity(new BlockPos(x, y, z));
-                return new GuiCubeCreator(player.inventory, tile, 0);
-            }
-            default:
-                return null;
-        }
-    }
+		@Override
+		public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+				switch (ID) {
+						case (Global.CUBECREATOR_GUI): {
+								TileCubeCreator tile = (TileCubeCreator) world.getTileEntity(new BlockPos(x, y, z));
+								return new GuiCubeCreator(player.inventory, tile, 0);
+						} default: return null;
+				}
+		}
 }

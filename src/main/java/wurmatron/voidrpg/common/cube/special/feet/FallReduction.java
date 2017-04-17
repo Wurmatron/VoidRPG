@@ -11,58 +11,58 @@ import wurmatron.voidrpg.common.reference.Global;
 
 public class FallReduction implements ICube {
 
-    @Override
-    public String getName() {
-        return "shock";
-    }
+		@Override
+		public String getName() {
+				return "shock";
+		}
 
-    @Override
-    public Block getBlock() {
-        return VoidRPGBlocks.cubeShock;
-    }
+		@Override
+		public Block getBlock() {
+				return VoidRPGBlocks.cubeShock;
+		}
 
-    @Override
-    public ResourceLocation getTexture() {
-        return new ResourceLocation(Global.MODID, "textures/cube/shock.png");
-    }
+		@Override
+		public ResourceLocation getTexture() {
+				return new ResourceLocation(Global.MODID, "textures/cube/shock.png");
+		}
 
-    @Override
-    public double getWeight() {
-        return 25;
-    }
+		@Override
+		public double getWeight() {
+				return 25;
+		}
 
-    @Override
-    public int getMaxDurability() {
-        return 2500;
-    }
+		@Override
+		public int getMaxDurability() {
+				return 2500;
+		}
 
-    @Override
-    public int getComplexity() {
-        return 5;
-    }
+		@Override
+		public int getComplexity() {
+				return 5;
+		}
 
-    @Override
-    public int getMaxAmount(Item item) {
-        return 64;
-    }
+		@Override
+		public int getMaxAmount(Item item) {
+				return 64;
+		}
 
-    @Override
-    public boolean getSupportedItem(EntityEquipmentSlot slot, Item item) {
-        return slot.equals(EntityEquipmentSlot.HEAD);
-    }
+		@Override
+		public boolean getSupportedItem(EntityEquipmentSlot slot, Item item) {
+				return slot.equals(EntityEquipmentSlot.HEAD);
+		}
 
-    @Override
-    public String getDescription() {
-        return "";
-    }
+		@Override
+		public String getDescription() {
+				return "";
+		}
 
-    @Override
-    public boolean hasEffects() {
-        return true;
-    }
+		@Override
+		public boolean hasEffects() {
+				return true;
+		}
 
-    @Override
-    public double getProtectionPercentage(DamageSource source, double amount) {
-        return 0;
-    }
+		@Override
+		public double getProtectionPercentage(DamageSource source, double amount) {
+				return 0;
+		}
 }

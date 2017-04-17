@@ -15,29 +15,29 @@ import java.util.List;
 
 public class ConfigGUI extends GuiConfig {
 
-    public ConfigGUI(GuiScreen ps) {
-        super(ps, getConfigElements(), Global.NAME, "", false, false, ConfigHandler.mainConfig.getConfigFile().getName());
-    }
+		public ConfigGUI(GuiScreen ps) {
+				super(ps, getConfigElements(), Global.NAME, "", false, false, ConfigHandler.mainConfig.getConfigFile().getName());
+		}
 
-    private static List<IConfigElement> getConfigElements() {
-        List<IConfigElement> list = new ArrayList<IConfigElement>();
-        list.add(new DummyConfigElement.DummyCategoryElement("General", ConfigHandler.mainConfig.getConfigFile().getName(), CategoryEntryGeneral.class));
-        return list;
-    }
+		private static List<IConfigElement> getConfigElements() {
+				List<IConfigElement> list = new ArrayList<IConfigElement>();
+				list.add(new DummyConfigElement.DummyCategoryElement("General", ConfigHandler.mainConfig.getConfigFile().getName(), CategoryEntryGeneral.class));
+				return list;
+		}
 
-    public static class CategoryEntryGeneral extends GuiConfigEntries.CategoryEntry {
+		public static class CategoryEntryGeneral extends GuiConfigEntries.CategoryEntry {
 
-        public CategoryEntryGeneral(GuiConfig owningScreen, GuiConfigEntries owningEntryList, IConfigElement prop) {
-            super(owningScreen, owningEntryList, prop);
-        }
+				public CategoryEntryGeneral(GuiConfig owningScreen, GuiConfigEntries owningEntryList, IConfigElement prop) {
+						super(owningScreen, owningEntryList, prop);
+				}
 
-        @Override
-        protected GuiScreen buildChildScreen() {
-            Configuration configuration = ConfigHandler.mainConfig;
-            ConfigElement cat_general = new ConfigElement(configuration.getCategory(Configuration.CATEGORY_GENERAL));
-            List<IConfigElement> propertiesOnThisScreen = cat_general.getChildElements();
-            String windowTitle = configuration.toString();
-            return new GuiConfig(owningScreen, propertiesOnThisScreen, owningScreen.modID, Configuration.CATEGORY_GENERAL, configElement.requiresWorldRestart() || owningScreen.allRequireWorldRestart, configElement.requiresMcRestart() || owningScreen.allRequireMcRestart, windowTitle);
-        }
-    }
+				@Override
+				protected GuiScreen buildChildScreen() {
+						Configuration        configuration          = ConfigHandler.mainConfig;
+						ConfigElement        cat_general            = new ConfigElement(configuration.getCategory(Configuration.CATEGORY_GENERAL));
+						List<IConfigElement> propertiesOnThisScreen = cat_general.getChildElements();
+						String               windowTitle            = configuration.toString();
+						return new GuiConfig(owningScreen, propertiesOnThisScreen, owningScreen.modID, Configuration.CATEGORY_GENERAL, configElement.requiresWorldRestart() || owningScreen.allRequireWorldRestart, configElement.requiresMcRestart() || owningScreen.allRequireMcRestart, windowTitle);
+				}
+		}
 }

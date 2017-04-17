@@ -8,66 +8,65 @@ import net.minecraft.util.ResourceLocation;
 
 public interface ICube {
 
-    /**
-     * The name of this cube
-     * Localization name is "cube.<name>.name"
-     */
-    String getName();
+		/**
+			* The name of this cube
+			* Localization name is "cube.<name>.name"
+			*/
+		String getName();
 
-    /**
-     * Block used to create this cube / bits
-     */
-    Block getBlock();
+		/**
+			* Block used to create this cube / bits
+			*/
+		Block getBlock();
 
-    /**
-     * Texture used while displaying this cube
-     */
-    ResourceLocation getTexture();
+		/**
+			* Texture used while displaying this cube
+			*/
+		ResourceLocation getTexture();
 
-    /**
-     * Weight of this cube
-     */
-    double getWeight();
+		/**
+			* Weight of this cube
+			*/
+		double getWeight();
 
-    /**
-     * Durability of this cube
-     */
-    int getMaxDurability();
+		/**
+			* Durability of this cube
+			*/
+		int getMaxDurability();
 
-    /**
-     * Complexity of this cube
-     */
-    int getComplexity();
+		/**
+			* Complexity of this cube
+			*/
+		int getComplexity();
 
-    /**
-     * Max amount of this cube that can be on a item
-     *
-     * @param item Item that has a limit
-     */
-    int getMaxAmount(Item item);
+		/**
+			* Max amount of this cube that can be on a item
+			*
+			* @param item Item that has a limit
+			*/
+		int getMaxAmount(Item item);
 
-    /**
-     * Used to restrict the cubes from being placed on certain items or armor
-     *
-     * @param slot slot that the item is in
-     * @param item item that the cube is trying to be placed on
-     */
-    boolean getSupportedItem(EntityEquipmentSlot slot, Item item);
+		/**
+			* Used to restrict the cubes from being placed on certain items or armor
+			*
+			* @param slot slot that the item is in
+			* @param item item that the cube is trying to be placed on
+			*/
+		boolean getSupportedItem(EntityEquipmentSlot slot, Item item);
 
-    /**
-     * Description of what this cube does.
-     * Should be a localization key. (Will be handles automatically)
-     */
-    String getDescription();
+		/**
+			* Description of what this cube does.
+			* Should be a localization key. (Will be handles automatically)
+			*/
+		String getDescription();
 
-    /**
-     * Does this cube has a special effect?
-     *
-     */
-    boolean hasEffects();
+		/**
+			* Does this cube has a special effect?
+			*/
+		boolean hasEffects();
 
-    /**
-     * Amount of damage this cube protects the wearer from
-     */
-    double getProtectionPercentage(DamageSource source, double amount);
+		/**
+			* Amount of damage this cube protects the wearer from
+			*/
+		double getProtectionPercentage(DamageSource source, double amount);
 }

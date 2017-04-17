@@ -8,4 +8,7 @@ public class Local {
     public static final String PLACMENT_TYPE = "tooltip.placmenttype.name";
     public static final String MODEL_TYPE = "tooltip.modeltype.name";
     public static final String HOLD_CTRL = "tooltip.control.name";
+    // Cube Descriptions
+    public static final String CUBED_NIGHTVISION = "cube.nightvision.desc";
+    public static final String CUBED_WATERBREATHING = "cube.waterBreathing.desc";
 }

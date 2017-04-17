@@ -28,43 +28,35 @@ import wurmatron.voidrpg.common.utils.LogHandler;
 @Mod(modid = Global.MODID, name = Global.NAME, version = Global.VERSION, guiFactory = Global.GUIFACTORY, dependencies = Global.DEPENDENCIES)
 public class VoidRPG {
 
-    @Mod.Instance(Global.MODID)
-    public static VoidRPG instance;
+		@Mod.Instance(Global.MODID)
+		public static VoidRPG instance;
 
-    @SidedProxy(serverSide = Global.COMMONPROXY, clientSide = Global.CLIENTPROXY)
-    public static CommonProxy proxy;
+		@SidedProxy(serverSide = Global.COMMONPROXY, clientSide = Global.CLIENTPROXY)
+		public static CommonProxy proxy;
 
-    public static final CreativeTabs tabVoidRPG = new CreativeTabs("tabVoidRPG") {
-        @Override
-        public Item getTabIconItem() {
-            return VoidRPGItems.goggles;
-        }
-    };
+		public static final CreativeTabs tabVoidRPG = new CreativeTabs("tabVoidRPG") {
+				@Override
+				public Item getTabIconItem() {
+						return VoidRPGItems.goggles;
+				}
+		};
 
-    @Mod.EventHandler
-    public void onPreInit(FMLPreInitializationEvent e) {
-        LogHandler.info("Pre-Init");
-        ConfigHandler.preInit(e);
-        VoidRPGBlocks.init();
-        VoidRPGItems.init();
-        proxy.register();
-    }
+		@Mod.EventHandler
+		public void onPreInit(FMLPreInitializationEvent e) {
+				LogHandler.info("Pre-Init"); ConfigHandler.preInit(e); VoidRPGBlocks.init(); VoidRPGItems.init(); proxy.register();
+		}
 
-    @Mod.EventHandler
-    public void onInit(FMLInitializationEvent e) {
-        LogHandler.info("Init");
-        ConfigHandler.loadMainConfig();
-        NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
-        VoidRPGRecipes.init();
-        MinecraftForge.EVENT_BUS.register(new LivingTickEvent());
-        MinecraftForge.EVENT_BUS.register(new HurtEvent());
-        MinecraftForge.EVENT_BUS.register(new SetTargetEvent());
-        MinecraftForge.EVENT_BUS.register(new FallEvent());
-        CubeRegistry.addDefaultCubes();
-    }
+		@Mod.EventHandler
+		public void onInit(FMLInitializationEvent e) {
+				LogHandler.info("Init"); ConfigHandler.loadMainConfig();
+				NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler()); VoidRPGRecipes.init();
+				MinecraftForge.EVENT_BUS.register(new LivingTickEvent()); MinecraftForge.EVENT_BUS.register(new HurtEvent());
+				MinecraftForge.EVENT_BUS.register(new SetTargetEvent()); MinecraftForge.EVENT_BUS.register(new FallEvent());
+				CubeRegistry.addDefaultCubes(); CubeRegistry.addDefaultCubeCreatorRecipes();
+		}
 
-    @Mod.EventHandler
-    public void onServerStarting(FMLServerStartingEvent e) {
-        JsonHandler.loadJsonCubes();
-    }
+		@Mod.EventHandler
+		public void onServerStarting(FMLServerStartingEvent e) {
+				JsonHandler.loadJsonCubes();
+		}
 }

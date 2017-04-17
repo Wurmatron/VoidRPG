@@ -24,62 +24,46 @@ import java.util.stream.Collectors;
 
 public class ItemModelArmor extends ItemArmor {
 
-    private ArmorModel armorModel;
-    public boolean requiresUpdate = true;
+		private ArmorModel armorModel;
+		public boolean requiresUpdate = true;
 
-    public ItemModelArmor(ArmorMaterial material, int index, EntityEquipmentSlot slot) {
-        super(material, index, slot);
-        setCreativeTab(VoidRPG.tabVoidRPG);
-        setUnlocalizedName("armor" + slot.name().toLowerCase());
-    }
+		public ItemModelArmor(ArmorMaterial material, int index, EntityEquipmentSlot slot) {
+				super(material, index, slot); setCreativeTab(VoidRPG.tabVoidRPG);
+				setUnlocalizedName("armor" + slot.name().toLowerCase());
+		}
 
-    @Override
-    public ModelBiped getArmorModel(EntityLivingBase entity, ItemStack stack, EntityEquipmentSlot slot, ModelBiped _default) {
-        if (requiresUpdate)
-            if (armorModel != null) {
-                if (stack.getItem().equals(VoidRPGItems.armorHelmet)) {
-                    armorModel.addHeadCubes(DataHelper.rotateUp(DataHelper.getDataFromStack(stack)));
-                    armorModel.handleData(_default);
-                    requiresUpdate = false;
-                }
-                if (stack.getItem().equals(VoidRPGItems.armorLeggings)) {
-                    armorModel.addLeftLegCubes(DataHelper.rotateUp(DataHelper.getDataFromStack(stack)));
-                    armorModel.handleData(_default);
-                    requiresUpdate = false;
-                } if(stack.getItem().equals(VoidRPGItems.armorChestplate)) {
-                    armorModel.addBodyCubes(DataHelper.rotateUp(DataHelper.getDataFromStack(stack, NBT.BODY)));
-                }
-            } else {
-                armorModel = new ArmorModel();
-                requiresUpdate = true;
-            }
-        if (entity.getActivePotionEffect(Potion.getPotionFromResourceLocation("invisibility")) == null)
-            return armorModel;
-        return null;
-    }
+		@Override
+		public ModelBiped getArmorModel(EntityLivingBase entity, ItemStack stack, EntityEquipmentSlot slot, ModelBiped _default) {
+				if (requiresUpdate) if (armorModel != null) {
+						if (stack.getItem().equals(VoidRPGItems.armorHelmet)) {
+								armorModel.addHeadCubes(DataHelper.rotateUp(DataHelper.getDataFromStack(stack)));
+								armorModel.handleData(_default); requiresUpdate = false;
+						} if (stack.getItem().equals(VoidRPGItems.armorLeggings)) {
+								armorModel.addLeftLegCubes(DataHelper.rotateUp(DataHelper.getDataFromStack(stack)));
+								armorModel.handleData(_default); requiresUpdate = false;
+						} if (stack.getItem().equals(VoidRPGItems.armorChestplate)) {
+								armorModel.addBodyCubes(DataHelper.rotateUp(DataHelper.getDataFromStack(stack, NBT.BODY)));
+						}
+				} else {
+						armorModel = new ArmorModel(); requiresUpdate = true;
+				} if (entity.getActivePotionEffect(Potion.getPotionFromResourceLocation("invisibility")) == null) return armorModel;
+				return null;
+		}
 
-    @Override
-    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tip, boolean adv) {
-        tip.add(TextFormatting.GRAY + I18n.translateToLocal(Local.STAT_WEIGHT) + ": " + TextFormatting.AQUA + DataHelper.getWeight(stack, false));
-        int maxDurability = DataHelper.getMaxDurability(stack, false);
-        if (maxDurability <= 0)
-            maxDurability = 1;
-        tip.add(TextFormatting.GRAY + I18n.translateToLocal(Local.STAT_DURABILITY) + ": " + TextFormatting.AQUA + (DataHelper.getDurability(stack, false) / maxDurability) * 100 + "%");
-        tip.add(TextFormatting.GRAY + I18n.translateToLocal(Local.STAT_COMPLEXITY) + ": " + TextFormatting.AQUA + (DataHelper.getComplexity(stack, false)));
-        if (Keyboard.isKeyDown(Keyboard.KEY_RCONTROL)) {
-            HashMap<ICube, Integer> data = new HashMap<>();
-            for (CubeData f : DataHelper.getDataFromStack(stack)) {
-                if (f != null && data.containsKey(f.cube)) {
-                    int count = data.get(f.cube);
-                    data.remove(f.cube);
-                    count++;
-                    data.put(f.cube, count);
-                } else if (f != null)
-                    data.put(f.cube, 1);
-            }
-            tip.addAll(data.keySet().stream().map(g -> data.get(g) + "x " + I18n.translateToLocal(g.getName())).collect(Collectors.toList()));
-            tip.add("");
-        } else
-            tip.add(TextFormatting.AQUA + I18n.translateToLocal(Local.HOLD_CTRL));
-    }
+		@Override
+		public void addInformation(ItemStack stack, EntityPlayer player, List<String> tip, boolean adv) {
+				tip.add(TextFormatting.GRAY + I18n.translateToLocal(Local.STAT_WEIGHT) + ": " + TextFormatting.AQUA + DataHelper.getWeight(stack, false));
+				int maxDurability = DataHelper.getMaxDurability(stack, false); if (maxDurability <= 0) maxDurability = 1;
+				tip.add(TextFormatting.GRAY + I18n.translateToLocal(Local.STAT_DURABILITY) + ": " + TextFormatting.AQUA + (DataHelper.getDurability(stack, false) / maxDurability) * 100 + "%");
+				tip.add(TextFormatting.GRAY + I18n.translateToLocal(Local.STAT_COMPLEXITY) + ": " + TextFormatting.AQUA + (DataHelper.getComplexity(stack, false)));
+				if (Keyboard.isKeyDown(Keyboard.KEY_RCONTROL)) {
+						HashMap<ICube, Integer> data = new HashMap<>(); for (CubeData f : DataHelper.getDataFromStack(stack)) {
+								if (f != null && data.containsKey(f.cube)) {
+										int count = data.get(f.cube); data.remove(f.cube); count++; data.put(f.cube, count);
+								} else if (f != null) data.put(f.cube, 1);
+						}
+						tip.addAll(data.keySet().stream().map(g -> data.get(g) + "x " + I18n.translateToLocal(g.getName())).collect(Collectors.toList()));
+						tip.add("");
+				} else tip.add(TextFormatting.AQUA + I18n.translateToLocal(Local.HOLD_CTRL));
+		}
 }

@@ -11,17 +11,16 @@ import wurmatron.voidrpg.common.reference.NBT;
 
 public class SetTargetEvent {
 
-    @SubscribeEvent
-    public void onEntitySetTarget(LivingSetAttackTargetEvent e) {
-        if (e.getTarget() != null && e.getTarget() instanceof EntityPlayer && e.getEntityLiving().getLastAttacker() != e.getTarget()) {
-            EntityPlayer player = (EntityPlayer) e.getTarget();
-            if (player.inventory != null && player.inventory.armorInventory != null)
-                for (ItemStack stack : player.inventory.armorInventory)
-                    if (stack != null && stack.getItem() instanceof ItemModelArmor && stack.hasTagCompound() && !stack.getTagCompound().hasNoTags() && stack.getTagCompound().hasKey(NBT.CAPABILITIES)) {
-                        NBTTagCompound capabilities = stack.getTagCompound().getCompoundTag(NBT.CAPABILITIES);
-                        if (capabilities.getBoolean("mobStealth"))
-                            ((EntityLiving) e.getEntity()).setAttackTarget(null);
-                    }
-        }
-    }
+		@SubscribeEvent
+		public void onEntitySetTarget(LivingSetAttackTargetEvent e) {
+				if (e.getTarget() != null && e.getTarget() instanceof EntityPlayer && e.getEntityLiving().getLastAttacker() != e.getTarget()) {
+						EntityPlayer player = (EntityPlayer) e.getTarget();
+						if (player.inventory != null && player.inventory.armorInventory != null)
+								for (ItemStack stack : player.inventory.armorInventory)
+										if (stack != null && stack.getItem() instanceof ItemModelArmor && stack.hasTagCompound() && !stack.getTagCompound().hasNoTags() && stack.getTagCompound().hasKey(NBT.CAPABILITIES)) {
+												NBTTagCompound capabilities = stack.getTagCompound().getCompoundTag(NBT.CAPABILITIES);
+												if (capabilities.getBoolean("mobStealth")) ((EntityLiving) e.getEntity()).setAttackTarget(null);
+										}
+				}
+		}
 }
