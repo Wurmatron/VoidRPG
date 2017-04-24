@@ -3,7 +3,9 @@ package wurmatron.voidrpg.common.items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
 import wurmatron.voidrpg.client.proxy.ClientProxy;
 
 public class VoidRPGItems {
@@ -21,8 +23,10 @@ public class VoidRPGItems {
 		public static final String[] upgrades  = new String[]{"speedI", "speedII", "speedIII"};
 
 		public static void init() {
-				registerItem(goggles = new ItemGoggles()); GameRegistry.registerItem(itemMaterial = new ItemMaterial());
-				GameRegistry.registerItem(itemUpgrade = new ItemUpgrade()); registerItem(itemStaff = new ItemStaff());
+				registerItem(goggles = new ItemGoggles());
+				GameRegistry.registerItem(itemMaterial = new ItemMaterial());
+				GameRegistry.registerItem(itemUpgrade = new ItemUpgrade());
+				registerItem(itemStaff = new ItemStaff());
 				registerItem(armorHelmet = new ItemModelArmor(ItemArmor.ArmorMaterial.CHAIN, 0, EntityEquipmentSlot.HEAD));
 				registerItem(armorChestplate = new ItemModelArmor(ItemArmor.ArmorMaterial.CHAIN, 0, EntityEquipmentSlot.CHEST));
 				registerItem(armorLeggings = new ItemModelArmor(ItemArmor.ArmorMaterial.CHAIN, 1, EntityEquipmentSlot.LEGS));
@@ -31,7 +35,9 @@ public class VoidRPGItems {
 		}
 
 		private static void registerItem(Item item) {
-				GameRegistry.registerItem(item, item.getUnlocalizedName()); ClientProxy.items.add(item);
+				GameRegistry.registerItem(item, item.getUnlocalizedName());
+				if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
+						ClientProxy.items.add(item);
 		}
 }
 

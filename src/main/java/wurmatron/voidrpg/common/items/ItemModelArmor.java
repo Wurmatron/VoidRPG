@@ -9,6 +9,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.translation.I18n;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 import wurmatron.voidrpg.VoidRPG;
 import wurmatron.voidrpg.api.cube.CubeData;
@@ -24,14 +26,18 @@ import java.util.stream.Collectors;
 
 public class ItemModelArmor extends ItemArmor {
 
+		@SideOnly(Side.CLIENT)
 		private ArmorModel armorModel;
+
 		public boolean requiresUpdate = true;
 
 		public ItemModelArmor(ArmorMaterial material, int index, EntityEquipmentSlot slot) {
-				super(material, index, slot); setCreativeTab(VoidRPG.tabVoidRPG);
+				super(material, index, slot);
+				setCreativeTab(VoidRPG.tabVoidRPG);
 				setUnlocalizedName("armor" + slot.name().toLowerCase());
 		}
 
+		@SideOnly(Side.CLIENT)
 		@Override
 		public ModelBiped getArmorModel(EntityLivingBase entity, ItemStack stack, EntityEquipmentSlot slot, ModelBiped _default) {
 				if (requiresUpdate) if (armorModel != null) {
@@ -46,7 +52,9 @@ public class ItemModelArmor extends ItemArmor {
 						}
 				} else {
 						armorModel = new ArmorModel(); requiresUpdate = true;
-				} if (entity.getActivePotionEffect(Potion.getPotionFromResourceLocation("invisibility")) == null) return armorModel;
+				}
+				if (entity.getActivePotionEffect(Potion.getPotionFromResourceLocation("invisibility")) == null)
+						return armorModel;
 				return null;
 		}
 

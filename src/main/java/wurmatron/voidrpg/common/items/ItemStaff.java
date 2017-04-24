@@ -1,6 +1,5 @@
 package wurmatron.voidrpg.common.items;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -11,6 +10,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.translation.I18n;
@@ -33,13 +33,15 @@ public class ItemStaff extends Item {
 
 		@Override
 		public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
+				// TODO FIX THIS SO THAT IT ACTUALLY WORKS CORRECTLY
+				RayTraceResult ray = world.rayTraceBlocks(player.getLookVec().add(new Vec3d(player.posX, player.posY, player.posZ)), player.getLookVec().add(new Vec3d(player.getLookVec().xCoord, player.getLookVec().yCoord, player.getLookVec().zCoord).add(new Vec3d(player.posX, player.posY, player.posZ))), false,false,true);
 				if (stack.getTagCompound() != null) {
-						RayTraceResult ray = Minecraft.getMinecraft().getRenderViewEntity().rayTrace(5, 1);
 						if (ray != null && world.getBlockState(ray.getBlockPos()).getBlock() != Blocks.AIR) {
 								if (BitHelper.hasValidModel(world, ray.getBlockPos(), BitHelper.modelHead.toArray(new Vec3i[0]))) {
 										CubeData[] data = BitHelper.getDataFromModel(world, ray.getBlockPos(), BitHelper.modelHead.toArray(new Vec3i[0]), 16, 16, 16, new Vec3i(0, 0, 0));
 										ItemStack  item = DataHelper.createHelmetFromData(data); player.inventory.addItemStackToInventory(item);
 										stack.getTagCompound().setInteger(NBT.CUBE_DAMAGE, stack.getTagCompound().getInteger(NBT.CUBE_DAMAGE) - 1);
+										return new ActionResult(EnumActionResult.PASS, stack);
 								}
 								if (BitHelper.hasValidModel(world, ray.getBlockPos(), BitHelper.modelChest.toArray(new Vec3i[0])) && BitHelper.hasValidModel(world, ray.getBlockPos().add(1, 0, 0), BitHelper.modelArm.toArray(new Vec3i[0])) && BitHelper.hasValidModel(world, ray.getBlockPos().add(-1, 0, 0), BitHelper.modelArm.toArray(new Vec3i[0]))) {
 										CubeData[] bodyData     = BitHelper.getDataFromModel(world, ray.getBlockPos(), BitHelper.modelChest.toArray(new Vec3i[0]), 16, 16, 16, new Vec3i(0, 0, 0));
@@ -48,6 +50,7 @@ public class ItemStaff extends Item {
 										ItemStack  item         = DataHelper.createChestplateFromData(bodyData, leftArmData, rightArmData);
 										player.inventory.addItemStackToInventory(item);
 										stack.getTagCompound().setInteger(NBT.CUBE_DAMAGE, stack.getTagCompound().getInteger(NBT.CUBE_DAMAGE) - 1);
+										return new ActionResult(EnumActionResult.PASS, stack);
 								}
 						} if (stack.getTagCompound().getInteger(NBT.CUBE_DAMAGE) < MAX_DURABILITY) player.inventory.deleteStack(stack);
 						return new ActionResult(EnumActionResult.PASS, stack);
@@ -63,7 +66,7 @@ public class ItemStaff extends Item {
 		public void addInformation(ItemStack stack, EntityPlayer player, List<String> tip, boolean adv) {
 				if (stack.getTagCompound() != null)
 						tip.add(TextFormatting.GRAY + I18n.translateToLocal("stat.durability.name") + ": " + TextFormatting.AQUA + stack.getTagCompound().getInteger(NBT.CUBE_DAMAGE));
-				else tip.add(TextFormatting.RED + "Missing NBT");
+				else tip.add(TextFormatting.RED + I18n.translateToLocal("stat.invalid.name"));
 		}
 
 		@Override
