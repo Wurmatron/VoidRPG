@@ -35,7 +35,7 @@ public class ItemModelPlacer extends Item {
 																if (x <= 12 && x > 4 && y <= 8 && z <= 12 && z > 4) modelHead.add(new Vec3i(x, y, z));
 										BitHelper.createBaseArmorBlock(modelHead.toArray(new Vec3i[0]), world, pos); return EnumActionResult.SUCCESS;
 								} case (1): {
-										ArrayList<Vec3i> modelChest = new ArrayList<>(); for (int x = 5; x < 12; x++)
+										ArrayList<Vec3i> modelChest = new ArrayList<>(); for (int x = 4; x < 12; x++)
 												for (int y = 0; y < 12; y++)
 														for (int z = 6; z < 10; z++)
 																modelChest.add(new Vec3i(x, y, z));
