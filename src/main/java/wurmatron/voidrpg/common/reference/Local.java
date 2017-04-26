@@ -40,4 +40,6 @@ public class Local {
     public static final String CUBED_BLACK = "cube.decoWoolBlack.description";
     public static final String CUBED_DIAMOND = "cube.decoDiamond.description";
     public static final String CUBED_EMERALD = "cube.decoEmerald.description";
+    public static final String CUBED_DAMAGECONVT = "cube.damageConverter.description";
+    public static final String CUBED_SHOCK = "cube.shock.description";
 }

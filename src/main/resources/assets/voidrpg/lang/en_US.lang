@@ -189,3 +189,5 @@ cube.autoRepairII.description=Repairs Damages cubes faster then the Mk. 1
 cube.autoRepairIII.description=Repairs Damages cubes faster then the Mk. 2
 cube.stealth.description=Gives you unlimited invisibility.
 stat.invalid.name=Invalid Item NBT,Please Report This Bug On Github.
+cube.damageConverter.description=Converts some damge into cube damage
+cube.shock.description=Reduces fall damage depending on the armors weight.
