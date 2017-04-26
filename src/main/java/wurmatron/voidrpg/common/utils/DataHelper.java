@@ -89,6 +89,10 @@ public class DataHelper {
 		}
 
 		public static CubeData[] getDataFromStack(ItemStack stack) {
+				if(stack.getItem().getUnlocalizedName().equals(VoidRPGItems.armorChestplate.getUnlocalizedName())) {
+						// TODO Still need arm support
+						return getDataFromStack(stack, NBT.BODY);
+				}
 				return getDataFromStack(stack, "");
 		}
 
@@ -130,10 +134,15 @@ public class DataHelper {
 		}
 
 		public static double getWeight(ItemStack stack, boolean update) {
-				boolean temp = update; if (stack != null && stack.hasTagCompound()) {
-						if (!stack.getTagCompound().hasKey(NBT.WEIGHT)) temp = true; if (temp) {
-								CubeData[] cubes = getDataFromStack(stack); double total = 0; for (CubeData cube : cubes)
-										if (cube != null && cube.cube != null) total += cube.cube.getWeight();
+				boolean temp = update;
+				if (stack != null && stack.hasTagCompound()) {
+						if (!stack.getTagCompound().hasKey(NBT.WEIGHT))
+								temp = true;
+						if (temp) {
+								CubeData[] cubes = getDataFromStack(stack);
+								double total = 0; for (CubeData cube : cubes)
+										if (cube != null && cube.cube != null)
+												total += cube.cube.getWeight();
 								stack.getTagCompound().setDouble(NBT.WEIGHT, total);
 						} return Math.round(stack.getTagCompound().getDouble(NBT.WEIGHT));
 				} return -1;
@@ -142,7 +151,7 @@ public class DataHelper {
 		public static int getDurability(ItemStack stack, boolean update) {
 				boolean temp = update; if (stack != null && stack.hasTagCompound()) {
 						if (!stack.getTagCompound().hasKey(NBT.DURABILITY)) temp = true; if (temp) {
-								CubeData[] cubes = getDataFromStack(stack); int damage = 0; for (CubeData cube : cubes)
+								CubeData[] cubes = getDataFromStack(stack,NBT.BODY); int damage = 0; for (CubeData cube : cubes)
 										if (cube != null && cube.cube != null) damage += cube.damage;
 								stack.getTagCompound().setInteger(NBT.DURABILITY, (getMaxDurability(stack, true) - damage));
 						} return stack.getTagCompound().getInteger(NBT.DURABILITY);

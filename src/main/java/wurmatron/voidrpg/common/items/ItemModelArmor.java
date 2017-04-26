@@ -67,7 +67,8 @@ public class ItemModelArmor extends ItemArmor {
 				tip.add(TextFormatting.GRAY + I18n.translateToLocal(Local.STAT_DURABILITY) + ": " + TextFormatting.AQUA + (DataHelper.getDurability(stack, false) / maxDurability) * 100 + "%");
 				tip.add(TextFormatting.GRAY + I18n.translateToLocal(Local.STAT_COMPLEXITY) + ": " + TextFormatting.AQUA + (DataHelper.getComplexity(stack, false)));
 				if (Keyboard.isKeyDown(Keyboard.KEY_RCONTROL)) {
-						HashMap<ICube, Integer> data = new HashMap<>(); for (CubeData f : DataHelper.getDataFromStack(stack)) {
+						HashMap<ICube, Integer> data = new HashMap<>();
+						for (CubeData f : DataHelper.getDataFromStack(stack)) {
 								if (f != null && data.containsKey(f.cube)) {
 										int count = data.get(f.cube); data.remove(f.cube); count++; data.put(f.cube, count);
 								} else if (f != null) data.put(f.cube, 1);

@@ -54,7 +54,7 @@ public class VoidRPGPlugin extends BlankModPlugin {
 										registry.addDescription(new ItemStack(cube.getBlock(), 1, 0), "Name: " + I18n.format(cube.getName()), I18n.format(Local.STAT_DURABILITY) + ": " + cube.getMaxDurability(), I18n.format(Local.STAT_COMPLEXITY) + ": " + cube.getComplexity(), I18n.format(Local.STAT_WEIGHT) + ": " + cube.getWeight(), I18n.format(Local.STAT_ENERGY) + ": " + energy.getStorage(), I18n.format(Local.PLACMENT_TYPE) + ": " + getValidArmorTypes(cube), "", I18n.format(cube.getDescription()));
 								} else
 										registry.addDescription(new ItemStack(cube.getBlock(), 1, 0), "Name: " + I18n.format(cube.getName()), I18n.format(Local.STAT_DURABILITY) + ": " + cube.getMaxDurability(), I18n.format(Local.STAT_COMPLEXITY) + ": " + cube.getComplexity(), I18n.format(Local.STAT_WEIGHT) + ": " + cube.getWeight(), I18n.format(Local.PLACMENT_TYPE) + ": " + getValidArmorTypes(cube), "", I18n.format(cube.getDescription()));
-						else if(cube.getBlock() != null)
+						else if(cube != null && cube.getBlock() != null)
 								registry.addDescription(new ItemStack(cube.getBlock(), 1, 0), "Name: " + I18n.format(cube.getName()), I18n.format(Local.STAT_DURABILITY) + ": " + cube.getMaxDurability(), I18n.format(Local.STAT_COMPLEXITY) + ": " + cube.getComplexity(), I18n.format(Local.STAT_WEIGHT) + ": " + cube.getWeight(), I18n.format(Local.PLACMENT_TYPE) + ": " + getValidArmorTypes(cube));
 		}
 
