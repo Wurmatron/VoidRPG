@@ -32,8 +32,7 @@ public class ItemModelArmor extends ItemArmor {
 		public boolean requiresUpdate = true;
 
 		public ItemModelArmor(ArmorMaterial material, int index, EntityEquipmentSlot slot) {
-				super(material, index, slot);
-				setCreativeTab(VoidRPG.tabVoidRPG);
+				super(material, index, slot); setCreativeTab(VoidRPG.tabVoidRPG);
 				setUnlocalizedName("armor" + slot.name().toLowerCase());
 		}
 
@@ -48,15 +47,22 @@ public class ItemModelArmor extends ItemArmor {
 								armorModel.addLeftLegCubes(DataHelper.rotateUp(DataHelper.getDataFromStack(stack)));
 								armorModel.handleData(_default); requiresUpdate = false;
 						} if (stack.getItem().equals(VoidRPGItems.armorChestplate)) {
-								armorModel.addBodyCubes(DataHelper.addOffset(DataHelper.rotateUp(DataHelper.getDataFromStack(stack, NBT.BODY)), 1,12,1));
-								armorModel.handleData(_default);
-								requiresUpdate = false;
+								armorModel.addBodyCubes(DataHelper.addOffset(DataHelper.rotateUp(DataHelper.getDataFromStack(stack, NBT.BODY)), 1, 11, 1));
+								armorModel.addLeftArmCubes(DataHelper.addOffset(DataHelper.rotateUp(DataHelper.getDataFromStack(stack, NBT.LEFT_ARM)), 2, 9, 1));
+								armorModel.addRightArmCubes(DataHelper.addOffset(DataHelper.rotateUp(DataHelper.getDataFromStack(stack, NBT.RIGHT_ARM)), 0, 9, 1));
+								armorModel.handleData(_default); requiresUpdate = false;
+						} if (stack.getItem().equals(VoidRPGItems.armorLeggings)) {
+								armorModel.addLeftLegCubes(DataHelper.addOffset(DataHelper.rotateUp(DataHelper.getDataFromStack(stack, NBT.LEFT_LEG)), 0, 11, 0));
+								armorModel.addRightLegCubes(DataHelper.addOffset(DataHelper.rotateUp(DataHelper.getDataFromStack(stack, NBT.RIGHT_LEG)), 0, 11, 0));
+								armorModel.handleData(_default); requiresUpdate = false;
+						} if (stack.getItem().equals(VoidRPGItems.armorBoots)) {
+								armorModel.addLeftBootCubes(DataHelper.addOffset(DataHelper.rotateUp(DataHelper.getDataFromStack(stack, NBT.LEFT_BOOT)), 0, 0, 0));
+								armorModel.addRightBootCubes(DataHelper.addOffset(DataHelper.rotateUp(DataHelper.getDataFromStack(stack, NBT.RIGHT_BOOT)), 0, 0, 0));
+								armorModel.handleData(_default); requiresUpdate = false;
 						}
 				} else {
 						armorModel = new ArmorModel(); requiresUpdate = true;
-				}
-				if (entity.getActivePotionEffect(Potion.getPotionFromResourceLocation("invisibility")) == null)
-						return armorModel;
+				} if (entity.getActivePotionEffect(Potion.getPotionFromResourceLocation("invisibility")) == null) return armorModel;
 				return null;
 		}
 
@@ -67,8 +73,7 @@ public class ItemModelArmor extends ItemArmor {
 				tip.add(TextFormatting.GRAY + I18n.translateToLocal(Local.STAT_DURABILITY) + ": " + TextFormatting.AQUA + (DataHelper.getDurability(stack, false) / maxDurability) * 100 + "%");
 				tip.add(TextFormatting.GRAY + I18n.translateToLocal(Local.STAT_COMPLEXITY) + ": " + TextFormatting.AQUA + (DataHelper.getComplexity(stack, false)));
 				if (Keyboard.isKeyDown(Keyboard.KEY_RCONTROL)) {
-						HashMap<ICube, Integer> data = new HashMap<>();
-						for (CubeData f : DataHelper.getDataFromStack(stack)) {
+						HashMap<ICube, Integer> data = new HashMap<>(); for (CubeData f : DataHelper.getDataFromStack(stack)) {
 								if (f != null && data.containsKey(f.cube)) {
 										int count = data.get(f.cube); data.remove(f.cube); count++; data.put(f.cube, count);
 								} else if (f != null) data.put(f.cube, 1);

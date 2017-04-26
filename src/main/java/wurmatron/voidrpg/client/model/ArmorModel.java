@@ -23,7 +23,7 @@ public class ArmorModel extends ModelBiped {
 		private ArrayList<CubeData> rightBootsCubes = new ArrayList<>();
 
 		public ArmorModel() {
-				LogHandler.info("New Instance");
+				LogHandler.debug("New Instance");
 		}
 
 		public void addHeadCubes(CubeData[] head) {

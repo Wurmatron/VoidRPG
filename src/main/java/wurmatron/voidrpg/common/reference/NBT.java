@@ -16,4 +16,10 @@ public class NBT {
 		public static final String CAPABILITIES   = "capabilities";
 		public static final String REPAIR_TIMER   = "repairTimer";
 		public static final String BODY           = "body";
+		public static final String LEFT_ARM = "armLeft";
+		public static final String RIGHT_ARM = "armRight";
+		public static final String LEFT_LEG = "legLeft";
+		public static final String RIGHT_LEG = "legRight";
+		public static final String LEFT_BOOT = "bootLeft";
+		public static final String RIGHT_BOOT = "bootRight";
 }

@@ -13,6 +13,7 @@ import wurmatron.voidrpg.common.blocks.VoidRPGBlocks;
 import wurmatron.voidrpg.common.cube.CubeCreatorRecipe;
 import wurmatron.voidrpg.common.cube.CubeCreatorRecipeHandler;
 import wurmatron.voidrpg.common.items.ItemMaterial;
+import wurmatron.voidrpg.common.items.ItemStaff;
 import wurmatron.voidrpg.common.items.ItemUpgrade;
 import wurmatron.voidrpg.common.items.VoidRPGItems;
 
@@ -58,6 +59,7 @@ public class VoidRPGRecipes {
 				GameRegistry.addRecipe(new ShapedOreRecipe(ItemMaterial.createMaterial("largeReactor", 1), "CCC", "CRC", "CCC", 'C', ItemMaterial.createMaterial("smallReactor", 1), 'R', ItemMaterial.createMaterial("nanoTech", 1)));
 				GameRegistry.addRecipe(new ShapedOreRecipe(ItemUpgrade.createMaterial("speedI"), "BRB", "RAR", "BCB", 'B', Blocks.REDSTONE_BLOCK, 'R', Blocks.LAPIS_BLOCK, 'A', ItemMaterial.createMaterial("upgrade"), 'C', Items.DIAMOND));
 				GameRegistry.addRecipe(new ShapedOreRecipe(VoidRPGBlocks.cubeCreator, "BFB", "XAX", "BFB", 'F', Blocks.FURNACE, 'B', Blocks.IRON_BLOCK, 'X', ItemMaterial.createMaterial("creationCrystal", 1), 'A', Blocks.CHEST));
+				GameRegistry.addRecipe(new ShapedOreRecipe(ItemStaff.createStaff(ItemStaff.MAX_DURABILITY), "XDX", "JSJ", " S ", 'X', Blocks.END_STONE, 'J', "gemDiamond", 'D', ItemMaterial.createMaterial("nanoTech", 1), 'S', Items.BLAZE_ROD));
 		}
 
 		private static void addShapelessRecipes() {

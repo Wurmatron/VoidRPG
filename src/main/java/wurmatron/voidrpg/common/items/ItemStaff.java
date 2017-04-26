@@ -51,6 +51,11 @@ public class ItemStaff extends Item {
 										player.inventory.addItemStackToInventory(item);
 										stack.getTagCompound().setInteger(NBT.CUBE_DAMAGE, stack.getTagCompound().getInteger(NBT.CUBE_DAMAGE) - 1);
 										return new ActionResult(EnumActionResult.PASS, stack);
+								} else if(BitHelper.hasValidModel(world,ray.getBlockPos(), BitHelper.modelLeggings.toArray(new Vec3i[0]))) {
+										// TODO Split These into correct sides
+										CubeData[] leftLegData = BitHelper.getDataFromModel(world,ray.getBlockPos(),BitHelper.modelLeggings.toArray(new Vec3i[0]), 8,12,8,new Vec3i(0,0,0));
+										CubeData[] rightLegData = BitHelper.getDataFromModel(world,ray.getBlockPos(),BitHelper.modelLeggings.toArray(new Vec3i[0]), 8,12,8,new Vec3i(0,0,0));
+//										ItemStaff item = DataHelper.
 								}
 						} if (stack.getTagCompound().getInteger(NBT.CUBE_DAMAGE) < MAX_DURABILITY) player.inventory.deleteStack(stack);
 						return new ActionResult(EnumActionResult.PASS, stack);
