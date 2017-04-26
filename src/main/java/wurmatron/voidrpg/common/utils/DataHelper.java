@@ -20,7 +20,7 @@ public class DataHelper {
 				if (Math.abs(x) > 0 || Math.abs(y) > 0 || Math.abs(z) > 0) {
 						CubeData[] temp = new CubeData[cubeData.length]; for (int index = 0; index < cubeData.length; index++)
 								temp[index] = addOffset(cubeData[index], x, y, z); return temp;
-				} return removeNull(cubeData);
+				} return cubeData;
 		}
 
 		public static CubeData damageCube(CubeData data, int damage) {
@@ -98,19 +98,22 @@ public class DataHelper {
 								for (int i = 0; i < stack.getTagCompound().getSize(); i++) {
 										NBTTagCompound temp = stack.getTagCompound().getCompoundTag(Integer.toString(i));
 										for (int s = 0; s <= temp.getSize(); s++)
-												data.add(BitHelper.readCubeDataFromNBT(temp.getCompoundTag(Integer.toString(s))));
-								} return removeNull(data.toArray(new CubeData[0]));
+												if (BitHelper.readCubeDataFromNBT(temp.getCompoundTag(Integer.toString(s))) != null)
+														data.add(BitHelper.readCubeDataFromNBT(temp.getCompoundTag(Integer.toString(s))));
+								} return data.toArray(new CubeData[0]);
 						}
 				} else {
 						if (stack.getItem().equals(VoidRPGItems.armorChestplate)) {
 								if (type.equalsIgnoreCase(NBT.BODY)) {
 										NBTTagCompound bodyNBT = stack.getTagCompound().getCompoundTag(NBT.BODY);
 										for (int i = 0; i < bodyNBT.getSize(); i++) {
-												NBTTagCompound temp = stack.getTagCompound().getCompoundTag(Integer.toString(i));
-												for (int s = 0; s <= temp.getSize(); s++) {
-														data.add(BitHelper.readCubeDataFromNBT(temp.getCompoundTag(Integer.toString(s))));
-												}
-										} return removeNull(data.toArray(new CubeData[0]));
+												NBTTagCompound temp = bodyNBT.getCompoundTag(Integer.toString(i)); if (temp.getSize() > 0) {
+														for (int s = 0; s <= temp.getSize(); s++) {
+																if (BitHelper.readCubeDataFromNBT(temp.getCompoundTag(Integer.toString(s))) != null)
+																		data.add(BitHelper.readCubeDataFromNBT(temp.getCompoundTag(Integer.toString(s))));
+														}
+												} return data.toArray(new CubeData[0]);
+										}
 								}
 						}
 				} return new CubeData[0];
@@ -124,11 +127,6 @@ public class DataHelper {
 								data.add(BitHelper.readCubeDataFromNBT((NBTTagCompound) specialCubes.getTag(Integer.toString(i))));
 						return data.toArray(new CubeData[0]);
 				} return new CubeData[0];
-		}
-
-		private static <T> T[] removeNull(T[] data) {
-				ArrayList<T> temp = new ArrayList(); for (T f : data)
-						if (f != null) temp.add(f); return temp.toArray(data);
 		}
 
 		public static double getWeight(ItemStack stack, boolean update) {

@@ -99,10 +99,12 @@ public class BitHelper {
 
 		public static CubeData[] getDataFromModel(World world, BlockPos pos, Vec3i[] model, int maxX, int maxY, int maxZ, Vec3i center) {
 				CubeData[] data         = createDataFromModel(world, pos); ArrayList<CubeData> validCubes = new ArrayList<>();
-				Vec3i[]    inverseModel = inverseModel(model); for (CubeData c : data)
+				Vec3i[]    inverseModel = inverseModel(model);
+				for (CubeData c : data)
 						for (Vec3i neg : inverseModel)
 								if (c.xPos == neg.getX() && c.yPos == neg.getY() && c.zPos == neg.getZ() && c.xPos >= maxX + center.getX() && c.yPos >= maxY + center.getY() && c.zPos >= maxZ + center.getZ())
-										validCubes.add(c); return data;
+										validCubes.add(c);
+				return data;
 		}
 
 		public static CubeData[] createDataFromModel(World world, BlockPos pos) {

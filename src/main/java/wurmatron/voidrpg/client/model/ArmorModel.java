@@ -28,7 +28,6 @@ public class ArmorModel extends ModelBiped {
 
 		public void addHeadCubes(CubeData[] head) {
 				if (head != null && head.length > 0) headCubes = checkForRendering(head);
-				LogHandler.info("Handling Head Cubes " + head.length);
 		}
 
 		public void addBodyCubes(CubeData[] body) {

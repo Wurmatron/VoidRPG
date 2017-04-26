@@ -48,7 +48,9 @@ public class ItemModelArmor extends ItemArmor {
 								armorModel.addLeftLegCubes(DataHelper.rotateUp(DataHelper.getDataFromStack(stack)));
 								armorModel.handleData(_default); requiresUpdate = false;
 						} if (stack.getItem().equals(VoidRPGItems.armorChestplate)) {
-								armorModel.addBodyCubes(DataHelper.rotateUp(DataHelper.getDataFromStack(stack, NBT.BODY)));
+								armorModel.addBodyCubes(DataHelper.addOffset(DataHelper.rotateUp(DataHelper.getDataFromStack(stack, NBT.BODY)), 0,12,1));
+								armorModel.handleData(_default);
+								requiresUpdate = false;
 						}
 				} else {
 						armorModel = new ArmorModel(); requiresUpdate = true;

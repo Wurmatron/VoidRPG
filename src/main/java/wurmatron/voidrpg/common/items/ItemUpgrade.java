@@ -9,7 +9,6 @@ import java.util.List;
 
 public class ItemUpgrade extends Item {
 
-
 		public ItemUpgrade() {
 				setCreativeTab(VoidRPG.tabVoidRPG); setHasSubtypes(true); setUnlocalizedName("upgrade"); setRegistryName("upgrade");
 				setMaxStackSize(4);
