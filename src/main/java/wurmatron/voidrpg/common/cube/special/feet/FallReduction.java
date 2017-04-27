@@ -49,7 +49,7 @@ public class FallReduction implements ICube {
 
 		@Override
 		public boolean getSupportedItem(EntityEquipmentSlot slot, Item item) {
-				return slot.equals(EntityEquipmentSlot.HEAD);
+				return slot.equals(EntityEquipmentSlot.FEET);
 		}
 
 		@Override

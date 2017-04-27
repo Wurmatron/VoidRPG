@@ -56,7 +56,6 @@ public class DataHelper {
 				} stack.setTagCompound(tag); return stack;
 		}
 
-		// TODO Fix CubeData[] Reader
 		public static final ItemStack createChestplateFromData(CubeData[] chest, CubeData[] leftArm, CubeData[] rightArm) {
 				ItemStack      stack    = new ItemStack(VoidRPGItems.armorChestplate, 1, 0);
 				NBTTagCompound tag      = new NBTTagCompound(); NBTTagCompound body = new NBTTagCompound();
@@ -72,6 +71,32 @@ public class DataHelper {
 								rightarm.setTag(Integer.toString(i), nbtRightArm[i]); tag.setTag(NBT.RIGHT_ARM, rightarm);
 				} stack.setTagCompound(tag); return stack;
 		}
+
+		public static final ItemStack createLegsFromData(CubeData[] leftLeg, CubeData[] rightLeg) {
+				ItemStack      stack   = new ItemStack(VoidRPGItems.armorLeggings, 1, 0); NBTTagCompound tag = new NBTTagCompound();
+				NBTTagCompound leftNBT = new NBTTagCompound(); NBTTagCompound rightNBT = new NBTTagCompound();
+				if (leftLeg != null || rightLeg != null) {
+						NBTTagCompound[] nbtLeftLeg  = BitHelper.convertCubesToNBT(leftLeg);
+						NBTTagCompound[] nbtRightLeg = BitHelper.convertCubesToNBT(rightLeg); for (int i = 0; i < nbtLeftLeg.length; i++)
+								leftNBT.setTag(Integer.toString(i), nbtLeftLeg[i]); tag.setTag(NBT.LEFT_LEG, leftNBT);
+						for (int i = 0; i < nbtRightLeg.length; i++)
+								rightNBT.setTag(Integer.toString(i), nbtRightLeg[i]); tag.setTag(NBT.RIGHT_LEG, rightNBT);
+				} stack.setTagCompound(tag); return stack;
+		}
+
+		public static final ItemStack createBootsFromData(CubeData[] leftBoot, CubeData[] rightBoot) {
+				ItemStack      stack   = new ItemStack(VoidRPGItems.armorBoots, 1, 0); NBTTagCompound tag = new NBTTagCompound();
+				NBTTagCompound leftNBT = new NBTTagCompound(); NBTTagCompound rightNBT = new NBTTagCompound();
+				if (leftBoot != null || rightBoot != null) {
+						NBTTagCompound[] nbtLeftBoot  = BitHelper.convertCubesToNBT(leftBoot);
+						NBTTagCompound[] nbtRightBoot = BitHelper.convertCubesToNBT(rightBoot);
+						for (int i = 0; i < nbtLeftBoot.length; i++)
+								leftNBT.setTag(Integer.toString(i), nbtLeftBoot[i]); tag.setTag(NBT.LEFT_BOOT, leftNBT);
+						for (int i = 0; i < nbtRightBoot.length; i++)
+								rightNBT.setTag(Integer.toString(i), nbtRightBoot[i]); tag.setTag(NBT.RIGHT_BOOT, rightNBT);
+				} stack.setTagCompound(tag); return stack;
+		}
+
 
 		private static final NBTTagCompound[] convertDataToNBT(CubeData[]... cubeData) {
 				NBTTagCompound[] nbt = new NBTTagCompound[cubeData.length]; for (int index = 0; index < cubeData.length; index++) {
@@ -99,11 +124,18 @@ public class DataHelper {
 		}
 
 		public static CubeData[] getDataFromStack(ItemStack stack) {
-				if (stack.getItem().getUnlocalizedName().equals(VoidRPGItems.armorChestplate.getUnlocalizedName())) {
+				if (stack.getItem().equals(VoidRPGItems.armorChestplate)) {
 						List<CubeData> chestCubes = new ArrayList<>(); Collections.addAll(chestCubes, getDataFromStack(stack, NBT.BODY));
 						Collections.addAll(chestCubes, getDataFromStack(stack, NBT.LEFT_ARM));
 						Collections.addAll(chestCubes, getDataFromStack(stack, NBT.RIGHT_ARM));
 						return chestCubes.toArray(new CubeData[0]);
+				} else if (stack.getItem().equals(VoidRPGItems.armorLeggings)) {
+						List<CubeData> legCubes = new ArrayList<>(); Collections.addAll(legCubes, getDataFromStack(stack, NBT.LEFT_LEG));
+						Collections.addAll(legCubes, getDataFromStack(stack, NBT.RIGHT_LEG)); return legCubes.toArray(new CubeData[0]);
+				} else if (stack.getItem().equals(VoidRPGItems.armorBoots)) {
+						List<CubeData> bootCubes = new ArrayList<>();
+						Collections.addAll(bootCubes, getDataFromStack(stack, NBT.LEFT_BOOT));
+						Collections.addAll(bootCubes, getDataFromStack(stack, NBT.RIGHT_BOOT)); return bootCubes.toArray(new CubeData[0]);
 				} return getDataFromStack(stack, "");
 		}
 
@@ -128,7 +160,7 @@ public class DataHelper {
 																		data.add(BitHelper.readCubeDataFromNBT(temp.getCompoundTag(Integer.toString(s))));
 												} return data.toArray(new CubeData[0]);
 										}
-								} else if(type.equalsIgnoreCase(NBT.LEFT_ARM)) {
+								} else if (type.equalsIgnoreCase(NBT.LEFT_ARM)) {
 										NBTTagCompound leftArmNBT = stack.getTagCompound().getCompoundTag(NBT.LEFT_ARM);
 										for (int i = 0; i < leftArmNBT.getSize(); i++) {
 												NBTTagCompound temp = leftArmNBT.getCompoundTag(Integer.toString(i)); if (temp.getSize() > 0) {
@@ -137,7 +169,7 @@ public class DataHelper {
 																		data.add(BitHelper.readCubeDataFromNBT(temp.getCompoundTag(Integer.toString(s))));
 												} return data.toArray(new CubeData[0]);
 										}
-								} else if(type.equalsIgnoreCase(NBT.RIGHT_ARM)) {
+								} else if (type.equalsIgnoreCase(NBT.RIGHT_ARM)) {
 										NBTTagCompound rightArmNBT = stack.getTagCompound().getCompoundTag(NBT.RIGHT_ARM);
 										for (int i = 0; i < rightArmNBT.getSize(); i++) {
 												NBTTagCompound temp = rightArmNBT.getCompoundTag(Integer.toString(i)); if (temp.getSize() > 0) {
@@ -146,6 +178,46 @@ public class DataHelper {
 																		data.add(BitHelper.readCubeDataFromNBT(temp.getCompoundTag(Integer.toString(s))));
 												} return data.toArray(new CubeData[0]);
 										}
+								}
+						} else if (stack.getItem().equals(VoidRPGItems.armorLeggings)) {
+								if (type.equalsIgnoreCase(NBT.LEFT_LEG)) {
+										NBTTagCompound leftLegNBT = stack.getTagCompound().getCompoundTag(NBT.LEFT_LEG);
+										for (int i = 0; i < leftLegNBT.getSize(); i++) {
+												NBTTagCompound temp = leftLegNBT.getCompoundTag(Integer.toString(i)); if (temp.getSize() > 0) {
+														for (int s = 0; s <= temp.getSize(); s++)
+																if (BitHelper.readCubeDataFromNBT(temp.getCompoundTag(Integer.toString(s))) != null)
+																		data.add(BitHelper.readCubeDataFromNBT(temp.getCompoundTag(Integer.toString(s))));
+												} return data.toArray(new CubeData[0]);
+										}
+								} else if (type.equalsIgnoreCase(NBT.RIGHT_LEG)) {
+										NBTTagCompound rightLegNBT = stack.getTagCompound().getCompoundTag(NBT.RIGHT_LEG);
+										for (int i = 0; i < rightLegNBT.getSize(); i++) {
+												NBTTagCompound temp = rightLegNBT.getCompoundTag(Integer.toString(i)); if (temp.getSize() > 0) {
+														for (int s = 0; s <= temp.getSize(); s++)
+																if (BitHelper.readCubeDataFromNBT(temp.getCompoundTag(Integer.toString(s))) != null)
+																		data.add(BitHelper.readCubeDataFromNBT(temp.getCompoundTag(Integer.toString(s))));
+												}
+										} return data.toArray(new CubeData[0]);
+								}
+						} else if (stack.getItem().equals(VoidRPGItems.armorBoots)) {
+								if (type.equalsIgnoreCase(NBT.LEFT_BOOT)) {
+										NBTTagCompound leftBootNBT = stack.getTagCompound().getCompoundTag(NBT.LEFT_BOOT);
+										for (int i = 0; i < leftBootNBT.getSize(); i++) {
+												NBTTagCompound temp = leftBootNBT.getCompoundTag(Integer.toString(i)); if (temp.getSize() > 0) {
+														for (int s = 0; s <= temp.getSize(); s++)
+																if (BitHelper.readCubeDataFromNBT(temp.getCompoundTag(Integer.toString(s))) != null)
+																		data.add(BitHelper.readCubeDataFromNBT(temp.getCompoundTag(Integer.toString(s))));
+												} return data.toArray(new CubeData[0]);
+										}
+								} else if (type.equalsIgnoreCase(NBT.RIGHT_BOOT)) {
+										NBTTagCompound rightBootNBT = stack.getTagCompound().getCompoundTag(NBT.RIGHT_BOOT);
+										for (int i = 0; i < rightBootNBT.getSize(); i++) {
+												NBTTagCompound temp = rightBootNBT.getCompoundTag(Integer.toString(i)); if (temp.getSize() > 0) {
+														for (int s = 0; s <= temp.getSize(); s++)
+																if (BitHelper.readCubeDataFromNBT(temp.getCompoundTag(Integer.toString(s))) != null)
+																		data.add(BitHelper.readCubeDataFromNBT(temp.getCompoundTag(Integer.toString(s))));
+												}
+										} return data.toArray(new CubeData[0]);
 								}
 						}
 				} return new CubeData[0];
@@ -199,5 +271,13 @@ public class DataHelper {
 								stack.getTagCompound().setInteger(NBT.COMPLEXITY, complexity);
 						} return stack.getTagCompound().getInteger(NBT.COMPLEXITY);
 				} return -1;
+		}
+
+		public static CubeData[][] splitInHalf(CubeData[] data) {
+				List<CubeData> left = new ArrayList<>(); List<CubeData> right = new ArrayList<>(); for (CubeData c : data)
+						if (c != null && c.xPos <= 7) right.add(c);
+						else if (c != null) left.add(c);
+				CubeData[][] output = new CubeData[][]{left.toArray(new CubeData[0]), right.toArray(new CubeData[0])};
+				return output;
 		}
 }

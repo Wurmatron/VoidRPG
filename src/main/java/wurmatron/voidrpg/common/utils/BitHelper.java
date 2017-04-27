@@ -36,6 +36,7 @@ public class BitHelper {
 		public static final  List<Vec3i>      modelLeggings = new ArrayList<>();
 		public static final  List<Vec3i>      modelChest    = new ArrayList<>();
 		public static final  List<Vec3i>      modelArm      = new ArrayList<>();
+		public static final  List<Vec3i>      modelBoots    = new ArrayList<>();
 
 		private static final IBitBrush airBrush = new IBitBrush() {
 				@Override
@@ -84,6 +85,11 @@ public class BitHelper {
 								for (int y = 0; y < 12; y++)
 										for (int z = 6; z < 10; z++)
 												modelArm.add(new Vec3i(x, y, z));
+				} else if (modelBoots.size() <= 0) {
+						for (int x = 4; x < 12; x++)
+								for (int y = 0; y < 5; y++)
+										for (int z = 6; z < 10; z++)
+												modelBoots.add(new Vec3i(x, y, z));
 				}
 				if (world != null && pos != null && model != null && model.length > 0 && api.isBlockChiseled(world, pos) && !world.isRemote) {
 						try {
@@ -99,14 +105,11 @@ public class BitHelper {
 
 		public static CubeData[] getDataFromModel(World world, BlockPos pos, Vec3i[] model, int maxX, int maxY, int maxZ, Vec3i center) {
 				CubeData[] data         = createDataFromModel(world, pos); ArrayList<CubeData> validCubes = new ArrayList<>();
-				Vec3i[]    inverseModel = inverseModel(model);
-				for (CubeData c : data)
+				Vec3i[]    inverseModel = inverseModel(model); for (CubeData c : data)
 						for (Vec3i neg : inverseModel) {
 								if (c.xPos == neg.getX() && c.yPos == neg.getY() && c.zPos == neg.getZ() && c.xPos >= maxX + center.getX() && c.yPos >= maxY + center.getY() && c.zPos >= maxZ + center.getZ())
 										validCubes.add(c);
-						}
-				LogHandler.info("Cubes: "+ validCubes + " " + validCubes.size());
-				return data;
+						} return data;
 		}
 
 		public static CubeData[] createDataFromModel(World world, BlockPos pos) {

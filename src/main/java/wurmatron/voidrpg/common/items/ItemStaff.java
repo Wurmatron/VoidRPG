@@ -34,7 +34,7 @@ public class ItemStaff extends Item {
 		@Override
 		public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
 				// TODO FIX THIS SO THAT IT ACTUALLY WORKS CORRECTLY
-				RayTraceResult ray = world.rayTraceBlocks(player.getLookVec().add(new Vec3d(player.posX, player.posY, player.posZ)), player.getLookVec().add(new Vec3d(player.getLookVec().xCoord, player.getLookVec().yCoord, player.getLookVec().zCoord).add(new Vec3d(player.posX, player.posY, player.posZ))), false,false,true);
+				RayTraceResult ray = world.rayTraceBlocks(player.getLookVec().add(new Vec3d(player.posX, player.posY, player.posZ)), player.getLookVec().add(new Vec3d(player.getLookVec().xCoord, player.getLookVec().yCoord, player.getLookVec().zCoord).add(new Vec3d(player.posX, player.posY, player.posZ))), false, false, true);
 				if (stack.getTagCompound() != null) {
 						if (ray != null && world.getBlockState(ray.getBlockPos()).getBlock() != Blocks.AIR) {
 								if (BitHelper.hasValidModel(world, ray.getBlockPos(), BitHelper.modelHead.toArray(new Vec3i[0]))) {
@@ -51,11 +51,19 @@ public class ItemStaff extends Item {
 										player.inventory.addItemStackToInventory(item);
 										stack.getTagCompound().setInteger(NBT.CUBE_DAMAGE, stack.getTagCompound().getInteger(NBT.CUBE_DAMAGE) - 1);
 										return new ActionResult(EnumActionResult.PASS, stack);
-								} else if(BitHelper.hasValidModel(world,ray.getBlockPos(), BitHelper.modelLeggings.toArray(new Vec3i[0]))) {
-										// TODO Split These into correct sides
-										CubeData[] leftLegData = BitHelper.getDataFromModel(world,ray.getBlockPos(),BitHelper.modelLeggings.toArray(new Vec3i[0]), 8,12,8,new Vec3i(0,0,0));
-										CubeData[] rightLegData = BitHelper.getDataFromModel(world,ray.getBlockPos(),BitHelper.modelLeggings.toArray(new Vec3i[0]), 8,12,8,new Vec3i(0,0,0));
-//										ItemStaff item = DataHelper.
+								} else if (BitHelper.hasValidModel(world, ray.getBlockPos(), BitHelper.modelLeggings.toArray(new Vec3i[0]))) {
+										CubeData[]   legData   = BitHelper.getDataFromModel(world, ray.getBlockPos(), BitHelper.modelLeggings.toArray(new Vec3i[0]), 8, 12, 8, new Vec3i(0, 0, 0));
+										CubeData[][] splitLegs = DataHelper.splitInHalf(legData);
+										ItemStack    item      = DataHelper.createLegsFromData(splitLegs[1], splitLegs[0]);
+										player.inventory.addItemStackToInventory(item);
+										stack.getTagCompound().setInteger(NBT.CUBE_DAMAGE, stack.getTagCompound().getInteger(NBT.CUBE_DAMAGE) - 1);
+										return new ActionResult(EnumActionResult.PASS, stack);
+								} else if (BitHelper.hasValidModel(world, ray.getBlockPos(), BitHelper.modelBoots.toArray(new Vec3i[0]))) {
+										CubeData[]   bootData   = BitHelper.getDataFromModel(world, ray.getBlockPos(), BitHelper.modelBoots.toArray(new Vec3i[0]), 16, 8, 16, new Vec3i(0, 0, 0));
+										CubeData[][] splitBoots = DataHelper.splitInHalf(bootData);
+										ItemStack    item       = DataHelper.createBootsFromData(splitBoots[0], splitBoots[1]);
+										player.inventory.addItemStackToInventory(item);
+										stack.getTagCompound().setInteger(NBT.CUBE_DAMAGE, stack.getTagCompound().getInteger(NBT.CUBE_DAMAGE) - 1);
 								}
 						} if (stack.getTagCompound().getInteger(NBT.CUBE_DAMAGE) < MAX_DURABILITY) player.inventory.deleteStack(stack);
 						return new ActionResult(EnumActionResult.PASS, stack);
