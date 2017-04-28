@@ -42,6 +42,8 @@ public class LivingTickEvent {
 														EntityPlayer player = (EntityPlayer) e.getEntityLiving(); player.motionX *= 1.2; player.motionY *= 1.05;
 														player.motionZ *= 1.2;
 												}
+												if (capabilities.getBoolean("stealth") && e.getEntityLiving().getActivePotionEffect(Potion.getPotionFromResourceLocation("invisibility")) != null && e.getEntityLiving().getActivePotionEffect(Potion.getPotionFromResourceLocation("invisibility")).getDuration() <= 200 || capabilities.getBoolean("stealth") && e.getEntityLiving().getActivePotionEffect(Potion.getPotionFromResourceLocation("invisibility")) == null)
+														e.getEntityLiving().addPotionEffect(new PotionEffect(Potion.getPotionFromResourceLocation("invisibility"), 400));
 										} else if (!stack.getTagCompound().hasNoTags()) {
 												NBTTagCompound capabilities = new NBTTagCompound();
 												CubeData[]     specialCubes = DataHelper.getEffectCubes(stack);

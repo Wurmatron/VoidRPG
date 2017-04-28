@@ -7,6 +7,7 @@ import wurmatron.voidrpg.common.cube.regular.*;
 import wurmatron.voidrpg.common.cube.special.DamageConverter;
 import wurmatron.voidrpg.common.cube.special.LifeSteal;
 import wurmatron.voidrpg.common.cube.special.MobStealth;
+import wurmatron.voidrpg.common.cube.special.Stealth;
 import wurmatron.voidrpg.common.cube.special.chest.Gravity;
 import wurmatron.voidrpg.common.cube.special.feet.FallReduction;
 import wurmatron.voidrpg.common.cube.special.feet.Flippers;
@@ -60,7 +61,7 @@ public class CubeRegistry {
 				CubeRegistry.registerCube(new WaterBreathing()); CubeRegistry.registerCube(new LifeSteal());
 				CubeRegistry.registerCube(new MobStealth()); CubeRegistry.registerCube(new FallReduction());
 				CubeRegistry.registerCube(new Gravity()); CubeRegistry.registerCube(new DamageConverter());
-				CubeRegistry.registerCube(new Flippers());
+				CubeRegistry.registerCube(new Flippers()); CubeRegistry.registerCube(new Stealth());
 				CubeRegistry.registerCube(new BasicCube("decoWhite", VoidRPGBlocks.decoWoolWhile, new ResourceLocation(Global.MODID, "textures/cube/decoWhite.png"), 5.0, 500, 1, 4096, Local.CUBED_WHITE, 5));
 				CubeRegistry.registerCube(new BasicCube("decoOrange", VoidRPGBlocks.decoWoolOrange, new ResourceLocation(Global.MODID, "textures/cube/decoOrange.png"), 5.0, 500, 1, 4096, Local.CUBED_ORANGE, 5));
 				CubeRegistry.registerCube(new BasicCube("decoMagenta", VoidRPGBlocks.decoWoolMagenta, new ResourceLocation(Global.MODID, "textures/cube/decoMagenta.png"), 5.0, 500, 1, 4096, Local.CUBED_MEGENTA, 5));

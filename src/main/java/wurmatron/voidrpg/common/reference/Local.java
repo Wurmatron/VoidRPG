@@ -43,4 +43,5 @@ public class Local {
     public static final String CUBED_DAMAGECONVT = "cube.damageConverter.description";
     public static final String CUBED_SHOCK = "cube.shock.description";
     public static final String CUBED_FLIPPERS = "cube.flippers.description";
+    public static final String CUBED_STEALTH = "cube.stealth.description";
 }
