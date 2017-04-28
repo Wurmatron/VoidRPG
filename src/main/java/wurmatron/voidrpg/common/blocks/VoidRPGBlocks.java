@@ -42,8 +42,6 @@ public class VoidRPGBlocks {
 		public static Block energyStorageIV;
 		public static Block energyStorageV;
 		public static Block cubeDamageConverter;
-		public static Block cubeCooldownReduction;
-		public static Block cubeTrueVision;
 		public static Block energySolarI;
 		public static Block energySolarII;
 		public static Block energySolarIII;
@@ -83,9 +81,9 @@ public class VoidRPGBlocks {
 				registerBlock(armorEnergyShieldII = new BlockArmor(Material.ANVIL).setUnlocalizedName("energyShieldII"));
 				registerBlock(armorEnergyShieldIII = new BlockArmor(Material.ANVIL).setUnlocalizedName("energyShieldIII"));
 				registerBlock(armorLife = new BlockArmor(Material.ANVIL).setUnlocalizedName("armorLife"));
-//        // Machines
+				// Machines
 				registerBlock(cubeCreator = new BlockCubeCreator(Material.ANVIL));
-//        // Cubes
+				// Cubes
 				registerBlock(cubeWaterWalking = new BlockArmor(Material.IRON).setUnlocalizedName("cubeWaterWalking"));
 				registerBlock(cubeShock = new BlockArmor(Material.IRON).setUnlocalizedName("cubeShock"));
 				registerBlock(cubeFlippers = new BlockArmor(Material.IRON).setUnlocalizedName("cubeFlippers"));

@@ -9,6 +9,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.lwjgl.input.Keyboard;
 import wurmatron.voidrpg.api.cube.CubeData;
 import wurmatron.voidrpg.common.cube.special.legs.CubeMuscle;
 import wurmatron.voidrpg.common.items.ItemModelArmor;
@@ -44,6 +45,10 @@ public class LivingTickEvent {
 												}
 												if (capabilities.getBoolean("stealth") && e.getEntityLiving().getActivePotionEffect(Potion.getPotionFromResourceLocation("invisibility")) != null && e.getEntityLiving().getActivePotionEffect(Potion.getPotionFromResourceLocation("invisibility")).getDuration() <= 200 || capabilities.getBoolean("stealth") && e.getEntityLiving().getActivePotionEffect(Potion.getPotionFromResourceLocation("invisibility")) == null)
 														e.getEntityLiving().addPotionEffect(new PotionEffect(Potion.getPotionFromResourceLocation("invisibility"), 400));
+												if(capabilities.getBoolean("jetpack")) {
+														if(Keyboard.isKeyDown(Keyboard.KEY_SPACE))
+																e.getEntityLiving().motionY += 0.1;
+												}
 										} else if (!stack.getTagCompound().hasNoTags()) {
 												NBTTagCompound capabilities = new NBTTagCompound();
 												CubeData[]     specialCubes = DataHelper.getEffectCubes(stack);

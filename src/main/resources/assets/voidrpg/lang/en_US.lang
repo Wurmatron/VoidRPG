@@ -191,3 +191,4 @@ cube.stealth.description=Gives you unlimited invisibility.
 stat.invalid.name=Invalid Item NBT,Please Report This Bug On Github.
 cube.damageConverter.description=Converts some damge into cube damage
 cube.shock.description=Reduces fall damage depending on the armors weight.
+cube.nanoTech.description=Ligher, More Advanced Version of Heavy Armor

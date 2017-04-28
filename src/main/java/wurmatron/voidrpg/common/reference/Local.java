@@ -44,4 +44,6 @@ public class Local {
     public static final String CUBED_SHOCK = "cube.shock.description";
     public static final String CUBED_FLIPPERS = "cube.flippers.description";
     public static final String CUBED_STEALTH = "cube.stealth.description";
+    public static final String CUBED_NANO = "cube.nanoTech.description";
+    public static final String CUBED_JETPACK = "cube.jetpack.description";
 }
