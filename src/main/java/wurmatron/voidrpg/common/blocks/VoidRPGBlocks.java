@@ -18,7 +18,6 @@ public class VoidRPGBlocks {
 		public static Block armorCarbon;
 		public static Block armorWood;
 		public static Block armorCardboard;
-		public static Block armorActivePlating;
 		public static Block armorNanoTech;
 		public static Block armorEnergyShieldI;
 		public static Block armorEnergyShieldII;
@@ -42,9 +41,6 @@ public class VoidRPGBlocks {
 		public static Block energyStorageIII;
 		public static Block energyStorageIV;
 		public static Block energyStorageV;
-		public static Block energyReactorI;
-		public static Block energyReactorII;
-		public static Block energyReactorIII;
 		public static Block cubeDamageConverter;
 		public static Block cubeCooldownReduction;
 		public static Block cubeTrueVision;
@@ -52,9 +48,6 @@ public class VoidRPGBlocks {
 		public static Block energySolarII;
 		public static Block energySolarIII;
 		public static Block energyKenetic;
-		public static Block energyAutoRepairI;
-		public static Block energyAutoRepairII;
-		public static Block energyAutoRepairIII;
 		public static Block cubeStealth;
 		// Deco
 		public static Block decoDiamond;
@@ -85,7 +78,6 @@ public class VoidRPGBlocks {
 				registerBlock(armorCarbon = new BlockArmor(Material.ANVIL).setUnlocalizedName("armorCarbon"));
 				registerBlock(armorWood = new BlockArmor(Material.ANVIL).setUnlocalizedName("armorWood"));
 				registerBlock(armorCardboard = new BlockArmor(Material.ANVIL).setUnlocalizedName("armorCardboard"));
-				registerBlock(armorActivePlating = new BlockArmor(Material.ANVIL).setUnlocalizedName("armorActivePlating"));
 				registerBlock(armorNanoTech = new BlockArmor(Material.ANVIL).setUnlocalizedName("armorNanoTech"));
 				registerBlock(armorEnergyShieldI = new BlockArmor(Material.ANVIL).setUnlocalizedName("energyShieldI"));
 				registerBlock(armorEnergyShieldII = new BlockArmor(Material.ANVIL).setUnlocalizedName("energyShieldII"));
@@ -110,9 +102,6 @@ public class VoidRPGBlocks {
 				registerBlock(energyStorageIII = new BlockArmor(Material.IRON).setUnlocalizedName("energyStorageIII"));
 				registerBlock(energyStorageIV = new BlockArmor(Material.IRON).setUnlocalizedName("energyStorageIV"));
 				registerBlock(energyStorageV = new BlockArmor(Material.IRON).setUnlocalizedName("energyStorageV"));
-				registerBlock(energyReactorI = new BlockArmor(Material.IRON).setUnlocalizedName("energyReactorI"));
-				registerBlock(energyReactorII = new BlockArmor(Material.IRON).setUnlocalizedName("energyReactorII"));
-				registerBlock(energyReactorIII = new BlockArmor(Material.IRON).setUnlocalizedName("energyReactorIII"));
 				registerBlock(cubeDamageConverter = new BlockArmor(Material.IRON).setUnlocalizedName("cubeDamageConverter"));
 //				registerBlock(cubeCooldownReduction = new BlockArmor(Material.IRON).setUnlocalizedName("cubeCooldownReduction"));
 //				registerBlock(cubeTrueVision = new BlockArmor(Material.IRON).setUnlocalizedName("cubeTrueVision"));
@@ -120,9 +109,6 @@ public class VoidRPGBlocks {
 				registerBlock(energySolarII = new BlockArmor(Material.IRON).setUnlocalizedName("energySolarII"));
 				registerBlock(energySolarIII = new BlockArmor(Material.IRON).setUnlocalizedName("energySolarIII"));
 				registerBlock(energyKenetic = new BlockArmor(Material.IRON).setUnlocalizedName("energyKenetic"));
-				registerBlock(energyAutoRepairI = new BlockArmor(Material.IRON).setUnlocalizedName("energyAutoRepairI"));
-				registerBlock(energyAutoRepairII = new BlockArmor(Material.IRON).setUnlocalizedName("energyAutoRepairII"));
-				registerBlock(energyAutoRepairIII = new BlockArmor(Material.IRON).setUnlocalizedName("energyAutoRepairIII"));
 				registerBlock(cubeStealth = new BlockArmor(Material.IRON).setUnlocalizedName("cubeStealth"));
 //        // Deco
 				registerBlock(decoDiamond = new BlockArmor(Material.ANVIL).setUnlocalizedName("decoDiamond"));
@@ -148,7 +134,6 @@ public class VoidRPGBlocks {
 
 		private static Block registerBlock(Block block) {
 				GameRegistry.registerBlock(block, block.getUnlocalizedName());
-				if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) ClientProxy.blocks.add(block);
-				return block;
+				if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) ClientProxy.blocks.add(block); return block;
 		}
 }

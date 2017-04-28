@@ -38,6 +38,10 @@ public class LivingTickEvent {
 														// TODO Find a way to disable
 														EntityPlayer player = (EntityPlayer) e.getEntityLiving(); player.capabilities.allowFlying = true;
 												}
+												if (capabilities.getBoolean("flippers") && e.getEntityLiving() instanceof EntityPlayer && e.getEntityLiving().isInWater()) {
+														EntityPlayer player = (EntityPlayer) e.getEntityLiving(); player.motionX *= 1.2; player.motionY *= 1.05;
+														player.motionZ *= 1.2;
+												}
 										} else if (!stack.getTagCompound().hasNoTags()) {
 												NBTTagCompound capabilities = new NBTTagCompound();
 												CubeData[]     specialCubes = DataHelper.getEffectCubes(stack);

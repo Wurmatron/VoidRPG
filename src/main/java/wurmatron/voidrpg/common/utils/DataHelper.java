@@ -225,11 +225,9 @@ public class DataHelper {
 
 		public static CubeData[] getEffectCubes(ItemStack stack) {
 				ArrayList<CubeData> data = new ArrayList<>();
-				if (stack != null && stack.hasTagCompound() && !stack.getTagCompound().hasNoTags() && stack.getTagCompound().getTag("1") != null) {
-						NBTTagCompound specialCubes = (NBTTagCompound) stack.getTagCompound().getTag("1");
-						if (!specialCubes.hasNoTags()) for (int i = 0; i < specialCubes.getSize(); i++)
-								data.add(BitHelper.readCubeDataFromNBT((NBTTagCompound) specialCubes.getTag(Integer.toString(i))));
-						return data.toArray(new CubeData[0]);
+				if (stack != null && stack.hasTagCompound() && !stack.getTagCompound().hasNoTags()) {
+						CubeData[] stackData = getDataFromStack(stack); for (CubeData d : stackData)
+								if (d != null && d.cube != null && d.cube.hasEffects()) data.add(d); return data.toArray(new CubeData[0]);
 				} return new CubeData[0];
 		}
 

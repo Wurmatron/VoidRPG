@@ -65,7 +65,9 @@ public class ItemStaff extends Item {
 										player.inventory.addItemStackToInventory(item);
 										stack.getTagCompound().setInteger(NBT.CUBE_DAMAGE, stack.getTagCompound().getInteger(NBT.CUBE_DAMAGE) - 1);
 								}
-						} if (stack.getTagCompound().getInteger(NBT.CUBE_DAMAGE) < MAX_DURABILITY) player.inventory.deleteStack(stack);
+						}
+						if (stack.getTagCompound().getInteger(NBT.CUBE_DAMAGE) <= MAX_DURABILITY)
+								player.inventory.deleteStack(stack);
 						return new ActionResult(EnumActionResult.PASS, stack);
 				} return new ActionResult(EnumActionResult.FAIL, stack);
 		}

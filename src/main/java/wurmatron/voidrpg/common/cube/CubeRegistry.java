@@ -9,6 +9,7 @@ import wurmatron.voidrpg.common.cube.special.LifeSteal;
 import wurmatron.voidrpg.common.cube.special.MobStealth;
 import wurmatron.voidrpg.common.cube.special.chest.Gravity;
 import wurmatron.voidrpg.common.cube.special.feet.FallReduction;
+import wurmatron.voidrpg.common.cube.special.feet.Flippers;
 import wurmatron.voidrpg.common.cube.special.feet.WaterWalking;
 import wurmatron.voidrpg.common.cube.special.head.NightVision;
 import wurmatron.voidrpg.common.cube.special.head.WaterBreathing;
@@ -50,17 +51,16 @@ public class CubeRegistry {
 				if (cube != null && idCache.containsKey(cube)) return idCache.get(cube); return -1;
 		}
 
-		public static final void addDefaultCubes() {
-				CubeRegistry.registerCube(new LightArmor());
-				CubeRegistry.registerCube(new HeavyArmor());
-				CubeRegistry.registerCube(new ReinforcedArmor());
-				CubeRegistry.registerCube(new CarbonArmor()); CubeRegistry.registerCube(new CardboardArmor());
-				CubeRegistry.registerCube(new WoodCube()); CubeRegistry.registerCube(new WaterWalking());
-				CubeRegistry.registerCube(new NightVision()); CubeRegistry.registerCube(new CardboardArmor());
-				CubeRegistry.registerCube(new CubeMuscle()); CubeRegistry.registerCube(new WaterBreathing());
-				CubeRegistry.registerCube(new LifeSteal()); CubeRegistry.registerCube(new MobStealth());
-				CubeRegistry.registerCube(new FallReduction()); CubeRegistry.registerCube(new Gravity());
-				CubeRegistry.registerCube(new DamageConverter());
+		public static void addDefaultCubes() {
+				CubeRegistry.registerCube(new LightArmor()); CubeRegistry.registerCube(new HeavyArmor());
+				CubeRegistry.registerCube(new ReinforcedArmor()); CubeRegistry.registerCube(new CarbonArmor());
+				CubeRegistry.registerCube(new CardboardArmor()); CubeRegistry.registerCube(new WoodCube());
+				CubeRegistry.registerCube(new WaterWalking()); CubeRegistry.registerCube(new NightVision());
+				CubeRegistry.registerCube(new CardboardArmor()); CubeRegistry.registerCube(new CubeMuscle());
+				CubeRegistry.registerCube(new WaterBreathing()); CubeRegistry.registerCube(new LifeSteal());
+				CubeRegistry.registerCube(new MobStealth()); CubeRegistry.registerCube(new FallReduction());
+				CubeRegistry.registerCube(new Gravity()); CubeRegistry.registerCube(new DamageConverter());
+				CubeRegistry.registerCube(new Flippers());
 				CubeRegistry.registerCube(new BasicCube("decoWhite", VoidRPGBlocks.decoWoolWhile, new ResourceLocation(Global.MODID, "textures/cube/decoWhite.png"), 5.0, 500, 1, 4096, Local.CUBED_WHITE, 5));
 				CubeRegistry.registerCube(new BasicCube("decoOrange", VoidRPGBlocks.decoWoolOrange, new ResourceLocation(Global.MODID, "textures/cube/decoOrange.png"), 5.0, 500, 1, 4096, Local.CUBED_ORANGE, 5));
 				CubeRegistry.registerCube(new BasicCube("decoMagenta", VoidRPGBlocks.decoWoolMagenta, new ResourceLocation(Global.MODID, "textures/cube/decoMagenta.png"), 5.0, 500, 1, 4096, Local.CUBED_MEGENTA, 5));
