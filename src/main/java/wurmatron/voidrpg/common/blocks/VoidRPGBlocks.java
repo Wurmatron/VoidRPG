@@ -77,9 +77,9 @@ public class VoidRPGBlocks {
 				registerBlock(armorWood = new BlockArmor(Material.ANVIL).setUnlocalizedName("armorWood"));
 				registerBlock(armorCardboard = new BlockArmor(Material.ANVIL).setUnlocalizedName("armorCardboard"));
 				registerBlock(armorNanoTech = new BlockArmor(Material.ANVIL).setUnlocalizedName("armorNanoTech"));
-				registerBlock(armorEnergyShieldI = new BlockArmor(Material.ANVIL).setUnlocalizedName("energyShieldI"));
-				registerBlock(armorEnergyShieldII = new BlockArmor(Material.ANVIL).setUnlocalizedName("energyShieldII"));
-				registerBlock(armorEnergyShieldIII = new BlockArmor(Material.ANVIL).setUnlocalizedName("energyShieldIII"));
+//				registerBlock(armorEnergyShieldI = new BlockArmor(Material.ANVIL).setUnlocalizedName("energyShieldI"));
+//				registerBlock(armorEnergyShieldII = new BlockArmor(Material.ANVIL).setUnlocalizedName("energyShieldII"));
+//				registerBlock(armorEnergyShieldIII = new BlockArmor(Material.ANVIL).setUnlocalizedName("energyShieldIII"));
 				registerBlock(armorLife = new BlockArmor(Material.ANVIL).setUnlocalizedName("armorLife"));
 				// Machines
 				registerBlock(cubeCreator = new BlockCubeCreator(Material.ANVIL));
@@ -94,19 +94,19 @@ public class VoidRPGBlocks {
 				registerBlock(cubeWaterBreahing = new BlockArmor(Material.IRON).setUnlocalizedName("cubeWaterBreathing"));
 				registerBlock(cubeMobStealth = new BlockArmor(Material.IRON).setUnlocalizedName("cubeMobStealth"));
 				registerBlock(cubeWing = new BlockArmor(Material.IRON).setUnlocalizedName("cubeWing"));
-				registerBlock(cubeTrueStealth = new BlockArmor(Material.IRON).setUnlocalizedName("cubeTrueStealth"));
-				registerBlock(energyStorageI = new BlockArmor(Material.IRON).setUnlocalizedName("energyStorageI"));
-				registerBlock(energyStorageII = new BlockArmor(Material.IRON).setUnlocalizedName("energyStorageII"));
-				registerBlock(energyStorageIII = new BlockArmor(Material.IRON).setUnlocalizedName("energyStorageIII"));
-				registerBlock(energyStorageIV = new BlockArmor(Material.IRON).setUnlocalizedName("energyStorageIV"));
-				registerBlock(energyStorageV = new BlockArmor(Material.IRON).setUnlocalizedName("energyStorageV"));
+//				registerBlock(cubeTrueStealth = new BlockArmor(Material.IRON).setUnlocalizedName("cubeTrueStealth"));
+//				registerBlock(energyStorageI = new BlockArmor(Material.IRON).setUnlocalizedName("energyStorageI"));
+//				registerBlock(energyStorageII = new BlockArmor(Material.IRON).setUnlocalizedName("energyStorageII"));
+//				registerBlock(energyStorageIII = new BlockArmor(Material.IRON).setUnlocalizedName("energyStorageIII"));
+//				registerBlock(energyStorageIV = new BlockArmor(Material.IRON).setUnlocalizedName("energyStorageIV"));
+//				registerBlock(energyStorageV = new BlockArmor(Material.IRON).setUnlocalizedName("energyStorageV"));
 				registerBlock(cubeDamageConverter = new BlockArmor(Material.IRON).setUnlocalizedName("cubeDamageConverter"));
 //				registerBlock(cubeCooldownReduction = new BlockArmor(Material.IRON).setUnlocalizedName("cubeCooldownReduction"));
 //				registerBlock(cubeTrueVision = new BlockArmor(Material.IRON).setUnlocalizedName("cubeTrueVision"));
-				registerBlock(energySolarI = new BlockArmor(Material.IRON).setUnlocalizedName("energySolarI"));
-				registerBlock(energySolarII = new BlockArmor(Material.IRON).setUnlocalizedName("energySolarII"));
-				registerBlock(energySolarIII = new BlockArmor(Material.IRON).setUnlocalizedName("energySolarIII"));
-				registerBlock(energyKenetic = new BlockArmor(Material.IRON).setUnlocalizedName("energyKenetic"));
+//				registerBlock(energySolarI = new BlockArmor(Material.IRON).setUnlocalizedName("energySolarI"));
+//				registerBlock(energySolarII = new BlockArmor(Material.IRON).setUnlocalizedName("energySolarII"));
+//				registerBlock(energySolarIII = new BlockArmor(Material.IRON).setUnlocalizedName("energySolarIII"));
+//				registerBlock(energyKenetic = new BlockArmor(Material.IRON).setUnlocalizedName("energyKenetic"));
 				registerBlock(cubeStealth = new BlockArmor(Material.IRON).setUnlocalizedName("cubeStealth"));
 //        // Deco
 				registerBlock(decoDiamond = new BlockArmor(Material.ANVIL).setUnlocalizedName("decoDiamond"));

@@ -17,8 +17,9 @@ public class CubeCreatorRecipeWrapper extends BlankRecipeWrapper {
 		public final  int             time;
 
 		public CubeCreatorRecipeWrapper(ItemStack[] inputs, ItemStack output, int time) {
-				ArrayList<ItemStack> input = new ArrayList<>(); Collections.addAll(input, inputs); this.inputs = input;
+				ArrayList<ItemStack> input = new ArrayList<>(); this.inputs = input;
 				ArrayList<ItemStack> outputs = new ArrayList<>(); outputs.add(output); this.output = outputs; this.time = time;
+				Collections.addAll(input, inputs);
 		}
 
 		@Nonnull

@@ -27,7 +27,7 @@ public class CubeCreatorCategory extends BlankRecipeCategory<CubeCreatorRecipeWr
 		@Nonnull
 		@Override
 		public String getTitle() {
-				return "CubeJson Creator";
+				return "Cube Creator";
 		}
 
 		@Nonnull
@@ -38,7 +38,8 @@ public class CubeCreatorCategory extends BlankRecipeCategory<CubeCreatorRecipeWr
 
 		@Override
 		public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull CubeCreatorRecipeWrapper recipe) {
-				IGuiItemStackGroup stacks = recipeLayout.getItemStacks(); if (recipe.getInputs().size() > 0) {
+				IGuiItemStackGroup stacks = recipeLayout.getItemStacks();
+				if (recipe.getInputs().size() > 0) {
 						stacks.init(0, true, 18, 0); stacks.setFromRecipe(0, recipe.getInputs().get(0));
 				} if (recipe.getInputs().size() > 1) {
 						stacks.init(1, true, 54, 0); stacks.setFromRecipe(1, recipe.getInputs().get(1));

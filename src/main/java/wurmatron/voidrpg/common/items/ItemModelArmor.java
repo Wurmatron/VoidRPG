@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ItemModelArmor extends ItemArmor {
+public class ItemModelArmor extends ItemArmor{
 
 		@SideOnly(Side.CLIENT)
 		private ArmorModel armorModel;

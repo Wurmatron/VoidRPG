@@ -25,9 +25,11 @@ public class TileCubeCreator extends TileEntity implements IInventory, ITickable
 		@Override
 		public void update() {
 				if (!worldObj.isRemote) {
-						if (activeRecipe == null && worldObj.getWorldTime() % UPDATE_TIMER == 0) hasValidRecipe();
+						if (activeRecipe == null && worldObj.getTotalWorldTime() % UPDATE_TIMER == 0)
+								hasValidRecipe();
 						if (timer <= 0 && activeRecipe != null) {
-								addOutput(activeRecipe.getOutputCube()); activeRecipe = null;
+								addOutput(activeRecipe.getOutputCube());
+								activeRecipe = null;
 						} else if (timer > 0) {
 								int timeBoost = 0; for (int slot = 9; slot <= 13; slot++)
 										if (getStackInSlot(slot) != null && getStackInSlot(slot).getUnlocalizedName().startsWith("speed")) {
