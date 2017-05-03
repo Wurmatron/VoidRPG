@@ -10,42 +10,33 @@ import net.minecraft.util.ITickable;
 import wurmatron.voidrpg.api.recipe.ICubeCreatorRecipe;
 import wurmatron.voidrpg.common.config.Settings;
 import wurmatron.voidrpg.common.cube.CubeCreatorRecipeHandler;
+import wurmatron.voidrpg.common.items.ItemUpgrade;
 import wurmatron.voidrpg.common.reference.NBT;
 import wurmatron.voidrpg.common.utils.StackHelper;
 
 import javax.annotation.Nullable;
 
+// TODO Create way of telling timer via GUI
 public class TileCubeCreator extends TileEntity implements IInventory, ITickable {
 
 	private ItemStack[] inventory = new ItemStack[14];
 	private ICubeCreatorRecipe activeRecipe;
 	private int timer;
 	private int UPDATE_TIMER = Settings.cubeCreatorUpdatePeriod * 20;
+	private Boolean upgrades = null;
 
 	@Override
 	public void update () {
 		if (!worldObj.isRemote) {
-			if (activeRecipe == null && worldObj.getTotalWorldTime () % UPDATE_TIMER == 0)
-				hasValidRecipe ();
-			if (timer <= 0 && activeRecipe != null) {
-				addOutput (activeRecipe.getOutputCube ());
-				activeRecipe = null;
-			} else if (timer > 0) {
-				int timeBoost = 0;
-				for (int slot = 9; slot <= 13; slot++)
-					if (getStackInSlot (slot) != null && getStackInSlot (slot).getUnlocalizedName ().startsWith ("speed")) {
-						if (getStackInSlot (slot).getUnlocalizedName ().equals ("speedI"))
-							timeBoost += 2 * getStackInSlot (slot).stackSize;
-						else if (getStackInSlot (slot).getUnlocalizedName ().equals ("speedII"))
-							timeBoost += 4 * getStackInSlot (slot).stackSize;
-						else if (getStackInSlot (slot).getUnlocalizedName ().equals ("speedIII"))
-							timeBoost += 8 * getStackInSlot (slot).stackSize;
-					}
-				if (timeBoost > 0) {
-					timer -= timeBoost;
-				} else
-					timer--;
+			if (worldObj.getTotalWorldTime () % UPDATE_TIMER == 0) {
+				hasUpgrades (true);
+				if (activeRecipe == null)
+					lookForValidRecipe ();
 			}
+			if (activeRecipe != null && timer <= 0) {
+				handleFinishedRecipe ();
+			} else if (activeRecipe != null && timer > 0)
+				decreesTimer ();
 		}
 	}
 
@@ -123,11 +114,18 @@ public class TileCubeCreator extends TileEntity implements IInventory, ITickable
 	}
 
 	@Override
-	public void setInventorySlotContents (int index,@Nullable ItemStack stack) {
-		if (index < getSizeInventory ()) {
-			inventory[index] = stack;
-			markDirty ();
-		}
+	public void setInventorySlotContents (int index,ItemStack stack) {
+		if (index < 0 || index >= this.getSizeInventory ())
+			return;
+
+		if (stack != null && stack.stackSize > this.getInventoryStackLimit ())
+			stack.stackSize = this.getInventoryStackLimit ();
+
+		if (stack != null && stack.stackSize == 0)
+			stack = null;
+
+		this.inventory[index] = stack;
+		this.markDirty ();
 	}
 
 	@Override
@@ -184,60 +182,123 @@ public class TileCubeCreator extends TileEntity implements IInventory, ITickable
 		return true;
 	}
 
-	private void hasValidRecipe () {
-		for (ICubeCreatorRecipe recipe : CubeCreatorRecipeHandler.getRecipes ()) {
-			boolean hasItems = true;
-			if (recipe.getInputs () != null && recipe.getOutputCube () != null) {
-				for (ItemStack stack : recipe.getInputs ()) {
-					if (!hasStack (stack))
-						hasItems = false;
-					if (hasItems && activeRecipe == null)
+	private void lookForValidRecipe () {
+		if (activeRecipe == null && CubeCreatorRecipeHandler.getRecipes ().size () > 0) {
+			for (ICubeCreatorRecipe recipe : CubeCreatorRecipeHandler.getRecipes ()) {
+				boolean hasItems = true;
+				if (recipe.getInputs () != null && recipe.getOutputCube () != null && recipe.getTimeInTicks () > 0) {
+					for (ItemStack recipeInput : recipe.getInputs ())
+						if (!hasItem (recipeInput))
+							hasItems = false;
+					if (hasItems)
 						setActiveRecipe (recipe);
 				}
 			}
 		}
 	}
 
-	private boolean hasStack (ItemStack stack) {
-		int amount = 0;
+	private boolean hasItem (ItemStack stack) {
+		int itemAmount = 0;
 		for (int slot = 1; slot <= 8; slot++) {
-			if (getStackInSlot (slot) != null && StackHelper.areItemsEqual (stack,getStackInSlot (slot)))
-				return true;
-			if (getStackInSlot (slot) != null && StackHelper.areStacksEqualIgnoreSize (stack,getStackInSlot (slot)))
-				amount += getStackInSlot (slot).stackSize;
+			ItemStack slotStack = getStackInSlot (slot);
+			if (slotStack != null)
+				if (StackHelper.areItemsEqual (stack,slotStack))
+					return true;
+				else if (StackHelper.areStacksEqualIgnoreSize (stack,slotStack))
+					itemAmount += slotStack.stackSize;
 		}
-		return amount >= stack.stackSize;
-	}
-
-	private void addOutput (ItemStack stack) {
-		if (stack != null && getStackInSlot (0) == null) {
-			setInventorySlotContents (0,stack);
-		} else if (stack != null && getStackInSlot (0) != null && StackHelper.areStacksEqualIgnoreSize (getStackInSlot (0),stack)) {
-			ItemStack item = new ItemStack (stack.getItem (),getStackInSlot (0).stackSize + stack.stackSize);
-			if (stack.getTagCompound () != null)
-				item.setTagCompound (stack.getTagCompound ());
-			setInventorySlotContents (0,item);
-		}
-	}
-
-	private void consumeRecipeItems (ICubeCreatorRecipe recipe) {
-		for (ItemStack stack : recipe.getInputs ()) {
-			for (int s = 1; s <= 8; s++) {
-				if (getStackInSlot (s) != null && StackHelper.areStacksEqualIgnoreSize (stack,getStackInSlot (s))) {
-					ItemStack item = new ItemStack (stack.getItem (),getStackInSlot (s).stackSize - stack.stackSize);
-					if (stack.getTagCompound () != null)
-						item.setTagCompound (stack.getTagCompound ());
-					setInventorySlotContents (s,item);
-				}
-			}
-		}
+		return itemAmount >= stack.stackSize;
 	}
 
 	private void setActiveRecipe (ICubeCreatorRecipe recipe) {
-		if (recipe != null) {
-			timer = recipe.getTimeInTicks ();
-			consumeRecipeItems (recipe);
-			activeRecipe = recipe;
+		activeRecipe = recipe;
+		timer = recipe.getTimeInTicks ();
+	}
+
+	private void decreesTimer () {
+		timer -= getSpeedMod ();
+	}
+
+	private int getSpeedMod () {
+		if (hasUpgrades (false)) {
+			int modAmount = 1;
+			for (int slot = 9; slot <= 13; slot++) {
+				ItemStack upgradeStack = getStackInSlot (slot);
+				if (upgradeStack != null && upgradeStack.getItem () instanceof ItemUpgrade)
+					if (upgradeStack.getItemDamage () == 0)
+						modAmount += 2 * upgradeStack.stackSize;
+					else if (upgradeStack.getItemDamage () == 1)
+						modAmount += 4 * upgradeStack.stackSize;
+					else if (upgradeStack.getItemDamage () == 2)
+						modAmount += 8 * upgradeStack.stackSize;
+			}
+			if (modAmount <= 0)
+				modAmount = 1;
+			return modAmount;
+		}
+		return 1;
+	}
+
+	private boolean hasUpgrades (boolean forceUpdate) {
+		if (upgrades == null || forceUpdate) {
+			for (int slot = 9; slot <= 13; slot++)
+				if (getStackInSlot (slot) != null) {
+					upgrades = true;
+					return true;
+				}
+			upgrades = false;
+			return false;
+		} else
+			return upgrades;
+	}
+
+	private void handleFinishedRecipe () {
+		if (addOutput (activeRecipe.getOutputCube ())) {
+			consumeRecipe ();
+			activeRecipe = null;
+			lookForValidRecipe ();
+		}
+	}
+
+	private boolean addOutput (ItemStack stack) {
+		if (stack != null) {
+			if (getStackInSlot (0) == null) {
+				setInventorySlotContents (0,stack);
+				return true;
+			} else if (StackHelper.areStacksEqualIgnoreSize (getStackInSlot (0),stack)) {
+				if (getStackInSlot (0).stackSize + stack.stackSize <= 64) {
+					getStackInSlot (0).stackSize += stack.stackSize;
+					return true;
+				}
+				return false;
+			}
+		}
+		return false;
+	}
+
+	private void consumeRecipe () {
+		if (activeRecipe != null)
+			for (ItemStack input : activeRecipe.getInputs ())
+				consumeItem (input);
+	}
+
+	private void consumeItem (ItemStack stack) {
+		if (stack != null) {
+			int amountNeeded = stack.stackSize;
+			for (int slot = 1; slot <= 8; slot++) {
+				ItemStack slotStack = getStackInSlot (slot);
+				if (slotStack != null)
+					if (StackHelper.areItemsEqual (stack,slotStack))
+						setInventorySlotContents (slot,null);
+					else if (StackHelper.areStacksEqualIgnoreSize (stack,slotStack)) {
+						if (slotStack.stackSize > amountNeeded)
+							slotStack.stackSize -= amountNeeded;
+						else {
+							amountNeeded -= slotStack.stackSize;
+							setInventorySlotContents (slot,null);
+						}
+					}
+			}
 		}
 	}
 }
