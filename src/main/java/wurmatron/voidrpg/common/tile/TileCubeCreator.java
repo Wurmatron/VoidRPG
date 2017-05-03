@@ -12,6 +12,7 @@ import wurmatron.voidrpg.common.config.Settings;
 import wurmatron.voidrpg.common.cube.CubeCreatorRecipeHandler;
 import wurmatron.voidrpg.common.items.ItemUpgrade;
 import wurmatron.voidrpg.common.reference.NBT;
+import wurmatron.voidrpg.common.utils.LogHandler;
 import wurmatron.voidrpg.common.utils.StackHelper;
 
 import javax.annotation.Nullable;
@@ -32,6 +33,8 @@ public class TileCubeCreator extends TileEntity implements IInventory, ITickable
 				hasUpgrades (true);
 				if (activeRecipe == null)
 					lookForValidRecipe ();
+				else if(activeRecipe.getOutputCube ().getTagCompound () != null)
+					LogHandler.info (activeRecipe.getOutputCube ().getTagCompound ().toString ());
 			}
 			if (activeRecipe != null && timer <= 0) {
 				handleFinishedRecipe ();

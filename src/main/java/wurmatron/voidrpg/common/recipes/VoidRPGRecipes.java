@@ -1,11 +1,10 @@
 package wurmatron.voidrpg.common.recipes;
 
+import mod.chiselsandbits.helpers.ModUtil;
 import mod.chiselsandbits.items.ItemChiseledBit;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionType;
 import net.minecraft.potion.PotionUtils;
@@ -99,15 +98,8 @@ public class VoidRPGRecipes {
 
 	}
 
-	private static ItemStack createBitFromBlock (Block block,int count) {
-		return ItemChiseledBit.createStack (Block.getStateId (getStateFromItem (new ItemStack (block))),count,false);
+	private  static ItemStack createBitFromBlock (Block block,int count) {
+		return ItemChiseledBit.createStack (ModUtil.getStateId (block.getDefaultState ()),count, true);
 	}
 
-	private static IBlockState getStateFromItem (ItemStack block) {
-		if (block != null && block.getItem () instanceof ItemBlock) {
-			ItemBlock stack = (ItemBlock) block.getItem ();
-			return stack.getBlock ().getStateFromMeta (stack.getMetadata (block));
-		}
-		return null;
-	}
 }
