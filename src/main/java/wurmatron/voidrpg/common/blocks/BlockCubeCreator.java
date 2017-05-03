@@ -1,14 +1,18 @@
 package wurmatron.voidrpg.common.blocks;
 
 import net.minecraft.block.BlockContainer;
+import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import wurmatron.voidrpg.VoidRPG;
@@ -19,9 +23,12 @@ import javax.annotation.Nullable;
 
 public class BlockCubeCreator extends BlockContainer {
 
+	private static final PropertyDirection FACING = BlockHorizontal.FACING;
+
 	public BlockCubeCreator (Material material) {
 		super (material);
 		setCreativeTab (VoidRPG.tabVoidRPG);
+		setDefaultState (blockState.getBaseState ().withProperty (FACING,EnumFacing.EAST));
 		setUnlocalizedName ("cubeCreator");
 	}
 
@@ -42,5 +49,47 @@ public class BlockCubeCreator extends BlockContainer {
 		TileCubeCreator te = (TileCubeCreator) world.getTileEntity (pos);
 		InventoryHelper.dropInventoryItems (world,pos,te);
 		super.breakBlock (world,pos,blockstate);
+	}
+
+	@Override
+	public EnumBlockRenderType getRenderType (IBlockState state) {
+		return EnumBlockRenderType.MODEL;
+	}
+
+	public void onBlockAdded (World world,BlockPos pos,IBlockState state) {
+		setDefaultState (state);
+	}
+
+	@Override
+	public IBlockState onBlockPlaced (World worldIn,BlockPos pos,EnumFacing facing,float hitX,float hitY,float hitZ,int meta,EntityLivingBase placer) {
+		return this.getDefaultState ().withProperty (FACING,placer.getHorizontalFacing ().getOpposite ());
+	}
+
+	@Override
+	public IBlockState getStateFromMeta (int meta) {
+		EnumFacing enumfacing = EnumFacing.getFront (meta);
+		if (enumfacing.getAxis () == EnumFacing.Axis.Y)
+			enumfacing = EnumFacing.NORTH;
+		return this.getDefaultState ().withProperty (FACING,enumfacing);
+	}
+
+	@Override
+	public int getMetaFromState (IBlockState state) {
+		return ((EnumFacing) state.getValue (FACING)).getIndex ();
+	}
+
+	@Override
+	public IBlockState withRotation (IBlockState state,Rotation rot) {
+		return state.withProperty (FACING,rot.rotate ((EnumFacing) state.getValue (FACING)));
+	}
+
+	@Override
+	public IBlockState withMirror (IBlockState state,Mirror mirrorIn) {
+		return state.withRotation (mirrorIn.toRotation ((EnumFacing) state.getValue (FACING)));
+	}
+
+	@Override
+	protected BlockStateContainer createBlockState () {
+		return new BlockStateContainer (this,new IProperty[] {FACING});
 	}
 }

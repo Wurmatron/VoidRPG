@@ -2,7 +2,7 @@
   "__comment": "Created by Troykoffeman",
   "parent": "block/cube_all",
   "textures": {
-    "#-1": "voidrpg:blocks/cubeCreator"
+    "#-1": "voidrpg:models/cubeCreator"
   },
   "elements": [
     {
