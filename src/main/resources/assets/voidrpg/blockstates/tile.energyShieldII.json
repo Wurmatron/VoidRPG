@@ -1,5 +1,7 @@
 {
-    "variants": {
-        "normal": { "model": "voidrpg:energyShieldII" }
+  "variants": {
+    "normal": {
+      "model": "voidrpg:energyShieldII"
     }
+  }
 }

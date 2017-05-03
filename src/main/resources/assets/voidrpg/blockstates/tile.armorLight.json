@@ -1,5 +1,7 @@
 {
-    "variants": {
-        "normal": { "model": "voidrpg:armorLight" }
+  "variants": {
+    "normal": {
+      "model": "voidrpg:armorLight"
     }
+  }
 }

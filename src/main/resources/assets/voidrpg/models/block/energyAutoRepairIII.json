@@ -1,6 +1,6 @@
 {
-    "parent": "block/cube_all",
-    "textures": {
-        "all": "voidrpg:blocks/autoRepairIII"
-    }
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "voidrpg:blocks/autoRepairIII"
+  }
 }

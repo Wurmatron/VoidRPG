@@ -12,58 +12,58 @@ import wurmatron.voidrpg.common.reference.Local;
 
 public class Gravity implements ICube {
 
-		@Override
-		public String getName() {
-				return "gravity";
-		}
+	@Override
+	public String getName () {
+		return "gravity";
+	}
 
-		@Override
-		public Block getBlock() {
-				return VoidRPGBlocks.cubeGravity;
-		}
+	@Override
+	public Block getBlock () {
+		return VoidRPGBlocks.cubeGravity;
+	}
 
-		@Override
-		public ResourceLocation getTexture() {
-				return new ResourceLocation(Global.MODID, "textures/cube/gravity.png");
-		}
+	@Override
+	public ResourceLocation getTexture () {
+		return new ResourceLocation (Global.MODID,"textures/cube/gravity.png");
+	}
 
-		@Override
-		public double getWeight() {
-				return 200;
-		}
+	@Override
+	public double getWeight () {
+		return 200;
+	}
 
-		@Override
-		public int getMaxDurability() {
-				return 5000;
-		}
+	@Override
+	public int getMaxDurability () {
+		return 5000;
+	}
 
-		@Override
-		public int getComplexity() {
-				return 500;
-		}
+	@Override
+	public int getComplexity () {
+		return 500;
+	}
 
-		@Override
-		public int getMaxAmount(Item item) {
-				return 8;
-		}
+	@Override
+	public int getMaxAmount (Item item) {
+		return 8;
+	}
 
-		@Override
-		public boolean getSupportedItem(EntityEquipmentSlot slot, Item item) {
-				return slot.equals(EntityEquipmentSlot.CHEST);
-		}
+	@Override
+	public boolean getSupportedItem (EntityEquipmentSlot slot,Item item) {
+		return slot.equals (EntityEquipmentSlot.CHEST);
+	}
 
-		@Override
-		public String getDescription() {
-				return Local.CUBED_GRAVITY;
-		}
+	@Override
+	public String getDescription () {
+		return Local.CUBED_GRAVITY;
+	}
 
-		@Override
-		public boolean hasEffects() {
-				return true;
-		}
+	@Override
+	public boolean hasEffects () {
+		return true;
+	}
 
-		@Override
-		public double getProtectionPercentage(DamageSource source, double amount) {
-				return 0;
-		}
+	@Override
+	public double getProtectionPercentage (DamageSource source,double amount) {
+		return 0;
+	}
 }

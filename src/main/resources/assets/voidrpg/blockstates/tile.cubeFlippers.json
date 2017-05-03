@@ -1,5 +1,7 @@
 {
-    "variants": {
-        "normal": { "model": "voidrpg:cubeFlippers" }
+  "variants": {
+    "normal": {
+      "model": "voidrpg:cubeFlippers"
     }
+  }
 }

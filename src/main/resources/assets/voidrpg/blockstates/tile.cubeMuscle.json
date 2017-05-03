@@ -1,5 +1,7 @@
 {
-    "variants": {
-        "normal": { "model": "voidrpg:cubeMuscle" }
+  "variants": {
+    "normal": {
+      "model": "voidrpg:cubeMuscle"
     }
+  }
 }

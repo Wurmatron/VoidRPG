@@ -1,16 +1,18 @@
 [
-{
-  "modid": "voidrpg",
-  "name": "VoidRPG",
-  "description": "",
-  "version": "${version}",
-  "mcversion": "${mcversion}",
-  "url": "https://github.com/Wurmatron/VoidRPG",
-  "updateUrl": "",
-  "authorList": ["Wurmatron"],
-  "credits": "Special Thanks to Troykoffeman",
-  "logoFile": "",
-  "screenshots": [],
-  "dependencies": []
-}
+  {
+    "modid": "voidrpg",
+    "name": "VoidRPG",
+    "description": "",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "https://github.com/Wurmatron/VoidRPG",
+    "updateUrl": "",
+    "authorList": [
+      "Wurmatron"
+    ],
+    "credits": "Special Thanks to Troykoffeman",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": []
+  }
 ]

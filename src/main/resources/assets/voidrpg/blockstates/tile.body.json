@@ -1,5 +1,7 @@
 {
-    "variants": {
-        "normal": { "model": "voidrpg:body" }
+  "variants": {
+    "normal": {
+      "model": "voidrpg:body"
     }
+  }
 }

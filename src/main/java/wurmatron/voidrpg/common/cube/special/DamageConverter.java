@@ -12,58 +12,58 @@ import wurmatron.voidrpg.common.reference.Local;
 
 public class DamageConverter implements ICube {
 
-		@Override
-		public String getName() {
-				return "damageConverter";
-		}
+	@Override
+	public String getName () {
+		return "damageConverter";
+	}
 
-		@Override
-		public Block getBlock() {
-				return VoidRPGBlocks.cubeDamageConverter;
-		}
+	@Override
+	public Block getBlock () {
+		return VoidRPGBlocks.cubeDamageConverter;
+	}
 
-		@Override
-		public ResourceLocation getTexture() {
-				return new ResourceLocation(Global.MODID, "textures/cube/damageConverter.png");
-		}
+	@Override
+	public ResourceLocation getTexture () {
+		return new ResourceLocation (Global.MODID,"textures/cube/damageConverter.png");
+	}
 
-		@Override
-		public double getWeight() {
-				return 50;
-		}
+	@Override
+	public double getWeight () {
+		return 50;
+	}
 
-		@Override
-		public int getMaxDurability() {
-				return 12000;
-		}
+	@Override
+	public int getMaxDurability () {
+		return 12000;
+	}
 
-		@Override
-		public int getComplexity() {
-				return 10;
-		}
+	@Override
+	public int getComplexity () {
+		return 10;
+	}
 
-		@Override
-		public int getMaxAmount(Item item) {
-				return 20;
-		}
+	@Override
+	public int getMaxAmount (Item item) {
+		return 20;
+	}
 
-		@Override
-		public boolean getSupportedItem(EntityEquipmentSlot slot, Item item) {
-				return true;
-		}
+	@Override
+	public boolean getSupportedItem (EntityEquipmentSlot slot,Item item) {
+		return true;
+	}
 
-		@Override
-		public String getDescription() {
-				return Local.CUBED_DAMAGECONVT;
-		}
+	@Override
+	public String getDescription () {
+		return Local.CUBED_DAMAGECONVT;
+	}
 
-		@Override
-		public boolean hasEffects() {
-				return true;
-		}
+	@Override
+	public boolean hasEffects () {
+		return true;
+	}
 
-		@Override
-		public double getProtectionPercentage(DamageSource source, double amount) {
-				return 10;
-		}
+	@Override
+	public double getProtectionPercentage (DamageSource source,double amount) {
+		return 10;
+	}
 }

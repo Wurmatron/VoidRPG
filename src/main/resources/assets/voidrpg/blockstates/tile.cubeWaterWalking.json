@@ -1,5 +1,7 @@
 {
-    "variants": {
-        "normal": { "model": "voidrpg:cubeWaterWalking" }
+  "variants": {
+    "normal": {
+      "model": "voidrpg:cubeWaterWalking"
     }
+  }
 }

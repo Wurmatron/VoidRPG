@@ -12,60 +12,60 @@ import wurmatron.voidrpg.common.reference.Local;
 
 public class CubeMuscle implements ICube {
 
-		public static final float MOVEMENT_SPEED = 1.5f;
+	public static final float MOVEMENT_SPEED = 1.5f;
 
-		@Override
-		public String getName() {
-				return "muscle";
-		}
+	@Override
+	public String getName () {
+		return "muscle";
+	}
 
-		@Override
-		public Block getBlock() {
-				return VoidRPGBlocks.cubeMuscle;
-		}
+	@Override
+	public Block getBlock () {
+		return VoidRPGBlocks.cubeMuscle;
+	}
 
-		@Override
-		public ResourceLocation getTexture() {
-				return new ResourceLocation(Global.MODID, "textures/cube/muscle.png");
-		}
+	@Override
+	public ResourceLocation getTexture () {
+		return new ResourceLocation (Global.MODID,"textures/cube/muscle.png");
+	}
 
-		@Override
-		public double getWeight() {
-				return 20;
-		}
+	@Override
+	public double getWeight () {
+		return 20;
+	}
 
-		@Override
-		public int getMaxDurability() {
-				return 8192;
-		}
+	@Override
+	public int getMaxDurability () {
+		return 8192;
+	}
 
-		@Override
-		public int getComplexity() {
-				return 10;
-		}
+	@Override
+	public int getComplexity () {
+		return 10;
+	}
 
-		@Override
-		public int getMaxAmount(Item item) {
-				return 24;
-		}
+	@Override
+	public int getMaxAmount (Item item) {
+		return 24;
+	}
 
-		@Override
-		public boolean getSupportedItem(EntityEquipmentSlot slot, Item item) {
-				return slot.equals(EntityEquipmentSlot.LEGS);
-		}
+	@Override
+	public boolean getSupportedItem (EntityEquipmentSlot slot,Item item) {
+		return slot.equals (EntityEquipmentSlot.LEGS);
+	}
 
-		@Override
-		public String getDescription() {
-				return Local.CUBED_MUSCLE;
-		}
+	@Override
+	public String getDescription () {
+		return Local.CUBED_MUSCLE;
+	}
 
-		@Override
-		public boolean hasEffects() {
-				return true;
-		}
+	@Override
+	public boolean hasEffects () {
+		return true;
+	}
 
-		@Override
-		public double getProtectionPercentage(DamageSource source, double amount) {
-				return 0;
-		}
+	@Override
+	public double getProtectionPercentage (DamageSource source,double amount) {
+		return 0;
+	}
 }

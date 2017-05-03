@@ -1,5 +1,7 @@
 {
-    "variants": {
-        "normal": { "model": "voidrpg:cubeShock" }
+  "variants": {
+    "normal": {
+      "model": "voidrpg:cubeShock"
     }
+  }
 }

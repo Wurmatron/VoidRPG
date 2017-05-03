@@ -1,5 +1,7 @@
 {
-    "variants": {
-        "normal": { "model": "voidrpg:energyStorageI" }
+  "variants": {
+    "normal": {
+      "model": "voidrpg:energyStorageI"
     }
+  }
 }

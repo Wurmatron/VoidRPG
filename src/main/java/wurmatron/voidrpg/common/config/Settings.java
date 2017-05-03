@@ -1,7 +1,8 @@
 package wurmatron.voidrpg.common.config;
 
 public class Settings {
-		// Global.cfg
-		public static boolean debug;
-		public static int     cubeCreatorUpdatePeriod;
+
+	// Global.cfg
+	public static boolean debug;
+	public static int cubeCreatorUpdatePeriod;
 }

@@ -12,58 +12,60 @@ import wurmatron.voidrpg.common.reference.Local;
 
 public class HeavyArmor implements ICube {
 
-		@Override
-		public String getName() {
-				return "heavyArmor";
-		}
+	@Override
+	public String getName () {
+		return "heavyArmor";
+	}
 
-		@Override
-		public Block getBlock() {
-				return VoidRPGBlocks.armorHeavy;
-		}
+	@Override
+	public Block getBlock () {
+		return VoidRPGBlocks.armorHeavy;
+	}
 
-		@Override
-		public ResourceLocation getTexture() {
-				return new ResourceLocation(Global.MODID, "textures/cube/heavyArmor.png");
-		}
+	@Override
+	public ResourceLocation getTexture () {
+		return new ResourceLocation (Global.MODID,"textures/cube/heavyArmor.png");
+	}
 
-		@Override
-		public double getWeight() {
-				return 50;
-		}
+	@Override
+	public double getWeight () {
+		return 50;
+	}
 
-		@Override
-		public int getComplexity() {
-				return 1;
-		}
+	@Override
+	public int getComplexity () {
+		return 1;
+	}
 
-		@Override
-		public int getMaxDurability() {
-				return 1000;
-		}
+	@Override
+	public int getMaxDurability () {
+		return 1000;
+	}
 
-		@Override
-		public int getMaxAmount(Item item) {
-				return 4096;
-		}
+	@Override
+	public int getMaxAmount (Item item) {
+		return 4096;
+	}
 
-		@Override
-		public boolean getSupportedItem(EntityEquipmentSlot slot, Item item) {
-				return true;
-		}
+	@Override
+	public boolean getSupportedItem (EntityEquipmentSlot slot,Item item) {
+		return true;
+	}
 
-		@Override
-		public String getDescription() {
-				return Local.CUBED_HEAVY;
-		}
+	@Override
+	public String getDescription () {
+		return Local.CUBED_HEAVY;
+	}
 
-		@Override
-		public boolean hasEffects() {
-				return false;
-		}
+	@Override
+	public boolean hasEffects () {
+		return false;
+	}
 
-		@Override
-		public double getProtectionPercentage(DamageSource source, double amount) {
-				if (!source.isDamageAbsolute()) return (amount - (amount / 5)) > 0 ? (amount - (amount / 5)) : 0; return amount;
-		}
+	@Override
+	public double getProtectionPercentage (DamageSource source,double amount) {
+		if (!source.isDamageAbsolute ())
+			return (amount - (amount / 5)) > 0 ? (amount - (amount / 5)) : 0;
+		return amount;
+	}
 }

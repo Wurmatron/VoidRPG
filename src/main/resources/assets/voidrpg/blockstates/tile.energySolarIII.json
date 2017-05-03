@@ -1,5 +1,7 @@
 {
-    "variants": {
-        "normal": { "model": "voidrpg:energySolarIII" }
+  "variants": {
+    "normal": {
+      "model": "voidrpg:energySolarIII"
     }
+  }
 }

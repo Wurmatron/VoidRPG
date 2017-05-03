@@ -1,5 +1,7 @@
 {
-    "variants": {
-        "normal": { "model": "voidrpg:energyKenetic" }
+  "variants": {
+    "normal": {
+      "model": "voidrpg:energyKenetic"
     }
+  }
 }

@@ -1,6 +1,6 @@
 {
-    "parent": "block/cube_all",
-    "textures": {
-        "all": "voidrpg:blocks/energySolarI"
-    }
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "voidrpg:blocks/energySolarI"
+  }
 }

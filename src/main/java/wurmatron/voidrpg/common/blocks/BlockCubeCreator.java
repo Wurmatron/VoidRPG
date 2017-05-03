@@ -19,24 +19,28 @@ import javax.annotation.Nullable;
 
 public class BlockCubeCreator extends BlockContainer {
 
-		public BlockCubeCreator(Material material) {
-				super(material); setCreativeTab(VoidRPG.tabVoidRPG); setUnlocalizedName("cubeCreator");
-		}
+	public BlockCubeCreator (Material material) {
+		super (material);
+		setCreativeTab (VoidRPG.tabVoidRPG);
+		setUnlocalizedName ("cubeCreator");
+	}
 
-		@Override
-		public TileEntity createNewTileEntity(World worldIn, int meta) {
-				return new TileCubeCreator();
-		}
+	@Override
+	public TileEntity createNewTileEntity (World worldIn,int meta) {
+		return new TileCubeCreator ();
+	}
 
-		@Override
-		public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-				if (!world.isRemote)
-						player.openGui(VoidRPG.instance, Global.CUBECREATOR_GUI, world, pos.getX(), pos.getY(), pos.getZ()); return true;
-		}
+	@Override
+	public boolean onBlockActivated (World world,BlockPos pos,IBlockState state,EntityPlayer player,EnumHand hand,@Nullable ItemStack heldItem,EnumFacing side,float hitX,float hitY,float hitZ) {
+		if (!world.isRemote)
+			player.openGui (VoidRPG.instance,Global.CUBECREATOR_GUI,world,pos.getX (),pos.getY (),pos.getZ ());
+		return true;
+	}
 
-		@Override
-		public void breakBlock(World world, BlockPos pos, IBlockState blockstate) {
-				TileCubeCreator te = (TileCubeCreator) world.getTileEntity(pos); InventoryHelper.dropInventoryItems(world, pos, te);
-				super.breakBlock(world, pos, blockstate);
-		}
+	@Override
+	public void breakBlock (World world,BlockPos pos,IBlockState blockstate) {
+		TileCubeCreator te = (TileCubeCreator) world.getTileEntity (pos);
+		InventoryHelper.dropInventoryItems (world,pos,te);
+		super.breakBlock (world,pos,blockstate);
+	}
 }

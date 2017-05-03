@@ -1,5 +1,7 @@
 {
-    "variants": {
-        "normal": { "model": "voidrpg:decoWoolPurple" }
+  "variants": {
+    "normal": {
+      "model": "voidrpg:decoWoolPurple"
     }
+  }
 }

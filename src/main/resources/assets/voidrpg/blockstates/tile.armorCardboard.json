@@ -1,5 +1,7 @@
 {
-    "variants": {
-        "normal": { "model": "voidrpg:armorCardboard" }
+  "variants": {
+    "normal": {
+      "model": "voidrpg:armorCardboard"
     }
+  }
 }
