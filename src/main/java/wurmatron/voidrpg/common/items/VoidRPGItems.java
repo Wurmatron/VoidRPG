@@ -28,10 +28,10 @@ public class VoidRPGItems {
 		GameRegistry.registerItem (itemUpgrade = new ItemUpgrade ());
 		registerItem (itemStaff = new ItemStaff ());
 		registerItem (armorHelmet = new ItemModelArmor (ItemArmor.ArmorMaterial.CHAIN,0,EntityEquipmentSlot.HEAD));
-		registerItem (armorChestplate = new ItemModelArmor (ItemArmor.ArmorMaterial.CHAIN,0,EntityEquipmentSlot.CHEST));
-		registerItem (armorLeggings = new ItemModelArmor (ItemArmor.ArmorMaterial.CHAIN,1,EntityEquipmentSlot.LEGS));
-		registerItem (armorBoots = new ItemModelArmor (ItemArmor.ArmorMaterial.CHAIN,0,EntityEquipmentSlot.FEET));
-		registerItem (modelPlacer = new ItemModelPlacer ());
+		registerItem (armorChestplate = new ItemModelArmor (ItemArmor.ArmorMaterial.CHAIN,1,EntityEquipmentSlot.CHEST));
+		registerItem (armorLeggings = new ItemModelArmor (ItemArmor.ArmorMaterial.CHAIN,2,EntityEquipmentSlot.LEGS));
+		registerItem (armorBoots = new ItemModelArmor (ItemArmor.ArmorMaterial.CHAIN,3,EntityEquipmentSlot.FEET));
+		GameRegistry.registerItem (modelPlacer = new ItemModelPlacer ());
 	}
 
 	private static void registerItem (Item item) {

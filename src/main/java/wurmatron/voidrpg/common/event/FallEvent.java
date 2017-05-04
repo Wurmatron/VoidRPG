@@ -6,7 +6,6 @@ import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import wurmatron.voidrpg.common.items.ItemModelArmor;
 import wurmatron.voidrpg.common.reference.NBT;
-import wurmatron.voidrpg.common.utils.LogHandler;
 
 public class FallEvent {
 
@@ -18,7 +17,6 @@ public class FallEvent {
 					NBTTagCompound capabilities = stack.getTagCompound ().getCompoundTag (NBT.CAPABILITIES);
 					if (capabilities.getBoolean ("shock")) {
 						e.setCanceled (true);
-						LogHandler.debug ("Fall damage disabled due to armor");
 					}
 				}
 			}

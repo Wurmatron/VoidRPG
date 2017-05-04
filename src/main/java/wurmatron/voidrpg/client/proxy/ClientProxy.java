@@ -21,7 +21,8 @@ public class ClientProxy extends CommonProxy {
 	public static ArrayList <Block> blocks = new ArrayList ();
 
 	public static void createModel (Item item) {
-		ModelLoader.setCustomModelResourceLocation (item,0,new ModelResourceLocation (Global.MODID + ":" + item.getUnlocalizedName ().substring (5),"inventory"));
+		if (item != null)
+			ModelLoader.setCustomModelResourceLocation (item,0,new ModelResourceLocation (Global.MODID + ":" + item.getUnlocalizedName ().substring (5),"inventory"));
 	}
 
 	public static void createModel (Block item) {
@@ -44,7 +45,7 @@ public class ClientProxy extends CommonProxy {
 		for (int s = 0; s < VoidRPGItems.upgrades.length; s++)
 			ModelLoader.setCustomModelResourceLocation (VoidRPGItems.itemUpgrade,s,new ModelResourceLocation (Global.MODID + ":" + VoidRPGItems.upgrades[s],"inventory"));
 		for (int s = 0; s < 4; s++)
-			ModelLoader.setCustomModelResourceLocation (VoidRPGItems.modelPlacer,s,new ModelResourceLocation (Global.MODID + ":armor_" + ItemModelPlacer.getNameFromMeta (s)));
+			ModelLoader.setCustomModelResourceLocation (VoidRPGItems.modelPlacer,s,new ModelResourceLocation (Global.MODID + ":" + ItemModelPlacer.getNameFromMeta (s).toLowerCase ()));
 	}
 
 	@Override

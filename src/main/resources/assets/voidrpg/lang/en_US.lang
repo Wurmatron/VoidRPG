@@ -1,12 +1,15 @@
 # Creative Tab
 itemGroup.tabVoidRPG=VoidRPG
 
+# Chat
+item.modelPlacer.description=This must be used on #
+
 # Items
 item.creationStaff.name=Creation Staff
-item.modelPlacer_0.name=Model Placer (Boots)
+item.modelPlacer_0.name=Model Placer (Helmet)
 item.modelPlacer_1.name=Model Placer (Chestplate)
 item.modelPlacer_2.name=Model Placer (Leggings)
-item.modelPlacer_3.name=Model Placer (Helmet)
+item.modelPlacer_3.name=Model Placer (Boots)
 item.armor_feet.name=Boots
 item.armor_legs.name=Leggings
 item.armor_chest.name=Chestplate
@@ -38,6 +41,10 @@ item.solarPanel.name=Solar Cell
 item.smallReactor.name=Small reactor
 item.largeReactor.name=Large reactor
 item.repairBot.name=Repair Bot
+item.armorhead.name=Custom Helmet
+item.armorchest.name=Custom Chestplate
+item.armorlegs.name=Custom Leggings
+item.armorfeet.name=Custom Feet
 
 # Blocks
 tile.armorLight.name=Light Armor Block
@@ -120,6 +127,8 @@ stat.durability.name=Durability
 stat.weight.name=Weight
 stat.complexity.name=Complexity
 stat.energy.name=Energy Storage
+tooltip.control.name=Hold RCTRL for more info
+tooltip.invalidNBT.name=Invalid NBT
 
 # Chat
 chat.message.validHelmet=Creating Helmet

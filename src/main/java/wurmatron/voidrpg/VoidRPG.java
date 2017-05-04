@@ -44,6 +44,7 @@ public class VoidRPG {
 	public void onPreInit (FMLPreInitializationEvent e) {
 		LogHandler.info ("Pre-Init");
 		ConfigHandler.preInit (e);
+		ConfigHandler.loadMainConfig ();
 		VoidRPGBlocks.init ();
 		VoidRPGItems.init ();
 		proxy.register ();
@@ -52,7 +53,6 @@ public class VoidRPG {
 	@Mod.EventHandler
 	public void onInit (FMLInitializationEvent e) {
 		LogHandler.info ("Init");
-		ConfigHandler.loadMainConfig ();
 		NetworkRegistry.INSTANCE.registerGuiHandler (this,new GuiHandler ());
 		MinecraftForge.EVENT_BUS.register (new LivingTickEvent ());
 		MinecraftForge.EVENT_BUS.register (new HurtEvent ());
