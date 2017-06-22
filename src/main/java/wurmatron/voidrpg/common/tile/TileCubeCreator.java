@@ -28,12 +28,12 @@ public class TileCubeCreator extends TileEntity implements IInventory, ITickable
 
 	@Override
 	public void update () {
-		if (!worldObj.isRemote) {
-			if (worldObj.getTotalWorldTime () % UPDATE_TIMER == 0) {
+		if (!world.isRemote) {
+			if (world.getTotalWorldTime () % UPDATE_TIMER == 0) {
 				hasUpgrades (true);
 				if (activeRecipe == null)
 					lookForValidRecipe ();
-				else if(activeRecipe.getOutputCube ().getTagCompound () != null)
+				else if (activeRecipe.getOutputCube ().getTagCompound () != null)
 					LogHandler.info (activeRecipe.getOutputCube ().getTagCompound ().toString ());
 			}
 			if (activeRecipe != null && timer <= 0) {
@@ -81,7 +81,7 @@ public class TileCubeCreator extends TileEntity implements IInventory, ITickable
 		for (int i = 0; i < list.tagCount (); ++i) {
 			NBTTagCompound stackTag = list.getCompoundTagAt (i);
 			int slot = stackTag.getByte (NBT.SLOT) & 255;
-			setInventorySlotContents (slot,ItemStack.loadItemStackFromNBT (stackTag));
+			setInventorySlotContents (slot,new ItemStack (stackTag));
 		}
 		timer = nbt.getInteger (NBT.TIMER);
 	}
@@ -90,14 +90,14 @@ public class TileCubeCreator extends TileEntity implements IInventory, ITickable
 	public ItemStack decrStackSize (int index,int count) {
 		if (getStackInSlot (index) != null) {
 			ItemStack stack;
-			if (getStackInSlot (index).stackSize <= count) {
+			if (getStackInSlot (index).getCount () <= count) {
 				stack = getStackInSlot (index);
 				setInventorySlotContents (index,null);
 				markDirty ();
 				return stack;
 			} else {
 				stack = getStackInSlot (index).splitStack (count);
-				if (getStackInSlot (index).stackSize <= 0)
+				if (getStackInSlot (index).getCount () <= 0)
 					setInventorySlotContents (index,null);
 				else
 					setInventorySlotContents (index,getStackInSlot (index));
@@ -121,10 +121,10 @@ public class TileCubeCreator extends TileEntity implements IInventory, ITickable
 		if (index < 0 || index >= this.getSizeInventory ())
 			return;
 
-		if (stack != null && stack.stackSize > this.getInventoryStackLimit ())
-			stack.stackSize = this.getInventoryStackLimit ();
+		if (stack != null && stack.getCount () > this.getInventoryStackLimit ())
+			stack.setCount (getInventoryStackLimit ());
 
-		if (stack != null && stack.stackSize == 0)
+		if (stack != null && stack.getCount () == 0)
 			stack = null;
 
 		this.inventory[index] = stack;
@@ -137,7 +137,12 @@ public class TileCubeCreator extends TileEntity implements IInventory, ITickable
 	}
 
 	@Override
-	public boolean isUseableByPlayer (EntityPlayer player) {
+	public boolean isEmpty () {
+		return false;
+	}
+
+	@Override
+	public boolean isUsableByPlayer (EntityPlayer player) {
 		return true;
 	}
 
@@ -208,9 +213,9 @@ public class TileCubeCreator extends TileEntity implements IInventory, ITickable
 				if (StackHelper.areItemsEqual (stack,slotStack))
 					return true;
 				else if (StackHelper.areStacksEqualIgnoreSize (stack,slotStack))
-					itemAmount += slotStack.stackSize;
+					itemAmount += slotStack.getCount ();
 		}
-		return itemAmount >= stack.stackSize;
+		return itemAmount >= stack.getCount ();
 	}
 
 	private void setActiveRecipe (ICubeCreatorRecipe recipe) {
@@ -229,11 +234,11 @@ public class TileCubeCreator extends TileEntity implements IInventory, ITickable
 				ItemStack upgradeStack = getStackInSlot (slot);
 				if (upgradeStack != null && upgradeStack.getItem () instanceof ItemUpgrade)
 					if (upgradeStack.getItemDamage () == 0)
-						modAmount += 2 * upgradeStack.stackSize;
+						modAmount += 2 * upgradeStack.getCount ();
 					else if (upgradeStack.getItemDamage () == 1)
-						modAmount += 4 * upgradeStack.stackSize;
+						modAmount += 4 * upgradeStack.getCount ();
 					else if (upgradeStack.getItemDamage () == 2)
-						modAmount += 8 * upgradeStack.stackSize;
+						modAmount += 8 * upgradeStack.getCount ();
 			}
 			if (modAmount <= 0)
 				modAmount = 1;
@@ -269,8 +274,8 @@ public class TileCubeCreator extends TileEntity implements IInventory, ITickable
 				setInventorySlotContents (0,stack);
 				return true;
 			} else if (StackHelper.areStacksEqualIgnoreSize (getStackInSlot (0),stack)) {
-				if (getStackInSlot (0).stackSize + stack.stackSize <= 64) {
-					getStackInSlot (0).stackSize += stack.stackSize;
+				if (getStackInSlot (0).getCount () + stack.getCount () <= 64) {
+					stack.setCount (getStackInSlot (0).getCount () + stack.getCount ());
 					return true;
 				}
 				return false;
@@ -287,17 +292,17 @@ public class TileCubeCreator extends TileEntity implements IInventory, ITickable
 
 	private void consumeItem (ItemStack stack) {
 		if (stack != null) {
-			int amountNeeded = stack.stackSize;
+			int amountNeeded = stack.getCount ();
 			for (int slot = 1; slot <= 8; slot++) {
 				ItemStack slotStack = getStackInSlot (slot);
 				if (slotStack != null)
 					if (StackHelper.areItemsEqual (stack,slotStack))
 						setInventorySlotContents (slot,null);
 					else if (StackHelper.areStacksEqualIgnoreSize (stack,slotStack)) {
-						if (slotStack.stackSize > amountNeeded)
-							slotStack.stackSize -= amountNeeded;
+						if (slotStack.getCount () > amountNeeded)
+							slotStack.setCount (slotStack.getCount () - amountNeeded);
 						else {
-							amountNeeded -= slotStack.stackSize;
+							amountNeeded -= slotStack.getCount ();
 							setInventorySlotContents (slot,null);
 						}
 					}

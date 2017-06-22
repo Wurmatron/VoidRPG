@@ -24,18 +24,18 @@ public class VoidRPGItems {
 
 	public static void init () {
 		registerItem (goggles = new ItemGoggles ());
-		GameRegistry.registerItem (itemMaterial = new ItemMaterial ());
-		GameRegistry.registerItem (itemUpgrade = new ItemUpgrade ());
+		GameRegistry.register (itemMaterial = new ItemMaterial ());
+		GameRegistry.register (itemUpgrade = new ItemUpgrade ());
 		registerItem (itemStaff = new ItemStaff ());
 		registerItem (armorHelmet = new ItemModelArmor (ItemArmor.ArmorMaterial.CHAIN,0,EntityEquipmentSlot.HEAD));
 		registerItem (armorChestplate = new ItemModelArmor (ItemArmor.ArmorMaterial.CHAIN,1,EntityEquipmentSlot.CHEST));
 		registerItem (armorLeggings = new ItemModelArmor (ItemArmor.ArmorMaterial.CHAIN,2,EntityEquipmentSlot.LEGS));
 		registerItem (armorBoots = new ItemModelArmor (ItemArmor.ArmorMaterial.CHAIN,3,EntityEquipmentSlot.FEET));
-		GameRegistry.registerItem (modelPlacer = new ItemModelPlacer ());
+		GameRegistry.register (modelPlacer = new ItemModelPlacer ());
 	}
 
 	private static void registerItem (Item item) {
-		GameRegistry.registerItem (item,item.getUnlocalizedName ());
+		GameRegistry.register (item);
 		if (FMLCommonHandler.instance ().getEffectiveSide () == Side.CLIENT)
 			ClientProxy.items.add (item);
 	}

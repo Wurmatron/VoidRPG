@@ -25,7 +25,7 @@ public class LivingTickEvent {
 				if (stack != null && stack.getItem () instanceof ItemModelArmor && stack.hasTagCompound ()) {
 					if (!stack.getTagCompound ().hasNoTags () && stack.getTagCompound ().hasKey (NBT.CAPABILITIES)) {
 						NBTTagCompound capabilities = stack.getTagCompound ().getCompoundTag (NBT.CAPABILITIES);
-						if (e.getEntityLiving ().worldObj.getBlockState (e.getEntityLiving ().getPosition ().add (0,-1,0)).getBlock ().equals (Blocks.WATER) && capabilities.hasKey ("waterWalk") && capabilities.getBoolean ("waterWalk") || capabilities.hasKey ("waterWalk") && capabilities.getBoolean ("waterWalk") && e.getEntityLiving ().isInWater ()) {
+						if (e.getEntityLiving ().world.getBlockState (e.getEntityLiving ().getPosition ().add (0,-1,0)).getBlock ().equals (Blocks.WATER) && capabilities.hasKey ("waterWalk") && capabilities.getBoolean ("waterWalk") || capabilities.hasKey ("waterWalk") && capabilities.getBoolean ("waterWalk") && e.getEntityLiving ().isInWater ()) {
 							e.getEntityLiving ().motionY = 0;
 							e.getEntityLiving ().onGround = true;
 							if (e.getEntityLiving ().fallDistance > 3)

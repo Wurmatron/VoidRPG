@@ -3,6 +3,7 @@ package wurmatron.voidrpg;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -31,8 +32,8 @@ public class VoidRPG {
 
 	public static final CreativeTabs tabVoidRPG = new CreativeTabs ("tabVoidRPG") {
 		@Override
-		public Item getTabIconItem () {
-			return VoidRPGItems.goggles;
+		public ItemStack getTabIconItem () {
+			return new ItemStack (VoidRPGItems.goggles);
 		}
 	};
 	@Mod.Instance (Global.MODID)
@@ -62,7 +63,7 @@ public class VoidRPG {
 	}
 
 	@Mod.EventHandler
-	public void onPostInit(FMLPostInitializationEvent e) {
+	public void onPostInit (FMLPostInitializationEvent e) {
 		VoidRPGRecipes.init ();
 	}
 

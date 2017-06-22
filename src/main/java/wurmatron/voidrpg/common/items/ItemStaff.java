@@ -9,6 +9,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
@@ -43,8 +44,9 @@ public class ItemStaff extends Item {
 	}
 
 	@Override
-	public ActionResult <ItemStack> onItemRightClick (ItemStack stack,World world,EntityPlayer player,EnumHand hand) {
+	public ActionResult <ItemStack> onItemRightClick (World world,EntityPlayer player,EnumHand hand) {
 		// TODO FIX THIS SO THAT IT ACTUALLY WORKS CORRECTLY
+		ItemStack stack = player.inventory.getCurrentItem ();
 		RayTraceResult ray = world.rayTraceBlocks (player.getLookVec ().add (new Vec3d (player.posX,player.posY,player.posZ)),player.getLookVec ().add (new Vec3d (player.getLookVec ().xCoord,player.getLookVec ().yCoord,player.getLookVec ().zCoord).add (new Vec3d (player.posX,player.posY,player.posZ))),false,false,true);
 		if (stack.getTagCompound () != null) {
 			if (ray != null && world.getBlockState (ray.getBlockPos ()).getBlock () != Blocks.AIR) {
@@ -94,7 +96,7 @@ public class ItemStaff extends Item {
 	}
 
 	@Override
-	public void getSubItems (Item item,CreativeTabs tab,List <ItemStack> sub) {
+	public void getSubItems (Item itemIn,CreativeTabs tab,NonNullList<ItemStack> sub) {
 		sub.add (createStaff (MAX_DURABILITY));
 		sub.add (createStaff (9001));
 	}

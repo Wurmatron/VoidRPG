@@ -9,7 +9,7 @@ public class Local {
 	public static final String PLACMENT_TYPE = "tooltip.placmenttype.name";
 	public static final String HOLD_CTRL = "tooltip.control.name";
 	public static final String BLOCK_MODELPLACER = "item.modelPlacer.description";
-	public static final String INVALID_NBT= "tooltip.invalidNBT.name";
+	public static final String INVALID_NBT = "tooltip.invalidNBT.name";
 	// Cube Descriptions
 	public static final String CUBED_NIGHTVISION = "cube.nightVision.description";
 	public static final String CUBED_WATERBREATHING = "cube.waterBreathing.description";

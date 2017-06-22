@@ -98,8 +98,8 @@ public class VoidRPGRecipes {
 
 	}
 
-	private  static ItemStack createBitFromBlock (Block block,int count) {
-		return ItemChiseledBit.createStack (ModUtil.getStateId (block.getDefaultState ()),count, true);
+	private static ItemStack createBitFromBlock (Block block,int count) {
+		return ItemChiseledBit.createStack (ModUtil.getStateId (block.getDefaultState ()),count,true);
 	}
 
 }

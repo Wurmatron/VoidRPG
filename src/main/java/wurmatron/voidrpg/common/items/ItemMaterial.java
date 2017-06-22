@@ -3,6 +3,7 @@ package wurmatron.voidrpg.common.items;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import wurmatron.voidrpg.VoidRPG;
 
 import java.util.List;
@@ -31,7 +32,7 @@ public class ItemMaterial extends Item {
 	}
 
 	@Override
-	public void getSubItems (Item item,CreativeTabs tab,List <ItemStack> sub) {
+	public void getSubItems (Item item,CreativeTabs tab,NonNullList<ItemStack> sub) {
 		for (String i : VoidRPGItems.materials)
 			sub.add (createMaterial (i,1));
 	}

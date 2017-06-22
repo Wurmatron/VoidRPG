@@ -19,8 +19,6 @@ import wurmatron.voidrpg.VoidRPG;
 import wurmatron.voidrpg.common.reference.Global;
 import wurmatron.voidrpg.common.tile.TileCubeCreator;
 
-import javax.annotation.Nullable;
-
 public class BlockCubeCreator extends BlockContainer {
 
 	private static final PropertyDirection FACING = BlockHorizontal.FACING;
@@ -37,8 +35,9 @@ public class BlockCubeCreator extends BlockContainer {
 		return new TileCubeCreator ();
 	}
 
+
 	@Override
-	public boolean onBlockActivated (World world,BlockPos pos,IBlockState state,EntityPlayer player,EnumHand hand,@Nullable ItemStack heldItem,EnumFacing side,float hitX,float hitY,float hitZ) {
+	public boolean onBlockActivated (World world,BlockPos pos,IBlockState state,EntityPlayer player,EnumHand hand,EnumFacing facing,float hitX,float hitY,float hitZ) {
 		if (!world.isRemote)
 			player.openGui (VoidRPG.instance,Global.CUBECREATOR_GUI,world,pos.getX (),pos.getY (),pos.getZ ());
 		return true;
@@ -61,7 +60,7 @@ public class BlockCubeCreator extends BlockContainer {
 	}
 
 	@Override
-	public IBlockState onBlockPlaced (World worldIn,BlockPos pos,EnumFacing facing,float hitX,float hitY,float hitZ,int meta,EntityLivingBase placer) {
+	public IBlockState getStateForPlacement (World world,BlockPos pos,EnumFacing facing,float hitX,float hitY,float hitZ,int meta,EntityLivingBase placer,EnumHand hand) {
 		return this.getDefaultState ().withProperty (FACING,placer.getHorizontalFacing ().getOpposite ());
 	}
 

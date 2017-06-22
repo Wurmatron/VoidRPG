@@ -48,13 +48,13 @@ public class ContainerCubeCreator extends Container {
 					return null;
 				slot.onSlotChange (temp,stack);
 			}
-			if (temp.stackSize == 0)
+			if (temp.getCount() == 0)
 				slot.putStack (null);
 			else
 				slot.onSlotChanged ();
-			if (temp.stackSize == stack.stackSize)
+			if (temp.getCount() == stack.getCount())
 				return null;
-			slot.onPickupFromSlot (player,temp);
+//			slot.onSlotChange (player,temp);
 		}
 		return stack;
 	}
@@ -67,7 +67,7 @@ public class ContainerCubeCreator extends Container {
 		Slot slot;
 		ItemStack itemstack1;
 		if (stack.isStackable ()) {
-			while (stack.stackSize > 0 && (!backwards && k < end || backwards && k >= start)) {
+			while (stack.getCount () > 0 && (!backwards && k < end || backwards && k >= start)) {
 				slot = inventorySlots.get (k);
 				itemstack1 = slot.getStack ();
 				if (!slot.isItemValid (stack)) {
@@ -75,15 +75,15 @@ public class ContainerCubeCreator extends Container {
 					continue;
 				}
 				if (itemstack1 != null && itemstack1.getItem () == stack.getItem () && (!stack.getHasSubtypes () || stack.getItemDamage () == itemstack1.getItemDamage ()) && ItemStack.areItemStackTagsEqual (stack,itemstack1)) {
-					int l = itemstack1.stackSize + stack.stackSize;
+					int l = itemstack1.getCount() + stack.getCount();
 					if (l <= stack.getMaxStackSize () && l <= slot.getSlotStackLimit ()) {
-						stack.stackSize = 0;
-						itemstack1.stackSize = l;
+						stack.setCount (0);
+						itemstack1.setCount (l);
 						inv.markDirty ();
 						flag1 = true;
-					} else if (itemstack1.stackSize < stack.getMaxStackSize () && l < slot.getSlotStackLimit ()) {
-						stack.stackSize -= stack.getMaxStackSize () - itemstack1.stackSize;
-						itemstack1.stackSize = stack.getMaxStackSize ();
+					} else if (itemstack1.getCount() < stack.getMaxStackSize () && l < slot.getSlotStackLimit ()) {
+						stack.setCount (stack.getMaxStackSize () - itemstack1.getCount ());
+						itemstack1.setCount (stack.getMaxStackSize ());
 						inv.markDirty ();
 						flag1 = true;
 					}
@@ -91,7 +91,7 @@ public class ContainerCubeCreator extends Container {
 				k += (backwards ? -1 : 1);
 			}
 		}
-		if (stack.stackSize > 0) {
+		if (stack.getCount() > 0) {
 			k = (backwards ? end - 1 : start);
 			while (!backwards && k < end || backwards && k >= start) {
 				slot = inventorySlots.get (k);
@@ -101,16 +101,16 @@ public class ContainerCubeCreator extends Container {
 					continue;
 				}
 				if (itemstack1 == null) {
-					int l = stack.stackSize;
+					int l = stack.getCount();
 					if (l <= slot.getSlotStackLimit ()) {
 						slot.putStack (stack.copy ());
-						stack.stackSize = 0;
+						stack.setCount (0);
 						inv.markDirty ();
 						flag1 = true;
 						break;
 					} else {
 						putStackInSlot (k,new ItemStack (stack.getItem (),slot.getSlotStackLimit (),stack.getItemDamage ()));
-						stack.stackSize -= slot.getSlotStackLimit ();
+						stack.setCount (slot.getSlotStackLimit ());
 						inv.markDirty ();
 						flag1 = true;
 					}

@@ -27,7 +27,7 @@ public class HurtEvent {
 				if (stack != null && stack.getItem () instanceof ItemModelArmor && stack.hasTagCompound () && !stack.getTagCompound ().hasNoTags () && stack.getTagCompound ().hasKey (NBT.CAPABILITIES)) {
 					NBTTagCompound capabilities = stack.getTagCompound ().getCompoundTag (NBT.CAPABILITIES);
 					if (capabilities.getBoolean ("life")) {
-						List <Entity> entities = e.getEntityLiving ().worldObj.getEntitiesWithinAABBExcludingEntity (e.getEntityLiving (),e.getEntityLiving ().getEntityBoundingBox ().expand (10,10,10));
+						List <Entity> entities = e.getEntityLiving ().world.getEntitiesWithinAABBExcludingEntity (e.getEntityLiving (),e.getEntityLiving ().getEntityBoundingBox ().expand (10,10,10));
 						for (Entity ent : entities)
 							if (ent != null && ent instanceof EntityLivingBase) {
 								EntityLivingBase entity = (EntityLivingBase) ent;

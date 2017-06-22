@@ -131,7 +131,7 @@ public class VoidRPGBlocks {
 	}
 
 	private static Block registerBlock (Block block) {
-		GameRegistry.registerBlock (block,block.getUnlocalizedName ());
+		GameRegistry.register (block);
 		if (FMLCommonHandler.instance ().getEffectiveSide () == Side.CLIENT)
 			ClientProxy.blocks.add (block);
 		return block;

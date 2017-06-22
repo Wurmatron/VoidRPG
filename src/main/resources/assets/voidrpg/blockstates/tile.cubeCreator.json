@@ -1,8 +1,19 @@
 {
-    "variants": {
-        "facing=north": { "model": "voidrpg:cubecreator" },
-        "facing=south": { "model": "voidrpg:cubecreator", "y": 180 },
-        "facing=west":  { "model": "voidrpg:cubecreator", "y": 270 },
-        "facing=east":  { "model": "voidrpg:cubecreator", "y": 90 }
+  "variants": {
+    "facing=north": {
+      "model": "voidrpg:cubecreator"
+    },
+    "facing=south": {
+      "model": "voidrpg:cubecreator",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "voidrpg:cubecreator",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "voidrpg:cubecreator",
+      "y": 90
     }
+  }
 }
