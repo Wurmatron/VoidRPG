@@ -137,6 +137,7 @@ public class BitHelper {
 	}
 
 	private static boolean areValidBits (IBitBrush bit) {
+		LogHandler.info ("Bit: " + bit.getState ().getBlock ());
 		for (ICube cube : CubeRegistry.getCubes ())
 			if (cube != null && cube.getBlock () != null && bit.getState () != null && bit.getState ().getBlock () != null && cube.getBlock ().equals (bit.getState ().getBlock ()) && cube.getBlock ().equals (bit.getState ().getBlock ()) && bit.getItemStack (1) != null)
 				return true;

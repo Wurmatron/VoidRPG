@@ -13,11 +13,6 @@ public class CubeCreatorRecipeHandler implements IRecipeHandler <CubeCreatorReci
 		return CubeCreatorRecipeWrapper.class;
 	}
 
-	@Nonnull
-	@Override
-	public String getRecipeCategoryUid () {
-		return "voidrpg.cubecreator";
-	}
 
 	@Nonnull
 	@Override
@@ -33,6 +28,6 @@ public class CubeCreatorRecipeHandler implements IRecipeHandler <CubeCreatorReci
 
 	@Override
 	public boolean isRecipeValid (@Nonnull CubeCreatorRecipeWrapper recipe) {
-		return recipe.getOutputs ().size () > 0 && recipe.getInputs ().size () > 1 && recipe.time > 0;
+		return true;
 	}
 }

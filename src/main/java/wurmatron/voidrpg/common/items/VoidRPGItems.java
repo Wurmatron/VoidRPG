@@ -35,6 +35,7 @@ public class VoidRPGItems {
 	}
 
 	private static void registerItem (Item item) {
+		item.setRegistryName (item.getUnlocalizedName ());
 		GameRegistry.register (item);
 		if (FMLCommonHandler.instance ().getEffectiveSide () == Side.CLIENT)
 			ClientProxy.items.add (item);

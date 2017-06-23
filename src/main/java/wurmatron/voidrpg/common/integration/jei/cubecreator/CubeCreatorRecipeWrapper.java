@@ -1,5 +1,6 @@
 package wurmatron.voidrpg.common.integration.jei.cubecreator;
 
+import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
@@ -26,16 +27,12 @@ public class CubeCreatorRecipeWrapper extends BlankRecipeWrapper {
 		Collections.addAll (input,inputs);
 	}
 
-	@Nonnull
 	@Override
-	public List getInputs () {
-		return inputs;
-	}
-
-	@Nonnull
-	@Override
-	public List getOutputs () {
-		return output;
+	public void getIngredients (IIngredients ingredients) {
+		if(!inputs.isEmpty())
+			ingredients.setInputs(ItemStack.class, inputs);
+		if(!output.isEmpty())
+			ingredients.setOutputs (ItemStack.class, output);
 	}
 
 	@Override

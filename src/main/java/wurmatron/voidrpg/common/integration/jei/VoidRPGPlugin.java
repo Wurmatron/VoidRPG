@@ -40,6 +40,12 @@ public class VoidRPGPlugin extends BlankModPlugin {
 
 			@Nullable
 			@Override
+			public Object getIngredientUnderMouse (GuiCubeCreator guiCubeCreator,int i,int i1) {
+				return null;
+			}
+
+			@Nullable
+			@Override
 			public List <Rectangle> getGuiExtraAreas (GuiCubeCreator gui) {
 				List <Rectangle> list = new ArrayList <> ();
 				list.add (new Rectangle ((gui.width - 256) / 2,(gui.height - 212) / 2,256,212));
