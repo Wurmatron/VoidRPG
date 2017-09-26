@@ -3,6 +3,7 @@ package wurmatron.voidrpg.common.items;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
@@ -11,19 +12,18 @@ import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameData;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.registries.GameData;
 import wurmatron.voidrpg.VoidRPG;
 import wurmatron.voidrpg.common.config.Settings;
 import wurmatron.voidrpg.common.reference.Local;
 import wurmatron.voidrpg.common.utils.BitHelper;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ItemModelPlacer extends Item {
 
-	private static Block MODEL_BLOCK = GameData.getBlockRegistry ().getObject (new ResourceLocation (Settings.modelBlock.substring (0,Settings.modelBlock.indexOf (":")),Settings.modelBlock.substring (Settings.modelBlock.indexOf (":") + 1,Settings.modelBlock.length ())));
+	private static Block MODEL_BLOCK = GameRegistry.findRegistry (Block.class).getValue (new ResourceLocation (Settings.modelBlock.substring (0,Settings.modelBlock.indexOf (":")),Settings.modelBlock.substring (Settings.modelBlock.indexOf (":") + 1,Settings.modelBlock.length ())));
 
 	public ItemModelPlacer () {
 		setCreativeTab (VoidRPG.tabVoidRPG);
@@ -112,9 +112,9 @@ public class ItemModelPlacer extends Item {
 	}
 
 	@Override
-	public void getSubItems (Item item,CreativeTabs tab,NonNullList<ItemStack> sub) {
+	public void getSubItems (CreativeTabs tab,NonNullList <ItemStack> sub) {
 		for (int i = 0; i <= 3; i++)
-			sub.add (new ItemStack (item,1,i));
+			sub.add (new ItemStack (VoidRPGItems.modelPlacer,1,i));
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package wurmatron.voidrpg.common.event;
 
 
+import net.minecraft.entity.MoverType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -34,7 +35,7 @@ public class LivingTickEvent {
 						if (capabilities.getBoolean ("nightVision") && e.getEntityLiving ().getActivePotionEffect (Potion.getPotionFromResourceLocation ("night_vision")) != null && e.getEntityLiving ().getActivePotionEffect (Potion.getPotionFromResourceLocation ("night_vision")).getDuration () <= 200 || capabilities.getBoolean ("nightVision") && e.getEntityLiving ().getActivePotionEffect (Potion.getPotionFromResourceLocation ("night_vision")) == null)
 							e.getEntityLiving ().addPotionEffect (new PotionEffect (Potion.getPotionFromResourceLocation ("night_vision"),400));
 						if (capabilities.getBoolean ("muscle"))
-							e.getEntityLiving ().moveEntityWithHeading (e.getEntityLiving ().moveStrafing,e.getEntityLiving ().moveForward * CubeMuscle.MOVEMENT_SPEED);
+							e.getEntityLiving ().move (MoverType.SELF,e.getEntityLiving ().moveForward * CubeMuscle.MOVEMENT_SPEED,e.getEntityLiving ().moveForward * CubeMuscle.MOVEMENT_SPEED,e.getEntityLiving ().moveForward * CubeMuscle.MOVEMENT_SPEED);
 						if (capabilities.getBoolean ("waterBreathing") && e.getEntityLiving ().getActivePotionEffect (Potion.getPotionFromResourceLocation ("water_breathing")) != null && e.getEntityLiving ().getActivePotionEffect (Potion.getPotionFromResourceLocation ("water_breathing")).getDuration () <= 200 || capabilities.getBoolean ("water_breathing") && e.getEntityLiving ().getActivePotionEffect (Potion.getPotionFromResourceLocation ("water_breathing")) == null)
 							e.getEntityLiving ().addPotionEffect (new PotionEffect (Potion.getPotionFromResourceLocation ("water_breathing"),400));
 						if (capabilities.getBoolean ("gravity") && e.getEntityLiving () instanceof EntityPlayer) {

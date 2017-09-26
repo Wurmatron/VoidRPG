@@ -128,34 +128,6 @@ public class DataHelper {
 		return stack;
 	}
 
-
-	private static final NBTTagCompound[] convertDataToNBT (CubeData[]... cubeData) {
-		NBTTagCompound[] nbt = new NBTTagCompound[cubeData.length];
-		for (int index = 0; index < cubeData.length; index++) {
-			NBTTagCompound tag = new NBTTagCompound ();
-			if (cubeData[index] != null && cubeData[index].length > 0) {
-				NBTTagCompound[] d = BitHelper.convertCubesToNBT (cubeData[index]);
-				for (int i = 0; i < d.length; i++)
-					tag.setTag (Integer.toString (i),nbt[i]);
-				nbt[index] = tag;
-			}
-		}
-		return nbt;
-	}
-
-	private static final NBTTagCompound[] getNBTDataFromStack (ItemStack stack) {
-		if (stack != null && stack.getTagCompound () != null) {
-			ArrayList <CubeData> data = new ArrayList <> ();
-			NBTTagCompound[] stackData = getDataFromNBTData (stack.getTagCompound ());
-			for (int i = 0; i < stackData.length; i++) {
-				NBTTagCompound temp = stackData[i];
-				for (int s = 0; s <= temp.getSize (); s++)
-					data.add (BitHelper.readCubeDataFromNBT (temp.getCompoundTag (Integer.toString (s))));
-			}
-		}
-		return new NBTTagCompound[0];
-	}
-
 	private static final NBTTagCompound[] getDataFromNBTData (NBTTagCompound nbt) {
 		NBTTagCompound[] data = new NBTTagCompound[nbt.getSize ()];
 		for (int i = 0; i < nbt.getSize (); i++)
@@ -184,11 +156,12 @@ public class DataHelper {
 		return getDataFromStack (stack,"");
 	}
 
+	// TODO Correctly Find Special Cubes
 	public static CubeData[] getDataFromStack (ItemStack stack,String type) {
 		ArrayList <CubeData> data = new ArrayList <> ();
 		if (type.length () <= 0) {
 			if (stack != null && stack.hasTagCompound () && !stack.getTagCompound ().hasNoTags ()) {
-				for (int i = 0; i < stack.getTagCompound ().getSize (); i++) {
+				for (int i = 0; i < 4; i++) {
 					NBTTagCompound temp = stack.getTagCompound ().getCompoundTag (Integer.toString (i));
 					for (int s = 0; s <= temp.getSize (); s++)
 						if (BitHelper.readCubeDataFromNBT (temp.getCompoundTag (Integer.toString (s))) != null)
@@ -202,6 +175,7 @@ public class DataHelper {
 					NBTTagCompound bodyNBT = stack.getTagCompound ().getCompoundTag (NBT.BODY);
 					for (int i = 0; i < bodyNBT.getSize (); i++) {
 						NBTTagCompound temp = bodyNBT.getCompoundTag (Integer.toString (i));
+						LogHandler.info ("Chest NBT (" + i + "): "   + temp);
 						if (temp.getSize () > 0) {
 							for (int s = 0; s <= temp.getSize (); s++)
 								if (BitHelper.readCubeDataFromNBT (temp.getCompoundTag (Integer.toString (s))) != null)
@@ -213,6 +187,7 @@ public class DataHelper {
 					NBTTagCompound leftArmNBT = stack.getTagCompound ().getCompoundTag (NBT.LEFT_ARM);
 					for (int i = 0; i < leftArmNBT.getSize (); i++) {
 						NBTTagCompound temp = leftArmNBT.getCompoundTag (Integer.toString (i));
+						LogHandler.info ("Left NBT (" + i + "): "   + temp);
 						if (temp.getSize () > 0) {
 							for (int s = 0; s <= temp.getSize (); s++)
 								if (BitHelper.readCubeDataFromNBT (temp.getCompoundTag (Integer.toString (s))) != null)
@@ -222,8 +197,9 @@ public class DataHelper {
 					}
 				} else if (type.equalsIgnoreCase (NBT.RIGHT_ARM)) {
 					NBTTagCompound rightArmNBT = stack.getTagCompound ().getCompoundTag (NBT.RIGHT_ARM);
-					for (int i = 0; i < rightArmNBT.getSize (); i++) {
+					for (int i = 0; i < 3; i++) {
 						NBTTagCompound temp = rightArmNBT.getCompoundTag (Integer.toString (i));
+						LogHandler.info ("Right NBT (" + i + "): "   + temp);
 						if (temp.getSize () > 0) {
 							for (int s = 0; s <= temp.getSize (); s++)
 								if (BitHelper.readCubeDataFromNBT (temp.getCompoundTag (Integer.toString (s))) != null)

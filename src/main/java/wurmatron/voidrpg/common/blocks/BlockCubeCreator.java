@@ -10,7 +10,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
@@ -74,21 +73,21 @@ public class BlockCubeCreator extends BlockContainer {
 
 	@Override
 	public int getMetaFromState (IBlockState state) {
-		return ((EnumFacing) state.getValue (FACING)).getIndex ();
+		return state.getValue (FACING).getIndex ();
 	}
 
 	@Override
 	public IBlockState withRotation (IBlockState state,Rotation rot) {
-		return state.withProperty (FACING,rot.rotate ((EnumFacing) state.getValue (FACING)));
+		return state.withProperty (FACING,rot.rotate (state.getValue (FACING)));
 	}
 
 	@Override
 	public IBlockState withMirror (IBlockState state,Mirror mirrorIn) {
-		return state.withRotation (mirrorIn.toRotation ((EnumFacing) state.getValue (FACING)));
+		return state.withRotation (mirrorIn.toRotation (state.getValue (FACING)));
 	}
 
 	@Override
 	protected BlockStateContainer createBlockState () {
-		return new BlockStateContainer (this,new IProperty[] {FACING});
+		return new BlockStateContainer (this,FACING);
 	}
 }

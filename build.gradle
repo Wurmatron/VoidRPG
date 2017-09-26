@@ -1,15 +1,13 @@
 buildscript {
     repositories {
         jcenter()
-        maven {
-            name = "forge"
-            url = "http://files.minecraftforge.net/maven"
-        }
+        maven { url = "http://files.minecraftforge.net/maven" }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
     }
 }
+
 apply plugin: 'net.minecraftforge.gradle.forge'
 
 version = "${mod_version}"
@@ -22,13 +20,21 @@ targetCompatibility = 1.8
 minecraft {
     version = "${mc_version}-${forge_version}"
     runDir = "run"
-    mappings = "snapshot_20161220"
-	replace "@VERSION@", project.version
+    mappings = "${mcp_map}"
+	  replace "@VERSION@", project.version
     replaceIn "Global.java"
 }
 
+repositories {
+    maven {url = "http://dvs1.progwml6.com/files/maven" }
+    ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2483/844/[module]-[revision].[ext]"}
+    ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2483/470/[module]-[revision].[ext]"}
+}
+
 dependencies {
-    compile 'org.jetbrains:annotations:15.0'
+    deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}"
+    compile name: 'Tesla', version: "${mc_version}-${tesla_version}", classifier: "deobf", ext: 'jar'
+    compile name: 'chiselsandbits', version: "${chiselandbits_version}", ext: 'jar'
 }
 
 processResources
@@ -50,3 +56,5 @@ processResources
         exclude 'mcmod.info'
     }
 }
+
+apply plugin: 'idea'

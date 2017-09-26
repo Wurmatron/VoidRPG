@@ -6,12 +6,15 @@ import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.potion.PotionType;
 import net.minecraft.potion.PotionUtils;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
+import net.minecraftforge.registries.IForgeRegistry;
 import wurmatron.voidrpg.common.blocks.VoidRPGBlocks;
 import wurmatron.voidrpg.common.cube.CubeCreatorRecipe;
 import wurmatron.voidrpg.common.cube.CubeCreatorRecipeHandler;
@@ -19,6 +22,7 @@ import wurmatron.voidrpg.common.items.ItemMaterial;
 import wurmatron.voidrpg.common.items.ItemStaff;
 import wurmatron.voidrpg.common.items.ItemUpgrade;
 import wurmatron.voidrpg.common.items.VoidRPGItems;
+import wurmatron.voidrpg.common.reference.Global;
 
 public class VoidRPGRecipes {
 
@@ -37,42 +41,44 @@ public class VoidRPGRecipes {
 	}
 
 	private static void addShapedRecipes () {
-		GameRegistry.addRecipe (new ShapedOreRecipe (ItemMaterial.createMaterial ("creationCrystal",1),"XAX","BXB","XAX",'X',Blocks.END_STONE,'A',Items.BLAZE_ROD,'B',Items.EMERALD));
-		GameRegistry.addRecipe (new ShapedOreRecipe (ItemMaterial.createMaterial ("creationCrystal",1),"XBX","AXA","XBX",'X',Blocks.END_STONE,'A',Items.BLAZE_ROD,'B',Items.EMERALD));
-		GameRegistry.addRecipe (new ShapedOreRecipe (ItemMaterial.createMaterial ("creationCrystal",1),"XAX","BXB","XAX",'X',Blocks.NETHER_BRICK,'A',Items.CHORUS_FRUIT,'B',Items.EMERALD));
-		GameRegistry.addRecipe (new ShapedOreRecipe (ItemMaterial.createMaterial ("creationCrystal",1),"XBX","AXA","XBX",'X',Blocks.NETHER_BRICK,'A',Items.CHORUS_FRUIT,'B',Items.EMERALD));
-		GameRegistry.addRecipe (new ShapedOreRecipe (ItemMaterial.createMaterial ("upgrade",2),"BXB","XAX","BCB",'B',Blocks.OBSIDIAN,'X',Items.REDSTONE,'A',Items.EMERALD,'C',Items.ENDER_PEARL));
-		GameRegistry.addRecipe (new ShapedOreRecipe (ItemMaterial.createMaterial ("basicArmorPlate",1),"IXI","XAX","IXI",'I',Items.IRON_INGOT,'X',Items.GOLD_INGOT,'A',Blocks.IRON_BLOCK));
-		GameRegistry.addRecipe (new ShapedOreRecipe (ItemMaterial.createMaterial ("heavyArmorPlate",2),"XPX","PAP","XPX",'P',ItemMaterial.createMaterial ("basicArmorPlate",1),'X',Items.IRON_INGOT,'A',Items.DIAMOND));
-		GameRegistry.addRecipe (new ShapedOreRecipe (ItemMaterial.createMaterial ("reactiveArmorPlating",3),"PPP","XXX","PPP",'P',ItemMaterial.createMaterial ("heavyArmorPlate",1),'X',Items.DIAMOND));
-		GameRegistry.addRecipe (new ShapedOreRecipe (ItemMaterial.createMaterial ("regenerativeArmorPlating",6),"PPP","XXX","PPP",'P',ItemMaterial.createMaterial ("reactiveArmorPlating",1),'X',ItemMaterial.createMaterial ("repairBot",1)));
-		GameRegistry.addRecipe (new ShapedOreRecipe (ItemMaterial.createMaterial ("energyArmorPlating",1),"PPP","XXX","PPP",'P',ItemMaterial.createMaterial ("regenerativeArmorPlating",1),'X',ItemMaterial.createMaterial ("battery",1)));
-		GameRegistry.addRecipe (new ShapedOreRecipe (ItemMaterial.createMaterial ("cardboard",2)," P ","PLP"," P ",'P',Items.PAPER,'L',"plankWood"));
-		GameRegistry.addRecipe (new ShapedOreRecipe (ItemMaterial.createMaterial ("carbonChunk",6)," P ","PLP"," P ",'P',new ItemStack (Items.COAL,1,OreDictionary.WILDCARD_VALUE),'L',Blocks.COAL_BLOCK));
-		GameRegistry.addRecipe (new ShapedOreRecipe (ItemMaterial.createMaterial ("flippers",1)," B ","PPP",'B',new ItemStack (Items.DIAMOND_BOOTS,1,0),'P',"plankWood"));
-		GameRegistry.addRecipe (new ShapedOreRecipe (ItemMaterial.createMaterial ("nanoTech",1),"XAX","BCB","XAX",'X',Blocks.REDSTONE_BLOCK,'A',Items.EMERALD,'B',Items.DIAMOND,'C',Items.ENDER_EYE));
-		GameRegistry.addRecipe (new ShapedOreRecipe (ItemMaterial.createMaterial ("mechanicalMuscle",2),"XAX","XAX","XAX",'X',new ItemStack (Blocks.WOOL,1,OreDictionary.WILDCARD_VALUE),'A',ItemMaterial.createMaterial ("nanoTech",1)));
-		GameRegistry.addRecipe (new ShapedOreRecipe (ItemMaterial.createMaterial ("gravityCore",1),"XAX","ACA","XAX",'X',Items.NETHER_STAR,'A',ItemMaterial.createMaterial ("jetpackParts",1),'C',Blocks.DRAGON_EGG));
-		GameRegistry.addRecipe (new ShapedOreRecipe (ItemMaterial.createMaterial ("jetpackParts",4),"BXB","BAB","BBB",'B',Blocks.REDSTONE_BLOCK,'X',ItemMaterial.createMaterial ("creationCrystal",1),'A',Items.NETHER_STAR));
-		GameRegistry.addRecipe (new ShapedOreRecipe (ItemMaterial.createMaterial ("thruster",1)," X ","XAX","BBB",'X',Items.EMERALD,'A',Blocks.DIAMOND_BLOCK,'B',Items.BLAZE_POWDER));
-		GameRegistry.addRecipe (new ShapedOreRecipe (ItemMaterial.createMaterial ("waterElectrolysisModule",1),"XPX","PAP","XPX",'X',Items.PRISMARINE_SHARD,'P',PotionUtils.addPotionToItemStack (new ItemStack (Items.POTIONITEM),PotionType.getPotionTypeForName ("long_water_breathing")),'A',Items.PRISMARINE_CRYSTALS));
-		GameRegistry.addRecipe (new ShapedOreRecipe (ItemMaterial.createMaterial ("mindControl",1),"XAX","BCB","XAX",'X',Blocks.END_STONE,'A',ItemMaterial.createMaterial ("reactiveArmorPlating",1),'B',Items.EMERALD,'C',new ItemStack (Items.GOLDEN_APPLE,1,0)));
-		GameRegistry.addRecipe (new ShapedOreRecipe (ItemMaterial.createMaterial ("wings",1),"L L","LSL","L L",'L',Items.LEATHER,'S',Items.BONE));
-		GameRegistry.addRecipe (new ShapedOreRecipe (ItemMaterial.createMaterial ("wings",1),"L L","LSL","L L",'L',Items.LEATHER,'S',Items.STICK));
-		GameRegistry.addRecipe (new ShapedOreRecipe (ItemMaterial.createMaterial ("battery",1)," C ","IRI","IRI",'C',Items.GOLD_INGOT,'I',Items.IRON_INGOT,'R',Items.REDSTONE));
-		GameRegistry.addRecipe (new ShapedOreRecipe (ItemMaterial.createMaterial ("solarPanel",1),"GGG","IWI","IRI",'G',Blocks.GLASS,'I',Items.GOLD_INGOT,'W',new ItemStack (Blocks.WOOL,1,OreDictionary.WILDCARD_VALUE),'R',Items.REDSTONE));
-		GameRegistry.addRecipe (new ShapedOreRecipe (ItemMaterial.createMaterial ("largeReactor",1),"CCC","CRC","CCC",'C',ItemMaterial.createMaterial ("smallReactor",1),'R',ItemMaterial.createMaterial ("nanoTech",1)));
-		GameRegistry.addRecipe (new ShapedOreRecipe (ItemUpgrade.createMaterial ("speedI"),"BRB","RAR","BCB",'B',Blocks.REDSTONE_BLOCK,'R',Blocks.LAPIS_BLOCK,'A',ItemMaterial.createMaterial ("upgrade"),'C',Items.DIAMOND));
-		GameRegistry.addRecipe (new ShapedOreRecipe (VoidRPGBlocks.cubeCreator,"BFB","XAX","BFB",'F',Blocks.FURNACE,'B',Blocks.IRON_BLOCK,'X',ItemMaterial.createMaterial ("creationCrystal",1),'A',Blocks.CHEST));
-		GameRegistry.addRecipe (new ShapedOreRecipe (ItemStaff.createStaff (ItemStaff.MAX_DURABILITY),"XDX","JSJ"," S ",'X',Blocks.END_STONE,'J',"gemDiamond",'D',ItemMaterial.createMaterial ("nanoTech",1),'S',Items.BLAZE_ROD));
+		IForgeRegistry <IRecipe> registry = GameRegistry.findRegistry (IRecipe.class);
+//		registry.register (new ShapedOreRecipe (new ResourceLocation (Global.MODID,"Recipes"),ItemMaterial.createMaterial ("creationCrystal",1),"XAX","BXB","XAX",'X',Blocks.END_STONE,'A',Items.BLAZE_ROD,'B',Items.EMERALD));
+//		registry.register (new ShapedOreRecipe (new ResourceLocation (Global.MODID,"Recipes"),ItemMaterial.createMaterial ("creationCrystal",1),"XBX","AXA","XBX",'X',Blocks.END_STONE,'A',Items.BLAZE_ROD,'B',Items.EMERALD));
+//		registry.register (new ShapedOreRecipe (new ResourceLocation (Global.MODID,"Recipes"),ItemMaterial.createMaterial ("creationCrystal",1),"XAX","BXB","XAX",'X',Blocks.NETHER_BRICK,'A',Items.CHORUS_FRUIT,'B',Items.EMERALD));
+//		registry.register (new ShapedOreRecipe (new ResourceLocation (Global.MODID,"Recipes"),ItemMaterial.createMaterial ("creationCrystal",1),"XBX","AXA","XBX",'X',Blocks.NETHER_BRICK,'A',Items.CHORUS_FRUIT,'B',Items.EMERALD));
+//		registry.register (new ShapedOreRecipe (new ResourceLocation (Global.MODID,"Recipes"),ItemMaterial.createMaterial ("upgrade",2),"BXB","XAX","BCB",'B',Blocks.OBSIDIAN,'X',Items.REDSTONE,'A',Items.EMERALD,'C',Items.ENDER_PEARL));
+//		registry.register (new ShapedOreRecipe (new ResourceLocation (Global.MODID,"Recipes"),ItemMaterial.createMaterial ("basicArmorPlate",1),"IXI","XAX","IXI",'I',Items.IRON_INGOT,'X',Items.GOLD_INGOT,'A',Blocks.IRON_BLOCK));
+//		registry.register (new ShapedOreRecipe (new ResourceLocation (Global.MODID,"Recipes"),ItemMaterial.createMaterial ("heavyArmorPlate",2),"XPX","PAP","XPX",'P',ItemMaterial.createMaterial ("basicArmorPlate",1),'X',Items.IRON_INGOT,'A',Items.DIAMOND));
+//		registry.register (new ShapedOreRecipe (new ResourceLocation (Global.MODID,"Recipes"),ItemMaterial.createMaterial ("reactiveArmorPlating",3),"PPP","XXX","PPP",'P',ItemMaterial.createMaterial ("heavyArmorPlate",1),'X',Items.DIAMOND));
+//		registry.register (new ShapedOreRecipe (new ResourceLocation (Global.MODID,"Recipes"),ItemMaterial.createMaterial ("regenerativeArmorPlating",6),"PPP","XXX","PPP",'P',ItemMaterial.createMaterial ("reactiveArmorPlating",1),'X',ItemMaterial.createMaterial ("repairBot",1)));
+//		registry.register (new ShapedOreRecipe (new ResourceLocation (Global.MODID,"Recipes"),ItemMaterial.createMaterial ("energyArmorPlating",1),"PPP","XXX","PPP",'P',ItemMaterial.createMaterial ("regenerativeArmorPlating",1),'X',ItemMaterial.createMaterial ("battery",1)));
+//		registry.register (new ShapedOreRecipe (new ResourceLocation (Global.MODID,"Recipes"),ItemMaterial.createMaterial ("cardboard",2)," P ","PLP"," P ",'P',Items.PAPER,'L',"plankWood"));
+//		registry.register (new ShapedOreRecipe (new ResourceLocation (Global.MODID,"Recipes"),ItemMaterial.createMaterial ("carbonChunk",6)," P ","PLP"," P ",'P',new ItemStack (Items.COAL,1,OreDictionary.WILDCARD_VALUE),'L',Blocks.COAL_BLOCK));
+//		registry.register (new ShapedOreRecipe (new ResourceLocation (Global.MODID,"Recipes"),ItemMaterial.createMaterial ("flippers",1)," B ","PPP",'B',new ItemStack (Items.DIAMOND_BOOTS,1,0),'P',"plankWood"));
+//		registry.register (new ShapedOreRecipe (new ResourceLocation (Global.MODID,"Recipes"),ItemMaterial.createMaterial ("nanoTech",1),"XAX","BCB","XAX",'X',Blocks.REDSTONE_BLOCK,'A',Items.EMERALD,'B',Items.DIAMOND,'C',Items.ENDER_EYE));
+//		registry.register (new ShapedOreRecipe (new ResourceLocation (Global.MODID,"Recipes"),ItemMaterial.createMaterial ("mechanicalMuscle",2),"XAX","XAX","XAX",'X',new ItemStack (Blocks.WOOL,1,OreDictionary.WILDCARD_VALUE),'A',ItemMaterial.createMaterial ("nanoTech",1)));
+//		registry.register (new ShapedOreRecipe (new ResourceLocation (Global.MODID,"Recipes"),ItemMaterial.createMaterial ("gravityCore",1),"XAX","ACA","XAX",'X',Items.NETHER_STAR,'A',ItemMaterial.createMaterial ("jetpackParts",1),'C',Blocks.DRAGON_EGG));
+//		registry.register (new ShapedOreRecipe (new ResourceLocation (Global.MODID,"Recipes"),ItemMaterial.createMaterial ("jetpackParts",4),"BXB","BAB","BBB",'B',Blocks.REDSTONE_BLOCK,'X',ItemMaterial.createMaterial ("creationCrystal",1),'A',Items.NETHER_STAR));
+//		registry.register (new ShapedOreRecipe (new ResourceLocation (Global.MODID,"Recipes"),ItemMaterial.createMaterial ("thruster",1)," X ","XAX","BBB",'X',Items.EMERALD,'A',Blocks.DIAMOND_BLOCK,'B',Items.BLAZE_POWDER));
+//		registry.register (new ShapedOreRecipe (new ResourceLocation (Global.MODID,"Recipes"),ItemMaterial.createMaterial ("waterElectrolysisModule",1),"XPX","PAP","XPX",'X',Items.PRISMARINE_SHARD,'P',PotionUtils.addPotionToItemStack (new ItemStack (Items.POTIONITEM),PotionType.getPotionTypeForName ("long_water_breathing")),'A',Items.PRISMARINE_CRYSTALS));
+//		registry.register (new ShapedOreRecipe (new ResourceLocation (Global.MODID,"Recipes"),ItemMaterial.createMaterial ("mindControl",1),"XAX","BCB","XAX",'X',Blocks.END_STONE,'A',ItemMaterial.createMaterial ("reactiveArmorPlating",1),'B',Items.EMERALD,'C',new ItemStack (Items.GOLDEN_APPLE,1,0)));
+//		registry.register (new ShapedOreRecipe (new ResourceLocation (Global.MODID,"Recipes"),ItemMaterial.createMaterial ("wings",1),"L L","LSL","L L",'L',Items.LEATHER,'S',Items.BONE));
+//		registry.register (new ShapedOreRecipe (new ResourceLocation (Global.MODID,"Recipes"),ItemMaterial.createMaterial ("wings",1),"L L","LSL","L L",'L',Items.LEATHER,'S',Items.STICK));
+//		registry.register (new ShapedOreRecipe (new ResourceLocation (Global.MODID,"Recipes"),ItemMaterial.createMaterial ("battery",1)," C ","IRI","IRI",'C',Items.GOLD_INGOT,'I',Items.IRON_INGOT,'R',Items.REDSTONE));
+//		registry.register (new ShapedOreRecipe (new ResourceLocation (Global.MODID,"Recipes"),ItemMaterial.createMaterial ("solarPanel",1),"GGG","IWI","IRI",'G',Blocks.GLASS,'I',Items.GOLD_INGOT,'W',new ItemStack (Blocks.WOOL,1,OreDictionary.WILDCARD_VALUE),'R',Items.REDSTONE));
+//		registry.register (new ShapedOreRecipe (new ResourceLocation (Global.MODID,"Recipes"),ItemMaterial.createMaterial ("largeReactor",1),"CCC","CRC","CCC",'C',ItemMaterial.createMaterial ("smallReactor",1),'R',ItemMaterial.createMaterial ("nanoTech",1)));
+//		registry.register (new ShapedOreRecipe (new ResourceLocation (Global.MODID,"Recipes"),ItemUpgrade.createMaterial ("speedI"),"BRB","RAR","BCB",'B',Blocks.REDSTONE_BLOCK,'R',Blocks.LAPIS_BLOCK,'A',ItemMaterial.createMaterial ("upgrade"),'C',Items.DIAMOND));
+//		registry.register (new ShapedOreRecipe (new ResourceLocation (Global.MODID,"Recipes"),VoidRPGBlocks.cubeCreator,"BFB","XAX","BFB",'F',Blocks.FURNACE,'B',Blocks.IRON_BLOCK,'X',ItemMaterial.createMaterial ("creationCrystal",1),'A',Blocks.CHEST));
+//		registry.register (new ShapedOreRecipe (new ResourceLocation (Global.MODID,"Recipes"),ItemStaff.createStaff (ItemStaff.MAX_DURABILITY),"XDX","JSJ"," S ",'X',Blocks.END_STONE,'J',"gemDiamond",'D',ItemMaterial.createMaterial ("nanoTech",1),'S',Items.BLAZE_ROD));
 	}
 
 	private static void addShapelessRecipes () {
-		GameRegistry.addRecipe (new ShapelessOreRecipe (VoidRPGItems.goggles,Items.DIAMOND_HELMET,ItemMaterial.createMaterial ("nanoTech",1),ItemMaterial.createMaterial ("creationCrystal",1)));
-		GameRegistry.addRecipe (new ShapelessOreRecipe (ItemMaterial.createMaterial ("smallReactor",1),Blocks.EMERALD_BLOCK,Blocks.DIAMOND_BLOCK,ItemMaterial.createMaterial ("nanoTech",1),ItemMaterial.createMaterial ("nanoTech",1)));
-		GameRegistry.addRecipe (new ShapelessOreRecipe (ItemMaterial.createMaterial ("repairBot",1),Blocks.DIAMOND_BLOCK,ItemMaterial.createMaterial ("nanoTech",1),ItemMaterial.createMaterial ("nanoTech",1),ItemMaterial.createMaterial ("nanoTech",1),new ItemStack (Blocks.WOOL,1,OreDictionary.WILDCARD_VALUE)));
-		GameRegistry.addRecipe (new ShapelessOreRecipe (ItemUpgrade.createMaterial ("speedII"),ItemUpgrade.createMaterial ("speedI"),ItemUpgrade.createMaterial ("speedI"),ItemUpgrade.createMaterial ("speedI"),ItemUpgrade.createMaterial ("speedI")));
-		GameRegistry.addRecipe (new ShapelessOreRecipe (ItemUpgrade.createMaterial ("speedIII"),ItemUpgrade.createMaterial ("speedII"),ItemUpgrade.createMaterial ("speedII"),ItemUpgrade.createMaterial ("speedII"),ItemUpgrade.createMaterial ("speedII")));
+		IForgeRegistry <IRecipe> registry = GameRegistry.findRegistry (IRecipe.class);
+//		registry.register (new ShapelessOreRecipe (new ResourceLocation (Global.MODID,"Recipes"),VoidRPGItems.goggles,Items.DIAMOND_HELMET,ItemMaterial.createMaterial ("nanoTech",1),ItemMaterial.createMaterial ("creationCrystal",1)));
+//		registry.register (new ShapelessOreRecipe (new ResourceLocation (Global.MODID,"Recipes"),ItemMaterial.createMaterial ("smallReactor",1),Blocks.EMERALD_BLOCK,Blocks.DIAMOND_BLOCK,ItemMaterial.createMaterial ("nanoTech",1),ItemMaterial.createMaterial ("nanoTech",1)));
+//		registry.register (new ShapelessOreRecipe (new ResourceLocation (Global.MODID,"Recipes"),ItemMaterial.createMaterial ("repairBot",1),Blocks.DIAMOND_BLOCK,ItemMaterial.createMaterial ("nanoTech",1),ItemMaterial.createMaterial ("nanoTech",1),ItemMaterial.createMaterial ("nanoTech",1),new ItemStack (Blocks.WOOL,1,OreDictionary.WILDCARD_VALUE)));
+//		registry.register (new ShapelessOreRecipe (new ResourceLocation (Global.MODID,"Recipes"),ItemUpgrade.createMaterial ("speedII"),ItemUpgrade.createMaterial ("speedI"),ItemUpgrade.createMaterial ("speedI"),ItemUpgrade.createMaterial ("speedI"),ItemUpgrade.createMaterial ("speedI")));
+//		registry.register (new ShapelessOreRecipe (new ResourceLocation (Global.MODID,"Recipes"),ItemUpgrade.createMaterial ("speedIII"),ItemUpgrade.createMaterial ("speedII"),ItemUpgrade.createMaterial ("speedII"),ItemUpgrade.createMaterial ("speedII"),ItemUpgrade.createMaterial ("speedII")));
 	}
 
 	private static void addCubeCreatorRecipes () {

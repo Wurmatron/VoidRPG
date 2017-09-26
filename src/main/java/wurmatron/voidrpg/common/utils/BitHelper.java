@@ -108,13 +108,16 @@ public class BitHelper {
 
 	public static CubeData[] getDataFromModel (World world,BlockPos pos,Vec3i[] model,int maxX,int maxY,int maxZ,Vec3i center) {
 		CubeData[] data = createDataFromModel (world,pos);
-		ArrayList <CubeData> validCubes = new ArrayList <> ();
-		Vec3i[] inverseModel = inverseModel (model);
+		//		ArrayList <CubeData> validCubes = new ArrayList <> ();
+		//		Vec3i[] inverseModel = inverseModel (model);
+		//		for (CubeData c : data)
+		//			for (Vec3i neg : inverseModel) {
+		//				if (c.xPos == neg.getX () && c.yPos == neg.getY () && c.zPos == neg.getZ () && c.xPos >= maxX + center.getX () && c.yPos >= maxY + center.getY () && c.zPos >= maxZ + center.getZ ()){
+		//					validCubes.add (c);
+		//			}
+		//		}
 		for (CubeData c : data)
-			for (Vec3i neg : inverseModel) {
-				if (c.xPos == neg.getX () && c.yPos == neg.getY () && c.zPos == neg.getZ () && c.xPos >= maxX + center.getX () && c.yPos >= maxY + center.getY () && c.zPos >= maxZ + center.getZ ())
-					validCubes.add (c);
-			}
+			LogHandler.info ("VC: " + c.cube);
 		return data;
 	}
 
@@ -125,11 +128,16 @@ public class BitHelper {
 				IBitAccess bit = api.getBitAccess (world,pos);
 				for (int x = 16; x >= 0; x--)
 					for (int y = 16; y >= 0; y--)
-						for (int z = 16; z >= 0; z--)
+						for (int z = 16; z >= 0; z--) {
+							if (!bit.getBitAt (x,y,z).isAir ())
+								LogHandler.info ("Valid: " + areValidBits (bit.getBitAt (x,y,z)));
 							if (!bit.getBitAt (x,y,z).isAir () && areValidBits (bit.getBitAt (x,y,z)))
 								for (ICube cube : CubeRegistry.getCubes ())
-									if (cube != null && cube.getBlock () != null && cube.getBlock ().getUnlocalizedName ().equals (bit.getBitAt (x,y,z).getState ().getBlock ().getUnlocalizedName ()))
+									if (cube != null && cube.getBlock () != null && cube.getBlock () == (bit.getBitAt (x,y,z).getState ().getBlock ())) {
 										data.add (new CubeData (cube,x,y,z,0));
+										LogHandler.info ("added " + cube.getName ());
+									}
+						}
 			} catch (Exception e) {
 				e.printStackTrace ();
 			}
@@ -179,7 +187,7 @@ public class BitHelper {
 						defaultCubes.setTag (Integer.toString (defaultCubes.getSize () + 1),nbt);
 				}
 		}
-		if (defaultCubes.getSize () > 0)
+		if (defaultCubes.getSize () > 0 || specialCubes.getSize () > 0 || energyStorageCubes.getSize () > 0 || energyProductionCubes.getSize () > 0)
 			return new NBTTagCompound[] {defaultCubes,specialCubes,energyStorageCubes,energyProductionCubes};
 		return new NBTTagCompound[0];
 	}

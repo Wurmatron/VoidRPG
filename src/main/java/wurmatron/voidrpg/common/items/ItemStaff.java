@@ -1,5 +1,6 @@
 package wurmatron.voidrpg.common.items;
 
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -22,6 +23,7 @@ import wurmatron.voidrpg.common.reference.NBT;
 import wurmatron.voidrpg.common.utils.BitHelper;
 import wurmatron.voidrpg.common.utils.DataHelper;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class ItemStaff extends Item {
@@ -33,6 +35,7 @@ public class ItemStaff extends Item {
 		setMaxStackSize (1);
 		setHasSubtypes (true);
 		setUnlocalizedName ("creationStaff");
+		setRegistryName ("creationStaff");
 	}
 
 	public static ItemStack createStaff (int damage) {
@@ -47,7 +50,7 @@ public class ItemStaff extends Item {
 	public ActionResult <ItemStack> onItemRightClick (World world,EntityPlayer player,EnumHand hand) {
 		// TODO FIX THIS SO THAT IT ACTUALLY WORKS CORRECTLY
 		ItemStack stack = player.inventory.getCurrentItem ();
-		RayTraceResult ray = world.rayTraceBlocks (player.getLookVec ().add (new Vec3d (player.posX,player.posY,player.posZ)),player.getLookVec ().add (new Vec3d (player.getLookVec ().xCoord,player.getLookVec ().yCoord,player.getLookVec ().zCoord).add (new Vec3d (player.posX,player.posY,player.posZ))),false,false,true);
+		RayTraceResult ray = world.rayTraceBlocks (player.getLookVec ().add (new Vec3d (player.posX,player.posY,player.posZ)),player.getLookVec ().add (new Vec3d (player.getLookVec ().x,player.getLookVec ().y,player.getLookVec ().z).add (new Vec3d (player.posX,player.posY,player.posZ))),false,false,true);
 		if (stack.getTagCompound () != null) {
 			if (ray != null && world.getBlockState (ray.getBlockPos ()).getBlock () != Blocks.AIR) {
 				if (BitHelper.hasValidModel (world,ray.getBlockPos (),BitHelper.modelHead.toArray (new Vec3i[0]))) {
@@ -88,7 +91,7 @@ public class ItemStaff extends Item {
 	}
 
 	@Override
-	public void addInformation (ItemStack stack,EntityPlayer player,List <String> tip,boolean adv) {
+	public void addInformation (ItemStack stack,@Nullable World world,List <String> tip,ITooltipFlag flagIn) {
 		if (stack.getTagCompound () != null)
 			tip.add (TextFormatting.GRAY + I18n.translateToLocal ("stat.durability.name") + ": " + TextFormatting.AQUA + stack.getTagCompound ().getInteger (NBT.CUBE_DAMAGE));
 		else
@@ -96,7 +99,7 @@ public class ItemStaff extends Item {
 	}
 
 	@Override
-	public void getSubItems (Item itemIn,CreativeTabs tab,NonNullList<ItemStack> sub) {
+	public void getSubItems (CreativeTabs tab,NonNullList <ItemStack> sub) {
 		sub.add (createStaff (MAX_DURABILITY));
 		sub.add (createStaff (9001));
 	}

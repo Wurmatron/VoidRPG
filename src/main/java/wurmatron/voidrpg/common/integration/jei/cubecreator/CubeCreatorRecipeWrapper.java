@@ -37,6 +37,6 @@ public class CubeCreatorRecipeWrapper extends BlankRecipeWrapper {
 
 	@Override
 	public void drawInfo (@Nonnull Minecraft mc,int recipeWidth,int recipeHeight,int mouseX,int mouseY) {
-		mc.fontRendererObj.drawString (time + " ticks",25,60,Color.gray.getRGB ());
+		mc.fontRenderer.drawString (time + " ticks",25,60,Color.gray.getRGB ());
 	}
 }

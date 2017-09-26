@@ -15,8 +15,4 @@ public class SlotInput extends Slot {
 		return true;
 	}
 
-	@Override
-	public boolean canBeHovered () {
-		return super.canBeHovered ();
-	}
 }

@@ -17,6 +17,7 @@ import wurmatron.voidrpg.common.cube.special.head.WaterBreathing;
 import wurmatron.voidrpg.common.cube.special.legs.CubeMuscle;
 import wurmatron.voidrpg.common.reference.Global;
 import wurmatron.voidrpg.common.reference.Local;
+import wurmatron.voidrpg.common.utils.LogHandler;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -36,6 +37,7 @@ public class CubeRegistry {
 		if (!getCubes ().contains (cube))
 			for (byte index = 0; index < cubes.length; index++)
 				if (cubes[index] == null) {
+					LogHandler.info ("Index: " + index + cube.getName ());
 					cubes[index] = cube;
 					idCache.put (cube,index);
 					return;

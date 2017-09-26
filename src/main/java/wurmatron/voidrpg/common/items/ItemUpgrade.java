@@ -24,7 +24,7 @@ public class ItemUpgrade extends Item {
 	}
 
 	@Override
-	public void getSubItems (Item item,CreativeTabs tab,NonNullList <ItemStack> sub) {
+	public void getSubItems (CreativeTabs tab,NonNullList <ItemStack> sub) {
 		for (String i : VoidRPGItems.upgrades)
 			sub.add (createMaterial (i));
 	}

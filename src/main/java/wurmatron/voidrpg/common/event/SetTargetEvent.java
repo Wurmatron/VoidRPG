@@ -13,7 +13,7 @@ public class SetTargetEvent {
 
 	@SubscribeEvent
 	public void onEntitySetTarget (LivingSetAttackTargetEvent e) {
-		if (e.getTarget () != null && e.getTarget () instanceof EntityPlayer && e.getEntityLiving ().getLastAttacker () != e.getTarget ()) {
+		if (e.getTarget () != null && e.getTarget () instanceof EntityPlayer && e.getEntityLiving ().getAttackingEntity () != e.getTarget ()) {
 			EntityPlayer player = (EntityPlayer) e.getTarget ();
 			if (player.inventory != null && player.inventory.armorInventory != null)
 				for (ItemStack stack : player.inventory.armorInventory)

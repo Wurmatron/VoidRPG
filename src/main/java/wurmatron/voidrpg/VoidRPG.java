@@ -2,7 +2,6 @@ package wurmatron.voidrpg;
 
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -46,8 +45,9 @@ public class VoidRPG {
 		LogHandler.info ("Pre-Init");
 		ConfigHandler.preInit (e);
 		ConfigHandler.loadMainConfig ();
+		MinecraftForge.EVENT_BUS.register (new VoidRPGItems ());
 		VoidRPGBlocks.init ();
-		VoidRPGItems.init ();
+		VoidRPGItems.postInit ();
 		proxy.register ();
 	}
 

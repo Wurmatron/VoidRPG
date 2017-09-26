@@ -1,6 +1,7 @@
 package wurmatron.voidrpg.common.items;
 
 import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -9,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.translation.I18n;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
@@ -19,7 +21,9 @@ import wurmatron.voidrpg.client.model.ArmorModel;
 import wurmatron.voidrpg.common.reference.Local;
 import wurmatron.voidrpg.common.reference.NBT;
 import wurmatron.voidrpg.common.utils.DataHelper;
+import wurmatron.voidrpg.common.utils.LogHandler;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,6 +38,7 @@ public class ItemModelArmor extends ItemArmor {
 		super (material,index,slot);
 		setCreativeTab (VoidRPG.tabVoidRPG);
 		setUnlocalizedName ("armor" + slot.name ().toLowerCase ());
+		setRegistryName ("armor" + slot.name ().toLowerCase ());
 	}
 
 	@SideOnly (Side.CLIENT)
@@ -75,7 +80,7 @@ public class ItemModelArmor extends ItemArmor {
 	}
 
 	@Override
-	public void addInformation (ItemStack stack,EntityPlayer player,List <String> tip,boolean adv) {
+	public void addInformation (ItemStack stack,@Nullable World worldIn,List <String> tip,ITooltipFlag flagIn) {
 		tip.add (TextFormatting.GRAY + I18n.translateToLocal (Local.STAT_WEIGHT) + ": " + TextFormatting.AQUA + DataHelper.getWeight (stack,false));
 		int maxDurability = DataHelper.getMaxDurability (stack,false);
 		if (maxDurability <= 0)
