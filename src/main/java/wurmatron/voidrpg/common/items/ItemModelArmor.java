@@ -37,8 +37,6 @@ public class ItemModelArmor extends ItemArmor {
 	public ItemModelArmor (ArmorMaterial material,int index,EntityEquipmentSlot slot) {
 		super (material,index,slot);
 		setCreativeTab (VoidRPG.tabVoidRPG);
-		setUnlocalizedName ("armor" + slot.name ().toLowerCase ());
-		setRegistryName ("armor" + slot.name ().toLowerCase ());
 	}
 
 	@SideOnly (Side.CLIENT)

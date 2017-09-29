@@ -12,8 +12,6 @@ public class ItemGoggles extends ItemArmor {
 	public ItemGoggles () {
 		super (ArmorMaterial.CHAIN,0,EntityEquipmentSlot.HEAD);
 		setCreativeTab (VoidRPG.tabVoidRPG);
-		setUnlocalizedName ("goggles");
-		setRegistryName ("googles");
 		setMaxStackSize (1);
 		setMaxDamage (1200);
 	}

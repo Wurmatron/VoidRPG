@@ -27,8 +27,6 @@ public class ItemModelPlacer extends Item {
 
 	public ItemModelPlacer () {
 		setCreativeTab (VoidRPG.tabVoidRPG);
-		setUnlocalizedName ("modelPlacer");
-		setRegistryName ("modelPlacer");
 		setHasSubtypes (true);
 		setMaxStackSize (1);
 	}

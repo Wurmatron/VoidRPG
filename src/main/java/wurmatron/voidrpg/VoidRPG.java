@@ -24,6 +24,7 @@ import wurmatron.voidrpg.common.network.GuiHandler;
 import wurmatron.voidrpg.common.proxy.CommonProxy;
 import wurmatron.voidrpg.common.recipes.VoidRPGRecipes;
 import wurmatron.voidrpg.common.reference.Global;
+import wurmatron.voidrpg.common.reference.Registry;
 import wurmatron.voidrpg.common.utils.LogHandler;
 
 @Mod (modid = Global.MODID, name = Global.NAME, version = Global.VERSION, guiFactory = Global.GUIFACTORY, dependencies = Global.DEPENDENCIES)
@@ -45,9 +46,9 @@ public class VoidRPG {
 		LogHandler.info ("Pre-Init");
 		ConfigHandler.preInit (e);
 		ConfigHandler.loadMainConfig ();
-		MinecraftForge.EVENT_BUS.register (new VoidRPGItems ());
+		MinecraftForge.EVENT_BUS.register (new Registry());
 		VoidRPGBlocks.init ();
-		VoidRPGItems.postInit ();
+		VoidRPGItems.init();
 		proxy.register ();
 	}
 
@@ -64,7 +65,7 @@ public class VoidRPG {
 
 	@Mod.EventHandler
 	public void onPostInit (FMLPostInitializationEvent e) {
-		VoidRPGRecipes.init ();
+//		VoidRPGRecipes.init ();
 	}
 
 	@Mod.EventHandler

@@ -6,6 +6,7 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import wurmatron.voidrpg.client.proxy.ClientProxy;
+import wurmatron.voidrpg.common.reference.Registry;
 import wurmatron.voidrpg.common.tile.TileCubeCreator;
 
 public class VoidRPGBlocks {
@@ -131,10 +132,11 @@ public class VoidRPGBlocks {
 	}
 
 	private static Block registerBlock (Block block) {
-		block.setRegistryName (block.getUnlocalizedName ());
-//		GameRegistry.registerWithItem (block);
-		if (FMLCommonHandler.instance ().getEffectiveSide () == Side.CLIENT)
-			ClientProxy.blocks.add (block);
+		Registry.registerBlock(block, block.getUnlocalizedName());
+//		block.setRegistryName (block.getUnlocalizedName ());
+////		GameRegistry.registerWithItem (block);
+//		if (FMLCommonHandler.instance ().getEffectiveSide () == Side.CLIENT)
+//			ClientProxy.blocks.add (block);
 		return block;
 	}
 }

@@ -11,8 +11,6 @@ public class ItemMaterial extends Item {
 	public ItemMaterial () {
 		setCreativeTab (VoidRPG.tabVoidRPG);
 		setHasSubtypes (true);
-		setUnlocalizedName ("itemMaterial");
-		setRegistryName ("itemMaterial");
 	}
 
 	public static ItemStack createMaterial (String name,int size) {

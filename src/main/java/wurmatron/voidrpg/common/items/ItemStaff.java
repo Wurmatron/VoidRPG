@@ -34,8 +34,6 @@ public class ItemStaff extends Item {
 		setCreativeTab (VoidRPG.tabVoidRPG);
 		setMaxStackSize (1);
 		setHasSubtypes (true);
-		setUnlocalizedName ("creationStaff");
-		setRegistryName ("creationStaff");
 	}
 
 	public static ItemStack createStaff (int damage) {
