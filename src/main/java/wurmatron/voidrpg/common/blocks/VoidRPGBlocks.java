@@ -2,10 +2,7 @@ package wurmatron.voidrpg.common.blocks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import wurmatron.voidrpg.client.proxy.ClientProxy;
 import wurmatron.voidrpg.common.reference.Registry;
 import wurmatron.voidrpg.common.tile.TileCubeCreator;
 
@@ -132,11 +129,7 @@ public class VoidRPGBlocks {
 	}
 
 	private static Block registerBlock (Block block) {
-		Registry.registerBlock(block, block.getUnlocalizedName());
-//		block.setRegistryName (block.getUnlocalizedName ());
-////		GameRegistry.registerWithItem (block);
-//		if (FMLCommonHandler.instance ().getEffectiveSide () == Side.CLIENT)
-//			ClientProxy.blocks.add (block);
+		Registry.registerBlock (block,block.getUnlocalizedName ());
 		return block;
 	}
 }

@@ -1,7 +1,7 @@
 {
   "variants": {
-    "normal": {
-      "model": "voidrpg:armorNanoTech"
+    "inventory": {
+      "model": "voidrpg:armornanotech"
     }
   }
 }

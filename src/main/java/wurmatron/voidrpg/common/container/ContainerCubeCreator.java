@@ -48,13 +48,13 @@ public class ContainerCubeCreator extends Container {
 					return null;
 				slot.onSlotChange (temp,stack);
 			}
-			if (temp.getCount() == 0)
+			if (temp.getCount () == 0)
 				slot.putStack (null);
 			else
 				slot.onSlotChanged ();
-			if (temp.getCount() == stack.getCount())
+			if (temp.getCount () == stack.getCount ())
 				return null;
-//			slot.onSlotChange (player,temp);
+			//			slot.onSlotChange (player,temp);
 		}
 		return stack;
 	}
@@ -75,13 +75,13 @@ public class ContainerCubeCreator extends Container {
 					continue;
 				}
 				if (itemstack1 != null && itemstack1.getItem () == stack.getItem () && (!stack.getHasSubtypes () || stack.getItemDamage () == itemstack1.getItemDamage ()) && ItemStack.areItemStackTagsEqual (stack,itemstack1)) {
-					int l = itemstack1.getCount() + stack.getCount();
+					int l = itemstack1.getCount () + stack.getCount ();
 					if (l <= stack.getMaxStackSize () && l <= slot.getSlotStackLimit ()) {
 						stack.setCount (0);
 						itemstack1.setCount (l);
 						inv.markDirty ();
 						flag1 = true;
-					} else if (itemstack1.getCount() < stack.getMaxStackSize () && l < slot.getSlotStackLimit ()) {
+					} else if (itemstack1.getCount () < stack.getMaxStackSize () && l < slot.getSlotStackLimit ()) {
 						stack.setCount (stack.getMaxStackSize () - itemstack1.getCount ());
 						itemstack1.setCount (stack.getMaxStackSize ());
 						inv.markDirty ();
@@ -91,7 +91,7 @@ public class ContainerCubeCreator extends Container {
 				k += (backwards ? -1 : 1);
 			}
 		}
-		if (stack.getCount() > 0) {
+		if (stack.getCount () > 0) {
 			k = (backwards ? end - 1 : start);
 			while (!backwards && k < end || backwards && k >= start) {
 				slot = inventorySlots.get (k);
@@ -101,7 +101,7 @@ public class ContainerCubeCreator extends Container {
 					continue;
 				}
 				if (itemstack1 == null) {
-					int l = stack.getCount();
+					int l = stack.getCount ();
 					if (l <= slot.getSlotStackLimit ()) {
 						slot.putStack (stack.copy ());
 						stack.setCount (0);

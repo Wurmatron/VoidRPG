@@ -29,10 +29,10 @@ public class CubeCreatorRecipeWrapper extends BlankRecipeWrapper {
 
 	@Override
 	public void getIngredients (IIngredients ingredients) {
-		if(!inputs.isEmpty())
-			ingredients.setInputs(ItemStack.class, inputs);
-		if(!output.isEmpty())
-			ingredients.setOutputs (ItemStack.class, output);
+		if (!inputs.isEmpty ())
+			ingredients.setInputs (ItemStack.class,inputs);
+		if (!output.isEmpty ())
+			ingredients.setOutputs (ItemStack.class,output);
 	}
 
 	@Override

@@ -3,7 +3,6 @@ package wurmatron.voidrpg.common.items;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
@@ -21,7 +20,6 @@ import wurmatron.voidrpg.client.model.ArmorModel;
 import wurmatron.voidrpg.common.reference.Local;
 import wurmatron.voidrpg.common.reference.NBT;
 import wurmatron.voidrpg.common.utils.DataHelper;
-import wurmatron.voidrpg.common.utils.LogHandler;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;

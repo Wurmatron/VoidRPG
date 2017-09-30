@@ -175,7 +175,7 @@ public class DataHelper {
 					NBTTagCompound bodyNBT = stack.getTagCompound ().getCompoundTag (NBT.BODY);
 					for (int i = 0; i < bodyNBT.getSize (); i++) {
 						NBTTagCompound temp = bodyNBT.getCompoundTag (Integer.toString (i));
-						LogHandler.info ("Chest NBT (" + i + "): "   + temp);
+						LogHandler.info ("Chest NBT (" + i + "): " + temp);
 						if (temp.getSize () > 0) {
 							for (int s = 0; s <= temp.getSize (); s++)
 								if (BitHelper.readCubeDataFromNBT (temp.getCompoundTag (Integer.toString (s))) != null)
@@ -187,7 +187,7 @@ public class DataHelper {
 					NBTTagCompound leftArmNBT = stack.getTagCompound ().getCompoundTag (NBT.LEFT_ARM);
 					for (int i = 0; i < leftArmNBT.getSize (); i++) {
 						NBTTagCompound temp = leftArmNBT.getCompoundTag (Integer.toString (i));
-						LogHandler.info ("Left NBT (" + i + "): "   + temp);
+						LogHandler.info ("Left NBT (" + i + "): " + temp);
 						if (temp.getSize () > 0) {
 							for (int s = 0; s <= temp.getSize (); s++)
 								if (BitHelper.readCubeDataFromNBT (temp.getCompoundTag (Integer.toString (s))) != null)
@@ -199,7 +199,7 @@ public class DataHelper {
 					NBTTagCompound rightArmNBT = stack.getTagCompound ().getCompoundTag (NBT.RIGHT_ARM);
 					for (int i = 0; i < 3; i++) {
 						NBTTagCompound temp = rightArmNBT.getCompoundTag (Integer.toString (i));
-						LogHandler.info ("Right NBT (" + i + "): "   + temp);
+						LogHandler.info ("Right NBT (" + i + "): " + temp);
 						if (temp.getSize () > 0) {
 							for (int s = 0; s <= temp.getSize (); s++)
 								if (BitHelper.readCubeDataFromNBT (temp.getCompoundTag (Integer.toString (s))) != null)

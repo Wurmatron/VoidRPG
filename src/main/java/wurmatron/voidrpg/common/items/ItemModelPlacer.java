@@ -3,7 +3,6 @@ package wurmatron.voidrpg.common.items;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
@@ -13,7 +12,6 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.registries.GameData;
 import wurmatron.voidrpg.VoidRPG;
 import wurmatron.voidrpg.common.config.Settings;
 import wurmatron.voidrpg.common.reference.Local;
@@ -60,7 +58,7 @@ public class ItemModelPlacer extends Item {
 									if (x <= 12 && x > 4 && y <= 8 && z <= 12 && z > 4)
 										modelHead.add (new Vec3i (x,y,z));
 						BitHelper.createBaseArmorBlock (modelHead.toArray (new Vec3i[0]),world,pos);
-						stack.setCount (stack.getCount ()-1);
+						stack.setCount (stack.getCount () - 1);
 						return EnumActionResult.SUCCESS;
 					}
 					case (1): {
@@ -77,7 +75,7 @@ public class ItemModelPlacer extends Item {
 									modelArm.add (new Vec3i (x,y,z));
 						BitHelper.createBaseArmorBlock (modelArm.toArray (new Vec3i[0]),world,pos.add (1,0,0));
 						BitHelper.createBaseArmorBlock (modelArm.toArray (new Vec3i[0]),world,pos.add (-1,0,0));
-						stack.setCount (stack.getCount ()-1);
+						stack.setCount (stack.getCount () - 1);
 						return EnumActionResult.SUCCESS;
 					}
 					case (2): {
@@ -87,7 +85,7 @@ public class ItemModelPlacer extends Item {
 								for (int z = 6; z < 10; z++)
 									modelLegs.add (new Vec3i (x,y,z));
 						BitHelper.createBaseArmorBlock (modelLegs.toArray (new Vec3i[0]),world,pos);
-						stack.setCount (stack.getCount ()-1);
+						stack.setCount (stack.getCount () - 1);
 						return EnumActionResult.SUCCESS;
 					}
 					case (3): {
@@ -97,7 +95,7 @@ public class ItemModelPlacer extends Item {
 								for (int z = 6; z < 10; z++)
 									modelBoots.add (new Vec3i (x,y,z));
 						BitHelper.createBaseArmorBlock (modelBoots.toArray (new Vec3i[0]),world,pos);
-						stack.setCount (stack.getCount ()-1);
+						stack.setCount (stack.getCount () - 1);
 						return EnumActionResult.SUCCESS;
 					}
 					default:
