@@ -37,7 +37,6 @@ public class CubeRegistry {
 		if (!getCubes ().contains (cube))
 			for (byte index = 0; index < cubes.length; index++)
 				if (cubes[index] == null) {
-					LogHandler.info ("Index: " + index + cube.getName ());
 					cubes[index] = cube;
 					idCache.put (cube,index);
 					return;

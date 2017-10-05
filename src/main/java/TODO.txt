@@ -1,0 +1,17 @@
+
+ - Armor
+    - Fix Rendering Issue
+    - Find and Fix Missing Cube Textures
+    - Fix Special Cubes Not Loading / Rendering
+
+ - Add Json Item Recipes
+
+ - Finish Cube Creator
+ - Add Mod Cube Support
+    - TechReborn
+    - Botania
+    - Tough as Nails
+    - Blood Magic
+    - PSI
+    - Roots
+    - Modules From PowerSuits

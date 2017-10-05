@@ -129,7 +129,7 @@ public class VoidRPGBlocks {
 	}
 
 	private static Block registerBlock (Block block) {
-		Registry.registerBlock (block,block.getUnlocalizedName ());
+		Registry.registerBlock (block,block.getUnlocalizedName ().substring (5));
 		return block;
 	}
 }

@@ -39,9 +39,8 @@ public class ClientProxy extends CommonProxy {
 		ModelLoader.setCustomModelResourceLocation (item,0,new ModelResourceLocation (item.getRegistryName ().toString (),"inventory"));
 	}
 
-	public static void createModel (Block item) {
-		LogHandler.info ("Type: " + item.getRegistryName ().toString ());
-		ModelLoader.setCustomModelResourceLocation (Registry.blockItems.get (item),0,new ModelResourceLocation ( item.getRegistryName ().toString (),"inventory"));
+	public static void createModel (Block block) {
+		ModelLoader.setCustomModelResourceLocation (Registry.blockItems.get (block),0,new ModelResourceLocation (block.getRegistryName ().toString (),"inventory"));
 	}
 
 	public void registerItemModels () {
@@ -50,7 +49,7 @@ public class ClientProxy extends CommonProxy {
 		for (int s = 0; s < VoidRPGItems.upgrades.length; s++)
 			ModelLoader.setCustomModelResourceLocation (VoidRPGItems.itemUpgrade,s,new ModelResourceLocation (Global.MODID + ":" + VoidRPGItems.upgrades[s],"inventory"));
 		for (int s = 0; s < 4; s++)
-			ModelLoader.setCustomModelResourceLocation (VoidRPGItems.modelPlacer,s,new ModelResourceLocation (Global.MODID + ":" + ItemModelPlacer.getNameFromMeta (s).toLowerCase ()));
+			ModelLoader.setCustomModelResourceLocation (VoidRPGItems.modelPlacer,s,new ModelResourceLocation (Global.MODID + ":" + ItemModelPlacer.getNameFromMeta (s).toLowerCase (), "inventory"));
 		ModelLoader.setCustomModelResourceLocation (VoidRPGItems.itemStaff,0,new ModelResourceLocation (Global.MODID + ":" + "creationstaff","inventory"));
 	}
 
